@@ -1,0 +1,418 @@
+= Client Settings for the .NET SDK with Couchbase Server
+:navtitle: Client Settings
+
+The Couchbase .NET SDK offers a configuration API for customizing bootstrapping, timeouts, reliability and for performance tuning.
+You can configure the client programmatically via the [.api]`ClientConfiguration`, [.api]`PoolConfiguration` and [.api]`BucketConfiguration` classes, using XML configuration `App.Config` and or `Web.Config` files or by using JSON config files.
+
+[#dotnet-configurationbasics-settings]
+== Configuration Basics
+
+There are three main levels of configuration which correlate to classes or config sections:
+
+. Client level - applies to each and every client instance globally
+. Bucket level - applies to a specific bucket and will override any global settings
+. Pool level - applies to the connection level of a specific bucket configuration and override any bucket or client level settings if applicable
+
+At each level, there are specific classes or sections for configuring the behavior of the SDK.
+
+NOTE: defaults exists for all properties at each level.
+While some, like the bootstrap server list are often overridden since environment is different, others rarely need to be changed from their defaults.
+In general, rely on these defaults unless otherwise proven that they do not meet your needs.
+
+At the client level, the [.api]`ClientConfiguration` is the highest level configuration.
+Importantly, it contains the list of servers that the client will use to bootstrap against.
+
+[source,csharp]
+----
+var clientConfig = new ClientConfiguration {
+    Servers = new List<Uri> {
+        new Uri("http://server1.somedomain.com:8091"),
+        new Uri("http://server2.somedomain.com:8091"),
+        new Uri("http://server3.somedomain.com:8091")
+    }
+};
+----
+
+The listing above is an example of a client level configuration for bootstrapping against a cluster containing the following nodes: `+http://server1.somedomain.com:8091+`, `+http://server2.somedomain.com:8091+` and `+http://server3.somedomain.com:8091+`.
+This will override the default bootstrap host of `+http://localhost:8091+` and the client will use this list to bootstrap the itself to the cluster.
+
+Once you have a config, you'll either pass it into the constructor or the `Cluster` class:
+
+[source,csharp]
+----
+var cluster = new Cluster(clientConfig);
+----
+
+Alternatively, you can initialize the cluster helper:
+
+[source,csharp]
+----
+ClusterHelper.Initialize(clientConfig);
+----
+
+NOTE: calling a Initialize more than once per process or application may cause inconsistent behavior.
+
+A more advanced configuration that uses all three levels might look something like this:
+
+[source,csharp]
+----
+ var config = new ClientConfiguration {
+    BucketConfigs = new Dictionary<string, BucketConfiguration> {
+      {"authenticated", new BucketConfiguration {
+          PoolConfiguration = new PoolConfiguration {
+              MaxSize = 6,
+              MinSize = 4,
+              SendTimeout = 12000
+          },
+          DefaultOperationLifespan = 123,
+          Password = "password",
+          Username = "username",
+          BucketName = "authenticated"
+      }}
+    }
+};
+----
+
+In this example we are creating a configuration that also overrides the default BucketConfiguration and PoolConfiguration settings.
+
+[#dotnet-appconfig-webconfig-configuration]
+== Using an App.Config or Web.Config Configuration
+
+The section above shows how to programmatically configure the client, however in some situations you may want to use an App.Config or Web.Config to configure your client.
+For the most part, everything that is available programmatically can be done via the App.Config or Web.Config, for example:
+
+[source,xml]
+----
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <configSections>
+    <sectionGroup name="couchbaseClients">
+      <section name="couchbase" type="Couchbase.Configuration.Client.Providers.CouchbaseClientSection, Couchbase.NetClient" />
+    </sectionGroup>
+  </configSections>
+  <couchbaseClients>
+    <couchbase>
+     <servers>
+        <add uri="http://server1.somedomain.com:8091"></add>
+      </servers>
+      <buckets>
+        <add name="authenticated" password="secret">
+          <connectionPool name="custom" maxSize="6" minSize="4" />
+        </add>
+        <add name="travel-sample" useSsl="true" />
+      </buckets>
+    </couchbase>
+  </couchbaseClients>
+</configuration>
+----
+
+This configures two buckets "_beer-sample_" and "_authenticated_" and overrides the "_authenticated_" buckets pool configuration.
+To use this configuration, the appropriate constructor is called, passing the section name:
+
+[source,csharp]
+----
+var cluster = new Cluster("couchbaseClients/couchbase");
+----
+
+[#dotnet-json-configuration]
+== JSON Configuration
+
+An upcoming feature is full support for .NET Core which allows for client to run on Linux and OSX in addition to Windows.
+In support of .NET Core, the client can now be configured using JSON config files.
+
+NOTE: JSON configuration is only supported for versions of the SDK 2.3.0 and greater running on .NET Core 1.0 or greater.
+
+[source,csharp]
+----
+{
+  "basic": {
+    "enableConfigHeartbeat": false,
+    "servers": [
+      "http://server1.somedomain.com:8091/", "http://server2.somedomain.com:8091/"
+    ],
+    "buckets": [
+      {
+        "name": "travel-sample"
+      }
+    ]
+  }
+}
+----
+
+Here is an example of opening a cluster using the JSON configuration above:
+
+[source,csharp]
+----
+var builder = new ConfigurationBuilder();
+builder.AddJsonFile("config.json");
+
+var jsonConfiguration = builder.Build();
+var definition = new CouchbaseClientDefinition();
+jsonConfiguration.GetSection("couchbase:basic").Bind(definition);
+var clientConfig = new ClientConfiguration(definition);
+
+var cluster = new Cluster(clientConfig);
+var bucket = cluster.OpenBucket("travel-sample");
+----
+
+The "travel-sample" bucket is opened using any of the overridden defaults.
+
+[#dotnet-clientconfiguration-settings]
+== ClientConfiguration Settings
+
+These settings apply to each and every client instance globally.
+
+.ClientConfiguration Properties
+[cols="132,249,100"]
+|===
+| Name | Description | Default
+
+| `UseSsl`
+| Whether or not to use SSL encrypt data being sent to and from the server
+| false
+
+| `SslPort`
+| Overrides the `DirectPort` and sets the SSL port to use for key-value operations using the binary memcached protocol id UseSsl is enabled
+| 11207
+
+| `ApiPort`
+| The port to use for the Views API
+| 8092
+
+| `DirectPort`
+| The port to use for standard memcached binary operations such as storing and retrieving documents by key
+| 11210
+
+| `MgmtPort`
+| The port to use for the Management API
+| 8091
+
+| `HttpsMgmtPort`
+| Overrides the `MgmtPort` and sets the SSL port to use for the Management API
+| 18091
+
+| `HttpsApiPort`
+| Overrides the `ApiPort` and sets the SSL port to use for the Views API
+| 18092
+
+| `OperationTimeout`
+| The amount of time the client will wait on a pending operation before timing out
+| 2500 ms
+
+| `ObserveInterval`
+| The interval to wait before each Observe attempt
+| 10 ms
+
+| `ObserveTimeout`
+| The maximum amount of time to wait before timing out
+| 500 ms
+
+| `Servers`
+| The list of servers to bootstrap from
+| \http://localhost:8091/pools
+
+| `MaxViewRetries`
+| The upper limit for the number of times a View request that has failed will be retried
+| 2
+
+| `ViewHardTimeout`
+| The maximum amount of time that a View request takes before timing out.
+This includes time for retries.
+| 30000 ms
+
+| `ViewRequestTimeout`
+| Sets the timeout for each HTTP View request.
+| 5000 ms
+
+| `HeartbeatConfigInterval`
+| Sets the interval for configuration "heartbeat" checks, which check for changes in the configuration that are otherwise undetected by the client.
+| 10000 ms
+
+| `EnableConfigHeartBeat`
+| Enables configuration heartbeat checks.
+| true
+
+| `DefaultConnectionLimit`
+| Gets or sets the maximum number of concurrent connections allowed by a `ServicePoint` object used for making View and N1QL requests.
+| 5
+
+| `MaxServicePointIdleTime`
+| Gets or sets the maximum idle time of a `ServicePoint` object used for making View and N1QL requests.
+| 100,000 ms
+
+| `Expect100Continue`
+| Gets or sets a Boolean value that determines whether 100-Continue behavior is used.
+|
+
+| `DefaultOperationLifespan`
+| Gets or sets the default maximum time an operation is allowed to take (including processing and in-flight time on the wire).
+Note that in `App.config` this is set via `operationLifespan`
+| 2500ms
+
+| `BucketConfigs`
+| A map of bucket conifgurations and their names
+|
+
+| `BufferSize`
+| The size of each buffer to allocate per TCP connection for sending and recieving Memcached operations
+| 16k
+
+| `Converter`
+| Gets or sets the converter
+| -
+
+| `EnableTcpKeepAlives`
+| Gets or sets a value indicating whether enable TCP keep alives.
+| true
+
+| `TcpKeepAliveInterval`
+| Specifies the interval, in milliseconds, between when successive keep-alive packets are sent if no acknowledgement is received.
+| 1000ms
+
+| `TcpKeepAliveTime`
+| Specifies the timeout, in milliseconds, with no activity until the first keep-alive packet is sent.
+| 2hrs
+
+| `IOErrorCheckInterval`
+| Gets or sets the interval that the `IOErrorThreshold` will be checked.
+If the threshold is reached within the interval for a particular node, all keys mapped to that node the SDK will fail with a `NodeUnavailableException` in the `IOperationResult.Exception` field.
+The node will be flagged as "dead" and will try to reconnect, if connectivity is reached, the node will continue to process requests.
+| 500ms
+
+| `IOErrorThreshold`
+| Gets or sets the interval that the `IOErrorThreshold` will be checked.
+If the threshold is reached within the interval for a particular node, all keys mapped to that node the SDK will fail with a `NodeUnavailableException` in the `IOperationResult.Exception` field.
+The node will be flagged as "dead" and will try to reconnect, if connectivity is reached, the node will continue to process requests.
+| 10
+
+| `NodeAvailableCheckInterval`
+| If the client detects that a node has gone offline it will check for connectivity at this interval.
+| 1000ms
+
+| `QueryFailedThreshold`
+| Gets or sets the query failed threshold for a Uri before it is flagged as "un-responsive".
+Once flagged as "un-responsive", no requests will be sent to that node until a server re-config has occurred and the Uri is added back into the pool.
+This is so the client will not send requests to a server node which is un-responsive.
+| 2
+
+| `QueryRequestTimeout`
+| Gets or sets the timeout for a N1QL query request; this correlates to the client-side timeout.
+Server-side timeouts are configured per request using the QueryRequest.Timeout  method
+| 75000ms
+
+| `SearchRequestTimeout`
+| Gets or sets the search request timeout.
+| 75000ms
+|===
+
+[#dotnet-bucketconfiguration-settings]
+== BucketConfiguration Settings
+
+These settings apply to a specific bucket and will override any global settings.
+
+.BucketConfiguration Properties
+[cols="50,140,53"]
+|===
+| Name | Description | Default
+
+| `BucketName`
+| The name of the bucket to connect to.
+| "default"
+
+| `UseSsl`
+| Whether or not to use SSL encrypt data being sent to and from the server
+| false
+
+| `Password`
+| The bucket password
+| empty string
+
+| `ObserveInterval`
+| The interval to wait before each Observe attempt
+| 10ms
+
+| `ObserverTimeout`
+| The max amount of time to wait before timing out
+| 500ms
+
+| `PoolConfiguration`
+| The TCP socket pool configuration
+| (see below)
+
+| `DefaultOperationLifespan`
+| The default lifespan for operations of this bucket (i.e.
+maximum time taken by the operation, including processing and in-flight time on the wire).
+Note that in `App.config` this is set via `operationLifespan`
+| 2500ms
+
+| `UseEnhancedDurability`
+| Gets or sets a value indicating whether to use enhanced durability if the Couchbase server version supports it; if it's not supported the client will use Observe for Endure operations.
+| false
+|===
+
+[#dotnet-poolconfiguration-settings]
+== PoolConfiguration Settings
+
+These settings apply to the connection level of a specific bucket configuration and override any bucket or client level settings, if applicable.
+
+.PoolConfiguration Properties
+[cols="153,343,100"]
+|===
+| Name | Description | Default
+
+| `MaxSize`
+| The maximum number of TCP connections to use
+| 2
+
+| `MinSize`
+| The minimum or starting number of TCP connections to use
+| 1
+
+| `WaitTimeout`
+| The amount of time to wait for a TCP connection before timing out after the `MaxSize` has been reached and all connections are being used
+| 2500 ms
+
+| `ShutdownTimeout`
+| The amount of time to wait before the underlying socket closes its connection
+| 10000 ms
+
+| `SendTimeout`
+| The amount of time to allow between an operation being written on the socket and being acknowledged.
+| 15000 ms
+
+| `UseSsl`
+| Whether or not to use SSL encrypt data being sent to and from the server
+| false
+
+| `BufferSize`
+| The size of each buffer to allocate per TCP connection for sending and recieving Memcached operations
+| 16k
+
+| `EnableTcpKeepAlives`
+| Gets or sets a value indicating whether enable TCP keep alives.
+| true
+
+| `TcpKeepAliveTime`
+| Specifies the timeout, in milliseconds, with no activity until the first keep-alive packet is sent.
+| 2hrs
+
+| `TcpKeepAliveInterval`
+| Specifies the interval, in milliseconds, between when successive keep-alive packets are sent if no acknowledgement is received.
+| 1000ms
+
+| `CloseAttemptInterval`
+| Gets or sets the interval between close attempts on a IConnection if it's in use and IConnectionPool has been disposed.
+| 100ms
+
+| `MaxCloseAttempts`
+| Gets or sets the maximum number of times the client will try to close a IConnection if it's in use and IConnectionPool has been disposed.
+| 5
+
+| `UseEnhancedDurability`
+| Gets or sets a value indicating whether to use enhanced durability if the Couchbase server version supports it; if it's not supported the client will use Observe for Endure operations.
+| false
+
+| `ConnectTimeout`
+| The amount time allotted for the client to establish a TCP connection with a server before failing
+| 10000ms
+|===
