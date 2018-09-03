@@ -5,7 +5,7 @@
 [abstract]
 You can perform N1QL queries via the Couchbase .NET client.
 
-NOTE: See Couchbase Developer documentation for a quick intro to xref:5.1@server:architecture:querying-data-with-n1ql.adoc[N1QL].
+NOTE: See Couchbase Developer documentation for a quick intro to xref:n1ql-query.adoc[N1QL].
 
 To issue N1QL queries, you should create a [.api]`QueryRequest` object, and pass it to the [.api]`Query(QueryRequest query)` method in the [.api]`CouchbaseBucket` class.
 A few variants of such a query exist:

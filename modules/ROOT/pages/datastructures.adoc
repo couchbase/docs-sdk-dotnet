@@ -173,7 +173,7 @@ Remove an item from a set, if it exists.
 An exception is not thrown if the item does not exist.
 You can determine if an item existed or not by the return value.
 If the item did not exist beforehand, `None` is returned.
-This operation uses xref:5.1@server:developer-guide:cas-concurrency.adoc[CAS] to ensure the correct item is removed.
+This operation uses xref:6.0@server:developer-guide:cas-concurrency.adoc[CAS] to ensure the correct item is removed.
 
 [source,csharp]
 ----
@@ -204,7 +204,7 @@ You can retrieve items from the middle of the queue by using [.api]`ListGet`
 | [.api]`QueuePop`
 a|
 Remove an item from the end of the queue and return it.
-This operation uses xref:5.1@server:developer-guide:cas-concurrency.adoc[CAS] to ensure no two processs can retrieve the same item.
+This operation uses xref:6.0@server:developer-guide:cas-concurrency.adoc[CAS] to ensure no two processs can retrieve the same item.
 
 [source,csharp]
 ----
@@ -494,7 +494,7 @@ It offers the following operations:
 
 | [.api]`Dequeue()`
 | Removes and returns the object at the beginning of the queue.
-This operation uses xref:5.1@server:developer-guide:cas-concurrency.adoc[CAS] to ensure no two calls gets the same item.
+This operation uses xref:6.0@server:developer-guide:cas-concurrency.adoc[CAS] to ensure no two calls gets the same item.
 
 | [.api]`Enqueue(T item)`
 | Adds an object to the end of the queue.
@@ -518,5 +518,5 @@ Console.WriteLine(item);
 
 == Concurrency
 
-Where appropriate, all of operations on the [.api]`IBucket` level and the implementations in [.api]`Couchbase.Collections` utilise the xref:5.1@server:developer-guide:cas-concurrency.adoc[CAS] (Compare and Swap) value when manipulating data to ensure that two different processes do not manipulate the same data at the same time.
+Where appropriate, all of operations on the [.api]`IBucket` level and the implementations in [.api]`Couchbase.Collections` utilise the xref:6.0@server:developer-guide:cas-concurrency.adoc[CAS] (Compare and Swap) value when manipulating data to ensure that two different processes do not manipulate the same data at the same time.
 For example: when using [.api]`QueuePop`, two threads could not receive the same item.

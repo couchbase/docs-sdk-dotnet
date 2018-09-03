@@ -200,7 +200,7 @@ F4+FjEqAEIr1mQepDaNM0gEfVcgd2SzGhC3yhYFBAH//8W4DUot5ciEhoBs=
 Paste this into notepad running with administrative privileges and then save it to disk with a file extension of *.crt* and a file type of _"All Files"_.
 Then right click on the file and select _"Import Certificate"_, then select _"Local Machine"_, select the "_Trusted Root Certificate Authorities"_ and finally _"Finish"._  Once you have done this, all traffic between the client and the server will be encrypted.
 
-include::5.1@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
+include::6.0@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
 
 DNS SRV bootstrapping is available in the .NET SDK from version 2.3.9.
 In order to make the SDK use the SRV records, you need to create a custom implemention of `IServerResolver` and then use the custom class name in the Couchbase client configuration.
