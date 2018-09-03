@@ -1,0 +1,167 @@
+= Release notes
+:page-topic-type: concept
+
+[abstract]
+Release notes for Couchbase .NET SDK version 2.1, the official SDK for creating applications using Couchbase Server with Microsoft .NET languages.
+
+== Version 2.1.4 (10 August 2015)
+
+Version 2.1.4 (10 August 2015) is the fifth GA release of the Couchbase .NET 2.1 SDK.
+
+List of select JIRA tickets in this release
+
+Improvements:
+
+* [ http://issues.couchbase.com/browse/NCBC-434[NCBC-434^]] - add feature test ensuring that E2BIG is returned on append above 20 MB
+* [ http://issues.couchbase.com/browse/NCBC-949[NCBC-949^]] - Unit test cleanup and refactoring
+* [ http://issues.couchbase.com/browse/NCBC-955[NCBC-955^]] - Add option to affect operation flags with value formatting
+
+Bug fixes:
+
+* [ http://issues.couchbase.com/browse/NCBC-925[NCBC-925^]] - .NET Client 2.1.1 leaks connections when bucket does not exist
+* [ http://issues.couchbase.com/browse/NCBC-934[NCBC-934^]] - GetFromReplica returns null when no replicas exist in the replica list
+* [ http://issues.couchbase.com/browse/NCBC-940[NCBC-940^]] - Client receives "Cluster does not support Data Services" when Cannot Resolve Node Name
+* [ http://issues.couchbase.com/browse/NCBC-941[NCBC-941^]] - N1QL Request Timeout is missing from QueryClient
+* [ http://issues.couchbase.com/browse/NCBC-948[NCBC-948^]] - Corrected errors when running N1QL queries as bare (ad hoc) strings
+* [ http://issues.couchbase.com/browse/NCBC-956[NCBC-956^]] - Fix exception when decoding char type
+* [ http://issues.couchbase.com/browse/NCBC-962[NCBC-962^]] - Queries are not successful after rebalance swap of a query node
+* [ http://issues.couchbase.com/browse/NCBC-968[NCBC-968^]] - NRE when master node cannot be obtained during Observe
+* [ http://issues.couchbase.com/browse/NCBC-970[NCBC-970^]] - Make default view timeout consistent with other SDKs
+* [ http://issues.couchbase.com/browse/NCBC-972[NCBC-972^]] - High latency on async set with persistence to master
+
+== Version 2.1.3 (2 July 2015)
+
+Version 2.1.3 is the fourth GA release of the Couchbase .NET 2.1 SDK.
+
+List of select JIRA tickets in this release
+
+Bug fixes:
+
+* [ http://issues.couchbase.com/browse/NCBC-932[NCBC-932]] - `BodyLength` is zero when receive buffer tries read from it
+
+== Version 2.1.2 (24 June 2015)
+
+Version 2.1.2 is the third GA release of the Couchbase .NET 2.1 SDK.
+
+List of select JIRA tickets in this release
+
+New features:
+
+* [ http://issues.couchbase.com/browse/NCBC-833[NCBC-833]] - Add support for `nodesext` for N1QL service for CB 4.0 Beta
+
+Technical tasks:
+
+* [ http://issues.couchbase.com/browse/NCBC-901[NCBC-901]] - Make `IServer` implementations aware of Services defined by `NodesExt`
+* [ http://issues.couchbase.com/browse/NCBC-902[NCBC-902]] - Make Server selection "service aware"
+* [ http://issues.couchbase.com/browse/NCBC-903[NCBC-903]] - Ensure k/v requests to memcached buckets use data nodes
+* [ http://issues.couchbase.com/browse/NCBC-904[NCBC-904]] - Return correct error or exception when operation is attempted on node that does support service
+* [ http://issues.couchbase.com/browse/NCBC-922[NCBC-922]] - Receiving none(0xffffffff) as response status during failover
+
+Improvements:
+
+* [ http://issues.couchbase.com/browse/NCBC-891[NCBC-891]] - Update `Common.Logging` to version 3.1
+* [ http://issues.couchbase.com/browse/NCBC-899[NCBC-899]] - Change default value of `MaxAcquireIterationCount` and add Delay
+* [ http://issues.couchbase.com/browse/NCBC-919[NCBC-919]] - Global connection pool setting for `app.config`
+
+Bug fixes:
+
+* [ http://issues.couchbase.com/browse/NCBC-823[NCBC-823]] - `IndexOutOfRangeException` during fail over with .NET SDK 2.0
+* [ http://issues.couchbase.com/browse/NCBC-886[NCBC-886]] - Couchbase client returning wrong documents
+* [ http://issues.couchbase.com/browse/NCBC-895[NCBC-895]] - `BufferAllocator` is created per Connection
+* [ http://issues.couchbase.com/browse/NCBC-908[NCBC-908]] - Fix connection leak on Memcached bucket dispose
+* [ http://issues.couchbase.com/browse/NCBC-911[NCBC-911]] - Documentation Bug in `IViewQuery.ConnectionTimeout`
+* [ http://issues.couchbase.com/browse/NCBC-912[NCBC-912]] - Client tries to deserialize memcached body when it is empty
+* [ http://issues.couchbase.com/browse/NCBC-913[NCBC-913]] - SDK incorrectly states down node heartbeat is 1000 seconds
+* [ http://issues.couchbase.com/browse/NCBC-917[NCBC-917]] - Collection modified error during bulk operation
+* [ http://issues.couchbase.com/browse/NCBC-918[NCBC-918]] - Throughput is not restored with `rb2out` on memcached bucket
+* [ http://issues.couchbase.com/browse/NCBC-924[NCBC-924]] - Port defaults to 0 when `NodeExt` is not found in cluster map
+
+== Version 2.1.1 (20 May 2015)
+
+Version 2.1.1 is the second GA release of the Couchbase .NET 2.1 SDK.
+
+List of select JIRA tickets in this release
+
+Technical tasks:
+
+* [ http://issues.couchbase.com/browse/NCBC-893[NCBC-893]] - Ensure `VBucket.GetServer` does not throw AOOR Exceptions
+* [ http://issues.couchbase.com/browse/NCBC-898[NCBC-898]] - Make `NodeUnavailable` and `TemporaryFailures` retriable
+
+Improvements:
+
+* [ http://issues.couchbase.com/browse/NCBC-897[NCBC-897]] - When `SendAsync` returns synchronously call `OnCompleted` manually
+
+Bug fixes:
+
+* [ http://issues.couchbase.com/browse/NCBC-809[NCBC-809]] -         If two threads attempt to open the same bucket at the same time they will both bootstrap
+* [ http://issues.couchbase.com/browse/NCBC-884[NCBC-884]] - Make `Nodes` and `serversList` symmetrical
+* [ http://issues.couchbase.com/browse/NCBC-885[NCBC-885]] - SDK uses `Nodes` instead of `serverList` for VBucket Mapping
+* [ http://issues.couchbase.com/browse/NCBC-887[NCBC-887]] - `TcpKeepAlive` settings on `ClientConfiguration` are not honored
+* [ http://issues.couchbase.com/browse/NCBC-890[NCBC-890]] -         When a node is dropped (server offline for instance) OPS go to near Zero
+* [ http://issues.couchbase.com/browse/NCBC-892[NCBC-892]] - In `ClientConfiguration`, `TcpKeepAliveTime` and `TcpKeepAliveInterval` are switched
+* [ http://issues.couchbase.com/browse/NCBC-896[NCBC-896]] - Support translation between `Hostname` and `IPAddress` in `IPEndpointExtensions.GetServer(hostname)`
+
+== Version 2.1.0 (5 May 2015)
+
+Version 2.1.0 is the first GA release of the Couchbase .NET 2.1 SDK.
+
+List of select JIRA tickets in this release
+
+New features:
+
+* [ http://issues.couchbase.com/browse/NCBC-532[NCBC-532^]] - Provide TAP(async/await) Methods for K/V operations
+* [ http://issues.couchbase.com/browse/NCBC-642[NCBC-642^]] - Use `IOControl` to set heartbeat settings on each TCP connection (2.1.X)
+* [ http://issues.couchbase.com/browse/NCBC-676[NCBC-676^]] - Make JSON Serializer pluggable
+* [ http://issues.couchbase.com/browse/NCBC-790[NCBC-790^]] - `Exists` function missing
+* [ http://issues.couchbase.com/browse/NCBC-822[NCBC-822^]] - Make `Transcoder` and `Converter` pluggable
+* [ http://issues.couchbase.com/browse/NCBC-828[NCBC-828^]] - Provide support for GAT and Touch (sliding expirations)
+
+Technical tasks:
+
+* [ http://issues.couchbase.com/browse/NCBC-874[NCBC-874^]] - Implement Prepend/Append Async Methods on Memcached and Couchbase buckets
+* [ http://issues.couchbase.com/browse/NCBC-875[NCBC-875^]] - Implement `ExistsAsync` on Memcached and Couchbase Buckets
+* [ http://issues.couchbase.com/browse/NCBC-876[NCBC-876^]] - Implement Increment/Decrement Async on Memcached and Couchbase buckets
+* [ http://issues.couchbase.com/browse/NCBC-877[NCBC-877^]] - Implement `UnlockAsync` on Memcached and Couchbase buckets
+* [ http://issues.couchbase.com/browse/NCBC-834[NCBC-834^]] - Implement `InsertAsync` methods and overloads
+* [ http://issues.couchbase.com/browse/NCBC-835[NCBC-835^]] - Implement `UpsertAsync` methods and overloads
+* [ http://issues.couchbase.com/browse/NCBC-836[NCBC-836^]] - Implement `RemoveAsync` methods and overloads
+* [ http://issues.couchbase.com/browse/NCBC-837[NCBC-837^]] - Implement `GetAsync` methods and overloads
+* [ http://issues.couchbase.com/browse/NCBC-838[NCBC-838^]] - Implement `ReplaceAsync` methods and overloads
+* [ http://issues.couchbase.com/browse/NCBC-839[NCBC-839^]] - Implement `ObserveAsync` methods and overloads
+* [ http://issues.couchbase.com/browse/NCBC-840[NCBC-840^]] - Implement `GetFromReplicaAsync` methods and overloads
+* [ http://issues.couchbase.com/browse/NCBC-825[NCBC-825^]] - update documentation after `connectionTimeout` and `operationTimeout` changes
+* [ http://issues.couchbase.com/browse/NCBC-849[NCBC-849^]] - Create read-your-own-write (RYOW) code example for N1QL and bootstrap example for Sherlock DP
+* [ http://issues.couchbase.com/browse/NCBC-861[NCBC-861^]] - Update logging documentation and blog
+
+Improvements:
+
+* [ http://issues.couchbase.com/browse/NCBC-763[NCBC-763^]] -Improve connection management during rebalance, swap, and failover
+* [ http://issues.couchbase.com/browse/NCBC-808[NCBC-808^]] - Ensure Incr/Decr/Append/Prepend retry when a NMV error is returned
+* [ http://issues.couchbase.com/browse/NCBC-814[NCBC-814^]] - Improve throughput during rebalance scenarios
+* [ http://issues.couchbase.com/browse/NCBC-819[NCBC-819^]] - When cluster map contains no vBuckets handle gracefully
+* [ http://issues.couchbase.com/browse/NCBC-831[NCBC-831^]] - Integrate `QueryClient` (prepare specifically) with `IBucket`
+* [ http://issues.couchbase.com/browse/NCBC-832[NCBC-832^]] - Refactor "SendWithRetry" methods into IRequestExecutor
+* [ http://issues.couchbase.com/browse/NCBC-842[NCBC-842^]] - Add overloads for `SendWithRetry` and `SendWithRetryAsync` that take no parametric polymorphism
+* [ http://issues.couchbase.com/browse/NCBC-851[NCBC-851^]] - Refactor KeyObserver.Observe to be truly synchronous
+* [ http://issues.couchbase.com/browse/NCBC-859[NCBC-859^]] - Improve `IRequestExecuter.SendWithRetryAsnc` exception logic
+* [ http://issues.couchbase.com/browse/NCBC-871[NCBC-871^]] - Memcached bucket missing Replace overload for CAS and Expires
+
+Bug fixes:
+
+* [ http://issues.couchbase.com/browse/NCBC-712[NCBC-712^]] - `ArgumentOutOfRangeException` in vBucket class during rebalance
+* [ http://issues.couchbase.com/browse/NCBC-783[NCBC-783^]] - constantly high latency 3 seconds during rebalance in
+* [ http://issues.couchbase.com/browse/NCBC-803[NCBC-803^]] - add raw handling of objects to the documentation
+* [ http://issues.couchbase.com/browse/NCBC-817[NCBC-817^]] - `IBucket.IsSecure` throws ServerUnavailableException when used with IoC (Autofac, etc)
+* [ http://issues.couchbase.com/browse/NCBC-821[NCBC-821^]] - Getting Couchbase .Net SDK picture is very old
+* [ http://issues.couchbase.com/browse/NCBC-843[NCBC-843^]] - SendWithRetryAsync blocks if `Operation.WriteAsync` faults
+* [ http://issues.couchbase.com/browse/NCBC-845[NCBC-845^]] - NMV returned turned to caller during rebalance
+* [ http://issues.couchbase.com/browse/NCBC-846[NCBC-846^]] - In some cases the async methods may never time out
+* [ http://issues.couchbase.com/browse/NCBC-847[NCBC-847^]] - Expiry property is not used
+* [ http://issues.couchbase.com/browse/NCBC-853[NCBC-853^]] - Couchbase Client App.config / Web.config documentation error .NET SDK
+* [ http://issues.couchbase.com/browse/NCBC-856[NCBC-856^]] - `System.AggregateException` at `Couchbase.Core.Buckets.CouchbaseRequestExecuter.SendWithRetryAsync`
+* [ http://issues.couchbase.com/browse/NCBC-862[NCBC-862^]] - Get methods fail when stored value is null or empty
+* [ http://issues.couchbase.com/browse/NCBC-865[NCBC-865^]] - When cluster has no replicas `GetFromReplicaAsync` returns `ResponseStatus.Success`
+* [ http://issues.couchbase.com/browse/NCBC-869[NCBC-869^]] - Cluster.Create Manager throws HTTP 401 Unauthorized ERROR
+* [ http://issues.couchbase.com/browse/NCBC-872[NCBC-872^]] - Integer transcoding from 1.3.10 to 2.0.3 is incorrect
+* [ http://issues.couchbase.com/browse/NCBC-878[NCBC-878^]] - project file "..Tester3.csproj" was not found.
+* [ http://issues.couchbase.com/browse/NCBC-880[NCBC-880^]] - Ensure `MemcachedRequestExecutor` does not throw NRE when operation times out

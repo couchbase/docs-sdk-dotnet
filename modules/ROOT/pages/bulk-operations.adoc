@@ -1,0 +1,93 @@
+= Bulk operations
+:page-topic-type: concept
+
+[abstract]
+Bulk operations allow you to upsert or get a set of keys in parallel.
+
+The `IBucket` interface provides two methods (with many overloads) for updating and retrieving documents based upon a range of IDs or keys.
+Internally the client processes these keys in parallel taking advantage of the computer architecture of the application server and fully utilizing the resources that are available.
+
+These methods are configurable through the overloads that take a `ParallelOptions` object and the `range` parameters.
+Through these parameters you can specify the `MaxDegreeOfParallism`, an optional `CancellationToken`, and the size of the partition you want to be processed per iteration.
+The overload that does not supply these uses the defaults handled internally by the .NET framework.
+
+[#upsert]
+== Upsert
+
+Bulk upsert operations enable you to insert or replace a set of documents.
+The following example creates several documents in a [.api]`Dictionary` object and then inserts them all into the database by using only one [.api]`Upsert()` operation.
+
+[source,csharp]
+----
+     using (var bucket = _cluster.OpenBucket())
+     {
+         var items = new Dictionary<string, dynamic>
+         {
+             {"CouchbaseBucketTests.Test_Multi_Upsert.String", "string"},
+             {"CouchbaseBucketTests.Test_Multi_Upsert.Json", new {Foo = "Bar", Baz = 2}},
+             {"CouchbaseBucketTests.Test_Multi_Upsert.Int", 2},
+             {"CouchbaseBucketTests.Test_Multi_Upsert.Number", 5.8},
+             {"CouchbaseBucketTests.Test_Multi_Upsert.Binary", new[] {0x00, 0x00}}
+         };
+
+         var multiUpsert = bucket.Upsert(items);
+         foreach (var item in multiUpsert)
+         {
+             Assert.IsTrue(item.Value.Success);
+         }
+     }
+----
+
+[#get]
+== Get
+
+Bulk get operations enable to you retrieve a set of documents in parallel.
+The following example puts a set of keys into a `List` object and then retrieves all of the corresponding documents by using only one [.api]`Get()` operation.
+
+[source,csharp]
+----
+    using (var bucket = _cluster.OpenBucket())
+    {
+        var items = new List<string>
+        {
+            "CouchbaseBucketTests.Test_Multi_Upsert.String",
+            "CouchbaseBucketTests.Test_Multi_Upsert.Json",
+            "CouchbaseBucketTests.Test_Multi_Upsert.Int",
+            "CouchbaseBucketTests.Test_Multi_Upsert.Number",
+            "CouchbaseBucketTests.Test_Multi_Upsert.Binary"
+        };
+
+        var multiGet = bucket.Get<dynamic>(items);
+        foreach (var item in multiGet)
+        {
+            Assert.IsTrue(item.Value.Success);
+        }
+    }
+----
+
+== Overloading the parallel options and partition size
+
+Here is an example of using one of the overloads that takes a `ParallelOptions` object and specifies a `range` to partition the requests into two requests per iteration utilizing a maximum of 2 cores:
+
+[source,csharp]
+----
+     using (var bucket = _cluster.OpenBucket("beer-sample"))
+     {
+         var query = bucket.CreateQuery("beer", "brewery_beers");
+         var results = bucket.Query<dynamic>(query);
+
+         var keys = results.
+             Rows.
+             ConvertAll(x => x.id.Value).
+             Cast<string>();
+
+         var multiget = bucket.Get<dynamic>(keys.ToList(), new ParallelOptions
+         {
+             MaxDegreeOfParallelism = 2
+         },
+         2);
+         Assert.AreEqual(results.TotalRows, multiget.Count);
+     }
+----
+
+Note that this is a contrived example and you should use benchmarking and trial and error to determine the optimal parallel setting for your particular environment and use case.

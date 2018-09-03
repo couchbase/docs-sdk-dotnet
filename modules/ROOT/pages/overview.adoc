@@ -1,0 +1,82 @@
+= Overview
+:page-topic-type: concept
+
+[abstract]
+The Couchbase .NET SDK 2.0 is the official .NET client library for Couchbase Server.
+Written entirely in the C# programming language, it targets .NET Framework 4.5 and later and Couchbase Server 2.5 and later.
+
+== Compatibility
+
+To take advantage of all features offered by Couchbase Server, you need to know what version of the SDK provides compatibility for the features you want to use.
+The following matrix shows which versions of the SDK support the major features of each version of Couchbase Server.
+
+.Couchbase Server and SDK Supported Feature Matrix
+|===
+| ^| Server 1.8 ^| Server 2.0 ^| Server 2.5 ^| Server 3.0
+
+5+| *Basic Features*
+
+| K/V Operations
+^| 1.0
+^| 1.0
+^| 1.0/2.0
+^| 1.0/2.0
+
+| View API
+^| -
+^| 1.0
+^| 1.0/2.0
+^| 1.0/2.0
+
+5+| *Advanced Features*
+
+| N1QL API
+^| -
+^| -
+^| -
+^| 2.0
+
+| Document API
+^| -
+^| -
+^| 2.0
+^| 2.0
+
+| Durability Requirements
+^| -
+^| 1.0
+^| 1.0/2.0
+^| 1.0/2.0
+
+| SSL
+^| -
+^| -
+^| -
+^| 2.0
+
+| CRAM MD5 Auth
+^| -
+^| -
+^| -
+^| 2.0
+
+| Bulk Operations
+^| 1.0
+^| 1.0
+^| 1.0/2.0
+^| 1.0/2.0
+
+| CCCP (fast bootstrapping)
+^| -
+^| -
+^| 2.0
+^| 2.0
+
+5+| *Administrative Features*
+
+| Admin API
+^| -
+^| 1.0
+^| 1.0/2.0
+^| 1.0/2.0
+|===

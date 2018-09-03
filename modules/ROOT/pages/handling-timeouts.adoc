@@ -1,0 +1,45 @@
+= Handling timeouts
+:page-topic-type: concept
+
+[abstract]
+The SDK supports configuration options to control the various timeouts that you might want to override so you can fine-tune your applications.
+
+Internally the client uses a set of heuristics and accompanying logic to determine whether or not to retry operations if they fail with a timeout or to return a failure message to the calling application.
+In general, an application should not provide additional logic in the case that a timeout error is returned; however, it’s likely an indication that the application configuration may be in need of tuning or that perhaps a broader system or network level issue might be at play.
+
+== Client timeout configuration
+
+The following timeouts are configurable either through the `App.Config` or `Web.Config` or through the [.api]`ClientConfiguration` object itself:
+
+[cols="129,488,100"]
+|===
+| Name | Description | Default
+
+| `OperationTimeout`
+| The amount of time to wait on a binary operation before timing out
+| 2,500 ms
+
+| `ViewTimeout`
+| The amount of time to wait on a View query before timing out
+| 30,000 ms
+
+| `QueryTimeout`
+| The amount of time to wait on a N1QL query before timing out
+| 30,000 ms
+
+| `WaitTimeout`
+| The amount of time to wait for an available TCP connection before timing out
+| 2,500 ms
+
+| `ObserveTimeout`
+| The amount of time to spend waiting for an Observe operation to meet its durability requirements before timing out
+| 500 ms
+
+| `ShutdownTimeout`
+| The time between when the SDK closes a TCP connection and when it actually shuts down
+| 10,000 ms
+|===
+
+Certain timeouts such as `ViewTimeout` and `QueryTimeout` can also be overridden on a per query basis.
+
+NOTE: In general, the default settings are sufficient for most applications—only after encountering issues should they be adjusted.

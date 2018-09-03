@@ -1,0 +1,48 @@
+= Connecting to buckets
+:page-topic-type: concept
+
+[abstract]
+After you create a `ClientConfiguration`, you can then connect to a cluster by using the `Cluster` class.
+
+To connect to a bucket, create a `Cluster` object and pass the `ClientConfiguration` object as a parameter, as shown in the following example:
+
+[source,csharp]
+----
+  var config = new ClientConfiguration
+  {
+    Servers = new List<Uri>
+    {
+      new Uri("http://192.168.56.101:8091/pools"),
+      new Uri("http://192.168.56.102:8091/pools"),
+      new Uri("http://192.168.56.103:8091/pools"),
+      new Uri("http://192.168.56.104:8091/pools"),
+    }
+  };
+
+  using (var cluster = new Cluster(config))
+  {
+    //open buckets here
+  }
+----
+
+The default constructor allocates a `ClientConnection` internally with the default settings.
+Creating a `ClientConfiguration` object is required only when you want to override the default settings.
+
+Now that we have a `Cluster` object, we can connect to a bucket by calling the [.api]`Cluster.OpenBucket()` method.
+The default [.api]`OpenBucket()` method connects to the default bucket.
+If you want to open a different bucket, use one of the overloads that take a bucket name and password.
+It’s important to note that you do not need to provide a bucket configuration to open another bucket; if one doesn’t exist, the client will clone one from the default configuration.
+
+[source,csharp]
+----
+  using (var cluster = new Cluster(config))
+  {
+      using (var bucket = cluster.OpenBucket())
+      {
+          //use bucket here
+      }
+  }
+----
+
+When you call `OpenBucket()`, internally the client is using the configuration provided to establish the connection between the client and the server.
+The references are maintained by the `Cluster` object; it’s the root object and should be long-lived and reused within your application.

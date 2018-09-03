@@ -1,0 +1,7 @@
+name: dotnet-sdk
+version: '2.1'
+title: ".NET SDK"
+start_page: dotnet-intro.adoc
+nav:
+- modules/ROOT/nav.adoc
+server_version: '4.1'

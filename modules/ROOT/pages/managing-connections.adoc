@@ -1,0 +1,7 @@
+= Managing server connections
+:page-topic-type: concept
+
+[abstract]
+TCP connections are a finite resource and need to managed appropriately for an application to perform to expectations, scale to demand and work reliably.
+
+Through configuration you can adjust the connection pool, change default timeout values, and enable or disable SSL encryption on the client.
