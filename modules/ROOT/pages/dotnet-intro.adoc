@@ -1,10 +1,9 @@
-= .NET SDK 2.1
+= .NET SDK 2.2
 :page-topic-type: concept
 
 [abstract]
 The .NET Couchbase SDK provides a way to store and retrieve your objects to and from a Couchbase cluster.
-
-The .NET Couchbase SDK can be used via a synchronous or asynchronous interface.
+It can be used via a synchronous or asynchronous interface.
 
 Here's a sampling of what you can do with the Couchbase .NET SDK:
 
@@ -31,7 +30,7 @@ After the document has been created, you can store it in the cluster by using th
 bucket.Upsert(doc);
 ----
 
-Upsert is a combination of [.term]_insert_ and [.term]_update_ and will either replace an existing item if it exists, or create it anew if it's not yet present.
+Upsert is a combination of [.term]_insert_ and [.term]_update_ and will either replace an existing item if it exists or create it anew if it's not yet present.
 
 == Retrieving Documents
 

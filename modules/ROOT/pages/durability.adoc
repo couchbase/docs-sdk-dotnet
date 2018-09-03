@@ -1,0 +1,100 @@
+= Durability, CAS, and Lock/Unlock
+:page-topic-type: concept
+
+[abstract]
+Despite our best attempts, network failures, node outages and general maintenance are a part of distributed computing that cannot be completely removed.
+
+Couchbase provides ways of improving the likelihood that an operation or request will succeed.
+In this section, techniques for handling durability and availability will be discussed along with application patterns and techniques for handling these situations.
+
+== Handling failover
+
+When a Couchbase cluster node is failed over, the node is removed from the cluster, and replica data in the other nodes is made available for client requests.
+Typically for maintenance you will remove a node; failing over a node is for the cases when a node is no longer functional.
+
+From an application perspective, your major tools for handling failover scenarios are by specifying durability constraints such as the number of nodes the data must be persisted to and/or replicated to on writes, and by allowing replicas to be checked during a read for data if it cannot be retrieved from the primary node.
+
+For example, if you have a three node cluster, you may wish to set the number of replicas stored to be two and then on your writes providing the `PersistTo` and `ReplicateTo` values as two and two respectively.
+This will ensure that for the write to succeed, the given durability must be achieved by replicating the data to at least two nodes and that the data is persisted on at least two nodes as well.
+This concept is known as [.term]_observe_.
+
+== Enhanced and CAS Durability
+
+In Couchbase server 4.0 there are two ways of providing durability constraints: the older CAS-based approach and the newer [.term]_enhanced durability approach,_ which uses a sequence number to ensure replication and persistence.
+
+The major advantages of using enhanced durability over the CAS-based approach are:
+
+* It is more reliable in highly concurrent situations.
+A modification on a document would return a CAS failure if the document were modified by another user, which has nothing to do with the replicated or persisted state of the document.
+* It is more reliable during failover since it is easy to disambiguate between the document being lost and being in a state of high-concurrency; in other words, observe may give a false positive for failed.
+
+The only drawback to using enhanced durability is that when it is enabled, an extra 16 bytes of data will be added to each operation for tracking its durability.
+Other than that, the performance for both is the same.
+
+[source,csharp]
+----
+       var config = new ClientConfiguration
+       {
+       Servers = new List<Uri> { new Uri(ConfigurationManager.AppSettings["bootstrapUrl"]) },
+           BucketConfigs = new Dictionary<string, BucketConfiguration>
+           {
+               {
+               "default", new BucketConfiguration
+               {
+               UseEnhancedDurability = true
+               }
+               }
+           }
+       };
+               using (var cluster = new Cluster(config))
+       {
+               using (var bucket = cluster.OpenBucket())
+           {
+               bucket.Remove(key);
+               var result = await bucket.InsertAsync(key, "foo", ReplicateTo.Two, PersistTo.Two);
+               Assert.IsTrue(result.Success);
+               Assert.AreEqual(Durability.Satisfied, result.Durability);
+          }
+     }
+----
+
+To enable enhanced durability, you do so by setting the `ClientConfiguration.UseEnhancedDurability` to true and just like with CAS-based, you add `PersistTo` and `ReplicateTo` constraints to each method call.
+The default is for `ClientConfiguration.UseEnhancedDurability` to be false, meaning that CAS-based observe will be used.
+
+== Reading from replicas
+
+For ensuring data can be read in the event of failover, the Couchbase .NET SDK provides a method for performing replica reads: `CouchbaseBucket.GetFromReplica`.
+This method works as a sort of "fallback" if the request for the data on the primary fails.
+To use this method, replicas must be enabled for the cluster.
+
+[source,csharp]
+----
+    using (var cluster = new Cluster(ClientConfigUtil.GetConfiguration()))
+   {
+       using (var bucket = cluster.OpenBucket())
+       {
+           var result = await bucket.GetAsync<string>("foo");
+
+           //check result from primary
+           if (result.Status != ResponseStatus.Success && result.Status != ResponseStatus.KeyNotFound)
+           {
+               //check the replicas
+               result = await bucket.GetFromReplicaAsync<string>("foo");
+           }
+           if (result.Success)
+           {
+               //do something with result
+           }
+       }
+   }
+----
+
+Reading from replicas is an example of the trade-off between consistency and availability; we are fine reading from a replica even if the master copy is not the same.
+In many cases, this is acceptable behavior.
+For example, on a Web site which is content-driven usually the most important thing is ensuring that the user receives content regardless of its revision.
+Additionally, if consistency is important, it can be resolved later perhaps when the user goes through checkout process of an e-commerce application.
+
+== ReplicaNotConfiguredException
+
+If the number of replicas you have configured on the cluster do not match the durability you are requesting (`ReplicateTo`/`PersistTo`), you will get a `ReplicaNotConfiguredException`.
+The solution here is to lower your durability constraints so that they match the server's configuration.

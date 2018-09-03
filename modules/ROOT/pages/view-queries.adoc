@@ -8,7 +8,7 @@ The Couchbase .NET SDK offers access to all features of the Couchbase View API.
 Note that before working with the API, a design document and View must exist on the Couchbase Server you are targeting.
 
 For these examples, we will use the design documents and views that come with the `beer-sample` sample bucket that can be installed directly from the Couchbase Management Console.
-To install the sample buiket, navigate to the console, log in, and click the [.ui]*Settings* tab.
+To install the sample buket, navigate to the console, log in, and click the [.ui]*Settings* tab.
 After you have done this, click [.ui]*Sample Buckets*.
 Under [.ui]*Available Samples*, select the [.ui]*beer-sample* check box.
 Then click [.ui]*Create*.
@@ -71,46 +71,46 @@ For a complete list of `IViewQuery` methods, the parameters they take and their 
 | Name | Description
 
 | `From`
-| Specify the bucket and the design document to query
+| Specify the bucket and the design document to query.
 
 | `Bucket`
-| Specify the bucket to query
+| Specify the bucket to query.
 
 | `DesignDoc`
-| Specify the design document to query
+| Specify the design document to query.
 
 | `View`
-| Specify the view to query
+| Specify the view to query.
 
 | `Skip`
-| The number of records to skip
+| The number of records to skip.
 
 | `Stale`
 | Whether or not to return stale data or force an index: `StaleMode.False` {vbar} `Ok` {vbar} `UpdateAfter`
 
 | `Asc`
-| Sort in ascending order by key
+| Sort in ascending order by key.
 
 | `Desc`
-| Sort in descending order by key
+| Sort in descending order by key.
 
 | `Group`
-| Groups the results from the reduce function into a single row
+| Groups the results from the reduce function into a single row.
 
 | `GroupLevel`
-| Specify the level of grouping to use
+| Specify the level of grouping to use.
 
 | `Limit`
-| The maximum number of rows to return
+| The maximum number of rows to return.
 
 | `Reduce`
-| True to use the reduce method
+| True to use the reduce method.
 
 | `ConnectionTimeout`
-| The number of seconds to wait before timing out a request
+| The number of seconds to wait before timing out a request.
 
 | `RawUri`
-| Returns the internally created HTTP request URL
+| Returns the internally created HTTP request URL.
 |===
 
 The [.api]`IBucket.Query()` method returns an object implementing the `IViewResult<T>` interface.
@@ -125,16 +125,16 @@ The following table lists some of the members of the `IViewResult<T>` interface.
 | The error message returned by the View engine
 
 | `Message`
-| If the query failed as the result of a server error, a message indicating the reason why
+| If the query failed as the result of a server error, a message indicating the reason why.
 
 | `Rows`
-| A List<T> of T, which is the result of the query
+| A List<T> of T, which is the result of the query.
 
 | `Success`
-| true if the query completed successfully
+| true if the query completed successfully.
 
 | `StatusCode`
-| The HTTP status code returned by the server
+| The HTTP status code returned by the server.
 
 | `TotalRows`
 | The total rows available; may not match the exact rows returned if Limit is called.

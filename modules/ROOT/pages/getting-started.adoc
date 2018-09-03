@@ -22,7 +22,7 @@ NuGet is a centralized repository for package authors and consumers, and it also
 
 Using Visual Studio 2012 or later, follow these steps to get started with the Couchbase .NET SDK:
 
-. From the IDE, right-click the project you want to add the dependency to.
+. From the IDE, right-click the project to which you want to add the dependency.
 . In the context menu, click [.ui]*Manage NuGet Packages*.
 The NuGet package manager modal dialog opens.
 . From the Tree View menu on the left, select menu:Online[nuget.org].
@@ -34,7 +34,8 @@ NuGet will pull in all required dependencies and reference them.
 You're ready to start coding!
 
 As an alternative to using the Visual Studio IDE, you can include the binaries by using the Package Manager Console.
-The main advantage of using the Package Manager Console is that the NuGet Dialog by default always installs the latest version of the package published to NuGet.org, however the console allows you to define the version of the package you want to include.
+The main advantage of using the Package Manager Console is that the NuGet Dialog by default always installs the latest version of the package published to NuGet.org.
+However, the console allows you to define the version of the package you want to include.
 For users targeting older builds of the SDK, using the Package Manager Console is the best option.
 
 To use the Package Manager Console to include the SDK in your project:
@@ -52,13 +53,13 @@ Install-Package CouchbaseNetClient
 For example:
 +
 ....
-Install-Package CouchbaseNetClient -Version 2.0.0 -Pre
+Install-Package CouchbaseNetClient -Version 2.0.0-beta -Pre
 ....
 
 == Downloading and referencing the binaries
 
 If you do not want to use NuGet to include the Couchbase .NET SDK in your project, you can download and reference the binaries directly.
-If you chose this route, you’ll also be responsible for including and resolving dependencies used internally by the SDK.
+If you chose this route, you would also be responsible for including and resolving dependencies used internally by the SDK.
 
 To download and reference the binaries directly:
 

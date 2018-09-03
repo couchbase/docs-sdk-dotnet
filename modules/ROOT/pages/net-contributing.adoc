@@ -31,7 +31,7 @@ The steps for doing this are as follows:
 . Navigate to http://review.couchbase.org[^].
 . From the menu at the top right-hand side of the page, select [.ui]*Register*.
 . Use a Google account, a Yahoo account, or any other http://openid.net/get-an-openid/[OpenID^] account to register.
-. After you have signed in you will be prompted to verify your email and provide a user name.
+. After you have signed in you will be prompted to verify your email and provide a username.
 . At the very bottom of the page, click [.ui]*New Contributor Agreement* and follow the directions to sign the CLA.
 . Click [.ui]*Submit Agreement*.
 
@@ -46,7 +46,7 @@ The maintainer of the SDK decides whether to accept or deny the pull request.
 If the maintainer decides to accept the pull request, then they will push the pull request to https://code.google.com/p/gerrit/[Gerrit^], the code review system used internally within Couchbase.
 
 Gerrit uses the concepts of [.term]_change sets_ and [.term]_patch sets_.
-A change set is the submission under review, and a patch set is an amendment to that change set.
+A change set is a submission under review, and a patch set is an amendment to that change set.
 
 After the submission has been pushed to Gerrit, it is reviewed by one or more Couchbase engineers.
 Very likely this will be the maintainer of the SDK.

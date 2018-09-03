@@ -9,7 +9,7 @@ While the client comes with reasonable default configuration settings, sometimes
 The client comes with a set of default values for its configuration.
 For the most part, these defaults are satisfactory for most development and production use.
 However, these values can be modified or overridden as needed to tune the client to specific use-cases and scenarios.
-The client can be configured in one of two ways: programmatically through the `ClientConfiguration` object or through the `App.Config` or `Web.Config`.
+The client can be configured in one of two ways: programmatically through the `ClientConfiguration` object or  the `App.Config` or `Web.Config`.
 You should choose one of the two in order to avoid precedence problems and configuration clashes.
 
 *The ClientConfiguration object*
@@ -208,7 +208,8 @@ The `BucketConfiguration` members and their defaults are as follows:
 | (see below)
 
 | `DefaultOperationLifespan`
-| The default lifespan for operations of this bucket (ie maximum time taken by the operation, including processing and in-flight time on the wire).
+| The default lifespan for operations of this bucket (i.e.
+maximum time taken by the operation, including processing and in-flight time on the wire).
 Note that in `App.config` this is set via `operationLifespan`
 | 2500ms
 |===

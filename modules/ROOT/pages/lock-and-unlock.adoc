@@ -1,0 +1,45 @@
+= Lock and Unlock: pessimistic concurrency
+:page-topic-type: concept
+
+[abstract]
+While CAS on an operation handles optimistic concurrency without requiring explicit locks, pessimistic concurrency can be achieved by using Lock and Unlock.
+Using Lock ensures that no other users can update the key or value if it is locked.
+Unlock removes the lock held on key so that it can be mutated by other users.
+
+== Example: GetWithLock and Unlock
+
+Here is an example of using GetAndLock and Unlock:
+
+[source,csharp]
+----
+    static async Task<bool> UpdatePostWithLockAsync(Post modified)
+    {
+        var bucket = ClusterHelper.GetBucket("default");
+        var success = false;
+
+        //get the original document - if it doesn't exist fail
+        var result = await bucket.GetWithLockAsync<Post>(modified.PostId, TimeSpan.FromSeconds(5));
+        if (result.Success)
+        {
+            //update the original documents fields
+            var original = result.Value;
+            original.Content = modified.Content;
+            original.Author = modified.Author;
+            original.Views = original.Views++;
+
+            //perform the mutation passing in the CAS value
+            var updated = await bucket.UpsertAsync(original.PostId, original, result.Cas);
+            if (updated.Success)
+            {
+                success = true;
+            }
+            await bucket.UnlockAsync(original.PostId, result.Cas);
+        }
+        return success;
+    }
+----
+
+This is roughly equivalent to the optimistic concurrency example.
+First, we get the document and lock it, giving us a 5 second lock to complete the operation.
+Then we update the original document and replace it.
+Finally, we unlock the document using the original CAS value from the GetWithLockAsync call.

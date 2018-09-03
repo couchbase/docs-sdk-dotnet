@@ -30,12 +30,24 @@ Creating a `ClientConfiguration` object is required only when you want to overri
 
 Now that we have a `Cluster` object, we can connect to a bucket by calling the [.api]`Cluster.OpenBucket()` method.
 The default [.api]`OpenBucket()` method connects to the default bucket.
+
 If you want to open a different bucket, use one of the overloads that take a bucket name and password.
+
+----
+using (var cluster = new Cluster(config))
+     {
+        using (var bucket = cluster.OpenBucket("mybucketname", "mypassword"))
+        {
+        //use bucket here
+        }
+     }
+----
+
 It’s important to note that you do not need to provide a bucket configuration to open another bucket; if one doesn’t exist, the client will clone one from the default configuration.
 
 [source,csharp]
 ----
-  using (var cluster = new Cluster(config))
+using (var cluster = new Cluster(config))
   {
       using (var bucket = cluster.OpenBucket())
       {

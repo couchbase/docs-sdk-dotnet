@@ -2,7 +2,9 @@
 :page-topic-type: concept
 
 [abstract]
-Besides the document and atomic operations, Couchbase supports other ways of querying your data: views and N1QL.
+Besides the document and atomic operations, Couchbase supports other ways of querying your data: Views, Geo-Spatial Views and N1QL.
 
 Views allow you to provide secondary and composite indexes and transform results using MapReduce.
-N1QL is the  language for querying documents in Couchbase Server.
+Geo-Spatial Views allow for a query over a geometric range.
+N1QL is the new SQL-like language for querying documents in Couchbase Server.
+Both Geo-Spatial Views and N1QL are new in Couchbase Server 4.0

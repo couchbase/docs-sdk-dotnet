@@ -15,21 +15,26 @@ The following timeouts are configurable either through the `App.Config` or `Web.
 |===
 | Name | Description | Default
 
-| `OperationTimeout`
-| The amount of time to wait on a binary operation before timing out
+| `DefaultOperationLifespan`
+| The amount of time given to a binary operation before timing out.
+This includes retries.
 | 2,500 ms
 
 | `ViewTimeout`
 | The amount of time to wait on a View query before timing out
-| 30,000 ms
+| 70,000 ms
 
 | `QueryTimeout`
 | The amount of time to wait on a N1QL query before timing out
-| 30,000 ms
+| 70,000 ms
 
 | `WaitTimeout`
 | The amount of time to wait for an available TCP connection before timing out
 | 2,500 ms
+
+| `SendTimeout`
+| The amount of time to wait for a pending binary operation before timing out.
+| 15,000 ms
 
 | `ObserveTimeout`
 | The amount of time to spend waiting for an Observe operation to meet its durability requirements before timing out
@@ -43,3 +48,103 @@ The following timeouts are configurable either through the `App.Config` or `Web.
 Certain timeouts such as `ViewTimeout` and `QueryTimeout` can also be overridden on a per query basis.
 
 NOTE: In general, the default settings are sufficient for most applications—only after encountering issues should they be adjusted.
+
+== Handling N1QL query timeouts
+
+N1QL queries allow for both client and server timeout.
+The ClientConfiguration.QueryRequestTimeout is the primary client-side way controlling timeouts with N1QL queries and the default is 70000ms.
+
+[source,csharp]
+----
+				var config = new ClientConfiguration
+				{
+				    QueryRequestTimeout = 100000
+				};
+				using (var bucket = _cluster.OpenBucket(config))
+				{
+				    var queryRequest = new QueryRequest()
+				        .Statement("SELECT * FROM `beer-sample` LIMIT $1")
+				        .AddPositionalParameter(10);
+
+				    var result = await bucket.QueryAsync<dynamic>(queryRequest);
+				    if (result.Success)
+				    {
+				        //do someting with the result
+				    }
+				}
+----
+
+You can also change the server timeout on a per-request basis:
+
+[source,csharp]
+----
+				using (var bucket = _cluster.OpenBucket())
+				{
+				    var queryRequest = new QueryRequest()
+				        .Statement("SELECT * FROM `beer-sample` LIMIT $1")
+				        .AddPositionalParameter(10)
+				        .Timeout(new TimeSpan(0, 0, 0, 0, 5));
+
+				    var result = await bucket.QueryAsync<dynamic>(queryRequest);
+				    if (result.Success)
+				    {
+				        //do someting with the result
+				    }
+				}
+----
+
+This overrides the default server timeout that is zero, which is infinite unless the client timeout defined by ClientConfiguration.QueryRequestTimeout terminates the request.
+In most cases the ClientConfiguration.QueryRequestTimeout is the best choice.
+
+== Handling K/V connection timeouts
+
+For Key/Value operations the two configuration timeouts you will want to tune are WaitTimeout and DefaultOperationLifespan.
+WaitTimeout configures the length of time that a thread will wait for an available connection and DefaultOperationLifespan is the maximum length of time that an operation will be given to run to completion.
+The defaults are generally acceptable for most scenarios, but can be increased to ensure larger messages are sent or when a network is particularly slow.
+
+If an operation cannot be completed with the duration defined by DefaultOperationLifespan, then the IOperationResult associated with the request will have it's Status field set to ResponseStatus.OperationTimeout.
+At this point the application may want to either retry the operation or if it is a read, use a replica read:
+
+[source,csharp]
+----
+				var result = await bucket.GetAsync<dynamic>("somekey");
+				if (result.Status == ResponseStatus.OperationTimeout)
+				{
+				    result = await bucket.GetFromReplicaAsync<dynamic>("somekey");
+				    if (result.Success)
+				    {
+				        //do something
+				    }
+				}
+----
+
+== Handling View connection timeouts
+
+Like N1QL queries, Views offer both a server timeout and a client timeout.
+The ClientConfiguration.ViewRequestTimeout is the client-side way of controlling timeouts and is the suggested pattern.
+The default timeout is 70,000ms.
+
+[source,csharp]
+----
+				var config = new ClientConfiguration
+				{
+				    ViewRequestTimeout = 100000
+				};
+
+				using (var cluster = new Cluster(config))
+				{
+				    using (var bucket = _cluster.OpenBucket())
+				    {
+				        var query = bucket.CreateQuery("beer", "brewery_beers", true);
+				        var result = await bucket.QueryAsync<dynamic>(query);
+				        if(result.Success)
+				        {
+				            //do something with results
+				        }
+				    }
+				}
+----
+
+Note that for high-performance applications, you do not want to create the bucket on every request, but instead globally on application start-up and close it when the application shuts down; this is purely for example.
+
+You can also set the server timeout by using the Query.ConnectionTimeout value, but this is done less frequently and should be equal to the value you set for ClientConfiguration.ViewRequestTimeout.

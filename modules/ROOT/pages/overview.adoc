@@ -12,13 +12,14 @@ The following matrix shows which versions of the SDK support the major features 
 
 .Couchbase Server and SDK Supported Feature Matrix
 |===
-| ^| Server 1.8 ^| Server 2.0 ^| Server 2.5 ^| Server 3.0
+| ^| Server 1.8 ^| Server 2.0 ^| Server 2.5 ^| Server 3.0 ^| Server 4.0
 
-5+| *Basic Features*
+6+| *Basic Features*
 
 | K/V Operations
 ^| 1.0
 ^| 1.0
+^| 1.0/2.0
 ^| 1.0/2.0
 ^| 1.0/2.0
 
@@ -27,18 +28,21 @@ The following matrix shows which versions of the SDK support the major features 
 ^| 1.0
 ^| 1.0/2.0
 ^| 1.0/2.0
+^| 1.0/2.0
 
-5+| *Advanced Features*
+6+| *Advanced Features*
 
 | N1QL API
 ^| -
 ^| -
 ^| -
 ^| 2.0
+^| 2.0
 
 | Document API
 ^| -
 ^| -
+^| 2.0
 ^| 2.0
 ^| 2.0
 
@@ -47,11 +51,13 @@ The following matrix shows which versions of the SDK support the major features 
 ^| 1.0
 ^| 1.0/2.0
 ^| 1.0/2.0
+^| 1.0/2.0
 
 | SSL
 ^| -
 ^| -
 ^| -
+^| 2.0
 ^| 2.0
 
 | CRAM MD5 Auth
@@ -59,10 +65,12 @@ The following matrix shows which versions of the SDK support the major features 
 ^| -
 ^| -
 ^| 2.0
+^| 2.0
 
 | Bulk Operations
 ^| 1.0
 ^| 1.0
+^| 1.0/2.0
 ^| 1.0/2.0
 ^| 1.0/2.0
 
@@ -71,12 +79,23 @@ The following matrix shows which versions of the SDK support the major features 
 ^| -
 ^| 2.0
 ^| 2.0
+^| 2.0
 
-5+| *Administrative Features*
+6+| *Administrative Features*
 
 | Admin API
 ^| -
 ^| 1.0
 ^| 1.0/2.0
 ^| 1.0/2.0
+^| 2.0
 |===
+
+== SSL/TLS Support
+
+The .NET SDK supports the same protocols that Couchbase Server supports, and this is as follows:
+
+* .NET Framework before 4.6: TLS 1.0 or TLS 1.1 (poodle-safe)
+* .NET Framework 4.6 or after: TLS 1.0, TLS 1.1, or TLS 1.2
+* .NET SDK version 1.0 does not support SSL, which was introduced in Version 2.0.
+Therefore, Couchbase Server 2.5 and later support .NET SDK 2.0 and SSL/TLS as explained.

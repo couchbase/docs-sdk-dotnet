@@ -8,7 +8,7 @@ The `IBucket` interface provides two methods (with many overloads) for updating 
 Internally the client processes these keys in parallel taking advantage of the computer architecture of the application server and fully utilizing the resources that are available.
 
 These methods are configurable through the overloads that take a `ParallelOptions` object and the `range` parameters.
-Through these parameters you can specify the `MaxDegreeOfParallism`, an optional `CancellationToken`, and the size of the partition you want to be processed per iteration.
+Through these parameters, you can specify the `MaxDegreeOfParallism`, an optional `CancellationToken`, and the size of the partition you want to be processed per iteration.
 The overload that does not supply these uses the defaults handled internally by the .NET framework.
 
 [#upsert]
@@ -90,4 +90,4 @@ Here is an example of using one of the overloads that takes a `ParallelOptions` 
      }
 ----
 
-Note that this is a contrived example and you should use benchmarking and trial and error to determine the optimal parallel setting for your particular environment and use case.
+Note that this is a contrived example, and you should use benchmarking and trial and error to determine the optimal parallel setting for your particular environment and use case.

@@ -1,5 +1,5 @@
 name: dotnet-sdk
-version: '2.1'
+version: '2.2'
 title: ".NET SDK"
 start_page: dotnet-intro.adoc
 nav:

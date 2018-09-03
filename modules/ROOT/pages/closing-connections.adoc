@@ -4,9 +4,10 @@
 [abstract]
 Both `Cluster` and `IBucket` objects implement the IDisposable pattern and also have finalizers.
 
-Managing the lifetime of the objects `Cluster` and `IBucket` is critical for developing robust, high performance applications.
-In a typical application, you would create a single, static `Cluster` object that would live for the duration of the application or the process’s lifetime—create the `Cluster` object when the application starts and call it’s [.api]`Dispose` method when the application shuts down.
-Depending upon finalization is not suggested, but admissible in certain applications.
+Managing the lifetime of the objects `Cluster` and `IBucket` is critical for developing robust, high-performance applications.
+In a typical application, you would create a single, static `Cluster` object that would live for the duration of the application or the process’s lifetime.
+Create the `Cluster` object when the application starts and call it [.api]`Dispose` method when the application shuts down.
+Depending upon finalization is not suggested, but it is admissible in certain applications.
 
 == Closing the bucket
 
@@ -16,7 +17,9 @@ You can close a bucket and release the internal connections by using one of the 
 * Calling `Dispose` explicitly or implicitly via the `using` statement
 * By calling `Cluster.CloseBucket()` and passing the bucket reference
 
-Using finalization and garbage collection is the least dependable method and relies on a certain amount of nondeterminism because you are relying on the common language runtime (CLR) finalization mechanism; just let the object go out of scope.
+The least dependable method is to use finalization and garbage collection that relies on a certain amount of nondeterminism.
+In that method, you are relying on the common language runtime (CLR) finalization mechanism, which just lets the object go out of scope.
+
 The other methods are preferred because you deterministically control the object's lifetime.
 Here is an example that uses the `Cluster.CloseBucket()` method:
 

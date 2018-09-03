@@ -12,11 +12,11 @@ The default implementation of [.api]``IDocument<T>``is the [.api]`Document<T>` c
 
 | `Id`
 | string
-| The unique identifier for the document
+| The unique identifier for the document.
 
 | `Cas`
 | ulong
-| The compare and swap (CAS) value for enforcing optimistic concurrency
+| The compare and swap (CAS) value for enforcing optimistic concurrency.
 
 | `Expiry`
 | uint
@@ -59,13 +59,13 @@ The following table shows the methods that are available for storing documents i
 | Name | Description
 
 | `Insert`
-| Inserts a document, failing if it already exists
+| Inserts a document, failing if it already exists.
 
 | `Replace`
-| Replaces a document, failing if doesn’t exist
+| Replaces a document, failing if it doesn’t exist.
 
 | `Upsert`
-| Updates a document if it exists, otherwise inserts the document
+| Updates a document if it exists, otherwise inserts the document.
 |===
 
 If the `Cas` or `Expires` value is set, they will be honored for each operation.

@@ -1,0 +1,129 @@
+= Managing Clusters
+:page-topic-type: concept
+
+[abstract]
+The Couchbase .NET SDK provides an API for managing a Couchbase cluster programmatically.
+
+Some of the tasks that you can do with it include:
+
+* Add a node to an existing cluster
+* Remove a node from a cluster
+* Failover a node from a cluster
+* List the buckets in a cluster
+* Add a bucket to a cluster
+* Remove a bucket from a cluster
+* Force a cluster rebalance
+* Get cluster and cluster map information
+
+The major component used for performing cluster management is the ClusterManager class, which is created by a Cluster instance via a factory method.
+Another new class that consolidates the number of calls needed to make a cluster is the ClusterProvisioner class.
+In the following examples we will show how to create a cluster programmatically using this object and perform various administrative operations on the cluster.
+
+== Provisioning the VM's
+
+In order to follow this example, you will need to provision the nodes that will make up the Couchbase cluster.
+These can be any supported OS, but each must have Couchbase Server installed and the basic networking done so that they can communicate to each other over common networking protocols such as TCP and HTTP.
+
+In this example, we will use Vagrant, Puppet and the "vagrants" project found here: https://github.com/couchbaselabs/vagrants to provision a cluster.
+Additional steps for installing Puppet, Vagrant and VirtualBox can be found here: http://nitschinger.at/A-Couchbase-Cluster-in-Minutes-with-Vagrant-and-Puppet
+
+Once the nodes are provisioned, we can continue with the rest of the example.
+
+== Bootstrapping the initial the entry-point (EP) node
+
+Using the IP's of your nodes that have been provisioned, the client can bootstrap to the entry-point or "EP" node.
+This done either through a configuration object or through the App.config or Web.config (for ASP.NET projects).
+In this example we will use a ClientConfiguration object to programmatically create a configuration and bootstrap to the EP node:
+
+[source,csharp]
+----
+    var config = new ClientConfiguration
+    {
+        Servers = new List<Uri>
+        {
+            new Uri("http://192.168.77.101:8091/"),
+            new Uri("http://192.168.77.102:8091/"),
+            new Uri("http://192.168.77.103:8091/"),
+            new Uri("http://192.168.77.104:8091/")
+        }
+    };
+
+    var cluster = new Cluster(config);
+    var provisioner = new ClusterProvisioner(cluster, "Administrator", "password");
+    var results = await provisioner.ProvisionEntryPointAsync();
+    foreach (var res in results.Results)
+    {
+        Console.WriteLine(res.Message);
+    }
+----
+
+In this example, you create a ClientConfiguration and specify the URI's for each of the four nodes you provisioned in the previous step.
+The entry-point node or EP node will be the first node in the list.
+
+You then create a Cluster object passing in the ClientConfiguration and then create a ClusterProvisioner object passing in the Cluster references and the user and password.
+Then we call ProvisionEntryPointAsync() which will create an EP node from the first URI in the Servers list that has a "default" Couchbase (persistent) bucket.
+The password and username will be the administrative password and since we are using the defaults, all three services (data, query, and index) will be enabled.
+Finally we output the results.
+
+== Adding sample buckets
+
+Next you will optionally add two sample buckets: travel-sample and beer-sample.
+
+[source,csharp]
+----
+    var result = await provisioner.ProvisionSampleBucketAsync("beer-sample");
+    Console.WriteLine(result.Message);
+
+    var result = await provisioner.ProvisionSampleBucketAsync("travel-sample");
+    Console.WriteLine(result.Message);
+----
+
+== Provisioning additional buckets
+
+Once again optionally, you may want to add additional buckets.
+In this case we will add a SASL authenticated Couchbase bucket and a MemcachedBucket:
+
+[source,csharp]
+----
+     var result = await provisioner.ProvisionBucketAsync(new BucketSettings
+    {
+        Name = "authenticated",
+        SaslPassword = "secret",
+        AuthType = AuthType.Sasl,
+        BucketType = BucketTypeEnum.Couchbase
+    });
+    Console.WriteLine(result.Message);
+----
+
+The name of the bucket is "authenticated", the password is "secret", and the BucketType is Couchbase, so this will create a persistent bucket.
+
+[source,csharp]
+----
+    var result = await provisioner.ProvisionBucketAsync(new BucketSettings
+    {
+        Name = "memcached",
+        SaslPassword = "",
+        AuthType = AuthType.Sasl,
+        BucketType = BucketTypeEnum.Memcached
+    });
+    Console.WriteLine(result.Message);
+----
+
+The name of the bucket is "memcached" with no password and the BucketType is Memcached, so this will create an in-memory bucket.
+
+== Adding nodes to the cluster
+
+Once you have provisioned and bootstrapped to an EP node, you can add nodes to create a cluster.
+In order to do this, the ClusterProvisioner object created earlier will be used to add the rest of the nodes defined in the ClientConfiguration in the first step (102, 103, and 104).
+
+[source,csharp]
+----
+var results = await provisioner.ProvisionNodesAsync(
+            CouchbaseService.Index,
+            CouchbaseService.KV,
+            CouchbaseService.N1QL);
+----
+
+This will provision the rest of the nodes in the ClientConfiguration.
+If you want finer grained control of which services are enabled on each node, you can you use ProvisionNodeAsync.
+ProvisionNodeAsync provisions a single node.
