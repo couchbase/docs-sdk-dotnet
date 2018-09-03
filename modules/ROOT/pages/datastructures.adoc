@@ -1,0 +1,522 @@
+= Data Structures
+
+[abstract]
+You can use complex data structures such as dictionaries and lists in Couchbase.
+These data structures may be manipulated with basic operations without retrieving and storing the entire document.
+
+Data structures in Couchbase are similar in concept to data structures in C# (.NET):
+
+* *Map* is like .NET `Dictionary<TKey, TValue>`, and is a key-value structure, where a value is accessed by using a key string.
+* *List* is like a .NET `List<TValue>` and is a sequential data structure.
+Values can be placed in the beginning or end of a list, and can be accessed using numeric indexes.
+* *Queue* is like a `IQueue` implementation which offers FIFO (first-in-first-out) semantics, allowing it to be used as a lightweight job queue.
+* *Set* is a wrapper over a `List<TValue>` which provides the ability to handle unique values.
+
+These data structures are stored as JSON documents in Couchbase, and can therefore be accessed using N1QL and normal key-value operations.
+Data structures can also be manipulated using the traditional sub-document and full-document KV APIs.
+
+Using the data structures API may help your application in two ways:
+
+* *Simplicity*: Data structures provide high level operations by which you can deal with documents as if they were container data structures.
+Adding an item to a dictionary is expressed as `MapAdd`, rather than retrieving the entire document, modifying it locally, and then saving it back to the server.
+* *Efficiency*: Data structure operations do not transfer the entire document across the network.
+Only the relevant data is exchanged between client and server, allowing for less network overhead and lower latency.
+
+NOTE: Besides the [.api]`IBucket` level data structure methods, there is a new namespace called [.api]`Couchbase.Collections` which contains implementations of some of the core interfaces in [.api]`System.Collection.Generics` such as [.api]`ISet<TValue>`, [.api]`IList<TValue>`, [.api]`IDictionary<Tkey, TValue>` and a [.api]`CouchbaseQueue` class.
+See section <<couchbase-collections,The Couchbase.Collections Namespace>> below called for more details.
+
+== Creating a Data Structure
+
+Data structures can be created implicitly using the [.opt]`create=True`.
+For example, to add an item to a map, specify the _document ID_ of the map itself (i.e.
+the ID which uniquely identifies the map in the server), the key _within_ the map, and the value to store under the key:
+
+[source,csharp]
+----
+bucket.MapAdd("map_id", "name", "Mark Nunberg", create=True)
+----
+
+Likewise, to create a list, specify the document ID and the value to add:
+
+[source,csharp]
+----
+bucket.ListAppend("list_id", "hello", create=True)
+----
+
+Note that the [.opt]`create=True` will not overwrite an existing document with the same name if it already exists.
+It is therefore always safe to use, unless your application creates data structures independently.
+
+Data structures can be explicitly created and reset using full-document methods, and initialize it with its JSON equivalent.
+To create a new empty list, set, or queue, use `bucket.Upsert("list_id", "[]")`.
+To create an empty map, use `bucket.Upsert("map_id", "{}")`.
+
+== Accessing Data Structures
+
+Data structures can be accessed using their appropriate methods.
+Most data access methods will return an [.api]`ValueResult`-like object with the actual returned value under the [.var]`value` property.
+
+[source,csharp]
+----
+bucket.ListGet<string>(0).Value  # 'hello'
+bucket.MapGet<string>("map_id", "name").Value  # 'mark nunberg'
+----
+
+Native .NET exceptions such as [.api]`IndexOutOfRangeException` will be returned if a given map key or list index is not found within the document.
+If the document itself does not exist, a [.api]`Couchbase.DocumentDoesNotExistException` will be returned instead.
+
+Here is a list of common operations:
+
+.Data Structure Operations
+[cols="25,94"]
+|===
+| |
+
+| [.api]`MapAdd`
+a|
+Add a key to a map.
+
+[source,csharp]
+----
+bucket.MapAdd("map_id", "some_key", "some value")
+----
+
+| [.api]`MapRemove`
+a|
+Remove a key from a map.
+
+[source,csharp]
+----
+bucket.MapRemove("map_id", "some_key")
+----
+
+| [.api]`MapGet`
+a|
+Get an item from a map.
+
+[source,csharp]
+----
+bucket.MapGet<TValue>("map_id", "some_key").Value #=> value
+----
+
+If the key is not found, an [.api]`IndexError` is raised.
+
+| [.api]`ListAppend`
+a|
+Add an item to the _end_ of a list.
+
+[source,csharp]
+----
+bucket.ListAppend("list_id", "some_value")
+----
+
+| [.api]`ListPrepend`
+a|
+Add an item to the _beginning_ of a list.
+
+[source,csharp]
+----
+bucket.ListPrepend("list_id", "some_value")
+----
+
+| [.api]`ListSet`
+a|
+Adds an item to a list at a given index.
+
+[source,csharp]
+----
+bucket.ListSet("list_id", 0, "some_value")
+----
+
+| [.api]`ListRemove`
+a|
+Removes an item from a list at a given index.
+
+[source,csharp]
+----
+bucket.ListRemove("list_id", 0)
+----
+
+| [.api]`ListGet`
+a|
+Get an item from a list by its index.
+
+[source,csharp]
+----
+bucket.ListGet<TValue>("list_id", 0).Value #=> value
+----
+
+If the index is out of range, an [.api]`IndexOutOfRangeException` will be returned.
+Note that you can get the _last_ array element by specifying `-1` as the index.
+
+| [.api]`SetAdd`
+a|
+Add an item to a set, if the item does not yet exist in the set.
+
+[source,csharp]
+----
+bucket.SetAdd("list_id", "some_value")
+----
+
+Note that a _set_ is just a list.
+You can retrieve the entire set by simply using a full-document [.api]`get` operation:
+
+[source,csharp]
+----
+set = bucket.Get("list_id").Value
+----
+
+NOTE: Currently, you can only store primitive values in sets, such as strings, ints, and booleans.
+
+| [.api]`SetRemove`
+a|
+Remove an item from a set, if it exists.
+An exception is not thrown if the item does not exist.
+You can determine if an item existed or not by the return value.
+If the item did not exist beforehand, `None` is returned.
+This operation uses xref:4.6@server:developer-guide:cas-concurrency.adoc[CAS] to ensure the correct item is removed.
+
+[source,csharp]
+----
+bucket.SetRemove("list_id", "some_value")
+----
+
+| [.api]`SetContains`
+a|
+Checks if a value exists in a set.
+
+[source,csharp]
+----
+bucket.SetContains("set_id", "some_value").Value #=> True or False
+----
+
+| [.api]`QueuePush`
+a|
+Add an item to the beginning of the queue.
+
+[source,csharp]
+----
+bucket.QueuePush("a_queue", "job123", create=True)
+----
+
+Note that a queue is just a list.
+You can retrieve items from the middle of the queue by using [.api]`ListGet`
+
+| [.api]`QueuePop`
+a|
+Remove an item from the end queue and return it.
+This operation uses xref:4.6@server:developer-guide:cas-concurrency.adoc[CAS] to ensure no two processs can retrieve the same item.
+
+[source,csharp]
+----
+item = bucket.QueuePop("a_queue").Value #=> 'job123'
+----
+
+If the queue is empty, then a [.api]`couchbase.exceptions.QueueEmpty` error is thrown.
+
+| [.api]`MapSize`, [.api]`ListSize`, [.api]`SetSize`, [.api]`QueueSize`
+a|
+These methods get the length of the data structure.
+For maps, this is the number of key-value pairs inside the map.
+For lists, queues, and sets, this is the number of elements in the structure.
+
+[source,csharp]
+----
+len = bucket.ListSize('a_list').Value #=> 42
+----
+|===
+
+Note that there are only *two* basic types: map and list.
+Types such as _queue_ and _set_ are merely derivatives of _list_.
+
+== Data Structures and Key-Value APIs
+
+Data structures can be accessed using key-value APIs as well.
+In fact, the data structure API is actually a client-side wrapper _around_ the key-value and sub-document API.
+Most of the data structure APIs wrap the sub-document API directly.
+
+NOTE: Because the data structure API is just a wrapper around the various key-value APIs, you are free to switch between them in your code.
+
+[#couchbase-collections]
+== The Couchbase.Collections Namespace
+
+In addition to the [.api]`IBucket` level methods for working with Data Structures, the .NET SDK also has implementations of [.api]`System.Collection.Generic` interfaces for Sets, Lists, Queues and Dictionaries.
+Instead of maintaining in-memory storage, these implementations persist to Couchbase Server as a JSON document as the structure is modified.
+
+NOTE: These classes are idiomatic to the .NET framework and thus are available to the SDK.
+Other SDKs may or may not support equivalents and/or have implementations that are platform idiomatic.
+
+== [.api]`CouchbaseSet<TValue>`
+
+This class is an implementation of [.api]`ISet<TValue>` and represents a set, which is a data structure that can store certain values in any order without duplicates.
+The underlying storage medium is a JSON document with a single array: "[]".
+The CouchbaseSet supports the following operations:
+
+[cols="100,167"]
+|===
+| *Method*
+| *Description*
+
+| [.api]`GetEnumerator`
+| Returns an enumerator that iterates through the collection.
+
+| [.api]`Add(TValue)`
+| Adds a value to the set.
+
+| [.api]`Clear()`
+| Removes all values from the set.
+
+| [.api]`Contains(TValue)`
+| Checks if an items exists within the set.
+
+| [.api]`CopyTo(TArray, startIndex)`
+| Copies the set to another array at a given index.
+
+| [.api]`Remove(TValue)`
+| Removes an item from the set.
+
+| [.api]`Count`
+| Returns the total number of items int the set.
+
+| [.api]`SetEquals(IEnumerable<Tvalue>)`
+| Compares two sets.
+
+| [.api]`Overlaps(IEnumerable<Tvalue>)`
+| Determines whether the current set overlaps with the specified collection.
+
+| [.api]`IsSupersetOf(IEnumerable<TValue>)`
+| Determines whether the current set is a superset of a specified collection.
+
+| [.api]`IsSubsetOf(IEnumerable<TValue> other)`
+| Determines whether a set is a subset of a specified collection.
+
+| [.api]`SymmetricExceptWith(IEnumerable<TValue>)`
+| Modifies the current set so that it contains only elements that are present either in the current set or in the specified collection, but not both.
+
+| [.api]`ExceptWith(IEnumerable<TValue>)`
+| Removes all elements in the specified collection from the current set.
+
+| [.api]`IntersectWith(IEnumerable<TValue>)`
+| Modifies the current set so that it contains only elements that are also in a specified collection.
+
+| [.api]`UnionWith(IEnumerable<TValue>)`
+| Modifies the current set so that it contains all elements that are present in the current set, in the specified collection, or in both.
+|===
+
+Here is an example of using the [.api]`CouchbaseSet`:
+
+[source,csharp]
+----
+public class Poco
+{
+    public string Key { get; set; }
+    public string Name { get; set; }
+    protected bool Equals(Poco other)
+    {
+        return string.Equals(Key, other.Key, StringComparison.OrdinalIgnoreCase);
+    }
+    public override bool Equals(object obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((Poco) obj);
+    }
+    public override int GetHashCode()
+    {
+        return (Key != null ? StringComparer.OrdinalIgnoreCase.GetHashCode(Key) : 0);
+    }
+}
+
+var collection = new CouchbaseSet<Poco>(_bucket, "pocos");
+collection.Add(new Poco { Key = "poco1", Name = "Poco-pica" });
+collection.Remove(new Poco {Key = "poco1", Name = "Poco-pica"});
+
+var exists = collection.Contains(new Poco {Key = "poco1", Name = "Poco-pica"});
+foreach(var poco in collection){ Console.WriteLine(poco);}
+----
+
+The Poco class overrides [.api]`Equals()` and [.api]`GetHashCode()` will be used henceforth in each example.
+
+== CouchbaseDictionary<TKey, TValue>
+
+The [.api]`CouchbaseDictionary` class is an implementation of [.api]`IDictionary<TKey, TValue>` which stores its values as a hash map in a JSON document in Couchbase.
+It supports the following operations:
+
+[cols="50,67"]
+|===
+| *Method*
+| *Description*
+
+| [.api]`Key`
+| Gets the key for this document.
+
+| [.api]`GetEnumerator()`
+| Returns an enumerator that iterates through the collection.
+
+| [.api]`Add(KeyValuePair<TKey, TValue>)`
+| Adds an item to the hash map.
+
+| [.api]`Clear()`
+| Removes all items from the hash map.
+
+| [.api]`Contains(KeyValuePair<TKey, TValue>)`
+| Determines if an item exists within the hash map.
+
+| [.api]`CopyTo(KeyValuePair<TKey, TValue>[], arrayIndex)`
+| Copies the values to an array starting at an index.
+
+| [.api]`Remove(KeyValuePair<TKey, TValue> item)`
+| Removes an item from the hash map.
+
+| [.api]`Count`
+| Returns the total number of items into the hash map.
+
+| [.api]`Add(TKey key, TValue value)`
+| Adds an item to the hash map.
+
+| [.api]`Remove(TKey key)`
+| Removes an item from the hash map.
+
+| [.api]`TryGetValue(TKey key, out TValue value)`
+| Gets a value from the hash map at a given key.
+
+| [.api]`this[TKey key]`
+| Indexer - gets a value from the hash map at a given key.
+
+| Keys[.api]````
+| Get all of the keys in the document.
+
+| [.api]`Values`
+| Get all of the values in the document.
+|===
+
+Here is an example using the CouchbaseDictionary<TKey, TValue>:
+
+[source,csharp]
+----
+var dictionary = new CouchbaseDictionary<string, Poco>(_bucket, key);
+dictionary.Add("somekey1", new Poco { Name = "poco1" });
+dictionary.Add("somekey2", new Poco { Name = "poco2" });
+var removed = dictionary.Remove("somekey2");
+
+foreach(var kv in dictionary)
+{
+    Console.WriteLine("{0}=>{1}", kv.Key, kv.Value);
+}
+----
+
+== CouchbaseList<TValue>
+
+The [.api]`CouchbaseList<TValue>` is an implementation of [.api]`IList<TValue>` and represents a list of items including duplicates.
+It supports the following operations:
+
+[cols="20925,47888"]
+|===
+| *Method*
+| *Description*
+
+| [.api]`Key`
+| Gets the key for this document.
+
+| [.api]`Add(T item)`
+| Adds an item to the list.
+
+| [.api]`GetEnumerator()`
+| Returns an enumerator that iterates through the collection.
+
+| [.api]`Contains(T item)`
+| Determines if an item exists in the list.
+
+| [.api]`Remove(T item)`
+| Removes an item from the list.
+
+| [.api]`IndexOf(T item)`
+| Gets the index of an item in the list.
+
+| [.api]`Insert(int index, T item)`
+| Inserts an item into the list at a given index.
+
+| [.api]`RemoveAt(int index)`
+| Removes an item from the list at a given index.
+
+| [.api]`this[int index]`
+| Indexer - gets an item in the list at a given index.
+
+| [.api]`Get(int index)`
+| Gets an item in the list at a given index.
+
+| [.api]`Clear()`
+| Removes all items from the list.
+
+| [.api]`Count`
+| Returns the total number of items into the list.
+|===
+
+Here is an example using the [.api]`CouchbaseList<TValue>`:
+
+[source,csharp]
+----
+var collection = new CouchbaseList<Poco>(_bucket, "BucketListTests_Test_Enumeration");
+
+var numItems = 5;
+for (var i = 0; i < numItems; i++)
+{
+    collection.Add(new Poco {Key = "poco"+i, Name = "Poco-pica"+i});
+}
+
+foreach (var poco in collection)
+{
+    Console.WriteLine(poco);
+}
+----
+
+== CouchbaseQueue<TValue>
+
+The [.api]`CouchbaseQueue<TValue>` is implementation of a Queue data structure and offers similar functionality to [.api]`System.Collections.Generic.Queue<TValue>`.
+It offers the following operations:
+
+[cols="111,100"]
+|===
+| *Method*
+| *Description*
+
+| [.api]`Key`
+| Gets the key for this document.
+
+| [.api]`GetEnumerator()`
+| Returns an enumerator that iterates through the collection.
+
+| [.api]`Clear()`
+| Removes all items from the queue.
+
+| [.api]`CopyTo(KeyValuePair<TKey, TValue>[], arrayIndex)`
+| Copies the values to an array starting at an index.
+
+| [.api]`Dequeue()`
+| Removes and returns the object at the beginning of the queue.
+This operation uses xref:4.6@server:developer-guide:cas-concurrency.adoc[CAS] to ensure no two calls gets the same item.
+
+| [.api]`Enqueue(T item)`
+| Adds an object to the end of the queue.
+
+| [.api]`Peek()`
+| Returns the object at the beginning of the queue without removing it.
+|===
+
+Here is an example of using the [.api]`CouchbaseQueue<TValue>`:
+
+[source,csharp]
+----
+var queue = new CouchbaseQueue<Poco>(_bucket, key);
+queue.Enqueue(new Poco { Name = "pcoco1" });
+queue.Enqueue(new Poco { Name = "pcoco2" });
+queue.Enqueue(new Poco { Name = "pcoco3" });
+
+var item = queue.Peek();
+Console.WriteLine(item);
+----
+
+== Concurrency
+
+Where appropriate, all of operations on the [.api]`IBucket` level and the implementations in [.api]`Couchbase.Collections` utilise the xref:4.6@server:developer-guide:cas-concurrency.adoc[CAS] (Compare and Swap) value when manipulating data to ensure that two different processes do not manipulate the same data at the same time.
+For example: when using [.api]`QueuePop`, two threads could not receive the same item.

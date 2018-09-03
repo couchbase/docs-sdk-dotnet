@@ -11,7 +11,7 @@ The following sections explain in detail how to get started using each method.
 
 == Installing the Client
 
-At a minimum, Microsoft .NET Framework 4.5 is required, but any newer version is also supported.
+The Couchbase .NET SDK is compatible with both Microsoft .NET Framework 4.5 or and Microsoft .NET Core runtimes.
 Microsoft Visual Studio 2013 or later is assumed in this guide, though you should use 2015 or later if possible.
 Add the Couchbase .NET SDK to your Visual Studio solution using one of the following methods:
 
@@ -78,10 +78,16 @@ To download and reference the binaries directly:
 . Click [.ui]*OK*.
 
 After you have referenced the Couchbase .NET SDK binaries, you need to locate and reference the dependencies it uses in a similar fashion.
-At the time of this writing, the dependencies are:
 
-* Apache Common Infrastructure Libraries for .NET v2.0.0: http://www.apache.org/licenses/LICENSE-2.0[\http://netcommon.sourceforge.net/downloads.html^]
-* Json.NET v6.0.1: https://json.codeplex.com/releases/view/126052[^]
+{empty} .NET Framework dependencies are:
+
+* Apache Common Infrastructure Libraries for .NET v3.3.1: http://net-commons.github.io/common-logging/[^]
+* Json.NET v9.0.1: https://github.com/JamesNK/Newtonsoft.Json/releases[^]
+
+{empty} .NET Core dependencies are:
+
+* Microsoft.Extensions.Logging v1.0.1: https://github.com/aspnet/Logging[^]
+* Json.NET v9.0.1: https://github.com/JamesNK/Newtonsoft.Json/releases[^]
 
 Other versions might not be compatible with the current SDK version.
 
@@ -205,7 +211,7 @@ The full source can be found on https://github.com/couchbaselabs/couchbase-net-e
 
 == API Reference
 
-The API reference is generated for each release and can be found http://docs.couchbase.com/sdk-api/couchbase-net-client-2.3.3/[here^].
+The API reference is generated for each release and can be found http://docs.couchbase.com/sdk-api/couchbase-net-client-2.4.8/[here^].
 
 == Contributing
 

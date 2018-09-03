@@ -4,7 +4,7 @@
 [abstract]
 The Couchbase .NET SDK provides an API for managing a Couchbase cluster programmatically: list, configure and create buckets, get cluster information, manipulate nodes in a cluster\...
 
-include::4.5@sdk:shared:partial$flush-info-pars.adoc[tag=management-intro]
+include::4.6@sdk:shared:partial$flush-info-pars.adoc[tag=management-intro]
 
 The .NET SDK also comes with some convenience functionality for common Couchbase management requests.
 
@@ -71,7 +71,7 @@ clusterManager.RemoveBucket("new_bucket");
 [#flushing]
 == Flushing Buckets
 
-include::4.5@sdk:shared:partial$flush-info-pars.adoc[tag=flush-intro]
+include::4.6@sdk:shared:partial$flush-info-pars.adoc[tag=flush-intro]
 
 You may flush a bucket in the .NET SDK by using the [.api]`BucketManager.Flush()` method:
 
@@ -83,7 +83,7 @@ The [.api]`Flush` operation may fail if the bucket does not have flush enabled, 
 
 == N1QL Index Management
 
-include::4.5@sdk:shared:partial$flush-info-pars.adoc[tag=index-management]
+include::4.6@sdk:shared:partial$flush-info-pars.adoc[tag=index-management]
 
 You can manage indexes in the .NET SDK using the [.api]`BucketManager` class, with its various N1QL related methods: [.api]`ListN1qlIndexes()`, [.api]`+CreateN1qlIndex(...)+`, etc\...
 
@@ -99,7 +99,7 @@ Note that the methods return an [.api]`IResult`, which could represent a failure
 
 == View Management
 
-include::4.5@sdk:shared:partial$flush-info-pars.adoc[tag=view-management]
+include::4.6@sdk:shared:partial$flush-info-pars.adoc[tag=view-management]
 
 In the .NET SDK, design documents are simply represented as a `string`, the JSON representation of the design document.
 All operations on design documents are performed on a `IBucketManager` instance.
@@ -136,7 +136,7 @@ string designDoc = "{"
 bucketManager.InsertDesignDocument("landmarks", designDoc);
 ----
 
-include::4.5@sdk:shared:partial$flush-info-pars.adoc[tag=one-view-update-warning]
+include::4.6@sdk:shared:partial$flush-info-pars.adoc[tag=one-view-update-warning]
 
 To remove a design document from a bucket, pass its name to the `RemoveDesignDocument` method.
 

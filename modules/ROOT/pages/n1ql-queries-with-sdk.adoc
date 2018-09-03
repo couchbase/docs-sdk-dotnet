@@ -5,7 +5,7 @@
 [abstract]
 You can perform N1QL queries via the Couchbase .NET client.
 
-NOTE: See Couchbase Developer documentation for a quick intro to xref:4.5@server:architecture:querying-data-with-n1ql.adoc[N1QL].
+NOTE: See Couchbase Developer documentation for a quick intro to xref:4.6@server:architecture:querying-data-with-n1ql.adoc[N1QL].
 
 To issue N1QL queries, you should create a [.api]`QueryRequest` object, and pass it to the [.api]`Query(QueryRequest query)` method in the [.api]`CouchbaseBucket` class.
 A few variants of such a query exist:
@@ -37,8 +37,8 @@ The identifier can be useful for grouping several queries (for example, in a kin
 You can use N1QL placeholders in the query.
 Placeholders allow you to specify variable constraints for an otherwise constant query.
 There are two variants of placeholders: postional and named parameters.
-Positional parameters use an ordinal placeholder for substitution and named parameters use variables.
-A named or poditional parameter is a placeholder for a value in the WHERE, LIMIT or OFFSET clause of a query.
+Positional parameters use an ordinal placeholder for substitution, while named parameters use variables.
+A named or positional parameter is a placeholder for a value in the WHERE, LIMIT or OFFSET clause of a query.
 Here are examples of using both postional and named parameters:
 
 .N1QL Query with positional and named parameters

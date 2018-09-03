@@ -2,19 +2,22 @@
 :navtitle: Collecting Information
 
 [abstract]
-The .NET SDK uses the Apache Common Infrastructure Libraries for .NET, which provides a common interface for logging adapters.
+The logging infrastructure in the .NET SDK depends on which .NET runtime you're targerting.
+For applications that are targeting .NET Framework 4.5+ the SDK uses the Apache Common Infrastructure Libraries and applications that are targeting .NET Core the SDK uses Microsoft.Extensions.Logging.
+
+== Logging in applications targeting .NET Framework 4.5+
+
+The Apache Common Infrstucture libraries provides a common interface for logging adapters.
 The SDK currently uses version 3.3.1 of Common.Logging.
 
-== Logging
-
 In order to use logging within the SDK, you need to reference the packages for the adapter you want to use.
+There are adapters available for all the major logging implementations.
+More information and a list of available adapters is available on the project website http://net-commons.github.io/common-logging/[here^].
+
 The following steps describe the process for using the Log4Net Adapter with the SDK:
 
 [#steps]
-. Using the NuGet Package Manager in Visual Studio, include the following package in your project: [.path]_Common.Logging.Log4Net1213_
-+
-image::common-logging-log4net1213.jpg[]
-
+. Using the NuGet Package Manager in Visual Studio, include the following package in your project: [.path]_Common.Logging.Log4Net1213_ image:common-logging-log4net1213.jpg[]
 . In your [.path]_App.Config_ or [.path]_Web.Config_, add the following elements between the `<configuration> and </configuration>` tags so that your configuration looks like this:
 +
 [source,xml]
@@ -27,6 +30,7 @@ image::common-logging-log4net1213.jpg[]
     </sectionGroup>
     <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" />
   </configSections>
+
   <common>
     <logging>
       <factoryAdapter type="Common.Logging.Log4Net.Log4NetLoggerFactoryAdapter, Common.Logging.Log4Net1213">
@@ -57,3 +61,116 @@ image::common-logging-log4net1213.jpg[]
 NOTE: This example creates a FileAppender.
 There's a wide variety of possible appenders and configuration options you can customize to your liking.
 For more information regarding customizing your configuration, check out the http://logging.apache.org/log4net/release/manual/configuration.html[Log4Net documentation^].
+
+== Logging in applications targeting .NET Core
+
+As part of the new .NET Core runtime, Microsoft have added a new abstraction interface.
+This is conceptually very similar to the Common.Logging, however it also has additional support built in for ASP.NET 5 and other Microsoft libraries.
+
+To get logging to work within the .NET SDK, you need will need to add a package for the adapter to connect with.
+There are a number of logging implementations based on Microsoft.Extensions.Logging that can be viewed https://github.com/aspnet/Logging[here^].
+There are also some basic Microsoft provided adapters such as Debug, Console and EventLog.
+
+The following instructions show how to get up and running with the NLog adapter with the SDK in an ASP.NET 5 web application using the newer Visual Studio 2017 format:
+
+. Add the following two nuget dependencies: _CouchbaseNetClient_ and _NLog.Web.AspNetCore_.
+. Create a _nlog.config_ in the root of your project and enable copy to output director.
+An example config could look like this:
++
+[source,xml]
+----
+<?xml version="1.0" encoding="utf-8" ?>
+<nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      autoReload="true"
+      internalLogLevel="Warn"
+      internalLogFile="c:\temp\internal-nlog.txt">
+
+	<!-- Load the ASP.NET Core plugin -->
+	<extensions>
+		<add assembly="NLog.Web.AspNetCore"/>
+	</extensions>
+
+	<!-- the targets to write to -->
+	<targets>
+		<!-- write logs to file -->
+		<target xsi:type="File" name="allfile" fileName="c:\temp\nlog-all-${shortdate}.log"
+		        layout="${longdate}|${event-properties:item=EventId.Id}|${logger}|${uppercase:${level}}|${message} ${exception}" />
+
+		<!-- another file log, only own logs. Uses some ASP.NET core renderers -->
+		<target xsi:type="File" name="ownFile-web" fileName="c:\temp\nlog-own-${shortdate}.log"
+		        layout="${longdate}|${event-properties:item=EventId.Id}|${logger}|${uppercase:${level}}|  ${message} ${exception}|url: ${aspnet-request-url}|action: ${aspnet-mvc-action}" />
+
+		<!-- couchbase log file -->
+		<target xsi:type="File" name="couchbase" fileName="c:\temp\couchbase-${shortdate}.log"
+		        layout="${longdate}|${event-properties:item=EventId.Id}|${logger}|${uppercase:${level}}|  ${message} ${exception}" />
+
+		<!-- write to the void aka just remove -->
+		<target xsi:type="Null" name="blackhole" />
+	</targets>
+
+	<!-- rules to map from logger name to target -->
+	<rules>
+		<!--All logs, including from Microsoft-->
+		<logger name="*" minlevel="Trace" writeTo="allfile" />
+
+		<!--Skip Microsoft logs and so log only own logs-->
+		<logger name="Microsoft.*" minlevel="Trace" writeTo="blackhole" final="true" />
+		<logger name="Couchbase.*" minlevel="Trace" writeTo="couchbase" final="true" />
+		<logger name="*" minlevel="Trace" writeTo="ownFile-web" />
+	</rules>
+</nlog>
+----
+
+. in startup.cs update both _Startup_ and _Configure_ methods to look like the following:
++
+[source,csharp]
+----
+public Startup(IHostingEnvironment env)
+{
+    var builder = new ConfigurationBuilder()
+        .SetBasePath(env.ContentRootPath)
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+        .AddEnvironmentVariables();
+    Configuration = builder.Build();
+
+    // register and load NLog config
+    env.ConfigureNLog("nlog.config");
+}
+
+public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+{
+    //add NLog to ASP.NET Core
+    loggerFactory.AddNLog();
+    LogManager.ConfigureLoggerFactory(loggerFactory);
+
+    //add NLog.Web plugin
+    app.AddNLogWeb();
+
+    app.UseMvc();
+}
+----
+
+. Inject a _ILogger_ and write a log using the Microsoft Logger interface, for example:
++
+[source,csharp]
+----
+public class HomeController : Controller
+{
+    private readonly ILogger _logger;
+
+    public HomeController(ILogger logger)
+    {
+        _logger = logger;
+    }
+
+    public IActionResult Index()
+    {
+        _logger.LogInformation("Index page says hello");
+        return View();
+    }
+}
+----
+
+More details on configuring NLog with Microsoft.Extensions.Logging can be found https://github.com/NLog/NLog.Extensions.Logging[here^].
