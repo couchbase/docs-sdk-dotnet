@@ -5,7 +5,7 @@
 [abstract]
 You can perform N1QL queries via the Couchbase .NET client.
 
-NOTE: See Couchbase Developer documentation for a quick intro to xref:4.6@server:architecture:querying-data-with-n1ql.adoc[N1QL].
+NOTE: See Couchbase Developer documentation for a quick intro to xref:5.1@server:architecture:querying-data-with-n1ql.adoc[N1QL].
 
 To issue N1QL queries, you should create a [.api]`QueryRequest` object, and pass it to the [.api]`Query(QueryRequest query)` method in the [.api]`CouchbaseBucket` class.
 A few variants of such a query exist:
@@ -37,7 +37,7 @@ The identifier can be useful for grouping several queries (for example, in a kin
 You can use N1QL placeholders in the query.
 Placeholders allow you to specify variable constraints for an otherwise constant query.
 There are two variants of placeholders: postional and named parameters.
-Positional parameters use an ordinal placeholder for substitution, while named parameters use variables.
+Positional parameters use an ordinal placeholder for substitution and named parameters use variables.
 A named or positional parameter is a placeholder for a value in the WHERE, LIMIT or OFFSET clause of a query.
 Here are examples of using both postional and named parameters:
 
@@ -147,6 +147,17 @@ Within the body of the method, we create a N1QL statement which returns the firs
 Then, using the [.api]`await` keyword, we execute the [.api]`Task<QueryResult>` returned from the `CouchbaseBucket.QueryAsync(…)` method.
 This will push the execution of the query to the (likely) thread pool in a non-blocking manner.
 Finally, we iterate through the rows returned by server in the [.api]`QueryResult` object.
+
+[#at_plus]
+== Scan Consistency
+
+Setting a https://developer.couchbase.com/documentation/server/5.1/architecture/querying-data-with-n1ql.html#story-h2-2[staleness parameter for queries^], with `scan_consistency`, enables a tradeoff between latency and (eventual) consistency.
+A N1QL query using the default *Not Bounded* Scan Consistency will not wait for any indexes to finish updating before running the query and returning results, meaning that results are returned quickly, but the query will not return any documents yet to be indexed.
+
+With Scan Consistency set to *RequestPlus*, all document changes and index updates are processed before the query is run.
+Select this when consistency is always more important than performance.
+For a middle ground, *AtPlus* is a "read your own write" (RYOW) option, which means it just waits for the new documents that you specify to be indexed, rather than an entire index of multiple documents.
+See the xref:scan-consistency-examples.adoc[examples] for how to use *AtPlus* for the best performance balance for many circumstances.
 
 == Streaming Large Result Sets
 

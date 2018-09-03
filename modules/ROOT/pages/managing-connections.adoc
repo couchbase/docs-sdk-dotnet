@@ -13,15 +13,21 @@ Connecting to a bucket is a two-step process: first, a *Cluster* object needs to
 [source,csharp]
 ----
 var cluster = Cluster();
+var credentials = new PasswordAuthenticator("Administrator", "password");
+cluster.Authenticate(credentials);
 var bucket = cluster.OpenBucket("default");
 
 //or alternately
-ClusterHelper.Initialize();
+ClusterHelper.Initialize(new ClientConfiguration(), credentials);
 var bucket = ClusterHelper.GetBucket("default");
 ----
 
 NOTE: The [.api]`ClusterHelper` is a singleton/multiton that makes it easier to manage resources and instances in server runtime environments such as ASP.NET and Owin/Katana.
 A [.api]`ClusterHelper` will make a singleton instance of a [.api]`Cluster` object and configuration and store references to opened [.api]`IBucket` objects that can be reused throughout the lifespan of an application.
+
+NOTE: The [.api]`PasswordAuthenticator` is used for connecting to Couchbase Server 5.0 and greater using RBAC (Role Based Access Control).
+In this case we are using the administrator account, however, *a more secure way to connect is to create a user with minimal privileges and a unique password*.
+If you are connecting to an older server version that does not use RBAC then you would omit the [.api]`PasswordAuthenticator` and instead pass the bucket password into the [.api]`OpenBucket` method.
 
 If no further arguments are applied, this code connects to `localhost` and opens the _default_ bucket.
 While this is suitable for development, you most probably want to connect to a remote cluster and also a different bucket (with a password), to do this you create a [.api]`ClientConfiguration` object can be constructed with a custom configuration:
@@ -36,13 +42,17 @@ var config = new ClientConfiguration {
    }
 };
 
-//create the cluster and open the new bucket
+//create the cluster and pass in the RBAC user
 var cluster = new Cluster(config);
-var bucket = cluster.OpenBucket("mybucket", "mybucketpassword");
+var credentials = new PasswordAuthenticator("Administrator", "password");
+cluster.Authenticate(credentials);
+
+//open the new bucket
+var bucket = cluster.OpenBucket("mybucket");
 
 //or alternately
-ClusterHelper.Initialize(config);
-var bucket = ClusterHelper.GetBucket("mybucket", "mybucketpassword");
+ClusterHelper.Initialize(config, credentials);
+var bucket = ClusterHelper.GetBucket("mybucket");
 ----
 
 The ClientConfiguration object also exposes per bucket configuration settings, for example:
@@ -56,19 +66,20 @@ var config = new ClientConfiguration{
     },
     BucketConfigs = new Dictionary<string, BucketConfiguration> {{
             "mybucket", new BucketConfiguration{
-                BucketName = "mybucket",
-                Password = "mybucketpassword"
+                BucketName = "mybucket"
             }
         }
      }
   };
+//create the authenticator for passing in the user and password for RBAC
+var credentials = new PasswordAuthenticator("Administrator", "password");
 
 //create the cluster and open the new bucket
-var cluster = new Cluster(config);
+var cluster = new Cluster(config, credentials);
 var bucket = cluster.OpenBucket("mybucket");
 
 //or alternately
-ClusterHelper.Initialize(config);
+ClusterHelper.Initialize(config, credentials);
 var bucket = ClusterHelper.GetBucket("mybucket");
 ----
 
@@ -76,7 +87,7 @@ It is very important in a production setup to pass in at least two or three node
 After initial contact is made, the bootstrap list provided by the user is thrown away and replaced with a list provided by the server (which contains all nodes of the cluster).
 
 As an alternative to programmatic configuration, the SDK also supports configuration via config file and soon will support JSON config files.
-Here is an example of an App.Config that is equivalent to the configuration above:
+Here is an example of an App.Config that is equivalent to the configuration above and assumes that you  are connecting to Couchbase Server 5.0 or greater using RBAC:
 
 [source,xml]
 ----
@@ -88,7 +99,7 @@ Here is an example of an App.Config that is equivalent to the configuration abov
     </sectionGroup>
   </configSections>
   <couchbaseClients>
-    <couchbase>
+    <couchbase username="Administrator" password="password">
       <servers>
         <add uri="http://192.168.56.101:8091"></add>
         <add uri="http://192.168.56.102:8091"></add>
@@ -117,8 +128,8 @@ More buckets can be open at the same time if needed:
 
 [source,csharp]
 ----
-var bucket1 = cluster.OpenBucket("bucket1", "password");
-var bucket2 = cluster.OpenBucket("bucket2", "password");
+var bucket1 = cluster.OpenBucket("bucket1");
+var bucket2 = cluster.OpenBucket("bucket2");
 ----
 
 If more than one bucket is open at a time, the underlying internals of the client makes sure to utilize the resources as best as possible, that is sharing sockets, thread pools and so on.
@@ -189,7 +200,7 @@ F4+FjEqAEIr1mQepDaNM0gEfVcgd2SzGhC3yhYFBAH//8W4DUot5ciEhoBs=
 Paste this into notepad running with administrative privileges and then save it to disk with a file extension of *.crt* and a file type of _"All Files"_.
 Then right click on the file and select _"Import Certificate"_, then select _"Local Machine"_, select the "_Trusted Root Certificate Authorities"_ and finally _"Finish"._  Once you have done this, all traffic between the client and the server will be encrypted.
 
-include::4.6@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
+include::5.1@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
 
 DNS SRV bootstrapping is available in the .NET SDK from version 2.3.9.
 In order to make the SDK use the SRV records, you need to create a custom implemention of `IServerResolver` and then use the custom class name in the Couchbase client configuration.

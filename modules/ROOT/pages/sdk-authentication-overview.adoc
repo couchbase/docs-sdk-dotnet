@@ -1,0 +1,114 @@
+= Authentication
+
+[abstract]
+RBAC requires that users pass appropriate _credentials_ to Couchbase Server in order to access cluster-resources.
+The SDK provides enhanced support for the passing of credentials.
+
+include::5.1@sdk:shared:partial$sdk-authentication-overview.adoc[tag=RBAC_and_the_SDK]
+
+include::5.1@sdk:shared:partial$sdk-authentication-overview.adoc[tag=authenticating_with_legacy_sdk_versions]
+
+== Passing Credentials
+
+The most recent versions of the SDK are RBAC-enabled, and provide enhanced support for authentication.
+Code examples for .NET can be found in xref:start-using-sdk.adoc[Getting Started with the SDK], and also as part of the xref:sdk-user-management-example.adoc[Sample Code] provided to demonstrate user management.
+
+[#dotnet_upgrading_to_rbac_sdk_versions]
+== Upgrading to RBAC-Enabled SDK-Versions
+
+The last pre-RBAC version of the .NET SDK was 2.4.2.
+The first RBAC-enabled version was 2.4.4.
+See the SDK link:/server/other-products/release-notes-archives/dotnet-sdk[Release Notes] for more information.
+
+With the most recent versions of the SDK, the legacy authentication interface and the new, optimized authentication interface can both be used: each supports access to buckets on Couchbase Servers whose version is either 5.0 and beyond, or pre-5.0.
+
+== Further Information on RBAC
+
+All aspects of the Couchbase RBAC system are covered in the section xref:5.1@server:security:security-authorization.adoc[Authorization].
+Specifically, for information on:
+
+* Adding _Users_ and assigning _roles_, by means of the Couchbase Web Console, see xref:5.1@server:security:security-rbac-for-admins-and-apps.adoc[Creating and Managing Users with the UI].
+* _Roles_ required for resource-access, and the privileges they entail, see xref:5.1@server:security:concepts-rba-for-apps.adoc[RBAC for Applications].
+* _Resources_ controlled by Couchbase RBAC, see xref:5.1@server:security:security-resources-under-access-control.adoc[Resources Under Access Control].
+
+== Certificate-Based Authentication
+
+Couchbase Server supports the use of X.509 certificates to authenticate clients.
+This allows authenticated users to access specific resources by means of the data service (no other service is currently available to clients through this form of authentication).
+
+The process relies on a certificate authority, for the issuing of certificates that validate identities.
+A certificate includes information such as the name of the entity it identifies, an expiration date, the name of the authority that issued the certificate, and the digital signature of the authority.
+A client attempting to access Couchbase Server can present a certificate to the server, allowing the server to check the validity of the certificate.
+If the certificate is valid, the user under whose identity the client is running, and the roles assigned that user, are verified.
+If the assigned roles are appropriate for the level of access requested to the specified resource, access is granted.
+
+Note that this means that the explicit authentication process otherwise required by Couchbase _Role-Based Access Control_ — whereby, in .NET, username and password are passed by means of the `authenticate` method on the `Cluster` object — is not needed.
+(See xref:start-using-sdk.adoc[Start Using the SDK] for an example of such standard authentication.)
+
+For a more detailed conceptual description of using certificates, see xref:5.1@server:security:security-certs-auth.adoc[Certificate-Based Authentication].
+
+For sample procedures whereby certificates can be generated and deployed, see xref:5.1@server:security:security-x509certsintro.adoc[X.509 for TLS].
+Note that this page includes the steps whereby a Java keystore is created, to enable certificate-based authentication by a Java client; for Windows there are a couple of more steps: you’ll need to generate a Personal Information Exchange (.PFX) file and store that in the Windows cert store.
+
+== Authenticating a .NET Client by Certificate
+
+To authenticate with Couchbase Server by means of a client certificate, you will need a key - although the key can be generated following the instructions  on the xref:5.1@server:security:security-x509certsintro.adoc[X.509 for TLS page], you do not need a Java Key Store.
+
+Once you have generated the `.pem` file, for windows you'll need to use it to create a `.pfx`:
+
+[source,bash]
+----
+openssl pkcs12 -export -in cert.cer -inkey key.pem -out certificate.pfx -certfile CA.cer
+----
+
+The .pfx is then stored in the Windows certificate store of the application server by copying it to that server and then right clicking on the file and selecting "Install Certificate" and following the steps (there are a couple of ways to do this, but this is the simplest).
+
+Once the .pfx is installed, the client configuration will have to be changed to use cert as opposed to the usual Username and Password:
+
+[source,csharp]
+----
+    var config = new ClientConfiguration
+            {
+                UseSsl = true
+            };
+
+            ClientConfiguration.IgnoreRemoteCertificateNameMismatch = true;//ignore for now
+
+            config.BucketConfigs["default"].EnableCertificateAuthentication = true;
+            config.BucketConfigs["default"].CertificateFactory = CertificateFactory.GetCertificatesByPathAndPassword(
+                new PathAndPasswordOptions
+                {
+                    Path = TestContext.CurrentContext.TestDirectory + "\\client.pfx",
+                    Password = "password"
+                });
+            var cluster = new Cluster(config);
+
+            var bucket = cluster.OpenBucket();
+----
+
+== Using a Different Certificate Factory
+
+Note that there is also a way to query the cert store directly by using a different certificate factory:
+
+[source,csharp]
+----
+var config = new ClientConfiguration
+            {
+                UseSsl = true
+            };
+
+            ClientConfiguration.IgnoreRemoteCertificateNameMismatch = true;//ignore for now
+
+            config.BucketConfigs["default"].EnableCertificateAuthentication = true;
+            config.BucketConfigs["default"].CertificateFactory = CertificateFactory.GetCertificatesFromStore(
+                new CertificateStoreOptions
+                {
+                    StoreLocation = StoreLocation.LocalMachine,
+                    StoreName = StoreName.Root,
+                    X509FindType = X509FindType.FindByIssuerName,
+                    FindValue = "MyCompanyIntermediateCA"
+                });
+            var cluster = new Cluster(config);
+
+            var bucket = cluster.OpenBucket();
+----

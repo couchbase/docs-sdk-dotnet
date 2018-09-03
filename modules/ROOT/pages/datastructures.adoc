@@ -23,7 +23,7 @@ Adding an item to a dictionary is expressed as `MapAdd`, rather than retrieving 
 Only the relevant data is exchanged between client and server, allowing for less network overhead and lower latency.
 
 NOTE: Besides the [.api]`IBucket` level data structure methods, there is a new namespace called [.api]`Couchbase.Collections` which contains implementations of some of the core interfaces in [.api]`System.Collection.Generics` such as [.api]`ISet<TValue>`, [.api]`IList<TValue>`, [.api]`IDictionary<Tkey, TValue>` and a [.api]`CouchbaseQueue` class.
-See section <<couchbase-collections,The Couchbase.Collections Namespace>> below called for more details.
+See section <<couchbase-collections,The Couchbase.Collections Namespace>> below for more details.
 
 == Creating a Data Structure
 
@@ -46,14 +46,14 @@ bucket.ListAppend("list_id", "hello", create=True)
 Note that the [.opt]`create=True` will not overwrite an existing document with the same name if it already exists.
 It is therefore always safe to use, unless your application creates data structures independently.
 
-Data structures can be explicitly created and reset using full-document methods, and initialize it with its JSON equivalent.
+Data structures can be explicitly created and reset using full-document methods, and each can be initialized with its JSON equivalent.
 To create a new empty list, set, or queue, use `bucket.Upsert("list_id", "[]")`.
 To create an empty map, use `bucket.Upsert("map_id", "{}")`.
 
 == Accessing Data Structures
 
 Data structures can be accessed using their appropriate methods.
-Most data access methods will return an [.api]`ValueResult`-like object with the actual returned value under the [.var]`value` property.
+Most data access methods will return a [.api]`ValueResult`-like object with the actual returned value under the [.var]`value` property.
 
 [source,csharp]
 ----
@@ -173,7 +173,7 @@ Remove an item from a set, if it exists.
 An exception is not thrown if the item does not exist.
 You can determine if an item existed or not by the return value.
 If the item did not exist beforehand, `None` is returned.
-This operation uses xref:4.6@server:developer-guide:cas-concurrency.adoc[CAS] to ensure the correct item is removed.
+This operation uses xref:5.1@server:developer-guide:cas-concurrency.adoc[CAS] to ensure the correct item is removed.
 
 [source,csharp]
 ----
@@ -203,8 +203,8 @@ You can retrieve items from the middle of the queue by using [.api]`ListGet`
 
 | [.api]`QueuePop`
 a|
-Remove an item from the end queue and return it.
-This operation uses xref:4.6@server:developer-guide:cas-concurrency.adoc[CAS] to ensure no two processs can retrieve the same item.
+Remove an item from the end of the queue and return it.
+This operation uses xref:5.1@server:developer-guide:cas-concurrency.adoc[CAS] to ensure no two processs can retrieve the same item.
 
 [source,csharp]
 ----
@@ -266,7 +266,7 @@ The CouchbaseSet supports the following operations:
 | Removes all values from the set.
 
 | [.api]`Contains(TValue)`
-| Checks if an items exists within the set.
+| Checks if an item exists within the set.
 
 | [.api]`CopyTo(TArray, startIndex)`
 | Copies the set to another array at a given index.
@@ -275,7 +275,7 @@ The CouchbaseSet supports the following operations:
 | Removes an item from the set.
 
 | [.api]`Count`
-| Returns the total number of items int the set.
+| Returns the total number of items in the set.
 
 | [.api]`SetEquals(IEnumerable<Tvalue>)`
 | Compares two sets.
@@ -472,7 +472,7 @@ foreach (var poco in collection)
 
 == CouchbaseQueue<TValue>
 
-The [.api]`CouchbaseQueue<TValue>` is implementation of a Queue data structure and offers similar functionality to [.api]`System.Collections.Generic.Queue<TValue>`.
+The [.api]`CouchbaseQueue<TValue>` is an implementation of a Queue data structure and offers similar functionality to [.api]`System.Collections.Generic.Queue<TValue>`.
 It offers the following operations:
 
 [cols="111,100"]
@@ -494,7 +494,7 @@ It offers the following operations:
 
 | [.api]`Dequeue()`
 | Removes and returns the object at the beginning of the queue.
-This operation uses xref:4.6@server:developer-guide:cas-concurrency.adoc[CAS] to ensure no two calls gets the same item.
+This operation uses xref:5.1@server:developer-guide:cas-concurrency.adoc[CAS] to ensure no two calls gets the same item.
 
 | [.api]`Enqueue(T item)`
 | Adds an object to the end of the queue.
@@ -518,5 +518,5 @@ Console.WriteLine(item);
 
 == Concurrency
 
-Where appropriate, all of operations on the [.api]`IBucket` level and the implementations in [.api]`Couchbase.Collections` utilise the xref:4.6@server:developer-guide:cas-concurrency.adoc[CAS] (Compare and Swap) value when manipulating data to ensure that two different processes do not manipulate the same data at the same time.
+Where appropriate, all of operations on the [.api]`IBucket` level and the implementations in [.api]`Couchbase.Collections` utilise the xref:5.1@server:developer-guide:cas-concurrency.adoc[CAS] (Compare and Swap) value when manipulating data to ensure that two different processes do not manipulate the same data at the same time.
 For example: when using [.api]`QueuePop`, two threads could not receive the same item.
