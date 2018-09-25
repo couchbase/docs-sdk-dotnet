@@ -19,7 +19,7 @@ Add the Couchbase .NET SDK to your Visual Studio solution using one of the follo
 * Downloading and referencing the binaries
 * Building from source yourself
 
-Information on new features, fixes, known issues as well as information on how to install older release versions is link:/server/other-products/release-notes-archives/dotnet-sdk[in the release notes].
+Information on new features, fixes, known issues as well as information on how to install older release versions is  xref:relnotes-dotnet-sdk.adoc[in the release notes].
 
 The following sections explain in detail how to get started using each method.
 
