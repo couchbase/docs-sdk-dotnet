@@ -240,8 +240,8 @@ This includes time for retries.
 | 100,000 ms
 
 | `Expect100Continue`
-| Gets or sets a Boolean value that determines whether 100-Continue behavior is used.
-|
+| Gets or sets a Boolean value that determines whether 100-Continue behavior is used. In some circumstances, changing to true will increase performance. You can use Query Workbench to see how fast the response should be, then change the setting here if,  with `Expect100Continue' set to false, the SDK is considerably slower.
+| false
 
 | `DefaultOperationLifespan`
 | Gets or sets the default maximum time an operation is allowed to take (including processing and in-flight time on the wire).
