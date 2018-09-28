@@ -4,13 +4,11 @@
 
 === Quick Installation Using NuGet
 
-For every release, we package the binaries and store the latest version
+For every release, we currently package the binaries and store the latest version
 in https://www.nuget.org/packages/CouchbaseNetClient/[NuGet]{.xref}.
 If you are not familiar with NuGet, it's the official and most widely
 supported package manager for Microsoft Visual Studio and .NET in
-general. NuGet is a centralized repository for package authors and
-consumers, and it also defines a suite of tools for authoring and
-consuming packages.
+general.
 
 ==== NuGet from Visual Studio
 
