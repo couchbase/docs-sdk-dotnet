@@ -4,27 +4,18 @@
 
 === Quick Installation Using NuGet
 
-For every release, we currently package the binaries and store the latest version
-in https://www.nuget.org/packages/CouchbaseNetClient/[NuGet]{.xref}.
-If you are not familiar with NuGet, it's the official and most widely
-supported package manager for Microsoft Visual Studio and .NET in
-general.
+For every release, we currently package the binaries and store the latest version in https://www.nuget.org/packages/CouchbaseNetClient/[NuGet].
+If you are not familiar with NuGet, it's the official and most widely supported package manager for Microsoft Visual Studio and .NET in general.
 
 ==== NuGet from Visual Studio
 
-Using Visual Studio 2013 or later, follow these steps to get started
-with the Couchbase .NET SDK:
+Using Visual Studio 2013 or later, follow these steps to get started with the Couchbase .NET SDK:
 
-. From the IDE, right-click the project you want to add the dependency
-to.
-. In the context menu, click *Manage NuGet Packages*. The NuGet
-package manager modal dialog opens.
-. From the Tree View menu on the left, select
-*Online > nuget.org*.
-. In the search box at the top right-hand side of the dialog,
-type CouchbaseNetClient and then press enter on your keyboard.
-. In the search results, select the CouchbaseNetClient package and
-then click *Install*.
+. From the IDE, right-click the project you want to add the dependency to.
+. In the context menu, click *Manage NuGet Packages*. The NuGet package manager modal dialog opens.
+. From the Tree View menu on the left, select *Online > nuget.org*.
+. In the search box at the top right-hand side of the dialog, type CouchbaseNetClient and then press enter on your keyboard.
+. In the search results, select the CouchbaseNetClient package and then click *Install*.
 
 ==== NuGet from the Package Manager Console
 
@@ -44,24 +35,17 @@ For example:
 
 === Downloading and referencing the binaries
 
-If you do not want to use NuGet to include the Couchbase .NET SDK in
-your project, you can download and reference the binaries directly. If
-you chose this route, you'll also be responsible for including and
-resolving dependencies used internally by the SDK.
+If you do not want to use NuGet to include the Couchbase .NET SDK in your project, you can download and reference the binaries directly. If you chose this route, you'll also be responsible for including and resolving dependencies used internally by the SDK.
 
 To download and reference the binaries directly:
 
 . Download the version of the SDK you want to install.
-. In Visual Studio, right-click the project you want to include the
-SDK in and then click *Add*.
+. In Visual Studio, right-click the project you want to include the SDK in and then click *Add*.
 . Click *Reference* to open the Reference Manager.
-. On the left side, click *Browse* and select the binaries you
-downloaded.
+. On the left side, click *Browse* and select the binaries you downloaded.
 . Click *OK*.
 
-After you have referenced the Couchbase .NET SDK binaries, you need to
-locate and reference the dependencies it uses in a similar fashion. At
-the time of this writing, the dependencies are:
+After you have referenced the Couchbase .NET SDK binaries, you need to locate and reference the dependencies it uses in a similar fashion. At the time of this writing, the dependencies are:
 
 * Apache Common Infrastructure Libraries for .NET
 v3.3.1: https://www.nuget.org/packages/Common.Logging/3.3.1
@@ -72,14 +56,10 @@ Other versions might not be compatible with the current SDK version.
 
 === Building from source
 
-If none of the other installation options suffice or if you want to
-debug the source or perhaps contribute, building directly from the
-source is the best option for you. All source is located on GitHub.
+If none of the other installation options suffice or if you want to debug the source or perhaps contribute, building directly from the source is the best option for you. All source is located on GitHub.
 
-_**Note:**The software provided via NuGet and S3 are the official
-releases that have been through a rigorous testing process. Code on
-GitHub that is not tagged as an official release is still in
-development._
+_**Note:**The software provided via NuGet and S3 are the official releases that have been through a rigorous testing process. 
+Code on GitHub that is not tagged as an official release is still in development._
 
 To build the .NET SDK from source:
 
@@ -93,13 +73,11 @@ https://github.com/couchbase/couchbase-net-client/fork
 
  git pull origin master
 
-. Navigate to the directory that the source was cloned to and open the
-solution.
+. Navigate to the directory that the source was cloned to and open the solution.
 . Build the solution.
 
-After you have successfully built the source, it's then just a matter of
-referencing the binaries (.DLL files) from your consuming project. _Note
-that you can checkout a specific tag for each release as well._
+After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project. 
+_Note that you can checkout a specific tag for each release as well._
 
 == Version 2.6.2 (10th September 2018)
 
