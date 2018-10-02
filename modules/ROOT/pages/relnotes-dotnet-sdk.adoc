@@ -31,7 +31,7 @@ From the Package Manager Console within your project:
  ** To install a specific version, include the version parameter.
 For example:
 
- Install-Package CouchbaseNetClient -Version 2.4.0
+ Install-Package CouchbaseNetClient -Version 2.7.0
 
 === Downloading and referencing the binaries
 
@@ -78,6 +78,45 @@ https://github.com/couchbase/couchbase-net-client/fork
 
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project. 
 _Note that you can checkout a specific tag for each release as well._
+
+== Version 2.7.0 (2nd October 2018)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.0.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.0[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-1652[NCBC-1652] - Update build scripts to new standard &amp; support non-windows
+* https://issues.couchbase.com/browse/NCBC-1758[NCBC-1758] - Add .gitattributes to normalise end of line formatting
+* https://issues.couchbase.com/browse/NCBC-1762[NCBC-1762] -  Handle HTTP 429 for FTS
+* https://issues.couchbase.com/browse/NCBC-1766[NCBC-1766] - Add support for FTS query retries when memory quota is reached
+* https://issues.couchbase.com/browse/NCBC-1768[NCBC-1768] - Add automatic retries for FTS queries
+* https://issues.couchbase.com/browse/NCBC-1774[NCBC-1774] - Add operation key as span tag
+* https://issues.couchbase.com/browse/NCBC-1779[NCBC-1779] - Add bucket name and config to logging for DEBUG and TRACE
+
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-1661[NCBC-1661] - SvcRestartAll-SUBDOC and  SvcRestart-SUBDOC fail on Ubuntu/Watson
+* https://issues.couchbase.com/browse/NCBC-1694[NCBC-1694] - List, map, etc operations do not create document if missing
+* https://issues.couchbase.com/browse/NCBC-1746[NCBC-1746] - QueryAsync times out after 75 seconds, even with extended timeout values
+* https://issues.couchbase.com/browse/NCBC-1763[NCBC-1763] - Closing cluster can cause exception in OrphanResponseLogger
+* https://issues.couchbase.com/browse/NCBC-1765[NCBC-1765] - Facet term values not being set
+* https://issues.couchbase.com/browse/NCBC-1770[NCBC-1770] - Config requests are using ChildOf relationships on finished spans
+* https://issues.couchbase.com/browse/NCBC-1772[NCBC-1772] - Random is not thread-safe and should be wrapped in lock
+* https://issues.couchbase.com/browse/NCBC-1773[NCBC-1773] - Default span tags are missing if using another Tracer (eg Jeager)
+* https://issues.couchbase.com/browse/NCBC-1777[NCBC-1777] - Don&#39;t dispatch observe requests when both PersistTo and ReplicateTo are Zero for durability requests
+* https://issues.couchbase.com/browse/NCBC-1781[NCBC-1781] - Ensure connection is available only after checking status
+https://issues.couchbase.com/browse/NCBC-1782[NCBC-1782] - Unit test fails because it gets aggregate exception instead of ServiceNotSupported
 
 == Version 2.6.2 (10th September 2018)
 
