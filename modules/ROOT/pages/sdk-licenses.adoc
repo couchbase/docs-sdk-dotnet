@@ -1,1 +1,1 @@
-
+include::dotnet-sdk::page$sdk-licenses.adoc[]
