@@ -1,0 +1,1 @@
+include::dotnet-sdk::page$get-involved.adoc[]
