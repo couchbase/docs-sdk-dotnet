@@ -1,0 +1,110 @@
+= Analytics using the .NET SDK
+:page-topic-type: howto
+:page-edition: Enterprise Edition:
+
+[abstract]
+Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
+
+
+For complex and long-running queries, involving large ad hoc join, set, aggregation, and grouping operations, Couchbase Data Platform introduces the xref:6.0@server:analytics:introduction.adoc[Couchbase Analytics Service (CBAS)].
+After familiarising yourself with our xref:6.0@server:analytics:primer-beer.adoc[introductory primer], in particular creating a dataset and linking it to a bucket to shadow the operational data, try Couchbase Analytics using the .NET SDK.
+
+== Availability
+
+The analytics service is available in Couchbase Data Platform 6.0 and later (developer preview in 5.5). While earlier .NET SDK versions provide some support, we strongly recommend to use at least version 2.7.0, which provides a committed and stable interface for it.
+
+== Usage: Performing a Request
+
+Intentionally, the API for analytics is very similar to the query service one. Right now it is only available on the `Bucket`:
+
+[source,csharp]
+----
+// Perform an Analytics query.
+IAnalyticsResult<T> Query<T>(IAnalyticsRequest analyticsRequest);
+
+// Perform an Analytics query asynchronously.
+Task<IAnalyticsResult<T>> QueryAsync<T>(IAnalyticsRequest analyticsRequest);
+
+// Perform an Analytics query asynchronously with a custom Cancellation Token.
+Task<IAnalyticsResult<T>> QueryAsync<T>(IAnalyticsRequest analyticsRequest, CancellationToken cancellationToken);
+----
+
+The timeout is always propagated to the server, so when a timeout happens on the client side the server can also stop processing the request and save resources.
+
+To perform a query, you need to create an `AnalyticsRequest` that allows parameters to be used which they can either be `positional` or `named`. Here is one example of each:
+
+[source,csharp]
+----
+// Query without parameters
+var query = new AnalyticsRequest("select airportname, country from airports where country = 'France'");
+
+// Query with positional parameter
+var query = new AnalyticsRequest("select airportname, country from airports where country = ?")
+    .AddPositionalParameter("France");
+
+// Query with named parameter
+var query = new AnalyticsRequest("select airportname, country from airports where country = $country")
+    .AddNamedParameter("country", "France");
+----
+
+Additional options are available at query time which can be passed in using the fluent API:
+
+.Analytics Params Reference
+[#csharp-analytics-params-ref]
+|===
+| Name | Builder | Default | Description
+
+| Client Context ID
+| `ClientContextId(String)`
+| Random UUID
+| Sets a context ID that is returned back as part of the result.
+
+| Server Side Timeout
+| `Timeout(TimeSpan)`
+| Analytics timeout set on the client (75s)
+| Customizes the timeout sent to the server. Usually does not have to be set because the client sets it based on the timeout on the operation.
+
+| Pretty
+| `Pretty(boolean)`
+| false
+| If the returned result should be prettified JSON.
+
+| Priority
+| `Priority(boolean)`
+| false
+| If this request should have priority over others.
+
+|===
+
+These params must be sent as part of the query:
+
+[source,csharp]
+----
+var query = new AnalyticsRequest("select airportname, country from airports where country = 'France'")
+    .Priority(true);
+----
+
+== Usage: Handling the Response
+
+Once the request has been executed, results are sent back to the client and it will return an `IAnalyticsResult`:
+
+[source,csharp]
+----
+IAnalyticsResult result = bucket.Query(query);
+----
+
+The result contains all kinds of actual data and metadata which might or might not be set, depending on the query response.  Before attempting to iterate the rows, it is usually a good idea to check if `QueryStatus` is `Success`. Here is an example:
+
+[source,csharp]
+----
+var result = bucket.Query(new AnalyticsRequest("SELECT airportname, country FROM airports WHERE country = 'France' LIMIT 5"));
+if (result.QueryStatus == QueryStatus.Success)
+{
+    foreach (var row in result.Rows)
+    {
+        Console.WriteLine(row);
+    }
+}
+----
+
+Should `QueryStatus` be `Errors`, the specific error can be found in the `Errors` list. Since there might be more than one error, it is a `List<Error>`. Additional metrics can be accessed through the `Metrics` object, such as `ElapsedTime` or the `ResultCount`.
