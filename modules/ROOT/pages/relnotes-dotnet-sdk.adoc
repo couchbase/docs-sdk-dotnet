@@ -88,8 +88,8 @@ http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.1.zip[Dow
 This release has the following known issues:
 
 * https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
-.NETCore SDK N1QL query throws System.PlatformNotSupportedException
-on some .NET Core platforms.  A workaround is available.
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms. 
+ A workaround is available.
 * https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
 Fatal error: unexpected end of JSON input
 
