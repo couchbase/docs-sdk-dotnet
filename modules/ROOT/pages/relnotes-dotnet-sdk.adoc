@@ -79,41 +79,6 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
-== Version 2.7.1 (6th November 2018)
-
-http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.1.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.1[API Reference]
-
-=== Known Issues
-
-This release has the following known issues:
-
-* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
-.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms. 
- A workaround is available.
-* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
-Fatal error: unexpected end of JSON input
-
-=== New Features and Behavioral Changes
-* https://issues.couchbase.com/browse/NCBC-1793[NCBC-1793] - Analytics KV Ingress for .NET
-* https://issues.couchbase.com/browse/NCBC-1794[NCBC-1794] - Analytics Deferred Queries for .NET
-* https://issues.couchbase.com/browse/NCBC-1767[NCBC-1767] - Add support for Analytics async execution mode
-* https://issues.couchbase.com/browse/NCBC-1798[NCBC-1798] - Add Conflict Resolution option when creating a bucket
-
-=== Fixed Issues
-* https://issues.couchbase.com/browse/NCBC-1729[NCBC-1729] - Operation timeout when server(spock) restarts
-* https://issues.couchbase.com/browse/NCBC-1783[NCBC-1783] - ClusterController.ProcessConfig throws System.ArgumentNullException during testing
-* https://issues.couchbase.com/browse/NCBC-1784[NCBC-1784] - ThresholdLoggingTracer throws System.ArgumentNullException during processing
-* https://issues.couchbase.com/browse/NCBC-1785[NCBC-1785] - MultiplexingConnection throws ObjectDisposedException during Send
-* https://issues.couchbase.com/browse/NCBC-1786[NCBC-1786] - 2.7.0 candidate .net async mode - Throughput gradually goes down through the test
-* https://issues.couchbase.com/browse/NCBC-1787[NCBC-1787] - 2.7.0 candidate .net async mode - half the time connection not recovering after 1 node swap rebalance
-* https://issues.couchbase.com/browse/NCBC-1788[NCBC-1788] - 2.7.0 candidate .net async mode - after drop connection and reconnected, sdk does not recover
-* https://issues.couchbase.com/browse/NCBC-1791[NCBC-1791] - Make sure kv service is only enabled if in nodes list
-* https://issues.couchbase.com/browse/NCBC-1792[NCBC-1792] - Fix logging bug where Log4Net cannot log JSON brackets
-* https://issues.couchbase.com/browse/NCBC-1795[NCBC-1795] - throughput does not recover when 2 nodes are in and rebalanced
-* https://issues.couchbase.com/browse/NCBC-1796[NCBC-1796] - Correct typo AddNamedParamter to AddNamedParameter
-* https://issues.couchbase.com/browse/NCBC-1797[NCBC-1797] - Please add missing AnalyticsRequest()
-* https://issues.couchbase.com/browse/NCBC-1803[NCBC-1803] - ConfigMonitor integration test intermittently fails
-
 == Version 2.7.0 (2nd October 2018)
 
 http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.0.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.0[API Reference]
