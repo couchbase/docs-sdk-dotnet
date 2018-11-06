@@ -70,7 +70,7 @@ See the notes there for Support details.
 5+| *Advanced Features*
 
 | Durability Requirements
-4+| Since 1.1
+4+| Since 1.3
 
 | Carrier Publication Configuration
 4+| All Versions
