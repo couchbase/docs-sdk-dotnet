@@ -24,7 +24,8 @@ NOTE: The [.api]`ClusterHelper` is a singleton/multiton that makes it easier to 
 A [.api]`ClusterHelper` will make a singleton instance of a [.api]`Cluster` object and configuration and store references to opened [.api]`IBucket` objects that can be reused throughout the lifespan of an application.
 
 If no further arguments are applied, this code connects to `localhost` and opens the _default_ bucket.
-While this is suitable for development, you most probably want to connect to a remote cluster and also a different bucket (with a password), to do this you create a [.api]`ClientConfiguration` object can be constructed with a custom configuration:
+While this is suitable for development, you most probably want to connect to a remote cluster and also a different bucket. 
+To do this, you create a [.api]`ClientConfiguration` object with a custom configuration:
 
 [source,csharp]
 ----
