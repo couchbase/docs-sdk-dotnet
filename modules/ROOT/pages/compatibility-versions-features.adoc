@@ -134,8 +134,8 @@ See the notes there for Support details.
 
 == .NET Framework Version Compatibility
 
-The Couchbase .NET SDK is compatible with both .NET Framework 4.5 and higher for all SDK versions and .NET Core 1.0 and higher from SDK version 2.4.
-Testing is completed on Windows for .NET 4.5 and .NET Core is tested on Windows, Linux and OSX.
+The Couchbase .NET SDK is compatible with .NET framework 4.5.2 on Windows.
+On both Windows and Ubuntu GNU/Linux, it is tested with .NET Standard 1.5, which supports .NET Core 1.1+, and .NET Standard 2.0, which supports .NET Core 2.0+.
 Other .NET implementations might work but are not tested and are outside of the scope of our technical support organization.
 
 include::6.0@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
