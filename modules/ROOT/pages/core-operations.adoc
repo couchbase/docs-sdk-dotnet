@@ -60,7 +60,7 @@ The update methods differ in behavior in respect to the existing state of the do
 
 Documents can be retrieved using the _get_ operation, and finally removed using the _remove_ operations.
 
-Since Couchbase’s KV store may be thought of as a distributed hashmap or dictionary, the following code samples are explanatory of Couchbase’ update operations in pseudo-code:
+Since Couchbase’s KV store may be thought of as a distributed hashmap or dictionary, the following code samples are explanatory of Couchbase’s update operations in pseudo-code:
 
 [source,csharp]
 ----
@@ -96,7 +96,7 @@ object Get(string docId) {
 }
 ----
 
-You can also use xref:n1ql-query.adoc[N1QL queries] and xref:full-text-search-overview.adoc[Full Text Search] to access documents by means other than their IDs, however these query operations Couchbase eventually translate into primitive key-value operations, and exist as separate services outside the data store.
+You can also use xref:n1ql-query.adoc[N1QL queries] and xref:full-text-search-overview.adoc[Full Text Search] to access documents by means other than their IDs, however these query operations Couchbase eventually translates into primitive key-value operations, and exist as separate services outside the data store.
 
 == Storing and Updating Documents
 
@@ -143,7 +143,7 @@ update `default` SET sale_price = msrp * 0.75 WHERE msrp < 19.95;
 == Retrieving Documents
 
 FASTPATH: This section discusses retrieving documents using their IDs, or primary keys.
-Documents can also be accessed using secondary lookups via xref:n1ql-query.adoc[N1QL queries] and MapReduce.
+Documents can also be accessed using secondary lookups via xref:n1ql-query.adoc[N1QL queries] and xref:view-queries-with-sdk.adoc[MapReduce].
 Primary key lookups are performed using the key-value API, which simplifies use and increases performance (as applications may interact with the KV store directly, rather than a secondary index or query processor).
 
 In Couchbase, documents are stored with their IDs.
@@ -203,7 +203,7 @@ The same is the case for `Decrement()`.
 
 A document may be used as a counter if its value is a simple ASCII number, like `42`.
 Couchbase allows you to increment and decrement these values atomically using a special [.api]`Increment` operation.
-The example below (in C#) shows how to use counters:
+The example below shows how to use counters:
 
 [source,csharp]
 ----
@@ -250,9 +250,7 @@ You can also use xref:subdocument-operations.adoc#ul_fp2_2yw_mv[sub-document cou
 
 You can use collection data structures such as lists, maps, sets and queues in Couchbase.
 These data structures may be manipulated with basic operations without retrieving and storing the entire document.
-
-See the data structures xref:dotnet-sdk::datastructures.adoc[documentation for each SDK language] for details on implementation.
-Some C# examples are provided below for easy reference, but more advanced Collections frameworks are accessible in xref:java-sdk::datastructures.adoc[Java] and xref:dotnet-sdk::datastructures.adoc[.NET] as well.
+See the xref:datastructures.adoc[data structures documentation] for details on implementation.
 
 Data structures in Couchbase are similar in concept to data structures in, for example, C#:
 
