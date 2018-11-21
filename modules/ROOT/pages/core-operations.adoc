@@ -133,7 +133,7 @@ bucket.MutateIn<dynamic>("docid").ArrayAddUnique("tags", "fast").Execute();
 
 or xref:{version-server}@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
 
-[source,sql]
+[source,n1ql]
 ----
 update `default` SET sale_price = msrp * 0.75 WHERE msrp < 19.95;
 ----
