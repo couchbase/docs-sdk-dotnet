@@ -189,7 +189,7 @@ bucket.MutateIn<dynamic>("my_array").
             Execute();
 ----
 
-If you wish to create an array if it does not exist and also push elements to it within the same operation you may use the<< subdoc-create-parents,_create-parents_>> option:
+If you wish to create an array if it does not exist and also push elements to it within the same operation you may use the <<subdoc-create-parents,_create-parents_>> option:
 
 [source,csharp]
 ----
