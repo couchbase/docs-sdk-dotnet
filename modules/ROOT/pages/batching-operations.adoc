@@ -1,1 +1,194 @@
-include::6.0@sdk:pages:partial$batching-operations.adoc[]
+= Batching Operations
+:page-topic-type: concept
+include::partial$attributes.adoc[]
+
+// tag::intro[]
+[abstract]
+Batching operations allows you to make better utilization of your network and speed up your application by increasing network throughput and reducing latency.
+Batched operations work by _pipelining_ requests over the network.
+When requests are pipelined, they are sent in one large group to the cluster.
+The cluster in turn _pipelines_ responses back to the client.
+When operations are batched, there are fewer IP packets to be sent over the network (since there are fewer individual TCP segments).
+
+You can batch operations via the Couchbase SDK.
+Batching operations is done either via explicit _multi_ methods, or by scheduling multiple operations in sequence.
+
+NOTE: The availability of _multi_ APIs or the ability to explicitly schedule and wait for operations is dependent on language and SDK features.
+Refer to the SDK documentation for more specifics.
+
+// end::intro[]
+
+// tag::async[]
+
+== Asynchronous batching
+
+Asynchronous clients inherently batch operations: because the application receives the response at a later stage in the application, it may attain batching via issuing many requests in sequence.
+When using an SDK in an asynchronous (non-blocking) model, all requests are inherently batched.
+
+// end::async[]
+
+// tag::perf[]
+
+== Performance benefits
+
+IP packets and TCP segments carry their own overhead, so no matter how small the contents, there is still a 20 byte overhead for IP, a 10 byte overhead for TCP, and a 26 byte overhead for Ethernet for each TCP packet; making the total overhead for each request close to 60 bytes.
+When multiple requests are batched into a single IP header or TCP segment, the IP/TCP overhead is incurred only when a new TCP segment (or IP packet) is actually needed to accommodate more requests.
+
+Reducing the number of packets is also more efficient for the CPU, as it requires fewer system calls to send/receive data over the network: Since the data is in a single buffer, it can be sent at once using a single system call and its responses received with a single system call.
+When using non-batched operations, each request and response will need to make its own system call.
+
+Due to Couchbase’s distributed architecture, multi-item access may result in multiple servers being contacted.
+For instance, when accessing 15 items on a 4 node cluster, roughly 3 items will exist on each node.
+When operations are batched, the SDK can efficiently parallelize requests to each involved server, allowing all items to be access quicker.
+On a per-server basis, batching requests allows each individual node to fetch relevant items in parallel from its memory.
+
+// end::perf[]
+
+// tag::err[]
+
+== Error handling
+
+Operation batching is done purely on the _client_ and _network_.
+Couchbase does not have a concept of _transactional_ batched operations - in which all operations either succeed or fail.
+As such, some operations may succeed and some may fail when batching commands.
+
+Consult your SDK documentation on how to distinguish successes and failures in batched operation.
+
+// end::err[]
+
+// tag::guide[]
+
+== Batching guidelines
+
+Batching improves network utilization.
+However there is a batching threshold at which the maximum network efficiency is gained - and batching beyond this amount will simply increase memory and CPU usage on the client, and in some cases cause operations to prematurely time-out or otherwise fail.
+
+As a guideline, applications should batch no more than 1MB before sending to the server.
+Calculating the 1 MB value is dependent on the length of the key and value (where applicable) of each operation.
+
+Note that this is just a guideline.
+The limit may be higher for extremely efficient networks (such as 10-gigabit Ethernet).
+It is recommended you benchmark your network to get ideal performance numbers.
+The limit may be lower for congested networks or slow server nodes (for example, a shared development VM with low resources).
+
+The [cbc-pillowfight] utility may be used to appropriately determine the correct batch size for a cluster.
+
+When calculating the batch size, also consider that each operation has a 24 byte overhead at the protocol level:
+
+// end::guide[]
+
+// tag::size[]
+
+== Sizing batches: examples
+
+When storing items, with each key being approximately 10 bytes long and each value being approximately 4000 bytes long, estimate the following:
+
+. Calculate Bytes per operation:
+ ** 10 (Key)
+ ** 4000 (Value)
+ ** 24 (Memcached Packet)
+ ** Total: 4034.
+. Divide 1 megabyte by the total size of an operation:
+ ** 1048576 / 4034
+ ** Batch Size: 259
+
+The 24 byte overhead becomes more evident when dealing with smaller values.
+Assuming an average key size of 5 and an average value size of 50:
+
+. Calculate bytes per operation:
+ ** 5 (Key)
+ ** 50 (value)
+ ** 24 (Packet)
+ ** Total: 74
+. Divide 1 megabyte by the total size of an operation:
+ ** Batch Size: 14169
+
+// end::size[]
+
+// tag::csharp[]
+
+== Batching operations using SDK
+
+There are a number options for doing batching in C#; the important part is breaking the operations into smaller batches and optimizing for your unique environment. 
+
+The following example is written in C# that uses TPL dataflow to send batches to the server:
+
+[source,csharp]
+----
+public async Task SendBatch<T>(int batchSize, IList<IDocument<T>> items)
+{
+    var batcher = new TransformBlock<IDocument<T>, IDocumentResult<T>>(
+        doc => Bucket.UpsertAsync(doc),
+        new ExecutionDataflowBlockOptions
+        {
+            MaxDegreeOfParallelism = batchSize
+        });
+
+    var buffer = new BufferBlock<IDocumentResult<T>>();
+    batcher.LinkTo(buffer);
+
+    foreach (var document in items)
+    {
+        batcher.Post(document);
+    }
+
+    batcher.Complete();
+    await batcher.Completion.ConfigureAwait(false);
+
+    if (buffer.TryReceiveAll(out var results))
+    {
+        foreach (var documentResult in results)
+        {
+            if (documentResult.Success == false)
+            {
+                Console.WriteLine(documentResult.Status);
+            }
+        }
+    }
+}
+----
+
+Here is another example using Linq to split the larger set into smaller sets:
+
+[source,csharp]
+----
+public async Task SendBatch<T>(int batchSize, IList<IDocument<T>> items)
+{
+    for (var i = 0; i < items.Count; i += batchSize)
+    {
+        var batch = items.Skip(i).Take(batchSize).Select(x=>Bucket.UpsertAsync(x)); 
+        var results = await Task.WhenAll(batch).ConfigureAwait(false);
+
+        foreach (var documentResult in results)
+        {
+            if (documentResult.Success == false)
+            {
+                Console.WriteLine(documentResult.Status);
+            }
+        }
+    }
+}
+----
+
+The Couchbase .NET SDK also has batch overloads that can be used for batching once you have a split the larger set into subsets:
+
+[source,csharp]
+----
+public async Task SendBatch<T>(int batchSize, IList<IDocument<T>> items)
+{
+    for (var i = 0; i < items.Count; i += batchSize)
+    {
+        var batch = items.Skip(i).Take(batchSize).Select(x=>x).ToList();
+        var results = await Bucket.UpsertAsync(batch).ConfigureAwait(false);
+
+        foreach (var documentResult in results)
+        {
+            if (documentResult.Success == false)
+            {
+                Console.WriteLine(documentResult.Status);
+            }
+        }
+    }
+}
+----
+// tag::csharp[]
