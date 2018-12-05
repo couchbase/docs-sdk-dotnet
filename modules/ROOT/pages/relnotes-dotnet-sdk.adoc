@@ -79,6 +79,29 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 2.7.2 (4th December 2018)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.2.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.2[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+
+=== New Features and Behavioral Changes
+* https://issues.couchbase.com/browse/NCBC-1668[NCBC-1668] - Manage Couchbase.Tests and Couchbase.Tests.Management on non-windows
+* https://issues.couchbase.com/browse/NCBC-1719[NCBC-1719] - Remove Operation Timing from QueryClient
+
+=== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-1804[NCBC-1804] - Some unit tests fail because of white encoding on Linux / OSX
+* https://issues.couchbase.com/browse/NCBC-1808[NCBC-1808] - Don&#39;t overwrite NodeExt&#39;s KV port with Node&#39;s
+* https://issues.couchbase.com/browse/NCBC-1806[NCBC-1806] - Fix SDK build warnings
+
 == Version 2.7.1 (6th November 2018)
 
 http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.1.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.1[API Reference]
