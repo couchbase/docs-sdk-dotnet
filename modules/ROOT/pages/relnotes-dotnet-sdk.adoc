@@ -96,9 +96,6 @@ Fatal error: unexpected end of JSON input
 === New Features and Behavioral Changes
 * https://issues.couchbase.com/browse/NCBC-1668[NCBC-1668] - Manage Couchbase.Tests and Couchbase.Tests.Management on non-windows
 * https://issues.couchbase.com/browse/NCBC-1719[NCBC-1719] - Remove Operation Timing from QueryClient
-* https://issues.couchbase.com/browse/NCBC-1805[NCBC-1805] - Code examples for core-operations.html
-* https://issues.couchbase.com/browse/NCBC-1807[NCBC-1807] - Subdoc examples
-* https://issues.couchbase.com/browse/NCBC-1809[NCBC-1809] - Translating Python Batching example to C#
 
 === Fixed Issues
 * https://issues.couchbase.com/browse/NCBC-1804[NCBC-1804] - Some unit tests fail because of white encoding on Linux / OSX
