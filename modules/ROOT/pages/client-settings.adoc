@@ -91,7 +91,7 @@ For the most part, everything that is available programmatically can be done via
     </sectionGroup>
   </configSections>
   <couchbaseClients>
-    <couchbase>
+    <couchbase username="username" password="password">
      <servers>
         <add uri="http://server1.somedomain.com:8091"></add>
       </servers>
@@ -125,6 +125,8 @@ NOTE: JSON configuration is only supported for versions of the SDK 2.3.0 and gre
 ----
 {
   "basic": {
+    "username": "username",
+    "password": "mypassword",
     "enableConfigHeartbeat": false,
     "servers": [
       "http://server1.somedomain.com:8091/", "http://server2.somedomain.com:8091/"
