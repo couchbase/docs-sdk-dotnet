@@ -151,6 +151,8 @@ jsonConfiguration.GetSection("couchbase:basic").Bind(definition);
 var clientConfig = new ClientConfiguration(definition);
 
 var cluster = new Cluster(clientConfig);
+var authenticator = new PasswordAuthenticator("username", "password");
+cluster.Authenticate(authenticator);
 var bucket = cluster.OpenBucket("travel-sample");
 ----
 
