@@ -125,6 +125,8 @@ NOTE: JSON configuration is only supported for versions of the SDK 2.3.0 and gre
 ----
 {
   "basic": {
+    "username": "username",
+    "password": "mypassword",
     "enableConfigHeartbeat": false,
     "servers": [
       "http://server1.somedomain.com:8091/", "http://server2.somedomain.com:8091/"
@@ -151,8 +153,6 @@ jsonConfiguration.GetSection("couchbase:basic").Bind(definition);
 var clientConfig = new ClientConfiguration(definition);
 
 var cluster = new Cluster(clientConfig);
-var authenticator = new PasswordAuthenticator("username", "password");
-cluster.Authenticate(authenticator);
 var bucket = cluster.OpenBucket("travel-sample");
 ----
 
