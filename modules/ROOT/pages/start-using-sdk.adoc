@@ -153,7 +153,7 @@ var bucket = cluster.OpenBucket("bucketname");
 The instance of Couchbase Server on which the bucket resides is specified as a URI.
 The bucket itself is referenced by name.
 To connect to a Couchbase bucket, you must use Couchbase _Role-Based Access Control_ (RBAC).
-This is fully described in the section xref:6.0@server:security:security-authorization.adoc[Authorization].
+This is fully described in the section xref:6.0@server:learn:security/authorization-overview.adoc[Authorization].
 A username and password for the current user must be specified.
 Following successful authentication, the bucket is opened.
 
