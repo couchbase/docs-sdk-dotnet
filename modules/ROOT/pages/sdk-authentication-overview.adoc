@@ -52,7 +52,7 @@ Note that this section includes the steps whereby a Java keystore is created, to
 
 == Authenticating a .NET Client by Certificate
 
-To authenticate with Couchbase Server by means of a client certificate, you will need a key - although the key can be generated following the instructions  on the xref:6.0@server:security:security-x509certsintro.adoc[X.509 for TLS page], you do not need a Java Key Store.
+To authenticate with Couchbase Server by means of a client certificate, you will need a key - which can be generated according to the xref:6.0@server:learn:security/certificates.adoc#x509-certificate-requirements[X.509 certificate requirements].
 
 Once you have generated the `.pem` file, for windows you'll need to use it to create a `.pfx`:
 
