@@ -34,7 +34,7 @@ Specifically, for information on:
 == Certificate-Based Authentication
 
 Couchbase Server supports the use of X.509 certificates to authenticate clients (only available in the Enterprise Edition, not the Community Edition).
-This allows authenticated users to access specific resources by means of the data service (no other service is currently available to clients through this form of authentication).
+This allows authenticated users to access specific resources by means of the data service, in Couchbase Server 5.1 and up, and all other services in more recent releases of Couchbase Data Platform.
 
 The process relies on a certificate authority, for the issuing of certificates that validate identities.
 A certificate includes information such as the name of the entity it identifies, an expiration date, the name of the authority that issued the certificate, and the digital signature of the authority.
@@ -45,10 +45,10 @@ If the assigned roles are appropriate for the level of access requested to the s
 Note that this means that the explicit authentication process otherwise required by Couchbase _Role-Based Access Control_ — whereby, in .NET, username and password are passed by means of the `authenticate` method on the `Cluster` object — is not needed.
 (See xref:start-using-sdk.adoc[Start Using the SDK] for an example of such standard authentication.)
 
-For a more detailed conceptual description of using certificates, see xref:6.0@server:security:security-certs-auth.adoc[Certificate-Based Authentication].
+For a more detailed conceptual description of using certificates, see xref:6.0@server:learn:security/certificates.adoc[Certificates].
 
-For sample procedures whereby certificates can be generated and deployed, see xref:6.0@server:security:security-x509certsintro.adoc[X.509 for TLS].
-Note that this page includes the steps whereby a Java keystore is created, to enable certificate-based authentication by a Java client; for Windows there are a couple of more steps: you’ll need to generate a Personal Information Exchange (.PFX) file and store that in the Windows cert store.
+For sample procedures whereby certificates can be generated and deployed, see xref:6.0@server:manage:manage-security/manage-certificates.adoc[Manage Certificates].
+Note that this section includes the steps whereby a Java keystore is created, to enable certificate-based authentication by a Java client; for Windows there are a couple of more steps: you’ll need to generate a Personal Information Exchange (.PFX) file and store that in the Windows cert store.
 
 == Authenticating a .NET Client by Certificate
 
