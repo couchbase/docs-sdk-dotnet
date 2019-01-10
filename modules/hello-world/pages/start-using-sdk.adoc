@@ -1,0 +1,12 @@
+= Install and Start Using the .NET SDK with Couchbase Server
+:navtitle: Start Using the SDK
+
+[abstract]
+The Couchbase .NET SDK enables you to interact with a Couchbase Server cluster from the .NET Framework using C#.
+It offers both a traditional synchronous API and an asynchronous API based on the _Task-based Asynchronous Pattern (TAP)_.
+
+== Installing the SDK
+
+These pages cover the first _Developer Preview_ of the Couchbase .NET SDK 3.0 (DP1).
+As such they are likely to change without notice.
+The DP1 code _should not_ be used in production.
