@@ -143,7 +143,7 @@ The [.api]`ClusterHelper` is a singleton for a [.api]`Cluster` instance and a "m
 * If different clusters need to be accessed, you can do this with multiple [.api]`Cluster` instances.
 * The [.api]`Cluster` instance and the [.api]`ClusterHelper` class should be initialized when the application starts up and closed via [.api]`Dispose()` when the application shuts down.
 
-WARNING: You are strongly recommended against using Round Robin DNS, which can return a different address at each connection, as Java uses $host from the Cluster Map -- which can cause connection issues. 
+WARNING: You are strongly recommended against using Round Robin DNS, which can return a different address at each connection, as .NET uses $host from the Cluster Map -- which can cause connection issues. 
 Use of a xref:managing-connections.adoc#using-dns-srv-records[Service record (SRV record)], to provide real hostnames (A records) in the bootstrap list, will ensure consistent connections.
 
 == Disconnecting from a Bucket
