@@ -79,6 +79,31 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 2.7.3 (11th January 2019)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.3.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.3[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-1813[NCBC-1813] - SDKs should run tests against mock by default
+* https://issues.couchbase.com/browse/NCBC-1824[NCBC-1824] - Update csproj to use both VersionPrefix and VersionSuffix
+* https://issues.couchbase.com/browse/NCBC-1826[NCBC-1826] - Only allow InternalsVisableTo under Debug
+* https://issues.couchbase.com/browse/NCBC-1827[NCBC-1827] - Disable Appveyor github hook
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-1828[NCBC-1828] - Sub-Document WithExpiry not being set with single operation
+
 == Version 2.7.2 (4th December 2018)
 
 http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.2.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.2[API Reference]
