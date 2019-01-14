@@ -80,9 +80,9 @@ Multiple operations can be combined as well:
 [source,csharp]
 ----
 var result = bucket.LookupIn<dynamic>("customer123").
-        Get("addresses.delivery.country").
-        Exists("purchases.pending[-1]").
-        Execute();
+    Get("addresses.delivery.country").
+    Exists("purchases.pending[-1]").
+    Execute();
 
 Console.WriteLine("{0}", result.Content<string>(0));
 Console.WriteLine("Path exists? {0}", result.Content<bool>(1));
@@ -117,9 +117,9 @@ Here's an example of one which replaces one path and removes another.
 [source,csharp]
 ----
 bucket.MutateIn<dynamic>("customer123").
-        Remove("addresses.billing").
-        Replace("email", "dougr96@hotmail.com").
-        Execute();
+    Remove("addresses.billing").
+    Replace("email", "dougr96@hotmail.com").
+    Execute();
 ----
 
 == Array append and prepend
@@ -129,18 +129,18 @@ Unlike fulldoc _append_/_prepend_ operations (which simply concatenate bytes to 
 
 [source,csharp]
 ----
- bucket.MutateIn<dynamic>("customer123").
-        ArrayAppend("purchases.complete", 777).
-        Execute();
+bucket.MutateIn<dynamic>("customer123").
+    ArrayAppend("purchases.complete", 777).
+    Execute();
 
 # purchases.complete is now [339, 976, 442, 666, 777]
 ----
 
 [source,csharp]
 ----
- bucket.MutateIn<dynamic>("customer123").
-        ArrayPrepend("purchases.abandoned", 18).
-        Execute();
+bucket.MutateIn<dynamic>("customer123").
+    ArrayPrepend("purchases.abandoned", 18).
+    Execute();
 
 # purchases.abandoned in now [18, 157, 49, 999]
 ----
@@ -151,8 +151,8 @@ Simply initialize the document with an empty array and then use the empty path f
 .Creating and populating an array document
 [source,csharp]
 ----
- bucket.Upsert("my_array", new List<int>());
- bucket.MutateIn<dynamic>("my_array").ArrayAppend("", "some element").Execute();
+bucket.Upsert("my_array", new List<int>());
+bucket.MutateIn<dynamic>("my_array").ArrayAppend("", "some element").Execute();
 
 # the document my_array is now ["some element"]
 ----
@@ -164,8 +164,8 @@ Be sure to know the difference between passing a collection of multiple elements
 [source,csharp]
 ----
 bucket.MutateIn<dynamic>("my_array").
-        ArrayAppend(false, "", "elem1", "elem2", "elem3").
-        Execute();
+    ArrayAppend(false, "", "elem1", "elem2", "elem3").
+    Execute();
 
 # the document my_array is now ["some_element", "elem1", "elem2", "elem3"]
 ----
@@ -183,10 +183,10 @@ Note that passing multiple values to a single _array-append_ operation results i
 [source,csharp]
 ----
 bucket.MutateIn<dynamic>("my_array").
-            ArrayAppend("", "elem1").
-            ArrayAppend("", "elem2").
-            ArrayAppend("", "elem3").
-            Execute();
+    ArrayAppend("", "elem1").
+    ArrayAppend("", "elem2").
+    ArrayAppend("", "elem3").
+    Execute();
 ----
 
 If you wish to create an array if it does not exist and also push elements to it within the same operation you may use the <<subdoc-create-parents,_create-parents_>> option:
@@ -323,13 +323,13 @@ In this case, the _create-parents_ or _create-intermediates_ option may be used.
 
 [source,csharp]
 ----
- bucket.MutateIn<dynamic>("customer123").
-        Upsert("level_0.level_1.foo.bar.phone",
-        new
-        {
-            num = "311-555-0101", 
-            ext = 16
-        }, true);
+bucket.MutateIn<dynamic>("customer123").
+    Upsert("level_0.level_1.foo.bar.phone",
+    new
+    {
+        num = "311-555-0101",
+        ext = 16
+    }, true);
 ----
 
 == CAS Semantics
@@ -415,7 +415,7 @@ Considering the document
 {"literal[]bracket": {"literal.dot": true}}
 ----
 
-A path such as 
+A path such as
  \`literal[]bracket`.\`literal.dot`.
 You can use double-backticks (pass:c[``]) to reference a literal backtick.
 

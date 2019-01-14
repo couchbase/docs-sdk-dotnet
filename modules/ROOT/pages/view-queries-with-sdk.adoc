@@ -89,11 +89,12 @@ A [.api]`SpatialViewRow` is similar to a [.api]`ViewRow`, with an added `Geometr
 var cluster = new Cluster(new ClientConfiguration());
 var bucket = cluster.OpenBucket("travel-sample"));
 
-var query = new SpatialViewQuery().From("spatial", "by_location")
-                .Bucket("travel-sample")
-                .StartRange(new List<double?> { 0, -90})
-                .EndRange(new List<double?> { 180, 90 })
-                .Limit(10);
+var query = new SpatialViewQuery()
+    .From("spatial", "by_location")
+    .Bucket("travel-sample")
+    .StartRange(new List<double?> { 0, -90})
+    .EndRange(new List<double?> { 180, 90 })
+    .Limit(10);
 
 var result = bucket.Query<dynamic>(query);
 foreach (var viewRow in result.Rows)

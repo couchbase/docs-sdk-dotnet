@@ -90,12 +90,12 @@ In order to specify which field to encrypt, a special .NET attribute is used to 
 ----
 public class Person
 {
-      [EncryptedField(Provider = "AES-256-HMAC-SHA256")]
-      public string Password { get; set; }
-      public string FirstName { get; set; }
-      public string LastName { get; set; }
-      public string UserName { get; set; }
-      public int Age { get; set; }
+    [EncryptedField(Provider = "AES-256-HMAC-SHA256")]
+    public string Password { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string UserName { get; set; }
+    public int Age { get; set; }
 }
 ----
 
@@ -112,10 +112,10 @@ For example, assuming a Person class annotated with the `EncryptedField` attribu
 ----
 var teddy = new Person
 {
-     Age = 33,
-     FirstName = "Ted",
-     LastName = "DeBloss",
-     Password = "ssloBeD12345"
+    Age = 33,
+    FirstName = "Ted",
+    LastName = "DeBloss",
+    Password = "ssloBeD12345"
 };
 
 var bucket = cluster.OpenBucket();
@@ -128,7 +128,7 @@ Retrieving a document with an encrypted field is no different than any other get
 var get = bucket.Get<Person>("person::2");
 if (get.Success)
 {
-       Console.WriteLine("Fetched person...");
+    Console.WriteLine("Fetched person...");
 }
 ----
 
