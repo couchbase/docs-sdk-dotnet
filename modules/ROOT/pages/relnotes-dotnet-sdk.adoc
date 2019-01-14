@@ -79,6 +79,37 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 2.7.3 (11th January 2019)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.3.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.3[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce `Fatal error: unexpected end of JSON input`.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-1813[NCBC-1813]:
+SDKs should run tests against mock by default
+* https://issues.couchbase.com/browse/NCBC-1824[NCBC-1824]:
+csproj updated to use both VersionPrefix and VersionSuffix.
+This improves the CI build.
+* https://issues.couchbase.com/browse/NCBC-1826[NCBC-1826]:
+InternalsVisableTo now only allowed under Debug build.
+* https://issues.couchbase.com/browse/NCBC-1827[NCBC-1827]:
+Disabled Appveyor GitHub hook
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-1828[NCBC-1828]:
+Sub-Document WithExpiry will now set with a single operation.
+
 == Version 2.7.2 (4th December 2018)
 
 http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.2.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.2[API Reference]
@@ -87,20 +118,25 @@ http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.2.zip[Dow
 
 This release has the following known issues:
 
-* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
 .NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
  A workaround is available.
-* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
-Fatal error: unexpected end of JSON input
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain prepared statements may produce `Fatal error: unexpected end of JSON input`.
 
 === New Features and Behavioral Changes
-* https://issues.couchbase.com/browse/NCBC-1668[NCBC-1668] - Manage Couchbase.Tests and Couchbase.Tests.Management on non-windows
-* https://issues.couchbase.com/browse/NCBC-1719[NCBC-1719] - Remove Operation Timing from QueryClient
+* https://issues.couchbase.com/browse/NCBC-1668[NCBC-1668]:
+Manage Couchbase.Tests and Couchbase.Tests.Management on non-windows
+* https://issues.couchbase.com/browse/NCBC-1719[NCBC-1719]:
+Remove Operation Timing from QueryClient
 
 === Fixed Issues
-* https://issues.couchbase.com/browse/NCBC-1804[NCBC-1804] - Some unit tests fail because of white encoding on Linux / OSX
-* https://issues.couchbase.com/browse/NCBC-1808[NCBC-1808] - Don&#39;t overwrite NodeExt&#39;s KV port with Node&#39;s
-* https://issues.couchbase.com/browse/NCBC-1806[NCBC-1806] - Fix SDK build warnings
+* https://issues.couchbase.com/browse/NCBC-1804[NCBC-1804]:
+Some unit tests fail because of white encoding on Linux / OSX
+* https://issues.couchbase.com/browse/NCBC-1808[NCBC-1808]:
+Don&#39;t overwrite NodeExt&#39;s KV port with Node&#39;s
+* https://issues.couchbase.com/browse/NCBC-1806[NCBC-1806]:
+Fix SDK build warnings
 
 == Version 2.7.1 (6th November 2018)
 
@@ -110,32 +146,49 @@ http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.1.zip[Dow
 
 This release has the following known issues:
 
-* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
 .NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms. 
  A workaround is available.
-* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
 Fatal error: unexpected end of JSON input
 
 === New Features and Behavioral Changes
-* https://issues.couchbase.com/browse/NCBC-1793[NCBC-1793] - Analytics KV Ingress for .NET
-* https://issues.couchbase.com/browse/NCBC-1794[NCBC-1794] - Analytics Deferred Queries for .NET
-* https://issues.couchbase.com/browse/NCBC-1767[NCBC-1767] - Add support for Analytics async execution mode
-* https://issues.couchbase.com/browse/NCBC-1798[NCBC-1798] - Add Conflict Resolution option when creating a bucket
+* https://issues.couchbase.com/browse/NCBC-1793[NCBC-1793]:
+Analytics KV Ingress for .NET
+* https://issues.couchbase.com/browse/NCBC-1794[NCBC-1794]:
+Analytics Deferred Queries for .NET
+* https://issues.couchbase.com/browse/NCBC-1767[NCBC-1767]:
+Add support for Analytics async execution mode
+* https://issues.couchbase.com/browse/NCBC-1798[NCBC-1798]:
+Add Conflict Resolution option when creating a bucket
 
 === Fixed Issues
-* https://issues.couchbase.com/browse/NCBC-1729[NCBC-1729] - Operation timeout when server(spock) restarts
-* https://issues.couchbase.com/browse/NCBC-1783[NCBC-1783] - ClusterController.ProcessConfig throws System.ArgumentNullException during testing
-* https://issues.couchbase.com/browse/NCBC-1784[NCBC-1784] - ThresholdLoggingTracer throws System.ArgumentNullException during processing
-* https://issues.couchbase.com/browse/NCBC-1785[NCBC-1785] - MultiplexingConnection throws ObjectDisposedException during Send
-* https://issues.couchbase.com/browse/NCBC-1786[NCBC-1786] - 2.7.0 candidate .net async mode - Throughput gradually goes down through the test
-* https://issues.couchbase.com/browse/NCBC-1787[NCBC-1787] - 2.7.0 candidate .net async mode - half the time connection not recovering after 1 node swap rebalance
-* https://issues.couchbase.com/browse/NCBC-1788[NCBC-1788] - 2.7.0 candidate .net async mode - after drop connection and reconnected, sdk does not recover
-* https://issues.couchbase.com/browse/NCBC-1791[NCBC-1791] - Make sure kv service is only enabled if in nodes list
-* https://issues.couchbase.com/browse/NCBC-1792[NCBC-1792] - Fix logging bug where Log4Net cannot log JSON brackets
-* https://issues.couchbase.com/browse/NCBC-1795[NCBC-1795] - throughput does not recover when 2 nodes are in and rebalanced
-* https://issues.couchbase.com/browse/NCBC-1796[NCBC-1796] - Correct typo AddNamedParamter to AddNamedParameter
-* https://issues.couchbase.com/browse/NCBC-1797[NCBC-1797] - Please add missing AnalyticsRequest()
-* https://issues.couchbase.com/browse/NCBC-1803[NCBC-1803] - ConfigMonitor integration test intermittently fails
+* https://issues.couchbase.com/browse/NCBC-1729[NCBC-1729]:
+Operation timeout when server(spock) restarts
+* https://issues.couchbase.com/browse/NCBC-1783[NCBC-1783]:
+ClusterController.ProcessConfig throws System.ArgumentNullException during testing
+* https://issues.couchbase.com/browse/NCBC-1784[NCBC-1784]:
+ThresholdLoggingTracer throws System.ArgumentNullException during processing
+* https://issues.couchbase.com/browse/NCBC-1785[NCBC-1785]:
+MultiplexingConnection throws ObjectDisposedException during Send
+* https://issues.couchbase.com/browse/NCBC-1786[NCBC-1786]:
+2.7.0 candidate .net async mode - Throughput gradually goes down through the test
+* https://issues.couchbase.com/browse/NCBC-1787[NCBC-1787]:
+2.7.0 candidate .net async mode - half the time connection not recovering after 1 node swap rebalance
+* https://issues.couchbase.com/browse/NCBC-1788[NCBC-1788]:
+2.7.0 candidate .net async mode - after drop connection and reconnected, sdk does not recover
+* https://issues.couchbase.com/browse/NCBC-1791[NCBC-1791]:
+Make sure kv service is only enabled if in nodes list
+* https://issues.couchbase.com/browse/NCBC-1792[NCBC-1792]:
+Fix logging bug where Log4Net cannot log JSON brackets
+* https://issues.couchbase.com/browse/NCBC-1795[NCBC-1795]:
+throughput does not recover when 2 nodes are in and rebalanced
+* https://issues.couchbase.com/browse/NCBC-1796[NCBC-1796]:
+Correct typo AddNamedParamter to AddNamedParameter
+* https://issues.couchbase.com/browse/NCBC-1797[NCBC-1797]:
+Please add missing AnalyticsRequest()
+* https://issues.couchbase.com/browse/NCBC-1803[NCBC-1803]:
+ConfigMonitor integration test intermittently fails
 
 == Version 2.7.0 (2nd October 2018)
 
@@ -145,36 +198,54 @@ http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.0.zip[Dow
 
 This release has the following known issues:
 
-* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
-.NETCore SDK N1QL query throws System.PlatformNotSupportedException
-on some .NET Core platforms.  A workaround is available.
-* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.  
+A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
 Fatal error: unexpected end of JSON input
 
 === New Features and Behavioral Changes
 
-* https://issues.couchbase.com/browse/NCBC-1652[NCBC-1652] - Update build scripts to new standard &amp; support non-windows
-* https://issues.couchbase.com/browse/NCBC-1758[NCBC-1758] - Add .gitattributes to normalise end of line formatting
-* https://issues.couchbase.com/browse/NCBC-1762[NCBC-1762] -  Handle HTTP 429 for FTS
-* https://issues.couchbase.com/browse/NCBC-1766[NCBC-1766] - Add support for FTS query retries when memory quota is reached
-* https://issues.couchbase.com/browse/NCBC-1768[NCBC-1768] - Add automatic retries for FTS queries
-* https://issues.couchbase.com/browse/NCBC-1774[NCBC-1774] - Add operation key as span tag
-* https://issues.couchbase.com/browse/NCBC-1779[NCBC-1779] - Add bucket name and config to logging for DEBUG and TRACE
+* https://issues.couchbase.com/browse/NCBC-1652[NCBC-1652]:
+Update build scripts to new standard &amp; support non-windows
+* https://issues.couchbase.com/browse/NCBC-1758[NCBC-1758]:
+Add .gitattributes to normalise end of line formatting
+* https://issues.couchbase.com/browse/NCBC-1762[NCBC-1762]:
+Handle HTTP 429 for FTS
+* https://issues.couchbase.com/browse/NCBC-1766[NCBC-1766]:
+Add support for FTS query retries when memory quota is reached
+* https://issues.couchbase.com/browse/NCBC-1768[NCBC-1768]:
+Add automatic retries for FTS queries
+* https://issues.couchbase.com/browse/NCBC-1774[NCBC-1774]:
+Add operation key as span tag
+* https://issues.couchbase.com/browse/NCBC-1779[NCBC-1779]:
+Add bucket name and config to logging for DEBUG and TRACE
 
 
 === Fixed Issues
 
-* https://issues.couchbase.com/browse/NCBC-1661[NCBC-1661] - SvcRestartAll-SUBDOC and  SvcRestart-SUBDOC fail on Ubuntu/Watson
-* https://issues.couchbase.com/browse/NCBC-1694[NCBC-1694] - List, map, etc operations do not create document if missing
-* https://issues.couchbase.com/browse/NCBC-1746[NCBC-1746] - QueryAsync times out after 75 seconds, even with extended timeout values
-* https://issues.couchbase.com/browse/NCBC-1763[NCBC-1763] - Closing cluster can cause exception in OrphanResponseLogger
-* https://issues.couchbase.com/browse/NCBC-1765[NCBC-1765] - Facet term values not being set
-* https://issues.couchbase.com/browse/NCBC-1770[NCBC-1770] - Config requests are using ChildOf relationships on finished spans
-* https://issues.couchbase.com/browse/NCBC-1772[NCBC-1772] - Random is not thread-safe and should be wrapped in lock
-* https://issues.couchbase.com/browse/NCBC-1773[NCBC-1773] - Default span tags are missing if using another Tracer (eg Jeager)
-* https://issues.couchbase.com/browse/NCBC-1777[NCBC-1777] - Don&#39;t dispatch observe requests when both PersistTo and ReplicateTo are Zero for durability requests
-* https://issues.couchbase.com/browse/NCBC-1781[NCBC-1781] - Ensure connection is available only after checking status
-https://issues.couchbase.com/browse/NCBC-1782[NCBC-1782] - Unit test fails because it gets aggregate exception instead of ServiceNotSupported
+* https://issues.couchbase.com/browse/NCBC-1661[NCBC-1661]:
+SvcRestartAll-SUBDOC and  SvcRestart-SUBDOC fail on Ubuntu/Watson
+* https://issues.couchbase.com/browse/NCBC-1694[NCBC-1694]:
+List, map, etc operations do not create document if missing
+* https://issues.couchbase.com/browse/NCBC-1746[NCBC-1746]:
+QueryAsync times out after 75 seconds, even with extended timeout values
+* https://issues.couchbase.com/browse/NCBC-1763[NCBC-1763]:
+Closing cluster can cause exception in OrphanResponseLogger
+* https://issues.couchbase.com/browse/NCBC-1765[NCBC-1765]:
+Facet term values not being set
+* https://issues.couchbase.com/browse/NCBC-1770[NCBC-1770]:
+Config requests are using ChildOf relationships on finished spans
+* https://issues.couchbase.com/browse/NCBC-1772[NCBC-1772]:
+Random is not thread-safe and should be wrapped in lock
+* https://issues.couchbase.com/browse/NCBC-1773[NCBC-1773]:
+Default span tags are missing if using another Tracer (eg Jeager)
+* https://issues.couchbase.com/browse/NCBC-1777[NCBC-1777]:
+Don&#39;t dispatch observe requests when both PersistTo and ReplicateTo are Zero for durability requests
+* https://issues.couchbase.com/browse/NCBC-1781[NCBC-1781]:
+Ensure connection is available only after checking status
+* https://issues.couchbase.com/browse/NCBC-1782[NCBC-1782]:
+Unit test fails because it gets aggregate exception instead of ServiceNotSupported
 
 == Version 2.6.2 (10th September 2018)
 
