@@ -12,11 +12,11 @@ We shall set them so low that almost everything gets logged - not something you 
 [source,csharp]
 ----
 var tracer = new ThresholdLoggingTracer
-            {
-                KvThreshold = 1, // 1 microsecond
-                SampleSize = int.MaxValue,
-                Interval = 1000 // 1 second
-            };
+{
+    KvThreshold = 1, // 1 microsecond
+    SampleSize = int.MaxValue,
+    Interval = 1000 // 1 second
+};
 ----
 
 This will set our threshold for key/value operations to one microsecond, log the found operations every second, and set the sample size to a very large value so everything will be logged.
@@ -27,24 +27,24 @@ Below, we read some documentss from the travel-sample bucket and, if found, writ
 [source,csharp]
 ----
 // Connect
-    var config = new ClientConfiguration();
-    config.Tracer = tracer;
+var config = new ClientConfiguration();
+config.Tracer = tracer;
 
-    var cluster = new Cluster(); // connects to cluster using localhost
-    cluster.Authenticate("username", "password");
+var cluster = new Cluster(); // connects to cluster using localhost
+cluster.Authenticate("username", "password");
 
-    // Load a couple of docs and write them back
-    var bucket = cluster.OpenBucket("travel-sample");
-    for (var i = 0; i < 5; i++)
+// Load a couple of docs and write them back
+var bucket = cluster.OpenBucket("travel-sample");
+for (var i = 0; i < 5; i++)
+{
+    var result = bucket.Get<dynamic>("airline_1" + i);
+    if (result.Success)
     {
-        var result = bucket.Get<dynamic>("airline_1" + i);
-        if (result.Success)
-        {
-            bucket.Upsert(result.Id, result.Value);
-        }
+        bucket.Upsert(result.Id, result.Value);
     }
+}
 
-    Thread.Sleep(TimeSpan.FromMinutes(1));
+Thread.Sleep(TimeSpan.FromMinutes(1));
 ----
 
 Run the code, and you will see something like the following in the logs:
@@ -138,16 +138,16 @@ Let's highlight a single operation, and explain each field in a little more deta
 [source,json]
 ----
 {
-        "operation_name":"Get",
-        "last_operaion_id":"0xc",
-        "last_local_address":"10.211.55.3:58678",
-        "last_remote_address":"10.112.181.101:11210",
-        "last_local_id":"8fe25176f5cb5068/1ca98582755c6f19",
-        "last_dispatch_us":1373,
-        "total_us":1481,
-        "dispatch_us":1373,
-        "server_us":22,
-        "decode_us":12
+    "operation_name":"Get",
+    "last_operaion_id":"0xc",
+    "last_local_address":"10.211.55.3:58678",
+    "last_remote_address":"10.112.181.101:11210",
+    "last_local_id":"8fe25176f5cb5068/1ca98582755c6f19",
+    "last_dispatch_us":1373,
+    "total_us":1481,
+    "dispatch_us":1373,
+    "server_us":22,
+    "decode_us":12
 }
 ----
 
