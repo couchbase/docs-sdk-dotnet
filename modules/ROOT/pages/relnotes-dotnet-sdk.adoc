@@ -91,7 +91,7 @@ This release has the following known issues:
 .NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
  A workaround is available.
 * https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
-Certain Prepared statements could produce `Fatal error: unexpected end of JSON input`.
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
 
 === New Features and Behavioral Changes
 
@@ -122,11 +122,11 @@ This release has the following known issues:
 .NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
  A workaround is available.
 * https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
-Certain prepared statements may produce `Fatal error: unexpected end of JSON input`.
+Certain prepared statements may produce _Fatal error: unexpected end of JSON input_.
 
 === New Features and Behavioral Changes
 * https://issues.couchbase.com/browse/NCBC-1668[NCBC-1668]:
-Manage Couchbase.Tests and Couchbase.Tests.Management on non-windows
+Manage Couchbase.Tests and Couchbase.Tests.Management on non-Windows
 * https://issues.couchbase.com/browse/NCBC-1719[NCBC-1719]:
 Remove Operation Timing from QueryClient
 
