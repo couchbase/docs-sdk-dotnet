@@ -36,7 +36,7 @@ foreach (var row in bucket.Query<dynamci>(query))
 {"type": "airline"}
 {"type": "airline"}
 {"type": "airline"}
-{"type": "airline"}
+{"type": "airport"}
 ----
 
 The above query using _cbq_ (some output truncated for clarity):
