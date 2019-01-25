@@ -22,17 +22,22 @@ It is xref:{version-server}@server:cli:cli-intro.adoc[located alongside the othe
 
 Queries are issued in the SDK using the _query_ operation.
 This API accepts a string which is the statement to execute, and returns the rows (or an iterable object which returns rows) representing the query’s result.
-Here is an example of a query executed in Python:
+Here is an example of a query executed in .NET:
 
-....
->>> for row in cb.n1ql_query('SELECT type FROM `travel-sample` LIMIT 4'):
-...   print(row)
+[source,csharp]
+----
+var query = new QueryRequest("SELECT type FROM `travel-sample` LIMIT 4");
+foreach (var row in bucket.Query<dynamci>(query))
+{
+    Console.WriteLine(JsonConvert.Serialize(row));
+}
+
 ...
-{'type': 'airline'}
-{'type': 'airline'}
-{'type': 'airline'}
-{'type': 'airport'}
-....
+{"type": "airline"}
+{"type": "airline"}
+{"type": "airline"}
+{"type": "airport"}
+----
 
 The above query using _cbq_ (some output truncated for clarity):
 
@@ -72,15 +77,19 @@ Internally, however, the response looks like the _cbq_ output above.
 If you use aliases in your query, then the returned rows contain the aliased name rather than the original one.
 For example:
 
-[source,python]
+[source,csharp]
 ----
->>> for row in cb.n1ql_query('SELECT airportname as n FROM `travel-sample` where type="airport" LIMIT 4'):
-...   print(row)
+var query = new QueryRequest("SELECT airportname as n FROM `travel-sample` where type="airport" LIMIT 4");
+foreach (var row in bucket.Query<dynamic>(query))
+{
+    Console.WriteLine(JsonConvert.Serialize(row));
+}
+
 ...
-{'n': 'Calais Dunkerque'}
-{'n': 'Peronne St Quentin'}
-{'n': 'Les Loges'}
-{'n': 'Couterne'}
+{"n": "Calais Dunkerque"}
+{"n": "Peronne St Quentin"}
+{"n": "Les Loges"}
+{"n": "Couterne"}
 ----
 
 == Specifying Query Criteria
@@ -187,12 +196,9 @@ The query may be divided into a _fixed_ or _static_ part (select all airports in
 
 A naive implementation of this function might look something like this:
 
-[source,python]
+[source,csharp]
 ----
-def airports_in_city(city):
-  query_string = "SELECT airportname FROM `travel-sample` WHERE city="
-  query_string += '"' + city + '"'
-  return cb.n1ql_query(query_string)
+var query = new QueryRequest($"SELECT airportname FROM `travel-sample` WHERE city=${city}");
 ----
 
 The approach above is both unwieldy and insecure (subject to SQL injection attacks).
@@ -200,12 +206,10 @@ The approach above is both unwieldy and insecure (subject to SQL injection attac
 N1QL allows the use of placeholders to declare dynamic query parameters.
 Here's a version of the above using placeholders:
 
-[source,python]
+[source,csharp]
 ----
-def airports_in_city(city):
-  query_string = "SELECT airportname FROM `travel-sample` WHERE city=$1"
-  query = N1QLQuery(query_string, city)
-  return cb.n1ql_query(query)
+var query = new QueryRequest("SELECT airportname FROM `travel-sample` WHERE city=$1")
+    .AddPositionalParamter("London");
 ----
 
 The `$1` is a positional placeholder.
@@ -216,25 +220,27 @@ Placeholders may also be _named_.
 This is particularly useful when there are many query parameters and ensuring that they are all in the correct order may be cumbersome.
 Name query placeholders take the form of `$name`.
 
-[source,python]
+[source,csharp]
 ----
-query_string = (
-"SELECT airportname FROM `travel-sample`"
-"WHERE country=$country "
-"AND geo.alt > $altitude "
-"AND (geo.lat BETWEEN $min_lat AND $max_lat) "
-"AND (geo.lon BETWEEN $min_lon AND $max_lon "
+var statement = "SELECT airportname FROM `travel-sample` " +
+    "WHERE country=$country " +
+    "AND geo.alt > $altitude " +
+    "AND (geo.lat BETWEEN $min_lat AND $max_lat) " +
+    "AND (geo.lon BETWEEN $min_lon AND $max_lon "
 )
 ----
 
 Then to issue the actual query:
 
-[source,python]
+[source,csharp]
 ----
-query = N1QLQuery(
-    query_string,
-    country="United States",
-    altitude=500, min_lat=-50, max_lat=50, min_lon=-180, max_lon=0)
+var query = new QueryRequest(statement)
+    .AddNamedParameter("country", "United States")
+    .AddNamedParameter("altitude", 500)
+    .AddNamedParameter("min_lat", -50)
+    .AddNamedParameter("max_lat", 50)
+    .AddNamedParameter("min_lon", -180)
+    .AddNamedParameter("max_lon", 0);
 ----
 
 [#prepare-stmts]
@@ -255,10 +261,11 @@ To indicate that an SDK should optimize a query, the [.param]`adhoc` parameter s
 When a query is not _ad-hoc_, the SDK will fetch the plan (if it does not already have it).
 Do not turn off the _adhoc_ flag for each query since only a finite number of query plans (currently 5000) can be stored in the SDK.
 
-[source,python]
+[source,csharp]
 ----
-query = N1QLQuery("SELECT airportname FROM `travel-sample` WHERE country=$1", "USA")
-q.adhoc = False
+var query = new QueryRequest("SELECT airportname FROM `travel-sample` WHERE country=$1")
+    .AddPositionalParameter("USA")
+    .AdHoc(false);
 ----
 
 NOTE: Parameterized queries are considered the same query for caching and planning purposes, even if the supplied parameters are different.
@@ -303,11 +310,12 @@ For more information, see xref:{version-server}@server:indexes:covering-indexes.
 
 You can also create and define indexes in the SDK using
 
-[source,python]
+[source,csharp]
 ----
-cb.bucket_manager().create_n1ql_primary_index(ignore_exists=True)
-cb.bucket_manager().create_n1ql_index('index_name', fields['name'])
-cb.bucket_manager().create_n1ql_index('index_email', fields['email'])
+var bucketManager = bucket.CreateManager();
+await bucketManager.CreateN1qlPrimaryIndexAsync();
+await bucketManager.CreateN1qlIndexAsync("index_name", new string[] { "name" })
+await bucketManager.CreateN1qlIndexAsync("index_emai", new string[] { "email" })
 ----
 
 == Index Building
@@ -330,13 +338,14 @@ if it has a `name` or `email`) field.
 
 Building deferred indexes can also be done via the SDK:
 
-[source,python]
+[source,csharp]
 ----
-mgr.create_n1ql_primary_index(ignore_exists=True, defer=True)
-mgr.create_n1ql_index('ix_name', fields=['name'], defer=True)
-mgr.create_n1ql_index('ix_email', fields=['email'], defer=True)
-mgr.build_n1ql_deferred_indexes()
-mgr.watch_n1ql_indexes(('ix_name', 'ix_email', '#primary'), timeout=120)
+var bucketManager = bucket.CreateManager();
+await bucketManager.CreateN1qlPrimaryIndexAsync(defer = true);
+await bucketManager.CreateN1qlIndexAsync("ix_name", defer = true, new string[] { "name" });
+await bucketManager.CreateN1qlIndexAsync("ix_email", defer = true, new string[] { "email" });
+await bucketManager.BuildN1qlDeferredIndexesAsync();
+await bucketManager.WatchN1qlIndexes(new List<string> { "ix_name", "ix_email", "#primary"}, TimeSpan.FromSeconds(2));
 ----
 
 == Index Consistency
@@ -357,37 +366,36 @@ When using this consistency mode, the query service will ensure that the indexes
 
 Consider the following snippet:
 
-[source,python]
+[source,csharp]
 ----
-from couchbase.n1ql import N1QLQuery, CONSISTENCY_REQUEST
 
-# Ensure there is a primary index on the default bucket!
-RANDOM_NUMBER = random.randint(0, 10000000)
+var randomNumber = new Random().Next(0, 10000000);
 
-cb = Bucket('couchbase://10.0.0.31/default')
-cb.upsert('user:{}'.format(RANDOM_NUMBER), {
-    'name': ['Brass', 'Doorknob'],
-    'email': ['brass.doorknob@juno.com'],
-    'random': RANDOM_NUMBER
-})
+bucket.Upsert($"user:{randomNumber}", new {
+    name = "Brass Doorknob",
+    email = "brass.doorknob@juno.com",
+    random = randomNumber
+});
 
-query = N1QLQuery(
-    'SELECT name, email, random, META(default).id FROM default WHERE $1 IN name', 'Brass')
-row = cb.n1ql_query(query).get_single_result()
+var query = new QueryRequest("SELECT name, email, random, META(default).id FROM default WHERE $1 IN name'")
+    .AddPositionalParamter("Brass");
+
+var result = bucket.Query<dynamic>(query);
 ----
 
 The above query may not return the newly inserted document because it has not yet been indexed.
 The query is issued immediately after document creation, and in this case the query engine may process the query before the index has been updated.
 
-If the above code is modified to use _request_plus_ (currently mapped to the [.api]`CONSISTENT_REQUEST` constant in the Python SDK), query processing will wait until all updates have been processed and recalculated into the index from the point in time the query was received:
+If the above code is modified to use _RequestPlus_, query processing will wait until all updates have been processed and recalculated into the index from the point in time the query was received:
 
-[source,python]
+[source,csharp]
 ----
-query = N1QLQuery(
-    'SELECT name, email, random, META(default).id FROM default WHERE $1 IN name', 'Brass')
-# If this line is removed, the latest 'random' field might not be present
-query.consistency = CONSISTENCY_REQUEST
-row = cb.n1ql_query(query).get_single_result()
+var query = new QueryRequest("SELECT name, email, random, META(default).id FROM default WHERE $1 IN name'")
+    .AddPositionalParamter("Brass")
+    // If this line is removed, the latest 'random' field might not be present
+    .ScanConsistency(ScanConsistency.RequestPlus);
+
+var result = bucket.Query<dynamic>(query);
 ----
 
 This gives you as an application developer more control over the balance between performance and consistency with respect to other actions on your distributed database.
