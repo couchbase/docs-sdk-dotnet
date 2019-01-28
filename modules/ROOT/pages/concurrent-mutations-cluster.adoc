@@ -66,7 +66,7 @@ a|
 ----
 var result = buckt.Get<dynamic>("docid");
 var new_doc = result.Value;
-var new_doc.field2 = "value2";
+new_doc.field2 = "value2";
 bucket.Replace("docid", new_doc);
 ----
 |===
