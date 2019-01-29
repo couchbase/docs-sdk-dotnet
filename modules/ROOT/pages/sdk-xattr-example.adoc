@@ -162,3 +162,40 @@ namespace XATTRsSample
     }
 }
 ----
+
+== Virtual Extended Attributes Example ==
+
+Using the Sub-Document API, Virtual XATTR can be used to fetch metadata about a document, via the $document virtual XATTR. A common use case is discovering documentation expiration metadata, or TTL:
+
+[source,csharp]
+----
+const string key = "airline_17628";
+
+// set document expiration to 1 minute
+bucket.Touch(key, TimeSpan.FromMinutes(1));
+
+// get the ttl using the XATTR
+var subdocResult = bucket.LookupIn<dynamic>(key)
+    .Get("$document.exptime", SubdocPathFlags.Xattr)
+    .Execute();
+
+var ttl = subdocResult.Content<long>("$document.exptime");
+Console.WriteLine($"TTl for key '{key} is {ttl}");
+
+// update TTL to 0 (doesn't expire)
+bucket.Touch(key, TimeSpan.Zero);
+
+// retrieve new ttl plus document size and a value from the JSON
+var result = bucket.LookupIn<dynamic>(key)
+    .Get("$document.exptime", SubdocPathFlags.Xattr)
+    .Get("$document.value_bytes", SubdocPathFlags.Xattr)
+    .Get("callsign")
+    .Execute();
+
+ttl = result.Content<long>("$document.exptime");
+var size = result.Content<long>("$document.value_bytes");
+var callSign = result.Content<string>("callsign");
+Console.WriteLine($"TTl for key '{key} is {ttl}");
+Console.WriteLine($"Size for key '{key} is {size}");
+Console.WriteLine($"Callsign for key '{key} is {callSign}");
+----
