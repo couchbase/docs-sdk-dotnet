@@ -81,21 +81,21 @@ If your application must store data that cannot be handled by any of the built-i
 == Using the _RAW_ format
 
 Manually serialize your document to a raw buffer, store the document using the _RAW_ format, and manually deserialize your document upon retrieval, reading and decoding the retrieved buffer manually.
-Here is an example in Python of manually encoding and decoding a UTF-16 string (note that the Python SDK names the _RAW_ format as [.param]`FMT_BYTES`):
+Here is an example in .NET of manually encoding and decoding a UTF-16 string (note that .NET uses `Unicode` in place of the _UTF16_ Encoding):
 
-[source,python]
+[source,csharp]
 ----
->>> from couchbase import FMT_BYTES
->>> cb.upsert('utf16_doc',
-              'Hello, UTF-16 World!'.encode('utf16'),
-              format=FMT_BYTES)
-OperationResult<RC=0x0, Key=u'utf16_doc', CAS=0x35cc17c7f213>
->>> raw_buf = cb.get('utf16_doc').value
->>> raw_buf
-'\xff\xfeH\x00e\x00l\x00l\x00o\x00,\x00 \x00U\x00T\x00F\x00-\x001\x006\x00 \x00W\x00o\x00r\x00l\x00d\x00!\x00'
->>> utf16_doc = raw_buf.decode('utf16')
->>> utf16_doc
-u'Hello, UTF-16 World!'
+// convert the string into UTF16 bytes
+var bytes = System.Text.Encoding.Unicode.GetBytes("Hello, UTF-16 World!");
+
+// store the document as a raw byte array
+bucket.Upsert("utf16_doc", bytes);
+
+// retrieve the document, specifying the content body as byte[]
+var result = bucket.Get<byte[]>("utf16_doc");
+
+// convert the result's value back into a string
+var value = System.Text.Encoding.Unicode.GetString(result.Value);
 ----
 
 [#transcoders]
@@ -108,32 +108,89 @@ A Transcoder refers to a pair of functions which are responsible for serializing
 
 Using transcoders is preferred over RAW serialization when possible, as it provides a cleaner interface as well as allows it to work in a mixed type environment (if there are multiple custom types) without having to encode the document type within the document itself.
 
-The _encoding_ function in the transcoder accepts a native Document type as input (as created by your application), encodes it as a byte buffer, and returns the byte buffer along with a type code.
+The _Encode_ function in the transcoder accepts a native Document type as input (as created by your application), encodes it as a byte buffer, and returns the byte buffer along with a type code.
 
-The _decoding_ function accepts a buffer (as fetched from the server) and a type code (the flags from the metadata) and returns the intended type to be used for the Document within the application.
+The _Decode_ functions accepts a buffer (as fetched from the server) and returns the intended type to be used for the Document within the application.
 
-The following shows an implementation of the encoding ([.api]`encode_value`) and decoding ([.api]`decode_value`) functions in Python:
+The following shows an implementation of the encoding ([.api]`Encode<T>`) and decoding ([.api]`Decode<T>`) functions in .NET:
 
-[source,python]
+[source,csharp]
 ----
-from couchbase.transcoder import Transcoder
-UTF16_TYPECODE = 0x0A000000
-class Utf16Transcoder(Transcoder):
-    def encode_value(self, value, format):
-        if (format == UTF16_TYPECODE):
-            return value.encode('utf16'), UTF16_TYPECODE
-        else:  # Call default implementation
-            return super(Utf16Transcoder, self).encode_value(value, format)
+class Utf16Transcoder : DefaultTranscoder
+{
+    public override byte[] Encode<T>(T value, Flags flags, OperationCode opcode)
+    {
+        var bytes = new byte[] { };
+        var typeCode = Type.GetTypeCode(typeof(T));
+        switch (typeCode)
+        {
+            case TypeCode.String:
+            case TypeCode.Char:
+                Converter.FromString(Convert.ToString(value), ref bytes, 0);
+                break;
+            case TypeCode.Int16:
+                Converter.FromInt16(Convert.ToInt16(value), ref bytes, 0);
+                break;
+            // implement other type codes (object, byte, object, etc)
+            default:
+                throw new NotSupportedException();
+        }
 
-    def decode_value(self, value, flags):
-        if flags == UTF16_TYPECODE:
-            return value.decode('utf16')
-        else:  # Call default implementation
-            return super(Utf16Transcoder, self).decode_value(value, flags)
+        return bytes;
+    }
 
-cb.transcoder = Utf16Transcoder()
-cb.upsert('utf16_doc', 'Hello, UTF-16 World!', format=UTF16_TYPECODE)
-cb.get('utf16_doc')
+    public override T Decode<T>(ArraySegment<byte> buffer, int offset, int length, Flags flags, OperationCode opcode)
+    {
+        return Decode<T>(buffer.Array, offset, length, flags, opcode);
+    }
+
+    public override T Decode<T>(byte[] buffer, int offset, int length, Flags flags, OperationCode opcode)
+    {
+        object value = default(T);
+        switch (flags.TypeCode)
+        {
+            case TypeCode.String:
+            case TypeCode.Char:
+                value = Converter.ToString(buffer, offset, length);
+                break;
+            case TypeCode.Int16:
+                value = Converter.ToInt16(buffer, offset);
+                break;
+            // implement other type codes (object, byte, object, etc)
+            default:
+                throw new NotSupportedException();
+        }
+
+        return (T) value;
+    }
+
+    public override Flags GetFormat<T>(T value)
+    {
+        return new Flags
+        {
+            Compression = Compression.None,
+            DataFormat = DataFormat.Binary,
+            TypeCode = Type.GetTypeCode(typeof(T))
+        };
+    }
+}
+
+// set the transcoder in the configuration used to create a cluster instance
+var config = new ClientConfiguration
+{
+    Transcoder = () => new Utf16Transcoder()
+};
+
+using (var cluster = new Cluster(config))
+{
+    var bucket = cluster.OpenBucket("my-bucket");
+
+    // upsert a document
+    var upsertResult = bucket.Upsert("my_doc", "Hello, UTF-16 World!");
+
+    // get the document
+    var getResult = bucket.Get<string>("my_doc");
+}
 ----
 
 // tag::nonjson_flags[]
