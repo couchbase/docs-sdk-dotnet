@@ -211,7 +211,7 @@ It is important to note that all legacy typecodes (regardless of language) are u
 Legacy SDKs will also often have a mask value (typically no wider than 16 bits).
 
 The resultant typecode (actually stored as the _flags_ value is a bitwise OR of the modern typecode and the legacy typecode.
-For example, the older legacy Python code for _JSON_ was `0x00` and the unified typecode for _JSON_ is `0x02`.
+For example, the older legacy .NET code for _JSON_ was `0x00` and the unified typecode for _JSON_ is `0x02`.
 The resultant typecode is thus:
 
 ....
@@ -219,7 +219,7 @@ The resultant typecode is thus:
 0x02000000
 ....
 
-Another example: The legacy typecode for the _RAW_ format in Python is `0x02`, and the common type code is `0x03`.
+Another example: The legacy typecode for the _RAW_ format in .NET is `0x02`, and the common type code is `0x03`.
 The resultant typecode is:
 
 ....
