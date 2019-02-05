@@ -9,4 +9,4 @@ It offers both a traditional synchronous API and an asynchronous API based on th
 
 These pages cover the first _Developer Preview_ of the Couchbase .NET SDK 3.0 (DP1).
 As such they are likely to change without notice.
-The DP1 code _should not_ be used in production.
+WARNING: The DP1 code _should not_ be used in production.
