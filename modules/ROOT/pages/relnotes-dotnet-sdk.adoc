@@ -79,6 +79,39 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 2.7.4 (5th February 2019)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.4.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.4[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-1696[NCBC-1696] - Add alternate name/alternate port config support
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-1831[NCBC-1831] - Update VersionSuffix to 2.7.4
+</li>
+* https://issues.couchbase.com/browse/NCBC-1712[NCBC-1712] - Add .editorconfig to help enforce solution formatting standards
+</li>
+* https://issues.couchbase.com/browse/NCBC-1778[NCBC-1778] - Improve SendWithDurabilityAsync testability using mocks
+</li>
+* https://issues.couchbase.com/browse/NCBC-1825[NCBC-1825] - Remove build-utils folder
+</li>
+* https://issues.couchbase.com/browse/NCBC-1829[NCBC-1829] - Ensure assembly is optimized when building in Release configuration
+</li>
+* https://issues.couchbase.com/browse/NCBC-1830[NCBC-1830] - Add new license SPDX license identifier for Apache 2.0
+</li>
+
 == Version 2.7.3 (11th January 2019)
 
 http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.3.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.3[API Reference]
