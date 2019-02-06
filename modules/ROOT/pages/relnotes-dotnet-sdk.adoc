@@ -95,22 +95,30 @@ Certain Prepared statements could produce _Fatal error: unexpected end of JSON i
 
 === New Features and Behavioral Changes
 
-* https://issues.couchbase.com/browse/NCBC-1696[NCBC-1696] - Add alternate name/alternate port config support
+* https://issues.couchbase.com/browse/NCBC-1696[NCBC-1696]:
+Alternate name/alternate port config support added for NATed environments,
 
 === Fixed Issues
 
-* https://issues.couchbase.com/browse/NCBC-1831[NCBC-1831] - Update VersionSuffix to 2.7.4
-</li>
-* https://issues.couchbase.com/browse/NCBC-1712[NCBC-1712] - Add .editorconfig to help enforce solution formatting standards
-</li>
-* https://issues.couchbase.com/browse/NCBC-1778[NCBC-1778] - Improve SendWithDurabilityAsync testability using mocks
-</li>
-* https://issues.couchbase.com/browse/NCBC-1825[NCBC-1825] - Remove build-utils folder
-</li>
-* https://issues.couchbase.com/browse/NCBC-1829[NCBC-1829] - Ensure assembly is optimized when building in Release configuration
-</li>
-* https://issues.couchbase.com/browse/NCBC-1830[NCBC-1830] - Add new license SPDX license identifier for Apache 2.0
-</li>
+* https://issues.couchbase.com/browse/NCBC-1831[NCBC-1831]:
+VersionSuffix updated to 2.7.4.
+
+* https://issues.couchbase.com/browse/NCBC-1712[NCBC-1712]:
+.editorconfig added to help enforce solution formatting standards.
+
+* https://issues.couchbase.com/browse/NCBC-1778[NCBC-1778]:
+SendWithDurabilityAsync testability using mocks has been improved.
+
+* https://issues.couchbase.com/browse/NCBC-1825[NCBC-1825]:
+build-utils folder removed.
+
+* https://issues.couchbase.com/browse/NCBC-1829[NCBC-1829]:
+When updating to the new csproj format, the Release configuration didn't automatically set the optimize property.
+Assembly is now optimized when building in Release configuration, to improve performance and not embed debug symbols.
+
+* https://issues.couchbase.com/browse/NCBC-1830[NCBC-1830]:
+Added new license SPDX license identifier for Apache 2.0, replacing deprecated license URL.
+
 
 == Version 2.7.3 (11th January 2019)
 
