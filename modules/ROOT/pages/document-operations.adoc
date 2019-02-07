@@ -240,6 +240,13 @@ Console.WriteLine(bucket.GetDocument<dynamic>("expires").Status);
 KeyNotFound
 ....
 
+You may also use the [.api]`IBucket.Touch()` method to modify expiration without fetching or modifying the document:
+
+[source,csharp]
+----
+bucket.Touch("expires", TimeSpan.FromSeconds(2));
+----
+
 [#net-atomic-modifications]
 == Atomic document modifications
 
