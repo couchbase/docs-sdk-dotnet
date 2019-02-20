@@ -1,2 +1,220 @@
 = Key Value Operations
+:navtitle: KV Operations
+:page-topic-type: howto
 
+// aka KV Operations
+// aka Core Operations
+
+
+
+//////////////////////////////////////////////
+///////////////// Unfinished /////////////////
+//////////////////////////////////////////////
+
+
+The complete code sample used on this page can be downloaded from
+///  xref::example$document.cs[here]
+- from which you can see in context how to authenticate and connect to a Couchbase Cluster, then perform these Bucket operations.
+
+
+== Documents
+
+A _document_ refers to an entry in the database (other databases may refer to the same concept as a _row_).
+A document has an ID (_primary key_ in other databases), which is unique to the document and by which it can be located.
+The document also has a value which contains the actual application data.
+See xref::concept-docs:documents.adoc[the concept guide to _Documents_] for a deeper dive into documents in the Couchbase Data Platform.
+Or read on, for a hands-on introduction to working with documents from the .NET SDK.
+
+== CRUD Operations
+
+The core interface to Couchbase Server is simple KV operations on full documents. For Sub-Document operations on partial documents, see the xref:subdocument-operations.adoc[next section].
+
+Make sure you're familiar with the basics of authorization and connecting to a Cluster from the xref::hello-world:start-using-sdk.adoc[Start Using the SDK section].
+We're going to expand the _upsert_ one-liner from that page into more usefully formed CRUD examples.
+
+[source,csharp]
+----
+Insert
+var document = new {foo = "bar", bar = "foo"};
+var result = await collection.Insert("document-key", document);
+
+Insert (with options)
+var document = new {foo = "bar", bar = "foo"};
+var result = await collection.Insert("document-key", document,
+    new InsertOptions
+    {
+        Cas = 12345,
+        Expiration = TimeSpan.FromMinutes(1),
+        PersistTo = PersistTo.One,
+        ReplicateTo = ReplicateTo.One,
+        Timeout = TimeSpan.FromSeconds(5)
+    }
+);
+----
+
+///  CAS
+///  protecting against concurrent updates to the same document
+///  see CAS page
+
+///
+/// PersistTo ....
+/// Durability...
+
+
+A simple replace:
+
+[source,csharp]
+----
+var document = new {foo = "bar", bar = "foo"};
+var result = await collection.Replace("document-key", document);
+----
+
+And replace again, but this time with with options:
+
+[source,csharp]
+----
+var document = new {foo = "bar", bar = "foo"};
+var result = await collection.Replace("document-key", document,
+    new ReplaceOptions
+    {
+        Cas = 12345,
+        Expiration = TimeSpan.FromMinutes(1),
+        PersistTo = PersistTo.One,
+        ReplicateTo = ReplicateTo.One,
+        Timeout = TimeSpan.FromSeconds(5)
+    }
+);
+----
+
+We'll discuss _expiration_ xref:#[below].
+Here's the same format for upsert:
+
+
+[source,csharp]
+----
+var document = new {foo = "bar", bar = "foo"};
+var result = await collection.Upsert("document-key", document);
+----
+
+And for upsert with options:
+
+[source,csharp]
+----
+var document = new {foo = "bar", bar = "foo"};
+var result = await collection.Upsert("document-key", document,
+    new UpsertOptions
+    {
+        Cas = 12345,
+        Expiration = TimeSpan.FromMinutes(1),
+        PersistTo = PersistTo.One,
+        ReplicateTo = ReplicateTo.One,
+        Timeout = TimeSpan.FromSeconds(5)
+    }
+);
+----
+
+
+
+//// TODO Remove
+
+
+ Retrieving full documents
+
+
+
+Get
+[source,csharp]
+----
+var result = await collection.Get(“document-key”);
+var content = result.ContentAs<string>();
+
+Get (with options)
+var result = await collection.Get(“document-key”,
+    new GetOptions
+    {
+        CreatePath = true,
+        IncludeExpiration = true,
+        ProjectList = new List<string>(),
+        Timeout = TimeSpan.FromSeconds(5)
+    }
+);
+var content = result.ContentAs<string>();
+----
+
+/// It is also possible to fetch the document and reset its expiration value at the same time. See Modifying Expiration for more information.
+
+
+
+
+
+== Removing
+
+
+Remove
+[source,csharp]
+----
+var result = await collection.Remove("document-key");
+----
+
+
+
+
+Remove (with options)
+[source,csharp]
+----
+var result = await collection.Remove("document-key",
+    new RemoveOptions
+    {
+        Cas = 12345,
+        PersistTo = PersistTo.One,
+        ReplicateTo = ReplicateTo.One,
+        Timeout = TimeSpan.FromSeconds(5)
+    }
+);
+----
+
+
+
+== Expiration / TTL
+
+/// todo
+
+By default, Couchbase documents do not expire, but transient or temporary data may be needed for user sessions, caches, or other temporary documents. 
+You can use expiration values on documents to handle transient data.
+
+
+/// Touch
+
+// GetAndTouch
+
+
+== TTL
+
+/// Increment / Decrement
+
+
+
+
+
+
+== Additional Resources
+
+// links
+
+Sub-Document & XATTR
+Batching
+Formats
+Non-JSON
+Query Engine
+
+
+
+
+
+
+
+
+//TODO
+//Get with projections
+//Response property definitions
+//Option property definitions
