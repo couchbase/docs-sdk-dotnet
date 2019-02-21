@@ -29,7 +29,8 @@ NOTE: The default installation places cbq in `/opt/couchbase/bin/` on Linux, `/A
 == Queries & Placeholders
 
 To issue N1QL queries from the .NET SDK, you should create a `QueryRequest` object
-////
+
+//// ...
 
 Placeholders allow you to specify variable constraints for an otherwise constant query. 
 There are two variants of placeholders: postional and named parameters. 
