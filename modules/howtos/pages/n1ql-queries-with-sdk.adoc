@@ -1,2 +1,111 @@
 = N1QL Queries from the SDK
+:navtitle: N1QL from the SDK
+:page-topic-type: howto
+:page-aliases: n1ql-query
 
+
+
+Our query service uses N1QL, which will be fairly familiar to anyone who's used any dialect of SQL.
+xref:#additional-resources[Further resources] for learning about N1QL are listed at the bottom of the page.
+You may whish to  //// link
+or just dive in with a query against our travel sample data set.
+In this case, the one thing that you need to know is that in order to make a bucket queryable, it must have at least one index defined.
+You can define a _primary_ index on a bucket. 
+When a primary index is defined you can issue non-covered queries on the bucket as well.
+
+Use
+xref:6.5@server::tools/cbq-shell.html
+our interactive Query shell.
+Open it, and enter the following:
+
+[source,n1ql]
+----
+CREATE PRIMARY INDEX ON `users`
+----
+
+NOTE: The default installation places cbq in `/opt/couchbase/bin/` on Linux, `/Applications/Couchbase Server.app/Contents/Resources/couchbase-core/bin/cbq` on OS X, and `C:\Program Files\Couchbase\Server\bin\cbq.exe` on Microsoft Windows
+
+
+== Queries & Placeholders
+
+To issue N1QL queries from the .NET SDK, you should create a `QueryRequest` object
+////
+
+Placeholders allow you to specify variable constraints for an otherwise constant query. 
+There are two variants of placeholders: postional and named parameters. 
+Positional parameters use an ordinal placeholder for substitution and named parameters use variables. 
+A named or positional parameter is a placeholder for a value in the WHERE, LIMIT or OFFSET clause of a query. 
+Note that both parameters and options are optional.
+
+[source,csharp]
+----
+var parameters = new QueryParameters();
+parameters.Add("London"); // positional parameter
+parameters.Add("city", "London"); // named paramter
+var options = new QueryOptions
+{
+
+};
+var result = await collection.Query<dynamic>(
+    "SELECT x.* FROM `default` WHERE x.Type=&0",
+    parameters,
+    options
+);
+----
+
+The complete code for this page's example can be found at 
+///////
+
+
+
+
+== QueryResult
+
+
+/// errors returned by the N1QL service during execution are returned in the QueryResult.Errors property, rather than by throwing exceptions. Here is a list of important QueryResult properties:
+
+
+
+== Building Statements with LINQ (Language Integrated Query)
+
+
+
+
+
+== Querying Asynchronously
+
+
+
+
+== Scan Consistency
+
+
+
+
+== Streaming Large Result Sets
+
+
+
+
+== Streaming rows
+
+// TODO
+
+
+== Additional Resources
+
+
+N1QL SDK concept doc
+
+
+N1QL intro &
+N1QL pages
+
+N1QL interactive tutorial
+
+Indexes
+GSI
+
+SQL++
+
+other query options
