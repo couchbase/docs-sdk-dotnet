@@ -55,7 +55,8 @@ var result = await collection.Query<dynamic>(
 ----
 
 The complete code for this page's example can be found at 
-///////
+
+/////// ...
 
 
 
