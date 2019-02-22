@@ -7,7 +7,7 @@
 
 Our query service uses N1QL, which will be fairly familiar to anyone who's used any dialect of SQL.
 xref:#additional-resources[Further resources] for learning about N1QL are listed at the bottom of the page.
-You may whish to  //// link
+You may wish to  //// link
 or just dive in with a query against our travel sample data set.
 In this case, the one thing that you need to know is that in order to make a bucket queryable, it must have at least one index defined.
 You can define a _primary_ index on a bucket. 
@@ -38,17 +38,28 @@ Positional parameters use an ordinal placeholder for substitution and named para
 A named or positional parameter is a placeholder for a value in the WHERE, LIMIT or OFFSET clause of a query. 
 Note that both parameters and options are optional.
 
+Positional parameter example:
 [source,csharp]
 ----
-var parameters = new QueryParameters();
-parameters.Add("London"); // positional parameter
-parameters.Add("city", "London"); // named paramter
-var options = new QueryOptions
-{
-
-};
+var parameters = new QueryParameters()
+    .Add("User");
+var options = new QueryOptions();
 var result = await collection.Query<dynamic>(
-    "SELECT x.* FROM `default` WHERE x.Type=&0",
+    "SELECT x.* FROM `default` WHERE x.Type=$1",
+    parameters,
+    options
+);
+----
+
+Named parameter example:
+[source,csharp]
+----
+var parameters = new QueryParameters()
+    .Add("type", "User");
+var options = new QueryOptions();
+
+var result = await collection.Query<dynamic>(
+    "SELECT x.* FROM `default` WHERE x.Type=$type",
     parameters,
     options
 );
