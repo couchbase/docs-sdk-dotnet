@@ -51,7 +51,7 @@ var result = await collection.Query<dynamic>(
 );
 ----
 
-Positional parameter example:
+Named parameter example:
 [source,csharp]
 ----
 var parameters = new QueryParameters()
