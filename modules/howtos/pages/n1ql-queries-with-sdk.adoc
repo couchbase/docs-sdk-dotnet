@@ -59,7 +59,7 @@ var parameters = new QueryParameters()
 var options = new QueryOptions();
 
 var result = await collection.Query<dynamic>(
-    "SELECT x.* FROM `default` WHERE x.Type=$city",
+    "SELECT x.* FROM `default` WHERE x.Type=$type",
     parameters,
     options
 );
