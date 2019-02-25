@@ -1,5 +1,7 @@
 = Document 
+:nav-title: Documents & Doc Ops
 :page-topic-type: concept
+:page-aliases: core-operations
 
 == Documents
 

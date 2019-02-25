@@ -1,6 +1,7 @@
 = Key Value Operations
 :navtitle: KV Operations
 :page-topic-type: howto
+:page-aliases: document-operations.adoc
 
 // aka KV Operations
 // aka Core Operations
@@ -113,7 +114,12 @@ var result = await collection.Upsert("document-key", document,
 );
 ----
 
-
+[TIP]
+.Sub-Document Operations
+====
+All of these operations involve fetching the complete document from the Cluster.
+Where the number of operations or other circumstances make bandwidth a significant issue, the SDK can work on just a portion of the document with xref:subdocument-operations.adoc[Sub-Docunent Operations].
+====
 
 //// TODO Remove
 
