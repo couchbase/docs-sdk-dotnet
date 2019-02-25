@@ -60,7 +60,7 @@ Here we just note that the CAS is a value representing the current state of an i
 The CAS value is returned as part of a document’s metadata whenever a document is accessed.
 Without explicitly setting it, a newly-created document would have a CAS value of _0_.
 
-_Timeout_ is an optional parameter which in the ,NET SDK has a type value of `TimeSpan`.
+_Timeout_ is an optional parameter which in the .NET SDK has a type value of `TimeSpan`.
 Timeout sets the timeout value for the underlying network connection.
 We will add to these options for the _Replace_ example:
 
@@ -161,11 +161,8 @@ var result = await collection.Remove("document-key",
 );
 ----
 
-
-
 == Expiration / TTL
 
-/// todo
 
 By default, Couchbase documents do not expire, but transient or temporary data may be needed for user sessions, caches, or other temporary documents. 
 You can use expiration values on documents to handle transient data.
@@ -195,9 +192,13 @@ Console.WriteLine(bucket.GetDocument<dynamic>("expires").Status);
 // links
 
 Sub-Document & XATTR
+
 Batching
+
 Formats
+
 Non-JSON
+
 Query Engine
 
 
