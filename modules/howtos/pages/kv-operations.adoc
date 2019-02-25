@@ -28,49 +28,41 @@ Or read on, for a hands-on introduction to working with documents from the .NET 
 
 == CRUD Operations
 
-The core interface to Couchbase Server is simple KV operations on full documents. For Sub-Document operations on partial documents, see the xref:subdocument-operations.adoc[next section].
-
+The core interface to Couchbase Server is simple KV operations on full documents.
 Make sure you're familiar with the basics of authorization and connecting to a Cluster from the xref::hello-world:start-using-sdk.adoc[Start Using the SDK section].
-We're going to expand the _upsert_ one-liner from that page into more usefully formed CRUD examples.
+We're going to expand on the short _Upsert_ example we used there, adding options as we move through the various CRUD operations.
+Here is the _Insert_ operation at its simplest:
 
 [source,csharp]
 ----
 Insert
 var document = new {foo = "bar", bar = "foo"};
 var result = await collection.Insert("document-key", document);
+----
 
+Options may be added to operations:
+
+[source,csharp]
+----
 Insert (with options)
 var document = new {foo = "bar", bar = "foo"};
 var result = await collection.Insert("document-key", document,
     new InsertOptions
     {
         Cas = 12345,
-        Expiration = TimeSpan.FromMinutes(1),
-        PersistTo = PersistTo.One,
-        ReplicateTo = ReplicateTo.One,
         Timeout = TimeSpan.FromSeconds(5)
     }
 );
 ----
 
-///  CAS
-///  protecting against concurrent updates to the same document
-///  see CAS page
+Setting a Compare and Swap (CAS) value is a form of optimistic locking - dealt with in depth in the xref:concurrent-document-mutations.adoc[CAS page].
+Here we just note that the CAS is a value representing the current state of an item; each time the item is modified, its CAS changes.
+The CAS value is returned as part of a document’s metadata whenever a document is accessed.
+Without explicitly setting it, a newly-created document would have a CAS value of _0_.
 
-///
-/// PersistTo ....
-/// Durability...
-
-
-A simple replace:
-
-[source,csharp]
-----
-var document = new {foo = "bar", bar = "foo"};
-var result = await collection.Replace("document-key", document);
-----
-
-And replace again, but this time with with options:
+_Timeout_ is an optional parameter which in the ,NET SDK has a type value of `TimeSpan`.
+Timeout sets the timeout value for the underlying network connection.
+We will add to these options for the _Replace_ example:
 
 [source,csharp]
 ----
@@ -80,24 +72,15 @@ var result = await collection.Replace("document-key", document,
     {
         Cas = 12345,
         Expiration = TimeSpan.FromMinutes(1),
-        PersistTo = PersistTo.One,
-        ReplicateTo = ReplicateTo.One,
         Timeout = TimeSpan.FromSeconds(5)
     }
 );
 ----
 
-We'll discuss _expiration_ xref:#[below].
-Here's the same format for upsert:
-
-
-[source,csharp]
-----
-var document = new {foo = "bar", bar = "foo"};
-var result = await collection.Upsert("document-key", document);
-----
-
-And for upsert with options:
+Expiration sets an explicit time to live (TTL) for a document, for which you can also xref:sdk-xattr-example.adoc[see a more detailed example of TTL discovery] later in the docs.
+We'll discuss modifying `Expiration` in more details xref:#net-modifying-expiration[below].
+For a discussion of item (Document) _vs_ Bucket expiration, see the 
+xref:6.5@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-bucket-versus-item[Expiration Overview page].
 
 [source,csharp]
 ----
@@ -114,26 +97,32 @@ var result = await collection.Upsert("document-key", document,
 );
 ----
 
+Here, we have add _Durability_ options, namely `PersistTo` and `ReplicateTo`.
+In Couchbase Server releases before 6.5, Durability was set with these two options -- see the xref:https://docs.couchbase.com/dotnet-sdk/2.7/durability.html[6.0 Durability documentation] -- covering  how many replicas the operation must be propagated to and how many persisted copies of the modified record must exist. 
+Couchbase Data Platform 6.5 refines these two options, with xref:synchronous-replication.adoc[Synchronous Replication] -- although they remain essentially the same in use -- as well as adding the option of xref:transactions.adoc[atomic document transactions].
+
+
 [TIP]
 .Sub-Document Operations
 ====
 All of these operations involve fetching the complete document from the Cluster.
-Where the number of operations or other circumstances make bandwidth a significant issue, the SDK can work on just a portion of the document with xref:subdocument-operations.adoc[Sub-Docunent Operations].
+Where the number of operations or other circumstances make bandwidth a significant issue, the SDK can work on just a specific _path_ of the document with xref:subdocument-operations.adoc[Sub-Docunent Operations].
 ====
 
-//// TODO Remove
+== Retrieving full documents
 
+Using the `Get()` method with the document key can be done in a similar fashion to the other operations:
 
- Retrieving full documents
-
-
-
-Get
 [source,csharp]
 ----
 var result = await collection.Get(“document-key”);
 var content = result.ContentAs<string>();
+----
 
+//// TODO: options - ProjectList
+
+[source,csharp]
+----
 Get (with options)
 var result = await collection.Get(“document-key”,
     new GetOptions
@@ -147,23 +136,16 @@ var result = await collection.Get(“document-key”,
 var content = result.ContentAs<string>();
 ----
 
+/// TODO: GetFromReplica
+
+
 /// It is also possible to fetch the document and reset its expiration value at the same time. See Modifying Expiration for more information.
-
-
 
 
 
 == Removing
 
-
-Remove
-[source,csharp]
-----
-var result = await collection.Remove("document-key");
-----
-
-
-
+When removing a document, you will have the same concern for durability as with any additive modification to the Bucket:
 
 Remove (with options)
 [source,csharp]
@@ -189,17 +171,22 @@ By default, Couchbase documents do not expire, but transient or temporary data m
 You can use expiration values on documents to handle transient data.
 
 
+//// TODO
+ 
+----
+    Expiry = expiry,
+...
+//will be expired, thus KeyNotFound
+Console.WriteLine(bucket.GetDocument<dynamic>("expires").Status);
+----
+
+
+/// Increment / Decrement  ?
+
+
 /// Touch
 
 // GetAndTouch
-
-
-== TTL
-
-/// Increment / Decrement
-
-
-
 
 
 
@@ -224,3 +211,5 @@ Query Engine
 //Get with projections
 //Response property definitions
 //Option property definitions
+
+
