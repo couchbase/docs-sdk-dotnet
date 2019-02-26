@@ -3,6 +3,7 @@
 :page-topic-type: howto
 :page-aliases: n1ql-query
 
+:abstract:
 
 
 Our query service uses N1QL, which will be fairly familiar to anyone who's used any dialect of SQL.
@@ -19,8 +20,10 @@ Open it, and enter the following:
 
 [source,n1ql]
 ----
-CREATE PRIMARY INDEX ON `users`
+CREATE PRIMARY INDEX ON `travel-sample`
 ----
+
+or replace travel-sample with a different Bucket name to build an index on a different dataset.
 
 NOTE: The default installation places cbq in `/opt/couchbase/bin/` on Linux, `/Applications/Couchbase Server.app/Contents/Resources/couchbase-core/bin/cbq` on OS X, and `C:\Program Files\Couchbase\Server\bin\cbq.exe` on Microsoft Windows.
 
@@ -69,25 +72,14 @@ The complete code for this page's example can be found at
 /////// ...???
 
 
+== Handling Results
+
+In most cases your query will return more than one result, and you may be looking to iterate over those results.
+
+/// Mike to do code
 
 
-== QueryResult
-
-
-/// errors returned by the N1QL service during execution are returned in the QueryResult.Errors property, rather than by throwing exceptions. 
-Here is a list of important QueryResult properties:
-
-
-
-== Building Statements with LINQ (Language Integrated Query)
-
-
-
-
-
-== Querying Asynchronously
-
-
+/ == Building Statements with LINQ (Language Integrated Query) ////// Not in DP1
 
 
 == Scan Consistency
@@ -103,10 +95,7 @@ Select this when consistency is always more important than performance.
 * For a middle ground, *AtPlus* is a "read your own write" (RYOW) option, which means it just waits for the new documents that you specify to be indexed, rather than an entire index of multiple documents.
 See the xref:scan-consistency-examples.adoc[examples] for how to use *AtPlus* for the best performance balance for many circumstances.
 
-
-///// Do we want to bring in the Scan Consistency example(s) - and thus the code - to this page ???
-
-/// .
+/// TODO AtPlus code sample
 
 == Streaming Large Result Sets
 
@@ -120,7 +109,7 @@ To avoid this, it is suggested that large results sets be streamed by setting th
 [source,csharp]
 ----
 
-//// TODO
+//// TODO - or not in DP1??  --  tbc ////
 
 
 ----
@@ -139,7 +128,7 @@ N1QL SDK concept doc
 N1QL intro &
 N1QL pages
 
-N1QL interactive tutorial
+The xref:http://query.pub.couchbase.com/tutorial/#1[N1QL interactive tutorial] is a good introduction to the basics of N1QL use.
 
 Indexes
 GSI

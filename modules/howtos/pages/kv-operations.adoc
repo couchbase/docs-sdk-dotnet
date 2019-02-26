@@ -3,11 +3,6 @@
 :page-topic-type: howto
 :page-aliases: document-operations.adoc
 
-// aka KV Operations
-// aka Core Operations
-
-
-
 //////////////////////////////////////////////
 ///////////////// Unfinished /////////////////
 //////////////////////////////////////////////
@@ -119,7 +114,7 @@ var result = await collection.Get(“document-key”);
 var content = result.ContentAs<string>();
 ----
 
-//// TODO: options - ProjectList
+Timeout can also be set - as in the earlier `Insert` example:
 
 [source,csharp]
 ----
@@ -127,19 +122,13 @@ Get (with options)
 var result = await collection.Get(“document-key”,
     new GetOptions
     {
-        CreatePath = true,
-        IncludeExpiration = true,
-        ProjectList = new List<string>(),
         Timeout = TimeSpan.FromSeconds(5)
     }
 );
 var content = result.ContentAs<string>();
 ----
 
-/// TODO: GetFromReplica
-
-
-/// It is also possible to fetch the document and reset its expiration value at the same time. See Modifying Expiration for more information.
+/ No GetFromReplica in DP1
 
 
 
@@ -168,7 +157,7 @@ By default, Couchbase documents do not expire, but transient or temporary data m
 You can use expiration values on documents to handle transient data.
 
 
-//// TODO
+//// TODO  Mike writing code sample
  
 ----
     Expiry = expiry,
@@ -176,15 +165,6 @@ You can use expiration values on documents to handle transient data.
 //will be expired, thus KeyNotFound
 Console.WriteLine(bucket.GetDocument<dynamic>("expires").Status);
 ----
-
-
-/// Increment / Decrement  ?
-
-
-/// Touch
-
-// GetAndTouch
-
 
 
 == Additional Resources
@@ -200,17 +180,4 @@ Formats
 Non-JSON
 
 Query Engine
-
-
-
-
-
-
-
-
-//TODO
-//Get with projections
-//Response property definitions
-//Option property definitions
-
 

@@ -68,6 +68,8 @@ var getResult = await collection.Get("my-document");
 KV Operations are described in detail on the xref:net-sdk:howtos:kv-operations.adoc[KV Operations page].
 Now that you know the basics, you may wish to go straight to that page -- or first see a complete worked example of using the Couchbase .NET client, our xref:3.0dp1@sample-application.adoc[Travel Sample Application].
 
+NOTE: The _Developer Preview_ version of the 3.0 .NET Client is entirely asynchronous in operation -- hence the `await`.
+
 == Additional Resources
 
 The API reference is generated for each release and can be found xref:http://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0dp1/[here].
