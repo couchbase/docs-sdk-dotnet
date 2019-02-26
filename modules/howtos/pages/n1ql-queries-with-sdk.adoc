@@ -14,7 +14,7 @@ You can define a _primary_ index on a bucket.
 When a primary index is defined you can issue non-covered queries on the bucket as well.
 
 Use
-xref:6.5@server::tools/cbq-shell.html[cbq],our interactive Query shell.
+xref:6.5@server::tools/cbq-shell.html[cbq], our interactive Query shell.
 Open it, and enter the following:
 
 [source,n1ql]
