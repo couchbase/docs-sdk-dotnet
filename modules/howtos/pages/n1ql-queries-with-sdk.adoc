@@ -7,15 +7,14 @@
 
 Our query service uses N1QL, which will be fairly familiar to anyone who's used any dialect of SQL.
 xref:#additional-resources[Further resources] for learning about N1QL are listed at the bottom of the page.
-You may wish to  //// link
+You may wish to  //// ............link Server N1QL intro pages.............
 or just dive in with a query against our travel sample data set.
-In this case, the one thing that you need to know is that in order to make a bucket queryable, it must have at least one index defined.
+In this case, the one thing that you need to know is that in order to make a Bucket queryable, it must have at least one index defined.
 You can define a _primary_ index on a bucket. 
 When a primary index is defined you can issue non-covered queries on the bucket as well.
 
 Use
-xref:6.5@server::tools/cbq-shell.html
-our interactive Query shell.
+xref:6.5@server::tools/cbq-shell.html[cbq],our interactive Query shell.
 Open it, and enter the following:
 
 [source,n1ql]
@@ -23,14 +22,14 @@ Open it, and enter the following:
 CREATE PRIMARY INDEX ON `users`
 ----
 
-NOTE: The default installation places cbq in `/opt/couchbase/bin/` on Linux, `/Applications/Couchbase Server.app/Contents/Resources/couchbase-core/bin/cbq` on OS X, and `C:\Program Files\Couchbase\Server\bin\cbq.exe` on Microsoft Windows
+NOTE: The default installation places cbq in `/opt/couchbase/bin/` on Linux, `/Applications/Couchbase Server.app/Contents/Resources/couchbase-core/bin/cbq` on OS X, and `C:\Program Files\Couchbase\Server\bin\cbq.exe` on Microsoft Windows.
 
 
 == Queries & Placeholders
 
 To issue N1QL queries from the .NET SDK, you should create a `QueryRequest` object
 
-//// ...
+//// ...TODO...
 
 Placeholders allow you to specify variable constraints for an otherwise constant query. 
 There are two variants of placeholders: postional and named parameters. 
@@ -38,7 +37,7 @@ Positional parameters use an ordinal placeholder for substitution and named para
 A named or positional parameter is a placeholder for a value in the WHERE, LIMIT or OFFSET clause of a query. 
 Note that both parameters and options are optional.
 
-Positional parameter example:
+.Positional parameter example:
 [source,csharp]
 ----
 var parameters = new QueryParameters()
@@ -51,7 +50,7 @@ var result = await collection.Query<dynamic>(
 );
 ----
 
-Named parameter example:
+.Named parameter example:
 [source,csharp]
 ----
 var parameters = new QueryParameters()
@@ -67,7 +66,7 @@ var result = await collection.Query<dynamic>(
 
 The complete code for this page's example can be found at 
 
-/////// ...
+/////// ...???
 
 
 
@@ -75,7 +74,8 @@ The complete code for this page's example can be found at
 == QueryResult
 
 
-/// errors returned by the N1QL service during execution are returned in the QueryResult.Errors property, rather than by throwing exceptions. Here is a list of important QueryResult properties:
+/// errors returned by the N1QL service during execution are returned in the QueryResult.Errors property, rather than by throwing exceptions. 
+Here is a list of important QueryResult properties:
 
 
 
@@ -93,23 +93,48 @@ The complete code for this page's example can be found at
 == Scan Consistency
 
 
+Setting a .....xref:????....[staleness parameter for queries], with `scan_consistency`, enables a tradeoff between latency and (eventual) consistency.
 
+* A N1QL query using the default *Not Bounded* Scan Consistency will not wait for any indexes to finish updating before running the query and returning results, meaning that results are returned quickly, but the query will not return any documents that are yet to be indexed.
+
+* With Scan Consistency set to *RequestPlus*, all document changes and index updates are processed before the query is run.
+Select this when consistency is always more important than performance.
+
+* For a middle ground, *AtPlus* is a "read your own write" (RYOW) option, which means it just waits for the new documents that you specify to be indexed, rather than an entire index of multiple documents.
+See the xref:scan-consistency-examples.adoc[examples] for how to use *AtPlus* for the best performance balance for many circumstances.
+
+
+///// Do we want to bring in the Scan Consistency example(s) - and thus the code - to this page ???
+
+/// .
 
 == Streaming Large Result Sets
 
 
+By default the .NET SDK will fetch the entire result set from the server, and de-serialize the entire set in-memory on the application.
+For smaller result sets this is fine, however with large result sets this causes the memory footprint to grow linearly upwards.
+This has an impact on CLR Garbage Collection, which can lead to poor application performance, and eventually an [.api]`OutOfMemoryException` may be thrown.
+To avoid this, it is suggested that large results sets be streamed by setting the `UseStreaming` property on the `QueryRequest` object:
+
+.Streaming N1QL Query
+[source,csharp]
+----
+
+//// TODO
 
 
-== Streaming rows
+----
 
-// TODO
+When streaming is enabled, the client will start a persistent connection with the server and only read the header until the Rows are enumerated; then, each row or JSON object will be de-serialized.
+The net effect is that the memory footprint of the application will stay a constant and not increase linearly, and the Garbage Collector will collect objects created during de-serialization in the first generation.
 
 
 == Additional Resources
 
+NOTE: N1QL is not the only query option in Couchbase.
+Be sure to xref:???????????????????[check that your use case fits your selection of query service].
 
 N1QL SDK concept doc
-
 
 N1QL intro &
 N1QL pages
@@ -121,5 +146,4 @@ GSI
 
 SQL++
 
-other query options
 
