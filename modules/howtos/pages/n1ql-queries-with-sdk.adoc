@@ -3,8 +3,13 @@
 :page-topic-type: howto
 :page-aliases: n1ql-query
 
-:abstract:
+[abstract]
+You can query for documents in Couchbase using the N1QL query language, a language based on SQL, but designed for structured and flexible JSON documents. 
+Querying can solve typical programming tasks such as finding a user profile by email address, facebook login, or user ID.
 
+WARNING: These pages cover the first _Developer Preview_ of the Couchbase .NET SDK 3.0 (DP1).
+As such they are likely to change without notice.
+The DP1 code _should not_ be used in production.
 
 Our query service uses N1QL, which will be fairly familiar to anyone who's used any dialect of SQL.
 xref:#additional-resources[Further resources] for learning about N1QL are listed at the bottom of the page.
@@ -23,7 +28,7 @@ Open it, and enter the following:
 CREATE PRIMARY INDEX ON `travel-sample`
 ----
 
-or replace travel-sample with a different Bucket name to build an index on a different dataset.
+or replace _travel-sample_ with a different Bucket name to build an index on a different dataset.
 
 NOTE: The default installation places cbq in `/opt/couchbase/bin/` on Linux, `/Applications/Couchbase Server.app/Contents/Resources/couchbase-core/bin/cbq` on OS X, and `C:\Program Files\Couchbase\Server\bin\cbq.exe` on Microsoft Windows.
 
@@ -77,9 +82,6 @@ The complete code for this page's example can be found at
 In most cases your query will return more than one result, and you may be looking to iterate over those results.
 
 /// Mike to do code
-
-
-/ == Building Statements with LINQ (Language Integrated Query) ////// Not in DP1
 
 
 == Scan Consistency

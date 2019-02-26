@@ -3,6 +3,10 @@
 :page-topic-type: howto
 :page-aliases: document-operations.adoc
 
+WARNING: These pages cover the first _Developer Preview_ of the Couchbase .NET SDK 3.0 (DP1).
+As such they are likely to change without notice.
+The DP1 code _should not_ be used in production.
+
 //////////////////////////////////////////////
 ///////////////// Unfinished /////////////////
 //////////////////////////////////////////////
@@ -127,9 +131,6 @@ var result = await collection.Get(“document-key”,
 );
 var content = result.ContentAs<string>();
 ----
-
-/ No GetFromReplica in DP1
-
 
 
 == Removing
