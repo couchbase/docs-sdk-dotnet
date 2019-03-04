@@ -3,6 +3,10 @@
 :page-topic-type: concept
 :page-aliases: core-operations
 
+
+// use the simplicity of https://developer.couchbase.com/documentation/server/3.x/developer/dev-guide-3.0/read-write.html possibly?
+// don't forget https://docs-staging.couchbase.com/dotnet-sdk/2.7/datastructures.html
+
 == Documents
 
 == Input and Output Types

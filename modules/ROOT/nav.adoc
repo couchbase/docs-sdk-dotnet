@@ -1,7 +1,6 @@
 .Hello World!
 * xref:hello-world:start-using-sdk.adoc[Start Using the SDK]
 * xref:hello-world:sample-application.adoc[Sample Application]
-* xref:hello-world:sdk-authentication-overview.adoc[Authentication]
 
 .Working with Data
 * xref:howtos:kv-operations.adoc[Key Value Operations]
@@ -13,9 +12,22 @@
 * xref:howtos:full-text-searching-with-sdk.adoc[Full Text Search from the SDK]
 * xref:howtos:view-queries-with-sdk.adoc[MapReduce Views]
 
+
+.Advanced Working with Data
+* xref:howtos:durability.adoc[Durability]
+ ** * xref:howtos:transactions.adoc[ACID Transactions]
+
+.Managing Couchbase
+* User Management
+ ** xref:howtos:sdk-authentication-overview.adoc[Authentication]
+
+.Errors & Diagnostics
+* xref:howtos:health-check.adoc[Health Check]
+
 .Concepts
-* xref:concept-docs:document-operations.adoc[Document Operations]
-* xref:concept-docs:collections.adoc[Collections]
+* xref:concept-docs:concepts.adoc[Concepts]
+ ** xref:concept-docs:document-operations.adoc[Documents & Doc Ops]
+ ** xref:concept-docs:collections.adoc[Collections]
 
 .Project Docs
 * xref:project-docs:relnotes-dotnet-sdk.adoc[Release Notes]

@@ -1,0 +1,48 @@
+
+
+
+
+
+xref:
+For details 
+
+Or dive straight in with some example code - get the full sample from
+
+
+
+
+
+
+// Scala code as placeholder
+----
+sealed trait Durability
+case object Disabled extends Durability
+case class ClientVerified(replicateTo: ReplicateTo.Value, persistTo: PersistTo.Value) extends Durability
+case object ReplicateToMajority extends Durability
+case object PersistToMajority extends Durability
+
+collection.replace(“id”, SomeData, durability = ReplicateToMajority);
+collection.replace(“id”, SomeData, durability = ClientVerified(ReplicateTo.Two, PersistTo.None));
+
+// Error handling for idempotent op
+def retryIdempotentOp(op: => Try[MutateResult, guard: Int = 3): Try[MutateResult] = { 
+   val result = op() 
+   result match {
+      case Success(_) =>
+      case Failure(err: RetryableOperationException) =>
+        // All ops that an app can retry immediately inherit RetryableOperationException 
+        if (guard > 0) retryOp(op, guard - 1) else Failure(err)
+      case Failure(err) => Failure(err)
+   }
+}
+
+retryIdempotentOp(collection.replace(“id”, SomeData, durability = ReplicateToMajority))
+
+// Error handling for non-idempotent op: very situation/app specific.  Suggestions welcome!
+
+// Upgrade scenario, writing app for both server <6.0 and >=6.5
+def durabilityForServer() = {
+   if (serverVersion >= 6.5) ReplicateToMajority else ClientVerified(ReplicateTo.Two)
+}
+collection.replace(“id”, SomeData, durability = durabilityForServer())
+----

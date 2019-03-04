@@ -1,0 +1,31 @@
+
+= Durability
+:navtitle: Durability
+:page-topic-type: landing-page
+
+[abstract]
+Durability must be traded off against performance.
+
+
+== Client-Side Durability
+
+For versions of Couchbase Data Platform prior to 6.5, Durability was handled on the client side
+
+3.0 with <=6.0
+
+xref: /// old docs[more in-depth discussion can be found in the old docs].
+
+
+== Strong Consistency
+
+With the release of Couchbase Data Platform 6.5, we introduce Synchronous Replication. 
+
+
+
+== Transactions
+
+Couchbase Data Platform 6.5 also sees a _*Beta*_ release of our _Multi-Document Atomicity_ feature, _a.k.a._ _Transactions_.
+Although atomicity guarantees occur a performance overhead, there are some circumstances where a guarantee of a document change not going astray is the most important aspect of the operation.
+
+
+

@@ -153,20 +153,68 @@ var result = await collection.Remove("document-key",
 
 == Expiration / TTL
 
-
 By default, Couchbase documents do not expire, but transient or temporary data may be needed for user sessions, caches, or other temporary documents. 
-You can use expiration values on documents to handle transient data.
+Using `Touch()`, you can set expiration values on documents to handle transient data:
 
-
-//// TODO  Mike writing code sample
- 
+[source,csharp]
 ----
-    Expiry = expiry,
-...
-//will be expired, thus KeyNotFound
-Console.WriteLine(bucket.GetDocument<dynamic>("expires").Status);
+var result = await collection.Touch("document-key", TimeSpan.FromSeconds(10));
 ----
 
+A network timeout can be set with the optional `TouchOptions()`, in the same fashion as earlier examples on this page:
+
+[source,csharp]
+----
+var result = await collection.Touch("document-key", TimeSpan.FromSeconds(30),
+    new TouchOptions
+    {
+        Timeout = TimeSpan.FromSeconds(5)
+    }
+);
+----
+
+== Atomic document modifications
+
+The value of a document can be increased or decreased atomically using `Binary.Increment()` and `.Binary.Decrement()`.
+
+.Increment
+[source,csharp]
+----
+// increment binary value by 1, if document doesn’t exist, seed it at 1000
+await collection.Binary.Increment("document-key", 1, 1000);
+----
+
+[source,csharp]
+----
+.Increment (with options)
+// increment binary value by 1, if document doesn’t exist, seed it at 1000
+// optional arguments:
+// - Timeout (TimeSpan)
+// - Expiration (TimeSpan)
+// - CAS (ulong)
+
+await collection.Binary.Increment("document-key", 1, 1000, TimeSpan.FromSeconds(5), TimeSpan.FromDays(1), cas);
+----
+
+.Decrement
+[source,csharp]
+----
+// decrement binary value by 1, if document doesn’t exist, seed it at 1000
+await collection.Binary.Decrement("document-key", 1, 1000);
+----
+
+.Increment (with options)
+[source,csharp]
+----
+// decrement binary value by 1, if document doesn’t exist, seed it at 1000
+// optional arguments:
+// - Timeout (TimeSpan)
+// - Expiration (TimeSpan)
+// - CAS (ulong)
+await collection.Binary.Decrement("document-key", 1, 1000, TimeSpan.FromSeconds(5), TimeSpan.FromDays(1), cas);
+----
+
+NOTE: Increment & Decrement are considered part of the ‘binary’ API and as such may still be subject to change
 
 == Additional Resources
 
