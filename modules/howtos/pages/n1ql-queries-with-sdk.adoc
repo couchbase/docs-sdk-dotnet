@@ -97,23 +97,40 @@ Select this when consistency is always more important than performance.
 * For a middle ground, *AtPlus* is a "read your own write" (RYOW) option, which means it just waits for the new documents that you specify to be indexed, rather than an entire index of multiple documents.
 See the xref:scan-consistency-examples.adoc[examples] for how to use *AtPlus* for the best performance balance for many circumstances.
 
-/// TODO AtPlus code sample
+.ScanConsisteny (RYOW)
+[source,csharp]
+----
+// create / update document (mutation)
+var upsertResult = await collection.Upsert("id", new { name = "Mike", type = "User" });
+
+// create mutation state from mutation results
+var state = MutationState.From(upsertResult);
+
+// use mutation state with query option
+var result = cluster.Query<dynamic>(
+    "SELECT x.* FROM `default` WHERE x.Type=$0",
+    parameters => parameters.Add("User"),
+    options => options.ConsistentWith(state)
+);
+----
 
 == Streaming Large Result Sets
 
 
 By default the .NET SDK will fetch the entire result set from the server, and de-serialize the entire set in-memory on the application.
 For smaller result sets this is fine, however with large result sets this causes the memory footprint to grow linearly upwards.
-This has an impact on CLR Garbage Collection, which can lead to poor application performance, and eventually an [.api]`OutOfMemoryException` may be thrown.
+This has an impact on CLR Garbage Collection, which can lead to poor application performance, and eventually an `OutOfMemoryException` may be thrown.
 To avoid this, it is suggested that large results sets be streamed by setting the `UseStreaming` property on the `QueryRequest` object:
 
 .Streaming N1QL Query
 [source,csharp]
 ----
-
-//// TODO - or not in DP1??  --  tbc ////
-
-
+// set result should be streaming with query option
+var result = cluster.Query<dynamic>(
+    "SELECT x.* FROM `default` WHERE x.Type=$0",
+    parameters => parameters.Add("User"),
+    options => options.UseStreaming(true)
+);
 ----
 
 When streaming is enabled, the client will start a persistent connection with the server and only read the header until the Rows are enumerated; then, each row or JSON object will be de-serialized.
