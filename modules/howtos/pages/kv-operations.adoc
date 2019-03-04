@@ -7,10 +7,6 @@ WARNING: These pages cover the first _Developer Preview_ of the Couchbase .NET S
 As such they are likely to change without notice.
 The DP1 code _should not_ be used in production.
 
-//////////////////////////////////////////////
-///////////////// Unfinished /////////////////
-//////////////////////////////////////////////
-
 
 The complete code sample used on this page can be downloaded from
 ///  xref::example$document.cs[here]
@@ -218,15 +214,12 @@ NOTE: Increment & Decrement are considered part of the ‘binary’ API and as s
 
 == Additional Resources
 
-// links
+Working on just a specific path within a JSON document will reduce network bandwidth requirements - see the xref:subdocument-operations.adoc[Sub-Document] pages.
+For working with metadata on a document, reference our xref:sdk-xattr-example.adoc[Extended Attributes] pages.
 
-Sub-Document & XATTR
+Another way of increasing network performance is to _pipeline_ operations with xref:batching-operations.adoc[Batching Operations].
 
-Batching
+As well as various xref:concept-docs:data-model.adoc[Formats] of JSON, Couchbase can work directly with xref:non-json.adoc[arbitary bytes, or binary format].
 
-Formats
-
-Non-JSON
-
-Query Engine
+Our xref:n1ql-queries-with-sdk.adoc[Query Engine] enables retrieval of information using the SQL-like syntax of N1QL.
 
