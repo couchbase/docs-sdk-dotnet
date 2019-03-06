@@ -68,9 +68,8 @@ var result = await collection.Query<dynamic>(
 );
 ----
 
-The complete code for this page's example can be found at 
+The complete code for this page's example can be found at xref:[??]
 
-/////// ...???
 
 
 == Handling Results
@@ -156,18 +155,16 @@ The net effect is that the memory footprint of the application will stay a const
 == Additional Resources
 
 NOTE: N1QL is not the only query option in Couchbase.
-Be sure to xref:???????????????????[check that your use case fits your selection of query service].
+Be sure to xref:??[check that your use case fits your selection of query service].
 
-N1QL SDK concept doc
+For a deeper dive into N1QL from the SDK, refer to our xref:[N1QL SDK concept doc].
 
-N1QL intro &
-N1QL pages
+The xref:[Server doc N1QL intro] and xref:[N1QL pages] make up a complete guide to the N1QL language, including all of the latest additions.
 
 The xref:http://query.pub.couchbase.com/tutorial/#1[N1QL interactive tutorial] is a good introduction to the basics of N1QL use.
 
-Indexes
-GSI
+Indexes / GSI links?
 
-SQL++
+SQL++ / Analytics.
 
 
