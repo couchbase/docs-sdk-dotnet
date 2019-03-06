@@ -35,10 +35,6 @@ NOTE: The default installation places cbq in `/opt/couchbase/bin/` on Linux, `/A
 
 == Queries & Placeholders
 
-To issue N1QL queries from the .NET SDK, you should create a `QueryRequest` object
-
-//// ...TODO...
-
 Placeholders allow you to specify variable constraints for an otherwise constant query. 
 There are two variants of placeholders: postional and named parameters. 
 Positional parameters use an ordinal placeholder for substitution and named parameters use variables. 
@@ -79,15 +75,35 @@ The complete code for this page's example can be found at
 
 == Handling Results
 
-In most cases your query will return more than one result, and you may be looking to iterate over those results.
+In most cases your query will return more than one result, and you may be looking to iterate over those results:
 
-/// Mike to do code
+[source,csharp]
+----
+var result = await collection.Query<dynamic>(
+    "SELECT x.* FROM `default` WHERE x.Type=$0",
+    parameters => parameters.Add("User"),
+    options => {}
+);
 
+// check query was successful
+if (result.Status != QueryStatus.Success)
+{
+    // error
+}
+
+// iterate over rows
+foreach (var row in result.Rows)
+{
+    // each row is an instance of the Query<T> call (eg dynamic or custom type
+    var name = row.username; // “mike”
+    Var age = row.age;
+}
+----
 
 == Scan Consistency
 
 
-Setting a .....xref:????....[staleness parameter for queries], with `scan_consistency`, enables a tradeoff between latency and (eventual) consistency.
+Setting a xref:????[staleness parameter for queries], with `scan_consistency`, enables a tradeoff between latency and (eventual) consistency.
 
 * A N1QL query using the default *Not Bounded* Scan Consistency will not wait for any indexes to finish updating before running the query and returning results, meaning that results are returned quickly, but the query will not return any documents that are yet to be indexed.
 
