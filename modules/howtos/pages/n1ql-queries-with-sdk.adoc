@@ -12,9 +12,8 @@ As such they are likely to change without notice.
 The DP1 code _should not_ be used in production.
 
 Our query service uses N1QL, which will be fairly familiar to anyone who's used any dialect of SQL.
-xref:#additional-resources[Further resources] for learning about N1QL are listed at the bottom of the page.
-You may wish to  //// ............link Server N1QL intro pages.............
-or just dive in with a query against our travel sample data set.
+xref:#_additional_resources[Further resources] for learning about N1QL are listed at the bottom of the page.
+Before you get started you may wish to checkout the xref:6.0@server:n1ql:n1ql-language-reference/index.adoc[N1QL intro page], or just dive in with a query against our travel sample data set.
 In this case, the one thing that you need to know is that in order to make a Bucket queryable, it must have at least one index defined.
 You can define a _primary_ index on a bucket. 
 When a primary index is defined you can issue non-covered queries on the bucket as well.
@@ -31,6 +30,8 @@ CREATE PRIMARY INDEX ON `travel-sample`
 or replace _travel-sample_ with a different Bucket name to build an index on a different dataset.
 
 NOTE: The default installation places cbq in `/opt/couchbase/bin/` on Linux, `/Applications/Couchbase Server.app/Contents/Resources/couchbase-core/bin/cbq` on OS X, and `C:\Program Files\Couchbase\Server\bin\cbq.exe` on Microsoft Windows.
+
+// TODO: improving this and/or adding server/6.0/tools/query-workbench.html
 
 
 == Queries & Placeholders
@@ -155,16 +156,16 @@ The net effect is that the memory footprint of the application will stay a const
 == Additional Resources
 
 NOTE: N1QL is not the only query option in Couchbase.
-Be sure to xref:??[check that your use case fits your selection of query service].
+Be sure to check that your use case fits your selection of query service.
 
-For a deeper dive into N1QL from the SDK, refer to our xref:[N1QL SDK concept doc].
+// For a deeper dive into N1QL from the SDK, refer to our xref:concept:[N1QL SDK concept doc].
 
-The xref:[Server doc N1QL intro] and xref:[N1QL pages] make up a complete guide to the N1QL language, including all of the latest additions.
+The xref:6.0@server:n1ql:n1ql-language-reference/index.adoc[Server doc N1QL intro] introduces up a complete guide to the N1QL language, including all of the latest additions.
 
 The xref:http://query.pub.couchbase.com/tutorial/#1[N1QL interactive tutorial] is a good introduction to the basics of N1QL use.
 
-Indexes / GSI links?
+// Indexes / GSI links?
 
-SQL++ / Analytics.
+// SQL++ / Analytics.
 
 
