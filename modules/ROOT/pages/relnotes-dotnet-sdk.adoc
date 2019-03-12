@@ -79,6 +79,32 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 2.7.5 (12th March 2019)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.5.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.5[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-1838[NCBC-1838]: 
+Default timeout was set as seconds as opposed to milliseconds.
+It has now been set to 2500ms.
+* https://issues.couchbase.com/browse/NCBC-1843[NCBC-1843]: 
+In LookupIn last command is not always parsed correctly, leading to an incorrect response status.
+This has been fixed, and the correct response status should now be returned.
+* https://issues.couchbase.com/browse/NCBC-1845[NCBC-1845]: 
+Status code OperationTimeout (Code 512) was returned under some circumstances with DocumentDoesNotExistException.
+This is now fixed, and a Timeout status no longer returns when the server returns KeyNotFound.
+
 == Version 2.7.4 (5th February 2019)
 
 http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.4.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.4[API Reference]
