@@ -28,19 +28,19 @@ Now you have the .NET client installed grab the code from link:href://devguideex
 [source,csharp]
 ----
 var config = new Configuration()
-    .WithServers("http://10.112.180.101:8091")
-    .WithCredentials("username", "password");
+    .WithServers("couchbase://10.112.180.101")
+    .WithCredentials("username", "password")
+    .WithBucket("defualt");
 ----
 
 Couchbase uses xref:6.5@server:learn/security:roles.adoc[Role Based Access Control (RBAC) to control access to resources.
 Here we will use the _Full Admin_ role created during installation of the Couchbase Data Platform.
 For production client code, you will want to use xref:3.0dp1@net-sdk:howtos:managing-connections.adoc#rbac[more appropriate, restrictive settings], but here we want to get you up and running quickly.
-If you're developing client code on the same VM or machine as the Couchbase Server, your URI can be _localhost_.
+If you're developing client code on the same VM or machine as the Couchbase Server, your URI can be _couchbase://localhost_.
 
 [source,csharp]
 ----
-var cluster = new Cluster();
-await cluster.Initialize(config);
+var cluster = new Cluster(config);
 ----
 
 [source,csharp]
@@ -68,7 +68,7 @@ var getResult = await collection.Get("my-document");
 KV Operations are described in detail on the xref:net-sdk:howtos:kv-operations.adoc[KV Operations page].
 Now that you know the basics, you may wish to go straight to that page -- or first see a complete worked example of using the Couchbase .NET client, our xref:3.0dp1@sample-application.adoc[Travel Sample Application].
 
-NOTE: The _Developer Preview_ version of the 3.0 .NET Client is entirely asynchronous -- hence the `await`.
+NOTE: The _Developer Preview_ version of the 3.0 .NET Client is entirely asynchronous -- synchronous alternatives may be added in the future.
 
 == Additional Resources
 
