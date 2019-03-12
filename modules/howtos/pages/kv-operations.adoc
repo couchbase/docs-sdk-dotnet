@@ -27,24 +27,24 @@ Make sure you're familiar with the basics of authorization and connecting to a C
 We're going to expand on the short _Upsert_ example we used there, adding options as we move through the various CRUD operations.
 Here is the _Insert_ operation at its simplest:
 
+.Insert
 [source,csharp]
 ----
-Insert
 var document = new {foo = "bar", bar = "foo"};
 var result = await collection.Insert("document-key", document);
 ----
 
 Options may be added to operations:
 
+.Insert (with options)
 [source,csharp]
 ----
-Insert (with options)
 var document = new {foo = "bar", bar = "foo"};
 var result = await collection.Insert("document-key", document,
-    new InsertOptions
+    options =>
     {
-        Cas = 12345,
-        Timeout = TimeSpan.FromSeconds(5)
+        options.WithCas(12345);
+        options.WithTimeout(TimeSpan.FromSeconds(5));
     }
 );
 ----
@@ -62,37 +62,37 @@ We will add to these options for the _Replace_ example:
 ----
 var document = new {foo = "bar", bar = "foo"};
 var result = await collection.Replace("document-key", document,
-    new ReplaceOptions
+    options =>
     {
-        Cas = 12345,
-        Expiration = TimeSpan.FromMinutes(1),
-        Timeout = TimeSpan.FromSeconds(5)
+        options.WithCas(12345);
+        options.WithExpiration(TimeSpan.FromMinutes(1));
+        options.WithTimeout(TimeSpan.FromSeconds(5));
     }
 );
 ----
 
 Expiration sets an explicit time to live (TTL) for a document, for which you can also xref:sdk-xattr-example.adoc[see a more detailed example of TTL discovery] later in the docs.
 We'll discuss modifying `Expiration` in more details xref:#net-modifying-expiration[below].
-For a discussion of item (Document) _vs_ Bucket expiration, see the 
+For a discussion of item (Document) _vs_ Bucket expiration, see the
 xref:6.5@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-bucket-versus-item[Expiration Overview page].
 
 [source,csharp]
 ----
 var document = new {foo = "bar", bar = "foo"};
 var result = await collection.Upsert("document-key", document,
-    new UpsertOptions
+    options =>
     {
-        Cas = 12345,
-        Expiration = TimeSpan.FromMinutes(1),
-        PersistTo = PersistTo.One,
-        ReplicateTo = ReplicateTo.One,
-        Timeout = TimeSpan.FromSeconds(5)
+        options.WithCas(12345);
+        options.WithExpiration(TimeSpan.FromMinutes(1));
+        options.WithPersistTo(PersistTo.One);
+        options.WithReplicateTo(ReplicateTo.One);
+        options.WithTimeout(TimeSpan.FromSeconds(5));
     }
 );
 ----
 
 Here, we have add _Durability_ options, namely `PersistTo` and `ReplicateTo`.
-In Couchbase Server releases before 6.5, Durability was set with these two options -- see the xref:https://docs.couchbase.com/dotnet-sdk/2.7/durability.html[6.0 Durability documentation] -- covering  how many replicas the operation must be propagated to and how many persisted copies of the modified record must exist. 
+In Couchbase Server releases before 6.5, Durability was set with these two options -- see the xref:https://docs.couchbase.com/dotnet-sdk/2.7/durability.html[6.0 Durability documentation] -- covering  how many replicas the operation must be propagated to and how many persisted copies of the modified record must exist.
 Couchbase Data Platform 6.5 refines these two options, with xref:synchronous-replication.adoc[Synchronous Replication] -- although they remain essentially the same in use -- as well as adding the option of xref:transactions.adoc[atomic document transactions].
 
 
@@ -115,13 +115,13 @@ var content = result.ContentAs<string>();
 
 Timeout can also be set - as in the earlier `Insert` example:
 
+.Get (with options)
 [source,csharp]
 ----
-Get (with options)
 var result = await collection.Get(“document-key”,
-    new GetOptions
+    options =>
     {
-        Timeout = TimeSpan.FromSeconds(5)
+        options.WithTimeout(TimeSpan.FromSeconds(5));
     }
 );
 var content = result.ContentAs<string>();
@@ -132,23 +132,23 @@ var content = result.ContentAs<string>();
 
 When removing a document, you will have the same concern for durability as with any additive modification to the Bucket:
 
-Remove (with options)
+.Remove (with options)
 [source,csharp]
 ----
 var result = await collection.Remove("document-key",
-    new RemoveOptions
+    options =>
     {
-        Cas = 12345,
-        PersistTo = PersistTo.One,
-        ReplicateTo = ReplicateTo.One,
-        Timeout = TimeSpan.FromSeconds(5)
+        options.WithCas(12345);
+        options.WithPersistTo(PersistTo.One);
+        options.WithReplicateTo(ReplicateTo.One);
+        options.WithTimeout(TimeSpan.FromSeconds(5));
     }
 );
 ----
 
 == Expiration / TTL
 
-By default, Couchbase documents do not expire, but transient or temporary data may be needed for user sessions, caches, or other temporary documents. 
+By default, Couchbase documents do not expire, but transient or temporary data may be needed for user sessions, caches, or other temporary documents.
 Using `Touch()`, you can set expiration values on documents to handle transient data:
 
 [source,csharp]
@@ -161,9 +161,9 @@ A network timeout can be set with the optional `TouchOptions()`, in the same fas
 [source,csharp]
 ----
 var result = await collection.Touch("document-key", TimeSpan.FromSeconds(30),
-    new TouchOptions
+    options =>
     {
-        Timeout = TimeSpan.FromSeconds(5)
+        options.WithTimeout(TimeSpan.FromSeconds(5));
     }
 );
 ----
@@ -179,15 +179,14 @@ The value of a document can be increased or decreased atomically using `Binary.I
 await collection.Binary.Increment("document-key", 1, 1000);
 ----
 
+.Increment (with options)
 [source,csharp]
 ----
-.Increment (with options)
 // increment binary value by 1, if document doesn’t exist, seed it at 1000
 // optional arguments:
 // - Timeout (TimeSpan)
 // - Expiration (TimeSpan)
 // - CAS (ulong)
-
 await collection.Binary.Increment("document-key", 1, 1000, TimeSpan.FromSeconds(5), TimeSpan.FromDays(1), cas);
 ----
 
@@ -198,10 +197,10 @@ await collection.Binary.Increment("document-key", 1, 1000, TimeSpan.FromSeconds(
 await collection.Binary.Decrement("document-key", 1, 1000);
 ----
 
-.Increment (with options)
+.Decrement (with options)
 [source,csharp]
 ----
-// decrement binary value by 1, if document doesn’t exist, seed it at 1000
+// decrement binary value by 1. If the document doesn’t exist, seed it at 1000
 // optional arguments:
 // - Timeout (TimeSpan)
 // - Expiration (TimeSpan)
