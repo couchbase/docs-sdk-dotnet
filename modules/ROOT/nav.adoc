@@ -4,7 +4,7 @@
 
 .Working with Data
 * xref:howtos:kv-operations.adoc[Key Value Operations]
-* xref:howtos:subdocument-operations.adoc[Sub-Document Operations]
+// * xref:howtos:subdocument-operations.adoc[Sub-Document Operations]
 //  ** xref:howtos:sdk-xattr-example.adoc[Extended Attributes]
 * xref:howtos:n1ql-queries-with-sdk.adoc[N1QL from the SDK]
 ////
@@ -14,9 +14,9 @@
 * xref:howtos:view-queries-with-sdk.adoc[MapReduce Views]
 ////
 
+////
 .Advanced Working with Data
 * xref:howtos:durability.adoc[Durability]
-////
  ** * xref:howtos:transactions.adoc[ACID Transactions]
 
 .Managing Couchbase
@@ -26,11 +26,12 @@
 .Errors & Diagnostics
 * xref:howtos:health-check.adoc[Health Check]
 
+////
 .Concepts
 * xref:concept-docs:concepts.adoc[Concepts]
  ** xref:concept-docs:document-operations.adoc[Documents & Doc Ops]
 // ** xref:concept-docs:collections.adoc[Collections]
-
+////
 .Project Docs
 ////
 * xref:project-docs:relnotes-dotnet-sdk.adoc[Release Notes]
