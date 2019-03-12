@@ -7,7 +7,7 @@ It offers both a traditional synchronous API and an asynchronous API based on th
 
 WARNING: These pages cover the first _Developer Preview_ of the Couchbase .NET SDK -- 3.0 _alpha_.
 As such they are likely to change without notice.
-The DP1 code _should not_ be used in production.
+The _alpha_ code _should not_ be used in production.
 
 == Installing the SDK
 
