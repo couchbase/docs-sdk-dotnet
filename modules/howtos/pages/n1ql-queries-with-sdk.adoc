@@ -103,7 +103,7 @@ foreach (var row in result.Rows)
 == Scan Consistency
 
 
-Setting a xref:????[staleness parameter for queries], with `scan_consistency`, enables a tradeoff between latency and (eventual) consistency.
+Setting a staleness parameter for queries, with `scan_consistency`, enables a tradeoff between latency and (eventual) consistency.
 
 * A N1QL query using the default *Not Bounded* Scan Consistency will not wait for any indexes to finish updating before running the query and returning results, meaning that results are returned quickly, but the query will not return any documents that are yet to be indexed.
 

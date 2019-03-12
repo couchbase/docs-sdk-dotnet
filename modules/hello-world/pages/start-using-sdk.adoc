@@ -74,7 +74,7 @@ NOTE: The _Developer Preview_ version of the 3.0 .NET Client is entirely asynchr
 
 The API reference is generated for each release and can be found xref:http://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0dp1/[here].
 
-xref:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code.
+xref::project-docs:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code.
 
 Couchbase welcomes community contributions to the .NET SDK.
 The .NET SDK source code is available on xref:https://github.com/couchbase/couchbase-net-client[GitHub].
