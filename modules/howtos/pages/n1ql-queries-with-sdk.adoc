@@ -4,7 +4,7 @@
 :page-aliases: n1ql-query
 
 [abstract]
-You can query for documents in Couchbase using the N1QL query language, a language based on SQL, but designed for structured and flexible JSON documents. 
+You can query for documents in Couchbase using the N1QL query language, a language based on SQL, but designed for structured and flexible JSON documents.
 Querying can solve typical programming tasks such as finding a user profile by email address, facebook login, or user ID.
 
 WARNING: These pages cover the first _Developer Preview_ of the Couchbase .NET SDK 3.0 (DP1).
@@ -15,7 +15,7 @@ Our query service uses N1QL, which will be fairly familiar to anyone who's used 
 xref:#_additional_resources[Further resources] for learning about N1QL are listed at the bottom of the page.
 Before you get started you may wish to checkout the xref:6.0@server:n1ql:n1ql-language-reference/index.adoc[N1QL intro page], or just dive in with a query against our travel sample data set.
 In this case, the one thing that you need to know is that in order to make a Bucket queryable, it must have at least one index defined.
-You can define a _primary_ index on a bucket. 
+You can define a _primary_ index on a bucket.
 When a primary index is defined you can issue non-covered queries on the bucket as well.
 
 Use
@@ -36,10 +36,10 @@ NOTE: The default installation places cbq in `/opt/couchbase/bin/` on Linux, `/A
 
 == Queries & Placeholders
 
-Placeholders allow you to specify variable constraints for an otherwise constant query. 
-There are two variants of placeholders: postional and named parameters. 
-Positional parameters use an ordinal placeholder for substitution and named parameters use variables. 
-A named or positional parameter is a placeholder for a value in the WHERE, LIMIT or OFFSET clause of a query. 
+Placeholders allow you to specify variable constraints for an otherwise constant query.
+There are two variants of placeholders: postional and named parameters.
+Positional parameters use an ordinal placeholder for substitution and named parameters use variables.
+A named or positional parameter is a placeholder for a value in the WHERE, LIMIT or OFFSET clause of a query.
 Note that both parameters and options are optional.
 
 .Positional parameter example:
@@ -92,7 +92,7 @@ if (result.Status != QueryStatus.Success)
 }
 
 // iterate over rows
-foreach (var row in result.Rows)
+foreach (var row in result)
 {
     // each row is an instance of the Query<T> call (eg dynamic or custom type
     var name = row.username; // “mike”
@@ -132,26 +132,9 @@ var result = cluster.Query<dynamic>(
 
 == Streaming Large Result Sets
 
+By default the .NET SDK will stream the result set from the server, where the client will start a persistent connection with the server and only read the header until the Rows are enumerated; then, each row or JSON object will be de-serialized one at a time.
 
-By default the .NET SDK will fetch the entire result set from the server, and de-serialize the entire set in-memory on the application.
-For smaller result sets this is fine, however with large result sets this causes the memory footprint to grow linearly upwards.
-This has an impact on CLR Garbage Collection, which can lead to poor application performance, and eventually an `OutOfMemoryException` may be thrown.
-To avoid this, it is suggested that large results sets be streamed by setting the `UseStreaming` property on the `QueryRequest` object:
-
-.Streaming N1QL Query
-[source,csharp]
-----
-// set result should be streaming with query option
-var result = cluster.Query<dynamic>(
-    "SELECT x.* FROM `default` WHERE x.Type=$0",
-    parameters => parameters.Add("User"),
-    options => options.UseStreaming(true)
-);
-----
-
-When streaming is enabled, the client will start a persistent connection with the server and only read the header until the Rows are enumerated; then, each row or JSON object will be de-serialized.
-The net effect is that the memory footprint of the application will stay a constant and not increase linearly, and the Garbage Collector will collect objects created during de-serialization in the first generation.
-
+This decreases pressure on CLR Garbage Collection and helps to prevent an `OutOfMemoryException` being thrown.
 
 == Additional Resources
 
