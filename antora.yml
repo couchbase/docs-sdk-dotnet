@@ -1,5 +1,6 @@
 name: dotnet-sdk
 version: '3.0alpha'
+prerelease: DRAFT
 title: ".NET SDK"
 start_page: 3.0alpha@dotnet-sdk:hello-world:start-using-sdk.adoc
 nav:
