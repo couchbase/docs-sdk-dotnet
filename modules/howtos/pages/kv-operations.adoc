@@ -7,9 +7,9 @@ WARNING: These pages cover the first _Developer Preview_ of the Couchbase .NET S
 As such they are likely to change without notice.
 The _alpha_ code _should not_ be used in production.
 
-The complete code sample used on this page can be downloaded from
+// The complete code sample used on this page can be downloaded from
 ///  xref::example$document.cs[here]
-- from which you can see in context how to authenticate and connect to a Couchbase Cluster, then perform these Bucket operations.
+// - from which you can see in context how to authenticate and connect to a Couchbase Cluster, then perform these Bucket operations.
 
 
 == Documents
@@ -74,7 +74,7 @@ var result = await collection.Replace("document-key", document,
 Expiration sets an explicit time to live (TTL) for a document, for which you can also xref:sdk-xattr-example.adoc[see a more detailed example of TTL discovery] later in the docs.
 We'll discuss modifying `Expiration` in more details xref:#net-modifying-expiration[below].
 For a discussion of item (Document) _vs_ Bucket expiration, see the
-xref:6.5@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-bucket-versus-item[Expiration Overview page].
+xref:6.0@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-bucket-versus-item[Expiration Overview page].
 
 [source,csharp]
 ----
@@ -93,7 +93,8 @@ var result = await collection.Upsert("document-key", document,
 
 Here, we have add _Durability_ options, namely `PersistTo` and `ReplicateTo`.
 In Couchbase Server releases before 6.5, Durability was set with these two options -- see the xref:https://docs.couchbase.com/dotnet-sdk/2.7/durability.html[6.0 Durability documentation] -- covering  how many replicas the operation must be propagated to and how many persisted copies of the modified record must exist.
-Couchbase Data Platform 6.5 refines these two options, with xref:synchronous-replication.adoc[Synchronous Replication] -- although they remain essentially the same in use -- as well as adding the option of xref:transactions.adoc[atomic document transactions].
+Couchbase Data Platform 6.5 refines these two options, with xref:synchronous-replication.adoc[Synchronous Replication] -- although they remain essentially the same in use.
+// -- as well as adding the option of xref:transactions.adoc[atomic document transactions].
 
 
 [TIP]
@@ -215,9 +216,9 @@ NOTE: Increment & Decrement are considered part of the ‘binary’ API and as s
 Working on just a specific path within a JSON document will reduce network bandwidth requirements - see the xref:subdocument-operations.adoc[Sub-Document] pages.
 For working with metadata on a document, reference our xref:sdk-xattr-example.adoc[Extended Attributes] pages.
 
-Another way of increasing network performance is to _pipeline_ operations with xref:batching-operations.adoc[Batching Operations].
+// Another way of increasing network performance is to _pipeline_ operations with xref:batching-operations.adoc[Batching Operations].
 
-As well as various xref:concept-docs:data-model.adoc[Formats] of JSON, Couchbase can work directly with xref:non-json.adoc[arbitary bytes, or binary format].
+// As well as various xref:concept-docs:data-model.adoc[Formats] of JSON, Couchbase can work directly with xref:non-json.adoc[arbitary bytes, or binary format].
 
 Our xref:n1ql-queries-with-sdk.adoc[Query Engine] enables retrieval of information using the SQL-like syntax of N1QL.
 
