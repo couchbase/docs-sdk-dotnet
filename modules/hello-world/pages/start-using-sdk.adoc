@@ -65,7 +65,7 @@ var upsertResult = await collection.Upsert("my-document", new {name = "mike"});
 var getResult = await collection.Get("my-document");
 ----
 
-KV Operations are described in detail on the xref:net-sdk:howtos:kv-operations.adoc[KV Operations page].
+KV Operations are described in detail on the xref:howtos:kv-operations.adoc[KV Operations page].
 Now that you know the basics, you may wish to go straight to that page.
 //
 //
