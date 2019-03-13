@@ -171,42 +171,50 @@ var result = await collection.Touch("document-key", TimeSpan.FromSeconds(30),
 
 == Atomic document modifications
 
-The value of a document can be increased or decreased atomically using `Binary.Increment()` and `.Binary.Decrement()`.
+The value of a document can be increased or decreased atomically using `Binary.Increment()` and `Binary.Decrement()`.
 
 .Increment
 [source,csharp]
 ----
-// increment binary value by 1, if document doesn’t exist, seed it at 1000
-await collection.Binary.Increment("document-key", 1, 1000);
+// increment binary value by 1, if document doesn’t exist, seed it at 1
+await collection.Binary.Increment("document-key");
 ----
 
 .Increment (with options)
 [source,csharp]
 ----
-// increment binary value by 1, if document doesn’t exist, seed it at 1000
-// optional arguments:
-// - Timeout (TimeSpan)
-// - Expiration (TimeSpan)
-// - CAS (ulong)
-await collection.Binary.Increment("document-key", 1, 1000, TimeSpan.FromSeconds(5), TimeSpan.FromDays(1), cas);
+await collection.Binary.Increment("document-key",
+    options =>
+    {
+        options.WithDelta(1);
+        options.WithInitial(1000);
+        options.WithCas(12345);
+        options.WithExpiration(TimeSpan.FromDays(1));
+        options.WithTimeout(TimeSpan.FromSeconds(5));
+    }
+);
 ----
 
 .Decrement
 [source,csharp]
 ----
-// decrement binary value by 1, if document doesn’t exist, seed it at 1000
-await collection.Binary.Decrement("document-key", 1, 1000);
+// decrement binary value by 1, if document doesn’t exist, seed it at 1
+await collection.Binary.Decrement("document-key");
 ----
 
 .Decrement (with options)
 [source,csharp]
 ----
-// decrement binary value by 1. If the document doesn’t exist, seed it at 1000
-// optional arguments:
-// - Timeout (TimeSpan)
-// - Expiration (TimeSpan)
-// - CAS (ulong)
-await collection.Binary.Decrement("document-key", 1, 1000, TimeSpan.FromSeconds(5), TimeSpan.FromDays(1), cas);
+await collection.Binary.Decrement("document-key",
+    options =>
+    {
+        options.WithDelta(1);
+        options.WithInitial(1000);
+        options.WithCas(12345);
+        options.WithExpiration(TimeSpan.FromDays(1));
+        options.WithTimeout(TimeSpan.FromSeconds(5));
+    }
+);
 ----
 
 NOTE: Increment & Decrement are considered part of the ‘binary’ API and as such may still be subject to change
@@ -221,4 +229,3 @@ For working with metadata on a document, reference our xref:sdk-xattr-example.ad
 // As well as various xref:concept-docs:data-model.adoc[Formats] of JSON, Couchbase can work directly with xref:non-json.adoc[arbitary bytes, or binary format].
 
 Our xref:n1ql-queries-with-sdk.adoc[Query Engine] enables retrieval of information using the SQL-like syntax of N1QL.
-
