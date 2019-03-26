@@ -535,10 +535,6 @@ ClusterHelper.Initialize(config);
 A couple of caveats are in order:
 
 * SSL is not yet supported for MUX (https://issues.couchbase.com/browse/NCBC-1056[JIRA ticket^])
-* Since MUX uses a single connection per node for Memcached (K/V) operations, some of the connection pool settings no longer apply, these are:
- ** MinSize
- ** MaxSize
- ** WaitTimeout
 * MUX has no effect on Views, N1QL or Full Text Search queries
 * Shared-Pooled IO Service w/MUX currently ignores the MinSize and creates the MaxSize of connections configured.
 This is a known issue/limitation and can be tracked by the following Jira ticket: https://issues.couchbase.com/browse/NCBC-1534[^]
