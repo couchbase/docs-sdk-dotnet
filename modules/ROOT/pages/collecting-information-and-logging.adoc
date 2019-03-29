@@ -91,7 +91,7 @@ Dependencies:
 Add the dependencies above using the NuGet Package Manager: image:logging-nuget-nlog.png[]
 
 2.
-Copy the following nlong.config file into your project and set "Copy to output directory" to "Copy always" in Visual Studio:
+Copy the following nlog.config file into your project and set "Copy to output directory" to "Copy always" in Visual Studio:
 
 [source,xml]
 ----
