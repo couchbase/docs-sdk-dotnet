@@ -1,0 +1,2176 @@
+= Couchbase .NET SDK Release Notes and Archives
+:navtitle: Release Notes
+:page-topic-type: project-doc
+:page-aliases: relnotes-dotnet-sdk
+
+== Installation
+
+=== Quick Installation Using NuGet
+
+For every release, we currently package the binaries and store the latest version in https://www.nuget.org/packages/CouchbaseNetClient/[NuGet].
+If you are not familiar with NuGet, it's the official and most widely supported package manager for Microsoft Visual Studio and .NET in general.
+
+==== NuGet from Visual Studio
+
+Using Visual Studio 2013 or later, follow these steps to get started with the Couchbase .NET SDK:
+
+. From the IDE, right-click the project you want to add the dependency to.
+. In the context menu, click *Manage NuGet Packages*. The NuGet package manager modal dialog opens.
+. From the Tree View menu on the left, select *Online > nuget.org*.
+. In the search box at the top right-hand side of the dialog, type CouchbaseNetClient and then press enter on your keyboard.
+. In the search results, select the CouchbaseNetClient package and then click *Install*.
+
+==== NuGet from the Package Manager Console
+
+From the Package Manager Console within your project:
+
+. From the Visual Studio menu bar, click *Tools*.
+. Select *NuGet Package Manager > Package Manager Console*.
+. In the console, enter the package installation command:
+ ** To install the latest version:
+
+ Install-Package CouchbaseNetClient
+
+ ** To install a specific version, include the version parameter.
+For example:
+
+ Install-Package CouchbaseNetClient -Version 2.7.0
+
+=== Downloading and referencing the binaries
+
+If you do not want to use NuGet to include the Couchbase .NET SDK in your project, you can download and reference the binaries directly. If you chose this route, you'll also be responsible for including and resolving dependencies used internally by the SDK.
+
+To download and reference the binaries directly:
+
+. Download the version of the SDK you want to install.
+. In Visual Studio, right-click the project you want to include the SDK in and then click *Add*.
+. Click *Reference* to open the Reference Manager.
+. On the left side, click *Browse* and select the binaries you downloaded.
+. Click *OK*.
+
+After you have referenced the Couchbase .NET SDK binaries, you need to locate and reference the dependencies it uses in a similar fashion. At the time of this writing, the dependencies are:
+
+* Apache Common Infrastructure Libraries for .NET
+v3.3.1: https://www.nuget.org/packages/Common.Logging/3.3.1
+* Json.NET
+v9.0.1: https://www.nuget.org/packages/Newtonsoft.Json/8.0.3[https://www.nuget.org/packages/Newtonsoft.Json/9.0.1]
+
+Other versions might not be compatible with the current SDK version.
+
+=== Building from source
+
+If none of the other installation options suffice or if you want to debug the source or perhaps contribute, building directly from the source is the best option for you. All source is located on GitHub.
+
+_**Note:**The software provided via NuGet and S3 are the official releases that have been through a rigorous testing process.
+Code on GitHub that is not tagged as an official release is still in development._
+
+To build the .NET SDK from source:
+
+. (Optional) Fork the GitHub repository:
+https://github.com/couchbase/couchbase-net-client/fork
+. Using a Git console, enter the command to clone the repository:
+
+ git clone https://github.com/couchbase/couchbase-net-client.git
+
+. Enter the command to retrieve the latest code from GitHub:
+
+ git pull origin master
+
+. Navigate to the directory that the source was cloned to and open the solution.
+. Build the solution.
+
+After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
+_Note that you can checkout a specific tag for each release as well._
+
+== Version 2.7.5 (12th March 2019)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.5.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.5[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-1838[NCBC-1838]: 
+Default timeout was set as seconds as opposed to milliseconds.
+It has now been set to 2500ms.
+* https://issues.couchbase.com/browse/NCBC-1843[NCBC-1843]: 
+In LookupIn last command is not always parsed correctly, leading to an incorrect response status.
+This has been fixed, and the correct response status should now be returned.
+* https://issues.couchbase.com/browse/NCBC-1845[NCBC-1845]: 
+Status code OperationTimeout (Code 512) was returned under some circumstances with DocumentDoesNotExistException.
+This is now fixed, and a Timeout status no longer returns when the server returns KeyNotFound.
+
+== Version 2.7.4 (5th February 2019)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.4.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.4[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-1696[NCBC-1696]:
+Alternate name/alternate port config support added for NATed environments,
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-1831[NCBC-1831]:
+VersionSuffix updated to 2.7.4.
+
+* https://issues.couchbase.com/browse/NCBC-1712[NCBC-1712]:
+.editorconfig added to help enforce solution formatting standards.
+
+* https://issues.couchbase.com/browse/NCBC-1778[NCBC-1778]:
+SendWithDurabilityAsync testability using mocks has been improved.
+
+* https://issues.couchbase.com/browse/NCBC-1825[NCBC-1825]:
+build-utils folder removed.
+
+* https://issues.couchbase.com/browse/NCBC-1829[NCBC-1829]:
+When updating to the new csproj format, the Release configuration didn't automatically set the optimize property.
+Assembly is now optimized when building in Release configuration, to improve performance and not embed debug symbols.
+
+* https://issues.couchbase.com/browse/NCBC-1830[NCBC-1830]:
+Added new license SPDX license identifier for Apache 2.0, replacing deprecated license URL.
+
+
+== Version 2.7.3 (11th January 2019)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.3.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.3[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-1813[NCBC-1813]:
+SDKs should run tests against mock by default
+* https://issues.couchbase.com/browse/NCBC-1824[NCBC-1824]:
+csproj updated to use both VersionPrefix and VersionSuffix.
+This improves the CI build.
+* https://issues.couchbase.com/browse/NCBC-1826[NCBC-1826]:
+InternalsVisableTo now only allowed under Debug build.
+* https://issues.couchbase.com/browse/NCBC-1827[NCBC-1827]:
+Disabled Appveyor GitHub hook
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-1828[NCBC-1828]:
+Sub-Document WithExpiry will now set with a single operation.
+
+== Version 2.7.2 (4th December 2018)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.2.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.2[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain prepared statements may produce _Fatal error: unexpected end of JSON input_.
+
+=== New Features and Behavioral Changes
+* https://issues.couchbase.com/browse/NCBC-1668[NCBC-1668]:
+Manage Couchbase.Tests and Couchbase.Tests.Management on non-Windows
+* https://issues.couchbase.com/browse/NCBC-1719[NCBC-1719]:
+Remove Operation Timing from QueryClient
+
+=== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-1804[NCBC-1804]:
+Some unit tests fail because of white encoding on Linux / OSX
+* https://issues.couchbase.com/browse/NCBC-1808[NCBC-1808]:
+Don&#39;t overwrite NodeExt&#39;s KV port with Node&#39;s
+* https://issues.couchbase.com/browse/NCBC-1806[NCBC-1806]:
+Fix SDK build warnings
+
+== Version 2.7.1 (6th November 2018)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.1.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.1[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms. 
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Fatal error: unexpected end of JSON input
+
+=== New Features and Behavioral Changes
+* https://issues.couchbase.com/browse/NCBC-1793[NCBC-1793]:
+Analytics KV Ingress for .NET
+* https://issues.couchbase.com/browse/NCBC-1794[NCBC-1794]:
+Analytics Deferred Queries for .NET
+* https://issues.couchbase.com/browse/NCBC-1767[NCBC-1767]:
+Add support for Analytics async execution mode
+* https://issues.couchbase.com/browse/NCBC-1798[NCBC-1798]:
+Add Conflict Resolution option when creating a bucket
+
+=== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-1729[NCBC-1729]:
+Operation timeout when server(spock) restarts
+* https://issues.couchbase.com/browse/NCBC-1783[NCBC-1783]:
+ClusterController.ProcessConfig throws System.ArgumentNullException during testing
+* https://issues.couchbase.com/browse/NCBC-1784[NCBC-1784]:
+ThresholdLoggingTracer throws System.ArgumentNullException during processing
+* https://issues.couchbase.com/browse/NCBC-1785[NCBC-1785]:
+MultiplexingConnection throws ObjectDisposedException during Send
+* https://issues.couchbase.com/browse/NCBC-1786[NCBC-1786]:
+2.7.0 candidate .net async mode - Throughput gradually goes down through the test
+* https://issues.couchbase.com/browse/NCBC-1787[NCBC-1787]:
+2.7.0 candidate .net async mode - half the time connection not recovering after 1 node swap rebalance
+* https://issues.couchbase.com/browse/NCBC-1788[NCBC-1788]:
+2.7.0 candidate .net async mode - after drop connection and reconnected, sdk does not recover
+* https://issues.couchbase.com/browse/NCBC-1791[NCBC-1791]:
+Make sure kv service is only enabled if in nodes list
+* https://issues.couchbase.com/browse/NCBC-1792[NCBC-1792]:
+Fix logging bug where Log4Net cannot log JSON brackets
+* https://issues.couchbase.com/browse/NCBC-1795[NCBC-1795]:
+throughput does not recover when 2 nodes are in and rebalanced
+* https://issues.couchbase.com/browse/NCBC-1796[NCBC-1796]:
+Correct typo AddNamedParamter to AddNamedParameter
+* https://issues.couchbase.com/browse/NCBC-1797[NCBC-1797]:
+Please add missing AnalyticsRequest()
+* https://issues.couchbase.com/browse/NCBC-1803[NCBC-1803]:
+ConfigMonitor integration test intermittently fails
+
+== Version 2.7.0 (2nd October 2018)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.0.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.0[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.  
+A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Fatal error: unexpected end of JSON input
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-1652[NCBC-1652]:
+Update build scripts to new standard &amp; support non-windows
+* https://issues.couchbase.com/browse/NCBC-1758[NCBC-1758]:
+Add .gitattributes to normalise end of line formatting
+* https://issues.couchbase.com/browse/NCBC-1762[NCBC-1762]:
+Handle HTTP 429 for FTS
+* https://issues.couchbase.com/browse/NCBC-1766[NCBC-1766]:
+Add support for FTS query retries when memory quota is reached
+* https://issues.couchbase.com/browse/NCBC-1768[NCBC-1768]:
+Add automatic retries for FTS queries
+* https://issues.couchbase.com/browse/NCBC-1774[NCBC-1774]:
+Add operation key as span tag
+* https://issues.couchbase.com/browse/NCBC-1779[NCBC-1779]:
+Add bucket name and config to logging for DEBUG and TRACE
+
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-1661[NCBC-1661]:
+SvcRestartAll-SUBDOC and  SvcRestart-SUBDOC fail on Ubuntu/Watson
+* https://issues.couchbase.com/browse/NCBC-1694[NCBC-1694]:
+List, map, etc operations do not create document if missing
+* https://issues.couchbase.com/browse/NCBC-1746[NCBC-1746]:
+QueryAsync times out after 75 seconds, even with extended timeout values
+* https://issues.couchbase.com/browse/NCBC-1763[NCBC-1763]:
+Closing cluster can cause exception in OrphanResponseLogger
+* https://issues.couchbase.com/browse/NCBC-1765[NCBC-1765]:
+Facet term values not being set
+* https://issues.couchbase.com/browse/NCBC-1770[NCBC-1770]:
+Config requests are using ChildOf relationships on finished spans
+* https://issues.couchbase.com/browse/NCBC-1772[NCBC-1772]:
+Random is not thread-safe and should be wrapped in lock
+* https://issues.couchbase.com/browse/NCBC-1773[NCBC-1773]:
+Default span tags are missing if using another Tracer (eg Jeager)
+* https://issues.couchbase.com/browse/NCBC-1777[NCBC-1777]:
+Don&#39;t dispatch observe requests when both PersistTo and ReplicateTo are Zero for durability requests
+* https://issues.couchbase.com/browse/NCBC-1781[NCBC-1781]:
+Ensure connection is available only after checking status
+* https://issues.couchbase.com/browse/NCBC-1782[NCBC-1782]:
+Unit test fails because it gets aggregate exception instead of ServiceNotSupported
+
+== Version 2.6.2 (10th September 2018)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.6.2.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.6.2[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+
+=== New Features and Behavioural Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1644[NCBC-1644] -
+Upgrade to OpenTracing 0.12
+* https://issues.couchbase.com/browse/NCBC-1760[NCBC-1760] -
+Refactor and add additional unit tests for Decrement(Async)
+* https://issues.couchbase.com/browse/NCBC-1751[NCBC-1751] - add
+parameterized query support for analytics
+* https://issues.couchbase.com/browse/NCBC-1752[NCBC-1752] -
+Update Analytics support for beta
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1730[NCBC-1730] -
+Client Failure at the beginning of restart server
+* https://issues.couchbase.com/browse/NCBC-1745[NCBC-1745] -
+SpanSummary.PopulateSpan can cause collection changed exception
+* https://issues.couchbase.com/browse/NCBC-1757[NCBC-1757] -
+error encountered after change phase .netcore-windows-watson-vs2017
+* https://issues.couchbase.com/browse/NCBC-1759[NCBC-1759] - Fix
+Increment & IncrementAsync expiration bug in CouchbaseBucket
+* https://issues.couchbase.com/browse/NCBC-1761[NCBC-1761] - kv
+async operation does not recover after 1 node swap rebalance
+* https://issues.couchbase.com/browse/NCBC-1764[NCBC-1764] -
+Revision is not updated when reusing existing server
+
+== Version 2.6.1 (9th August 2018)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.6.1.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.6.1[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+
+=== New Features and Behavioural Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1675[NCBC-1675] - add
+cert auth example in devguide-examples
+* https://issues.couchbase.com/browse/NCBC-1728[NCBC-1728] -
+Reuse node resources during swap/rebalance scenarios w/Couchbase
+buckets
+* https://issues.couchbase.com/browse/NCBC-1742[NCBC-1742] - Add
+code comments to properties missing them in ClientConfiguration
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1748[NCBC-1748] -
+N1QL service URIs are lost when processing new bucket config
+* https://issues.couchbase.com/browse/NCBC-1682[NCBC-1682] -
+Can't use couchbase:// protocol with ClusterManager
+* https://issues.couchbase.com/browse/NCBC-1683[NCBC-1683] -
+Integration test fails intermittently:
+ClusterManagerTests.Can_Get_SearchIndex_Statistics
+* https://issues.couchbase.com/browse/NCBC-1695[NCBC-1695] -
+Overload of GetAndLockAsync causes stack overflow exception
+* https://issues.couchbase.com/browse/NCBC-1714[NCBC-1714] -
+Review document expiry - seconds or milliseconds?
+* https://issues.couchbase.com/browse/NCBC-1715[NCBC-1715] -
+Integration test for FTS get statistics intermittently fails on
+Jenkins
+* https://issues.couchbase.com/browse/NCBC-1716[NCBC-1716] -
+Analytics requests use N1QL query timeout
+* https://issues.couchbase.com/browse/NCBC-1724[NCBC-1724] -
+Lots of error messages not in log4net format data while rebalancing
+* https://issues.couchbase.com/browse/NCBC-1725[NCBC-1725] -
+Increment causing VBucketBelongsToAnotherServer exception to bubble
+up instead of retrying
+* https://issues.couchbase.com/browse/NCBC-1735[NCBC-1735] -
+Search queries do not set the timeout property
+* https://issues.couchbase.com/browse/NCBC-1736[NCBC-1736] - Try
+to get config from all available nodes using streaming
+* https://issues.couchbase.com/browse/NCBC-1738[NCBC-1738] -
+Missing API reference links from release notes/archives page
+* https://issues.couchbase.com/browse/NCBC-1739[NCBC-1739] -
+Append & Prepend operations should not return NMVB status
+* https://issues.couchbase.com/browse/NCBC-1743[NCBC-1743] -
+Tracing causes System.InvalidOperationException exception when
+waiting on GetDocumentsAsync<...>(keys);
+* https://issues.couchbase.com/browse/NCBC-1744[NCBC-1744] -
+InsertAsync<T> calls itself recursively
+* https://issues.couchbase.com/browse/NCBC-1747[NCBC-1747] -
+Doesn't try to dispose of cluster if skipping ephemeral bucket tests
+
+== Version 2.6.0 (10th July 2018)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.6.0.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.6.0[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+
+=== New Features and Behavioural Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1633[NCBC-1633] -
+Field Encryption, Asymmetric Key Support
+* https://issues.couchbase.com/browse/NCBC-1650[NCBC-1650] -
+Create example for field level encryption
+* https://issues.couchbase.com/browse/NCBC-1654[NCBC-1654] -
+Support X509 authentication for HTTP Services
+* https://issues.couchbase.com/browse/NCBC-1673[NCBC-1673] -
+Implement RSA-2048-OEP for FLE
+* https://issues.couchbase.com/browse/NCBC-1697[NCBC-1697] -
+Support Cancellation of FTS Queries
+* https://issues.couchbase.com/browse/NCBC-1582[NCBC-1582] -
+Default forceSaslPlain to true
+* https://issues.couchbase.com/browse/NCBC-1637[NCBC-1637] -
+Enable Tracing / Orphaned response logging by default
+* https://issues.couchbase.com/browse/NCBC-1672[NCBC-1672] - Add
+CertificateAuthenticator for x509 authentication
+* https://issues.couchbase.com/browse/NCBC-1700[NCBC-1700] -
+Remove operation timing from SDK
+* https://issues.couchbase.com/browse/NCBC-1734[NCBC-1734] -
+Update nuget description to 2.6
+* https://issues.couchbase.com/browse/NCBC-1578[NCBC-1578] -
+Create automated Couchbase code analyzers
+* https://issues.couchbase.com/browse/NCBC-1620[NCBC-1620] -
+Allow custom SSL authentication
+* https://issues.couchbase.com/browse/NCBC-1641[NCBC-1641] -
+Include SourceLink PDB In NuGet Package To Support Debugging
+* https://issues.couchbase.com/browse/NCBC-1655[NCBC-1655] -
+Update Common.Logging to 3.4.1 or whatever the current version is.
+* https://issues.couchbase.com/browse/NCBC-1660[NCBC-1660] -
+Validate FTS Error Format Change in 5.5
+* https://issues.couchbase.com/browse/NCBC-1662[NCBC-1662] -
+Improve async handing of spans
+* https://issues.couchbase.com/browse/NCBC-1674[NCBC-1674] -
+Expose ITypeSerializer on IBucket to help improve Linq2Couchbase
+performance
+* https://issues.couchbase.com/browse/NCBC-1686[NCBC-1686] -
+Update timeout messages to use JSON object for context
+* https://issues.couchbase.com/browse/NCBC-1687[NCBC-1687] - Add
+more context details for N1QL timeouts
+* https://issues.couchbase.com/browse/NCBC-1688[NCBC-1688] - Add
+timeout to OperationContext for view timeouts
+* https://issues.couchbase.com/browse/NCBC-1689[NCBC-1689] - Add
+more context details for Search timeouts
+* https://issues.couchbase.com/browse/NCBC-1690[NCBC-1690] - Add
+more context details for Analytics timeouts
+* https://issues.couchbase.com/browse/NCBC-1692[NCBC-1692] -
+Allow server revocation to be enabled when using X509 cert auth
+* https://issues.couchbase.com/browse/NCBC-1698[NCBC-1698] - Add
+document expiry integration tests for Couchbase bucket
+* https://issues.couchbase.com/browse/NCBC-1701[NCBC-1701] -
+Upgrade minimum .NET support from 4.5 to 4.5.2
+* https://issues.couchbase.com/browse/NCBC-1717[NCBC-1717] -
+Replace Jenkins build badge with AppVeyor version
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1667[NCBC-1667] -
+Exception when trying to parse string to long
+* https://issues.couchbase.com/browse/NCBC-1691[NCBC-1691] -
+Review ConfigProvider log levels
+* https://issues.couchbase.com/browse/NCBC-1693[NCBC-1693] -
+Update Tracing to match RFC changes
+* https://issues.couchbase.com/browse/NCBC-1699[NCBC-1699] -
+CouchbaseList doesn't remove item on server
+* https://issues.couchbase.com/browse/NCBC-1710[NCBC-1710] -
+RequestExecutorBase doesn't set query timeout when passed in token
+is cancellable
+* https://issues.couchbase.com/browse/NCBC-1711[NCBC-1711] -
+N1Ql requests can be routed to wrong cluster
+* https://issues.couchbase.com/browse/NCBC-1718[NCBC-1718] -
+Search Query sorting order should be "desc"
+* https://issues.couchbase.com/browse/NCBC-1720[NCBC-1720] -
+Can_Get_SearchIndex_Statistics integration tests fail
+intermittently
+* https://issues.couchbase.com/browse/NCBC-1722[NCBC-1722] -
+Cast exception when using x509 Authentication
+* https://issues.couchbase.com/browse/NCBC-1726[NCBC-1726] -
+Client Failure continues after swap rebalance on memcached bucket on
+Vulcan
+* https://issues.couchbase.com/browse/NCBC-1727[NCBC-1727] -
+IndexOutOfRangeException w/Helo and Memcached
+
+== Version 2.5.12 (12 June 2018)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.5.12.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.5.12[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1676[NCBC-1676] -
+Race condition when more than one thread access an ssl stream
+* https://issues.couchbase.com/browse/NCBC-1679[NCBC-1679] -
+Lock related errors not setting Exception and Status fields
+correctly in the result
+* https://issues.couchbase.com/browse/NCBC-1680[NCBC-1680] -
+Failure messages are not returned for UserManager actions
+* https://issues.couchbase.com/browse/NCBC-1681[NCBC-1681] -
+UserManager requires password when creating new user
+* https://issues.couchbase.com/browse/NCBC-1702[NCBC-1702] -
+Ensure VBucketServerMap uses ssl/tls ports when enabled
+* https://issues.couchbase.com/browse/NCBC-1709[NCBC-1709] -
+Intermittently (about 1 out of 5 tests), when 2 nodes are removed
+and re-balanced, then KV throughput drops significantly
+
+== Version 2.5.10 (1 May 2018)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.5.10.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.5.10[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+
+=== New Features and Behavioural Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1646[NCBC-1646] - Add
+FTS Index Management
+* https://issues.couchbase.com/browse/NCBC-1647[NCBC-1647] - Add
+Profile N1QL Query Parameter
+* https://issues.couchbase.com/browse/NCBC-1571[NCBC-1571] -
+Update Memcached unsupported operations message to include Ephemeral
+bucket types
+* https://issues.couchbase.com/browse/NCBC-1625[NCBC-1625] -
+Improve KV header offset handling
+* https://issues.couchbase.com/browse/NCBC-1631[NCBC-1631] -
+Update MulitplexingConnection to use ConcurrentQueue
+* https://issues.couchbase.com/browse/NCBC-1642[NCBC-1642] -
+Ensure all async code configures an awaiter
+* https://issues.couchbase.com/browse/NCBC-1664[NCBC-1664] -
+Only use net45 target framework when on Windows OS
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1562[NCBC-1562] - SDK
+"seems" to bootstrap MC on 4.X using RBAC auth - should fail-fast
+* https://issues.couchbase.com/browse/NCBC-1564[NCBC-1564] -
+Update Search Exception to use result.Message instead of Errors
+property
+* https://issues.couchbase.com/browse/NCBC-1665[NCBC-1665] -
+Reset SyncState AutoResetEvent to false on clean
+* https://issues.couchbase.com/browse/NCBC-1666[NCBC-1666] - Bad
+Authentication Causes Connection Leak
+* https://issues.couchbase.com/browse/NCBC-1669[NCBC-1669] -
+Consolidate ContinueOnAnyContext usage
+* https://issues.couchbase.com/browse/NCBC-1670[NCBC-1670] -
+Remove and dispose contents of StatePool in MUX connections
+
+== Version 2.6.0-beta (13 April 2018)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.6.0-beta.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.6.0-beta[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+
+=== New Features and Behavioural Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1646[NCBC-1646] - Add
+FTS Index Management
+* https://issues.couchbase.com/browse/NCBC-1647[NCBC-1647] - Add
+Profile N1QL Query Parameter
+* https://issues.couchbase.com/browse/NCBC-1650[NCBC-1650] -
+Create example for field level encryption
+* https://issues.couchbase.com/browse/NCBC-1641[NCBC-1641] -
+Include SourceLink PDB In NuGet Package To Support Debugging
+* https://issues.couchbase.com/browse/NCBC-1656[NCBC-1656] -
+Update ThresholdLoggingTracer
+
+== Version 2.5.9 (3 April 2018)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.5.9.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.5.9[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+
+=== New Features and Behavioural Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1552[NCBC-1552] -
+Support X509 authentication for Query and FTS HTTP Services
+* https://issues.couchbase.com/browse/NCBC-765[NCBC-765] -
+Implement Common Connection String
+* https://issues.couchbase.com/browse/NCBC-1591[NCBC-1591] -
+Support querying DateTime fields stored as unix timestamp
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1651[NCBC-1651] - SDK
+throws parse exception when geopoint field is read in response
+
+== Version 2.5.8 (17 March 2018)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.5.8.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.5.8[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1645[NCBC-1645] -
+Make SDK use OpenTracing.Signed v0.10.4
+
+== Version 2.5.7 (17 March 2018)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.5.7.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.5.7[API Reference]
+
+*_Note:_* This release has been de-listed from
+http://www.nuget.org[www.nuget.org] because of the known issues below.
+Please use 2.5.8 instead.
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+* https://issues.couchbase.com/browse/NCBC-1645[NCBC-1645] -
+Make SDK use OpenTracing.Signed v0.10.4
+
+=== New Features and Behavioural Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1640[NCBC-1640] -
+Renew nuget.org API key
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1639[NCBC-1639] -
+Don't add custom tags to NullSpan's in TracerExtensions
+* https://issues.couchbase.com/browse/NCBC-1643[NCBC-1643] -
+Dependency on OpenTracing v0.10.0 throws exception in v2.5.6
+
+== Version 2.5.6 (13 March 2018)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.5.6.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.5.6[API Reference]
+
+**_Note: _**This release has been de-listed from
+http://www.nuget.org[www.nuget.org] because of the known issues below.
+Please use 2.5.8 instead.
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+* https://issues.couchbase.com/browse/NCBC-1645[NCBC-1645] -
+Make SDK use OpenTracing.Signed v0.10.4
+
+=== New Features and Behavioural Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1604[NCBC-1604] -
+Make test use "basic" in testSettings in config.json
+* https://issues.couchbase.com/browse/NCBC-1635[NCBC-1635] -
+Disable tracing for remaining 2.5.X releases
+* https://issues.couchbase.com/browse/NCBC-1636[NCBC-1636] -
+Rename custom N1QL parameter field to match Java SDK and mark
+uncommitted
+* https://issues.couchbase.com/browse/NCBC-1640[NCBC-1640] -
+Renew nuget.org API key
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1527[NCBC-1527] -
+JsonSerializationException when bootstrapping against invalid remote
+host
+* https://issues.couchbase.com/browse/NCBC-1558[NCBC-1558] -
+Bootstrapping fails for memcached bucket when using couchbase
+protocol
+* https://issues.couchbase.com/browse/NCBC-1632[NCBC-1632] -
+Async calls don't have access to ErrorMap
+* https://issues.couchbase.com/browse/NCBC-1638[NCBC-1638] - net
+2.5.6 : When remote connection drops, sdk throws unhandled exception
+on Asynchronous KV
+* https://issues.couchbase.com/browse/NCBC-1639[NCBC-1639] -
+Don't add custom tags to NullSpan's in TracerExtensions
+* https://issues.couchbase.com/browse/NCBC-1527[NCBC-1527] -
+JsonSerializationException when bootstrapping against invalid remote
+host
+* https://issues.couchbase.com/browse/NCBC-1558[NCBC-1558] -
+Bootstrapping fails for memcached bucket when using couchbase
+protocol
+* https://issues.couchbase.com/browse/NCBC-1632[NCBC-1632] -
+Async calls don't have access to ErrorMap
+* https://issues.couchbase.com/browse/NCBC-1638[NCBC-1638] - net
+2.5.6 : When remote connection drops, sdk throws unhandled exception
+on Asynchronous KV
+* https://issues.couchbase.com/browse/NCBC-1639[NCBC-1639] -
+Don't add custom tags to NullSpan's in TracerExtensions
+
+== Version 2.6.0-dp1 (26 February 2018)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.6.0-dp1.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.6.0-dp1[API Reference]
+
+**_Note: _**This release has been de-listed from
+http://www.nuget.org[www.nuget.org] because of the known issues below.
+Please use 2.6.0-beta instead.
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+* https://issues.couchbase.com/browse/NCBC-1645[NCBC-1645] -
+Make SDK use OpenTracing.Signed v0.10.4
+
+=== New Features and Behavioural Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1616[NCBC-1616] -
+Operation Tracing Phase 2
+* https://issues.couchbase.com/browse/NCBC-1619[NCBC-1619] -
+Operation Tracing Phase 1
+* https://issues.couchbase.com/browse/NCBC-1624[NCBC-1624]]-
+Send client / connection ID in Hello
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1632[NCBC-1632] -
+Async calls don't have access to ErrorMap
+
+== Version 2.5.5 (6 February 2018)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.5.5.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.5.5[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+
+=== New Features and Behavioural Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1499[NCBC-1499] -
+GetAndLock temp fail doesn't set LockedException on Spock (5.0)
+* https://issues.couchbase.com/browse/NCBC-1518[NCBC-1518] -
+When an operation fails because of auth failure it is re-tried
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1601[NCBC-1601] -
+Implement Log Redaction for User data
+* https://issues.couchbase.com/browse/NCBC-1578[NCBC-1578] -
+Create automated Couchbase code analyzers
+* https://issues.couchbase.com/browse/NCBC-1617[NCBC-1617] -
+Make SslConnection check IsEncrypted and IsSigned after
+authentication
+
+== Version 2.5.4 (10 January 2018)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.5.4.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.5.4[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+
+=== New Features and Behavioural Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1573[NCBC-1573] - add
+health check functionality
+* https://issues.couchbase.com/browse/NCBC-1602[NCBC-1602] -
+Implement Certificate Authentication
+* https://issues.couchbase.com/browse/NCBC-1550[NCBC-1550] - Add
+GetNode(CouchbaseService) to IConfigInfo
+* https://issues.couchbase.com/browse/NCBC-1606[NCBC-1606] -
+Improve query logging for debugging
+* https://issues.couchbase.com/browse/NCBC-1608[NCBC-1608] - Log
+query context ID when logging query timing
+* https://issues.couchbase.com/browse/NCBC-1609[NCBC-1609] -
+Remove SearchQueryResult overload that takes a HttpClient
+* https://issues.couchbase.com/browse/NCBC-1612[NCBC-1612] -
+Resolve DNS synchronously
+* https://issues.couchbase.com/browse/NCBC-1613[NCBC-1613] -
+Config processing thread is never terminated
+* https://issues.couchbase.com/browse/NCBC-1614[NCBC-1614] -
+Preload VBucketServerMap.IPEndPoints after deserialization
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1531[NCBC-1531] -
+Don't retry view requests under certain conditions
+* https://issues.couchbase.com/browse/NCBC-1593[NCBC-1593] -
+RemoveAsync with durability fails
+* https://issues.couchbase.com/browse/NCBC-1607[NCBC-1607] -
+Maintain same query context ID during log entries
+* https://issues.couchbase.com/browse/NCBC-1615[NCBC-1615] -
+Upsert in memcached bucket incorrectly converts expiration
+* https://issues.couchbase.com/browse/NCBC-1618[NCBC-1618] - A
+worker thread may en-queue a config after the queue has been
+disposed
+
+== Version 2.5.3 (7 December 2017)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.5.3.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.5.3[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+
+=== New Features and Behavioural Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1526[NCBC-1526] -
+Update MuxIO documentation regarding pool config (mix / max size)
+* https://issues.couchbase.com/browse/NCBC-1549[NCBC-1549] - Add
+OpenBucketAsync, CreateBucketAsync and GetBucketAsync
+* https://issues.couchbase.com/browse/NCBC-1553[NCBC-1553] - Add
+unit tests for Memcached unsupported operations
+* https://issues.couchbase.com/browse/NCBC-1556[NCBC-1556] -
+Improve error message when bootstrapping fails for Memcached buckets
+* https://issues.couchbase.com/browse/NCBC-1577[NCBC-1577] -
+Allow config-based disabling of config providers
+* https://issues.couchbase.com/browse/NCBC-1584[NCBC-1584] -
+Update Ketama hashing generation to match RFC example
+* https://issues.couchbase.com/browse/NCBC-1585[NCBC-1585] -
+Remove locks around multiplexing connections adding / removing
+in-flight states
+* https://issues.couchbase.com/browse/NCBC-1587[NCBC-1587] - Add
+MemoryStreamFactory
+* https://issues.couchbase.com/browse/NCBC-1572[NCBC-1572] -
+Implement/test support for KV with homogenous IPv6
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1555[NCBC-1555] -
+Default Transcoder class - DecodeString method doesn't manage null
+string
+* https://issues.couchbase.com/browse/NCBC-1561[NCBC-1561] - Use
+GlobalTimeout for all operations in MemcachedBucket
+* https://issues.couchbase.com/browse/NCBC-1563[NCBC-1563] -
+Remove invalid parameter in Memcached.TouchAsync XML
+* https://issues.couchbase.com/browse/NCBC-1565[NCBC-1565] -
+Memcached buckets try to send Observe operations
+* https://issues.couchbase.com/browse/NCBC-1566[NCBC-1566] -
+Memcached.RemoveAsync with durability does not throw
+NotSupportedException
+* https://issues.couchbase.com/browse/NCBC-1567[NCBC-1567] -
+IBucket.ReplaceAsync for list of documents with ReplicateTo,
+PersistTo and Timeout is missing
+* https://issues.couchbase.com/browse/NCBC-1568[NCBC-1568] -
+IBucket.RemoveAsync with ReplicateTo and Timeout is missing
+* https://issues.couchbase.com/browse/NCBC-1569[NCBC-1569] -
+IBucket.Upsert with document dictionary variants should be Obsolete
+* https://issues.couchbase.com/browse/NCBC-1570[NCBC-1570] -
+MemcachedBucket.Upsert with dictionary, parallel options and timeout
+should work
+* https://issues.couchbase.com/browse/NCBC-1575[NCBC-1575] - Add
+configuration override to force Plain SASL
+* https://issues.couchbase.com/browse/NCBC-1576[NCBC-1576] -
+MemcachedBucket.Upsert TTL is set to 0 - causing infinite lifetime
+* https://issues.couchbase.com/browse/NCBC-1579[NCBC-1579] -
+PooledIOService constructor should use Aquire to get connection
+* https://issues.couchbase.com/browse/NCBC-1580[NCBC-1580] - Fix
+failing unit tests
+* https://issues.couchbase.com/browse/NCBC-1581[NCBC-1581] -
+Password is written to log at INFO level
+* https://issues.couchbase.com/browse/NCBC-1583[NCBC-1583] -
+UnsupportedAddressFamilyException when parsing IPv6 URI
+* https://issues.couchbase.com/browse/NCBC-1586[NCBC-1586] -
+System.MissingMethodException - CTOR for BinaryTranscoder cannot be
+found
+* https://issues.couchbase.com/browse/NCBC-1588[NCBC-1588] -
+Configuration Documentation incorrect for MuxIO
+* https://issues.couchbase.com/browse/NCBC-1596[NCBC-1596] - Fix
+failing integration tests targeting server 5.0
+* https://issues.couchbase.com/browse/NCBC-1597[NCBC-1597] -
+N1QL query timeout uses View timeout from config config
+* https://issues.couchbase.com/browse/NCBC-1598[NCBC-1598] -
+Update Nuget pack title to be 2.5
+* https://issues.couchbase.com/browse/NCBC-1600[NCBC-1600] -
+Unable to bootstrap with IPv4 cluster
+* https://issues.couchbase.com/browse/NCBC-1603[NCBC-1603] - Fix
+unit tests in CouchbaseRequestExecutorTests
+
+== _Version 2.5.2 (19 October 2017)_
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.5.2.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.5.2[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+
+=== New Features and Behavioural Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1540[NCBC-1540] -
+Deprecate HeartBeatConfigInterval and rename to ConfigPollInterval
+* https://issues.couchbase.com/browse/NCBC-1542[NCBC-1542] -
+Removed lock for Insert and RemoveAt
+* [https://issues.couchbase.com/browse/NCBC-1556[NCBC-1556] -
+Improve error message when bootstrapping fails for Memcached buckets
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+* https://issues.couchbase.com/browse/NCBC-1524[NCBC-1524] - Add
+missing license information
+* https://issues.couchbase.com/browse/NCBC-1538[NCBC-1538] -
+MemchacheBucket Upsert method doesn't consider the expiration
+Timespan
+* https://issues.couchbase.com/browse/NCBC-1541[NCBC-1541] - Fix
+xml documentation typos
+* https://issues.couchbase.com/browse/NCBC-1543[NCBC-1543] -
+Release the acquired connection back to the connection pool
+* https://issues.couchbase.com/browse/NCBC-1547[NCBC-1547] -
+Ensure N1QL queries are retried after evicting invalid prepared
+statement
+* https://issues.couchbase.com/browse/NCBC-1551[NCBC-1551] -
+Multi Upsert using dictionary incorrectly sets the TTL
+* https://issues.couchbase.com/browse/NCBC-1554[NCBC-1554] -
+Failure status results in ArgumentOutOfRangeException
+* https://issues.couchbase.com/browse/NCBC-1557[NCBC-1557] -
+Cannot open Memcached buckets with Server 5.0
+* https://issues.couchbase.com/browse/NCBC-1559[NCBC-1559] -
+Invalid default timeout is set for Memcached Upsert
+* https://issues.couchbase.com/browse/NCBC-1560[NCBC-1560] -
+Auth error (401) raised in config thread of Memached buckets for CB
+5.0
+
+== Version 2.5.1 (6 October 2017)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.5.1.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.5.1[API Reference]
+
+**_Note: _**This release has been de-listed from
+http://www.nuget.org[www.nuget.org] because of the known issues below
+that can cause the SDK to fail operations against authenticated buckets.
+Please use 2.5.2 instead.
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+
+=== New Features and Behavioural Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1336[NCBC-1336] -
+Update AppVeyor integration creds to automated user
+* https://issues.couchbase.com/browse/NCBC-1509[NCBC-1509] -
+Discover and bootstrap analytics service from cluster config
+* https://issues.couchbase.com/browse/NCBC-1510[NCBC-1510] -
+Create and push nuget symbols package during deployments
+* https://issues.couchbase.com/browse/NCBC-1512[NCBC-1512] - Add
+logging that shows the server features that are enabled by client
+* https://issues.couchbase.com/browse/NCBC-1513[NCBC-1513] - Fix
+version issue with System.ComponentModel.TypeConverter 4.0.1 in test
+projects
+* https://issues.couchbase.com/browse/NCBC-1520[NCBC-1520] -
+Update integration tests execution configuration
+* https://issues.couchbase.com/browse/NCBC-1521[NCBC-1521] -
+Remove obsolete IDataMapper and HttpClient from http services
+* https://issues.couchbase.com/browse/NCBC-1535[NCBC-1535] -
+Reuse QueryClient's Async versions of methods in sync code paths
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1436[NCBC-1436] -
+QueryClient hides base properties HttpClient and DataMapper
+* https://issues.couchbase.com/browse/NCBC-1461[NCBC-1461] - Do
+not log failed N1QL prepare queries
+* https://issues.couchbase.com/browse/NCBC-1511[NCBC-1511] - Use
+POST when requesting a View
+* https://issues.couchbase.com/browse/NCBC-1514[NCBC-1514] -
+[RBAC] data writer can read
+* https://issues.couchbase.com/browse/NCBC-1515[NCBC-1515] -
+Update AppVeyor AWS credentials
+* https://issues.couchbase.com/browse/NCBC-1516[NCBC-1516] -
+Data reader can upsert
+* https://issues.couchbase.com/browse/NCBC-1517[NCBC-1517] -
+Enable KV Error map by default
+* https://issues.couchbase.com/browse/NCBC-1522[NCBC-1522] -
+Cluster class: when requesting a Query and bucket is not
+authenticate -> wrong exception
+* https://issues.couchbase.com/browse/NCBC-1523[NCBC-1523] -
+Full Text Search exception: "Unexpected character encountered while
+parsing value"
+* https://issues.couchbase.com/browse/NCBC-1525[NCBC-1525] -
+When SELECT RAW is used and streaming is enabled results should
+enumerate
+* https://issues.couchbase.com/browse/NCBC-1528[NCBC-1528] - Fix
+PrettyPrint tests based on cluster version
+* https://issues.couchbase.com/browse/NCBC-1529[NCBC-1529] -
+Ignore compiler warning for missing XML comments
+* https://issues.couchbase.com/browse/NCBC-1545[NCBC-1545] -
+Adding nodes to a 5.0.0 cluster can return "None" as error, never
+recovering
+* https://issues.couchbase.com/browse/NCBC-1548[NCBC-1548] - Get
+username from connection string before validating authenticator
+
+== Version 2.5.0 (7 September 2017)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.5.0.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.5.0[API Reference]
+
+**_Note: _**This release has been de-listed from
+http://www.nuget.org[www.nuget.org] because of the
+issue https://issues.couchbase.com/browse/NCBC-1545[NCBC-1545]. Please
+use 2.5.1 instead.
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502] -
+Fatal error: unexpected end of JSON input
+* https://issues.couchbase.com/browse/NCBC-1545[NCBC-1545] -
+Adding nodes to a 5.0.0 cluster can return "None" as error, never
+recovering
+
+=== New Features and Behavioral Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1206[NCBC-1206] -
+Allow per-operation timeouts
+* https://issues.couchbase.com/browse/NCBC-1388[NCBC-1388] -
+Make HeartbeatConfigInterval default to 2.5s for Fast Failover
+* https://issues.couchbase.com/browse/NCBC-1443[NCBC-1443] -
+Support Getting Cluster Version via SDK, handling authentication for
+5.0 RBAC
+* https://issues.couchbase.com/browse/NCBC-1449[NCBC-1449] - Add
+a means of doing RBAC auth via configuration
+* https://issues.couchbase.com/browse/NCBC-1487[NCBC-1487] -
+Support .NET Core 2.0
+* https://issues.couchbase.com/browse/NCBC-1497[NCBC-1497] -
+Make multi-methods that depend on Parallel.ForEach obsolete
+* https://issues.couchbase.com/browse/NCBC-1405[NCBC-1405] - SDK
+Enhanced Error Messages
+* https://issues.couchbase.com/browse/NCBC-1463[NCBC-1463] - Add
+domain switch (local / external) for User Management API
+* https://issues.couchbase.com/browse/NCBC-1464[NCBC-1464] -
+Update integration test suite to be Spock compatible
+* https://issues.couchbase.com/browse/NCBC-1479[NCBC-1479] -
+Update test projects so that we can toggle between RBAC and older
+auth modes
+* https://issues.couchbase.com/browse/NCBC-1481[NCBC-1481] -
+Expose more N1QL Query Options
+* https://issues.couchbase.com/browse/NCBC-1503[NCBC-1503] -
+Update README with steps to run integration tests against Spock
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1444[NCBC-1444] -
+Invalid error message when RBAC authentication fails
+* https://issues.couchbase.com/browse/NCBC-1475[NCBC-1475] -
+Clone does not copy Expiry for some commands
+* https://issues.couchbase.com/browse/NCBC-1478[NCBC-1478] -
+SetAuthenticator method is internal - cannot auth with RBAC using
+ClusterHelper
+* https://issues.couchbase.com/browse/NCBC-1480[NCBC-1480] -
+Upsert against SPOCK server throws MissingKeyException
+* https://issues.couchbase.com/browse/NCBC-1484[NCBC-1484] -
+MultiplexingIOService and SharedPooledIOService do not set
+SupportsEnhancedAuthentication
+* https://issues.couchbase.com/browse/NCBC-1485[NCBC-1485] -
+GetAndLock no longer returns TemporaryLockFailureException when the
+key is locked on CB 5.0
+* https://issues.couchbase.com/browse/NCBC-1486[NCBC-1486] -
+HttpStreamingProvider doesn't set connection pool bucket name
+* https://issues.couchbase.com/browse/NCBC-1489[NCBC-1489] - Use
+JSON data mapper for processing N1QL prepare result
+* https://issues.couchbase.com/browse/NCBC-1491[NCBC-1491] -
+Don't dispose bucket during memcached integration tests
+* https://issues.couchbase.com/browse/NCBC-1492[NCBC-1492] -
+Cluster level query doesn't work with Authenticator
+* https://issues.couchbase.com/browse/NCBC-1493[NCBC-1493] -
+BucketManagerTests & MemcachedBucketManagerTests integration tests
+fail
+* https://issues.couchbase.com/browse/NCBC-1494[NCBC-1494] -
+Subdoc create document integration tests fails
+* https://issues.couchbase.com/browse/NCBC-1495[NCBC-1495] -
+N1QL integration tests fail
+* https://issues.couchbase.com/browse/NCBC-1496[NCBC-1496] -
+Memcached bucket integration tests fail
+* https://issues.couchbase.com/browse/NCBC-1498[NCBC-1498] -
+MultiplexIOService doesn't work with RBAC
+* https://issues.couchbase.com/browse/NCBC-1505[NCBC-1505] -
+Format exception with Common.Logging and QueryCliente
+
+== Version 2.4.8 (3 Aug 2017)
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+
+=== New Features and Behavioral Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1323[NCBC-1323] -
+Update Core projects to Visual Studio 2017 XML based projects
+* https://issues.couchbase.com/browse/NCBC-1319[NCBC-1319] - Add
+examples of how to use 2.4.0 using VSCode, VS for Mac and CIL tools
+* https://issues.couchbase.com/browse/NCBC-1466[NCBC-1466] -
+Update appveyor.yml to use current in-progress build version
+* https://issues.couchbase.com/browse/NCBC-1469[NCBC-1469] -
+Update .NET Core app logging setup guide
+* https://issues.couchbase.com/browse/NCBC-1471[NCBC-1471] - Add
+GetCount sub document operation
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1423[NCBC-1423] -
+Document.Expiry description says it's in Milliseconds, should be
+seconds
+* https://issues.couchbase.com/browse/NCBC-1445[NCBC-1445] -
+Authentication fails when using App.Config with IAuthenticator
+* https://issues.couchbase.com/browse/NCBC-1453[NCBC-1453] -
+NotMyVBucket tries to use custom serializer to read updated bucket
+config
+* https://issues.couchbase.com/browse/NCBC-1465[NCBC-1465] -
+View and N1QL queries fail on single-node cluster
+
+== Version 2.4.7 (11 July 2017)
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1465[NCBC-1465]
+- View and N1QL queries fail on single-node cluster. See issue for
+workaround.
+
+=== New Features and Behavioral Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1340[NCBC-1340] -
+Extend KV Error map [part 2]
+* https://issues.couchbase.com/browse/NCBC-1378[NCBC-1378] - Add
+couchbasemock testing support in support of kverror map
+* https://issues.couchbase.com/browse/NCBC-1382[NCBC-1382] - Add
+basic KV error map testing with mock
+* https://issues.couchbase.com/browse/NCBC-1264[NCBC-1264] -
+Support Ephemeral Bucket Changes
+* https://issues.couchbase.com/browse/NCBC-1402[NCBC-1402] -
+Make RBAC error message consistent with RFC
+* https://issues.couchbase.com/browse/NCBC-1440[NCBC-1440] -
+CallbackFactory uses obsolete overload of IOperation.ReadAsync
+* https://issues.couchbase.com/browse/NCBC-1446[NCBC-1446] - Add
+GetDocumentFromReplica implementations
+* https://issues.couchbase.com/browse/NCBC-1448[NCBC-1448] -
+Update with newest user management RFC changes
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1433[NCBC-1433] -
+Investigate prepared statement client cache racyness
+* https://issues.couchbase.com/browse/NCBC-1435[NCBC-1435] -
+Logging of N1QL should include the N1QL text
+* https://issues.couchbase.com/browse/NCBC-1439[NCBC-1439] - Fix
+race condition with opaque mismatch
+* https://issues.couchbase.com/browse/NCBC-1450[NCBC-1450] - Fix
+Connection Pool unit test
+* https://issues.couchbase.com/browse/NCBC-1451[NCBC-1451] -
+Regression: NCBC-1442 causes config request to fail with
+UnknownError
+* https://issues.couchbase.com/browse/NCBC-1455[NCBC-1455] -
+Remove weird string from KV Error Tests
+* https://issues.couchbase.com/browse/NCBC-1456[NCBC-1456] -
+RBAC full name should be optional
+* https://issues.couchbase.com/browse/NCBC-1457[NCBC-1457] - Add
+test to verify bucket config with missing hostname
+* https://issues.couchbase.com/browse/NCBC-1458[NCBC-1458] -
+KeyNotFoundException when UseEnhancedDurability is true
+* https://issues.couchbase.com/browse/NCBC-1459[NCBC-1459] -
+AuthenticationException when BucketConfiguration.MinSize is 0
+* https://issues.couchbase.com/browse/NCBC-1462[NCBC-1462] -
+OperationTimeout when bootstrapping and using Memcached bucket
+
+== Version 2.4.6 (6 June 2017)
+
+**_Note: _**This release has been de-listed from
+http://www.nuget.org[www.nuget.org] because of the known issues below
+that can cause the SDK to fail operations against authenticated buckets.
+Please use 2.4.5 instead and fixes for these issues will be available in
+the next release.
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1318[NCBC-1318] -
+.Net Core SDK fails connect to nodes after restart all nodes in
+async mode on CentOS7.  Other platforms do not exhibit this
+behavior.
+* https://issues.couchbase.com/browse/NCBC-1417[NCBC-1417] -
+Error when creating bucket "The port number must be greater than
+1023..." (Affects all 2.X clients)
+* https://issues.couchbase.com/browse/NCBC-1462[NCBC-1462]
+- OperationTimeout when bootstrapping and using Memcached bucket
+* https://issues.couchbase.com/browse/NCBC-1459[NCBC-1459]
+- AuthenticationException when BucketConfiguration.MinSize is 0
+* https://issues.couchbase.com/browse/NCBC-1458[NCBC-1458]
+- KeyNotFoundException when UseEnhancedDurability is true
+
+=== New Features and Behavioral Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1319[NCBC-1319] - Add
+examples of how to use 2.4.0 using VSCode, VS for Mac and CIL tools
+* https://issues.couchbase.com/browse/NCBC-1407[NCBC-1407] -
+Change XATTR option name to `xattr`
+* https://issues.couchbase.com/browse/NCBC-1430[NCBC-1430] -
+Enable autodeployment of nuget package on tag
+* https://issues.couchbase.com/browse/NCBC-1371[NCBC-1371] - Add
+pooling for MUX connections
+* https://issues.couchbase.com/browse/NCBC-1400[NCBC-1400] - Log
+document key > host mapping to help identify server issue
+* https://issues.couchbase.com/browse/NCBC-1403[NCBC-1403] -
+Don't return failed operation body as response message
+* https://issues.couchbase.com/browse/NCBC-1412[NCBC-1412] - Add
+Binary Transcoder
+* https://issues.couchbase.com/browse/NCBC-1413[NCBC-1413] - Add
+Term to TermRangeQuery
+* https://issues.couchbase.com/browse/NCBC-1414[NCBC-1414] - Add
+cluster authenticate overload to take username & password
+* https://issues.couchbase.com/browse/NCBC-1419[NCBC-1419] -
+Update repository README to be more current
+* https://issues.couchbase.com/browse/NCBC-1421[NCBC-1421] -
+Ignore failing Ephemeral bucket integration test
+* https://issues.couchbase.com/browse/NCBC-1424[NCBC-1424] - Add
+support for Authenticator in ClusterHelper
+* https://issues.couchbase.com/browse/NCBC-1425[NCBC-1425] - Add
+IO timings when Trace is enabled
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1278[NCBC-1278] - Fix
+dependency on connection pooling in Server class
+* https://issues.couchbase.com/browse/NCBC-1423[NCBC-1423] -
+Document.Expiry description says it's in Milliseconds, should be
+seconds
+* https://issues.couchbase.com/browse/NCBC-1426[NCBC-1426] - Fix
+missing Type.Initializer compiler issue
+* https://issues.couchbase.com/browse/NCBC-1427[NCBC-1427] - Fix
+tests after SASL authentication refactor
+* https://issues.couchbase.com/browse/NCBC-1428[NCBC-1428] -
+Don't run Enhanced Auth tests during CI builds
+* https://issues.couchbase.com/browse/NCBC-1429[NCBC-1429] -
+NotSupportedException thrown when SSL enabled under high concurrency
+* https://issues.couchbase.com/browse/NCBC-1432[NCBC-1432] -
+Support Facets in FTS query responses
+* https://issues.couchbase.com/browse/NCBC-1434[NCBC-1434] -
+Don't use IOService to authenticate PlainTextMechanism
+
+== Version 2.4.5 (16 May 2017)
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1318[NCBC-1318] -
+.Net Core SDK fails connect to nodes after restart all nodes in
+async mode on CentOS7.  Other platforms do not exhibit this
+behavior.
+* https://issues.couchbase.com/browse/NCBC-1417[NCBC-1417] -
+Error when creating bucket "The port number must be greater than
+1023..." (Affects all 2.X clients)
+* https://issues.couchbase.com/browse/NCBC-1429[NCBC-1429] -
+NotSupportedException thrown when SSL enabled under high concurrency
+
+=== New Features and Behavioral Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1366[NCBC-1366] -
+.NET fast failover support
+* https://issues.couchbase.com/browse/NCBC-1376[NCBC-1376] - Add
+support for FTS Geo & TermRange Queries
+* https://issues.couchbase.com/browse/NCBC-1378[NCBC-1378] - Add
+couchbasemock testing support in support of kverror map
+* https://issues.couchbase.com/browse/NCBC-1380[NCBC-1380] -
+Request, parse, and load KV Error map
+* https://issues.couchbase.com/browse/NCBC-1382[NCBC-1382] - Add
+basic KV error map testing with mock
+* https://issues.couchbase.com/browse/NCBC-1345[NCBC-1345] - Add
+ephemeral bucket management functions to SDK
+* https://issues.couchbase.com/browse/NCBC-1377[NCBC-1377] - Fix
+nuget deployment url in Appveyor config
+* https://issues.couchbase.com/browse/NCBC-1392[NCBC-1392] -
+Support changes in user management rest endpoints due to rename of
+builtin to local
+* https://issues.couchbase.com/browse/NCBC-1385[NCBC-1385] -
+Replace Info logging with Debug logging in ConnectionPool
+* https://issues.couchbase.com/browse/NCBC-1387[NCBC-1387] - Add
+support for FTS advanced sorting
+* https://issues.couchbase.com/browse/NCBC-1389[NCBC-1389] -
+Ability to check for ClusterHelper initialization status
+* https://issues.couchbase.com/browse/NCBC-1397[NCBC-1397] - Add
+Jenkins build badge
+* https://issues.couchbase.com/browse/NCBC-1399[NCBC-1399] -
+Replace all ConfigureAwait(false) calls with ContinueOnAnyContext
+for consistency
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1352[NCBC-1352] -
+While swapping a node, log4net:ERROR Exception while rendering
+object of type is printed on SDKD console
+* https://issues.couchbase.com/browse/NCBC-1361[NCBC-1361] -
+subdoc request does not timeout at default 2500ms
+* https://issues.couchbase.com/browse/NCBC-1364[NCBC-1364] - Fix
+failing test -
+GetAndLock_Sets_Lock_And_Is_Released_After_Expiration
+* https://issues.couchbase.com/browse/NCBC-1374[NCBC-1374] - Uri
+format exception when hostname is empty in nodesExt
+* https://issues.couchbase.com/browse/NCBC-1375[NCBC-1375] -
+ClusterManger.CreateBucket defaults result in high IO priority
+bucket
+* https://issues.couchbase.com/browse/NCBC-1379[NCBC-1379] - Fix
+tagged build versioning when AppVeyor packages client
+* https://issues.couchbase.com/browse/NCBC-1381[NCBC-1381] -
+When using App.Config UseConnectionPooling is ignored.
+* https://issues.couchbase.com/browse/NCBC-1383[NCBC-1383] -
+Connection fails to auth when using async K/V methods
+* https://issues.couchbase.com/browse/NCBC-1384[NCBC-1384] -
+Ensure proper IIOService is instantiated when UseConnectionPooling
+is true
+* https://issues.couchbase.com/browse/NCBC-1390[NCBC-1390] -
+Client configuration is null when specifying bucket configs in
+ClientConfiguration
+* https://issues.couchbase.com/browse/NCBC-1391[NCBC-1391] - Use
+Task.Delay in async calls
+* https://issues.couchbase.com/browse/NCBC-1393[NCBC-1393] -
+async upsert hangs after removing entry point node
+* https://issues.couchbase.com/browse/NCBC-1394[NCBC-1394] -
+OperationTimeout and high memory consumption when swapping in a node
+* https://issues.couchbase.com/browse/NCBC-1396[NCBC-1396] -
+Opening Memcached buckets has significant delay
+* https://issues.couchbase.com/browse/NCBC-1398[NCBC-1398] -
+Reference to ClientConfiguration is null in PoolConfiguration
+* https://issues.couchbase.com/browse/NCBC-1404[NCBC-1404] -
+IClusterManager.CreateBucket is missing a proxyPort parameter
+* https://issues.couchbase.com/browse/NCBC-1409[NCBC-1409] - Fix
+ObjectDisposedException in ConfigMonitor.cs
+* https://issues.couchbase.com/browse/NCBC-1417[NCBC-1417] -
+Error when creating bucket "The port number must be greater than
+1023..."
+* https://issues.couchbase.com/browse/NCBC-1418[NCBC-1418] -
+NullReferenceException when AsyncState cleans up
+* https://issues.couchbase.com/browse/NCBC-1420[NCBC-1420] -
+Sample app RBAC update for 5.0
+
+== Version 2.4.4 (10 April 2017)
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1318[NCBC-1318] -
+.Net Core SDK fails connect to nodes after restart all nodes in
+async mode on CentOS7.  Other platforms do not exhibit this
+behavior.
+* https://issues.couchbase.com/browse/NCBC-1417[NCBC-1417] -
+Error when creating bucket "The port number must be greater than
+1023..." (Affects all 2.X clients)
+* https://issues.couchbase.com/browse/NCBC-1429[NCBC-1429] -
+NotSupportedException thrown when SSL enabled under high concurrency
+
+=== New features and Behavioral Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1341[NCBC-1341] - Add
+support for username/password auth in support of RBAC.
+* https://issues.couchbase.com/browse/NCBC-1362[NCBC-1362] - Add
+User Management features
+* https://issues.couchbase.com/browse/NCBC-1280[NCBC-1280] - Fix
+SDKQE build and upgrade nuget to v3.5
+* https://issues.couchbase.com/browse/NCBC-1300[NCBC-1300] -
+review travel sample app
+* https://issues.couchbase.com/browse/NCBC-1304[NCBC-1304] -
+[TravelSample] Javascript error on starting up
+* https://issues.couchbase.com/browse/NCBC-1351[NCBC-1351] -
+Provide easy extension methods to generate exceptions from responses
+* https://issues.couchbase.com/browse/NCBC-1344[NCBC-1344] -
+Review Cluster Level Authentication against RFC
+* https://issues.couchbase.com/browse/NCBC-1353[NCBC-1353] -
+Deploy nuget package on repository tag
+* https://issues.couchbase.com/browse/NCBC-1354[NCBC-1354] -
+Don't attach binaries zip on github release
+* https://issues.couchbase.com/browse/NCBC-1355[NCBC-1355] -
+Bump AppVeyor build number
+* https://issues.couchbase.com/browse/NCBC-1356[NCBC-1356] - Set
+user-agent header for all service requests (n1ql, fts, etc)
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1263[NCBC-1263] -
+Intermittent integration tests hang
+* https://issues.couchbase.com/browse/NCBC-1347[NCBC-1347] - Fix
+failing 'Test_PrepareQueryAsync_CanCancel' integration test
+* https://issues.couchbase.com/browse/NCBC-1349[NCBC-1349] -
+Single Subdoc Mutation Operations Don't Return Mutation Token
+* https://issues.couchbase.com/browse/NCBC-1350[NCBC-1350] -
+DefaultValueHandling.IgnoreAndPopulate Causes NRE With Bad Query
+Syntax
+* https://issues.couchbase.com/browse/NCBC-1357[NCBC-1357] -
+FakeConnection is missing property in Couchbase.UnitTests
+* https://issues.couchbase.com/browse/NCBC-1360[NCBC-1360] -
+AppVeyor fails to create GitHib release on tag
+* https://issues.couchbase.com/browse/NCBC-1368[NCBC-1368] -
+Regression in CouchbaseNetClient with respect to FQDN use with SSL
+* https://issues.couchbase.com/browse/NCBC-1369[NCBC-1369] -
+PoolConfiguration.MaxSize must come before PoolConfiguration.MinSize
+* https://issues.couchbase.com/browse/NCBC-1370[NCBC-1370] -
+MapGet throws NullReferenceException if key does not exist
+* https://issues.couchbase.com/browse/NCBC-1373[NCBC-1373] -
+Views return null values for each row when UseStreaming is enabled.
+
+== Version 2.4.2 (10 March 2017)
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1318[NCBC-1318] -
+.Net Core SDK fails connect to nodes after restart all nodes in
+async mode on CentOS7.  Other platforms do not exhibit this
+behavior.
+
+=== New features and Behavioral Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1276[NCBC-1276] - Add
+extension method to configure MS Logging
+* https://issues.couchbase.com/browse/NCBC-1305[NCBC-1305] -
+Make bootstrap url default to port 8091
+* https://issues.couchbase.com/browse/NCBC-1322[NCBC-1322] -
+Test that DocumentFragment<T>.Value works as expected for
+POCO's
+* https://issues.couchbase.com/browse/NCBC-1325[NCBC-1325] -
+Move packing steps to after_build in AppVeyor config
+* https://issues.couchbase.com/browse/NCBC-1326[NCBC-1326] -
+Cache packages and use artifacts section in appveyor
+* https://issues.couchbase.com/browse/NCBC-1327[NCBC-1327] -
+Update nuspec (title, description, copyright, etc)
+* https://issues.couchbase.com/browse/NCBC-1328[NCBC-1328] -
+Update AppVeyor package cache path
+* https://issues.couchbase.com/browse/NCBC-1330[NCBC-1330] -
+Record what framework client is running under when sending Hello
+* https://issues.couchbase.com/browse/NCBC-1333[NCBC-1333] -
+Push nuget packages to MyGet from AppVeyor
+* https://issues.couchbase.com/browse/NCBC-1334[NCBC-1334] -
+Push client zip file to S3 on repo tag
+* https://issues.couchbase.com/browse/NCBC-1249[NCBC-1249] - Add
+Analytics Query Support as Uncommitted
+* https://issues.couchbase.com/browse/NCBC-1281[NCBC-1281] -
+Suppress XML Comment Missing (CS1591) build warnings
+* https://issues.couchbase.com/browse/NCBC-1294[NCBC-1294] - Add
+Couchbase.snk to gitignore
+* https://issues.couchbase.com/browse/NCBC-1309[NCBC-1309] -
+.NET Core Log.Error ignores parameters and logs format string only
+* https://issues.couchbase.com/browse/NCBC-1316[NCBC-1316] -
+update to latest try-cb frontend
+* https://issues.couchbase.com/browse/NCBC-1320[NCBC-1320] -
+Update sample app bootstrap / connection section
+* https://issues.couchbase.com/browse/NCBC-1337[NCBC-1337] -
+When a timeout occurs Muxio returns Success with no body
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1250[NCBC-1250] -
+Unhandled exception of type 'System.ExecutionEngineException'
+occurred in System.Private.CoreLib.ni.dll
+* https://issues.couchbase.com/browse/NCBC-1286[NCBC-1286] -
+ObjectDisposedException when object is finalized
+* https://issues.couchbase.com/browse/NCBC-1291[NCBC-1291] - FTS
+queries _may_ continue to fail after a node goes on/offline
+* https://issues.couchbase.com/browse/NCBC-1298[NCBC-1298] -
+.NETCore SDK throws Failed to acquire a pooled client connection on
+xxx.xxx.xxx.xxx:11210 after 5 tries.
+* https://issues.couchbase.com/browse/NCBC-1301[NCBC-1301] -
+MuxIO NodeUnavailableException during rebalance
+* https://issues.couchbase.com/browse/NCBC-1311[NCBC-1311] -
+GetWithLock and GetAndLock Doc API is incorrect
+* https://issues.couchbase.com/browse/NCBC-1313[NCBC-1313] -
+Ensure document CAS is unlocked after lock expires
+* https://issues.couchbase.com/browse/NCBC-1314[NCBC-1314] -
+GetAndLock operations do not send expiration
+* https://issues.couchbase.com/browse/NCBC-1315[NCBC-1315] -
+.NET client does not set the HELO correctly
+* https://issues.couchbase.com/browse/NCBC-1321[NCBC-1321] -
+SASL unit test fails with null exception
+* https://issues.couchbase.com/browse/NCBC-1324[NCBC-1324] -
+Remove InternalsVisibleTo when build in AppVeyor
+* https://issues.couchbase.com/browse/NCBC-1329[NCBC-1329] -
+Don't report XML missing warnings for netstandard project
+* https://issues.couchbase.com/browse/NCBC-1335[NCBC-1335] -
+Only run XATTRs and Analytics integration tests when that feature is
+available
+* https://issues.couchbase.com/browse/NCBC-1339[NCBC-1339] -
+Ensure an operation is retried unless the node's state is
+unavailable
+* https://issues.couchbase.com/browse/NCBC-1342[NCBC-1342] -
+Exception using N1QL with UseStreaming(true) and AdHoc(false)
+* https://issues.couchbase.com/browse/NCBC-1343[NCBC-1343] -
+Query and Search Nodes Don't Reactivate In Client After Failure
+(unless all fail)
+* https://issues.couchbase.com/browse/NCBC-1346[NCBC-1346] - Fix
+integration tests for LookupInBuilder.Exists
+* https://issues.couchbase.com/browse/NCBC-1348[NCBC-1348] -
+Single Subdoc Operation With Short Results Throw NRE Reading Content
+
+== Version 2.4.0 (14 Feb 2017)
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296] -
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException
+on some .NET Core platforms.  A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1318[NCBC-1318] -
+.Net Core SDK fails connect to nodes after restart all nodes in
+async mode on CentOS7.  Other platforms do not exhibit this
+behavior.
+* https://issues.couchbase.com/browse/NCBC-1250[NCBC-1250] -
+Unhandled exception of type 'System.ExecutionEngineException'
+occurred in System.Private.CoreLib.ni.dll on .NET Core on Windows 7.
+ A possible workaround is available.
+
+=== New features and Behavioral Changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-864[NCBC-864] - Add
+JSON streaming parser to DataMapper/ViewClient
+* https://issues.couchbase.com/browse/NCBC-1228[NCBC-1228] -
+Codify and document DataStructure concurrency model
+* https://issues.couchbase.com/browse/NCBC-1243[NCBC-1243] -
+Update DataStructure Async methods to follow RFC spec
+* https://issues.couchbase.com/browse/NCBC-1258[NCBC-1258] -
+Support reading properties prior to enumerating StreamingQueryResult
+* https://issues.couchbase.com/browse/NCBC-1260[NCBC-1260] -
+Change IO strategy from pooled to muxio
+* https://issues.couchbase.com/browse/NCBC-1262[NCBC-1262] -
+Improve Query request URI handling
+* https://issues.couchbase.com/browse/NCBC-1271[NCBC-1271] -
+Update documentation on logging
+* https://issues.couchbase.com/browse/NCBC-1272[NCBC-1272] -
+Documentation updates on Muxio
+* https://issues.couchbase.com/browse/NCBC-1273[NCBC-1273] -
+Document that core exists and the package is split depending on your
+target
+* https://issues.couchbase.com/browse/NCBC-1274[NCBC-1274] -
+ensure packaging work is completed
+* https://issues.couchbase.com/browse/NCBC-1279[NCBC-1279] -
+Support N1QL query cancellation
+* https://issues.couchbase.com/browse/NCBC-1292[NCBC-1292] -
+Migrate memcached tests to integration test project
+* https://issues.couchbase.com/browse/NCBC-1248[NCBC-1248] - Add
+XATTR Support as Uncommitted
+* https://issues.couchbase.com/browse/NCBC-1234[NCBC-1234] -
+Develop build, package, deploy scripts for .NET SDK
+* https://issues.couchbase.com/browse/NCBC-1238[NCBC-1238] -
+Update Core dependencies to NetStandard.Library 1.6.1 et al.
+* https://issues.couchbase.com/browse/NCBC-1239[NCBC-1239] -
+Update all 3rd party Core dependencies to latest
+* https://issues.couchbase.com/browse/NCBC-1240[NCBC-1240] -
+Throw InitializationException if ClusterHelper.Initialize is not
+called.
+* https://issues.couchbase.com/browse/NCBC-1241[NCBC-1241] -
+Update Newtonsoft from 8.0.3 to 9.0.1
+* https://issues.couchbase.com/browse/NCBC-1245[NCBC-1245] -
+Remove local nuget config and targets files
+* https://issues.couchbase.com/browse/NCBC-1246[NCBC-1246] -
+Allow internals to be shared with SDKD.NetStandard
+* https://issues.couchbase.com/browse/NCBC-1256[NCBC-1256] -
+Update to log4net 2.0.7
+* https://issues.couchbase.com/browse/NCBC-1265[NCBC-1265] -
+Update BinaryToJsonTranscoder.cs to be net45 only
+* https://issues.couchbase.com/browse/NCBC-1284[NCBC-1284] -
+System.IO.FileNotFoundException on linux dotnet
+* https://issues.couchbase.com/browse/NCBC-1289[NCBC-1289] -
+Update Couchbase.nuspec .NET Core dependencies
+* https://issues.couchbase.com/browse/NCBC-1295[NCBC-1295] -
+PlatformNotSupportedException - when setting MaxConnectionsPerServer
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1142[NCBC-1142] -
+Query does not recover after service restart
+* https://issues.couchbase.com/browse/NCBC-1230[NCBC-1230] -
+Invalid logic of "fields" collection in FTS
+* https://issues.couchbase.com/browse/NCBC-1235[NCBC-1235] -
+When a N1QL request timed out (timeout) wrong exception received
+* https://issues.couchbase.com/browse/NCBC-1244[NCBC-1244] - On
+OSX default connection pool hangs when doing bulk async/await ops
+* https://issues.couchbase.com/browse/NCBC-1247[NCBC-1247] -
+.Net core (2.4.0 dp2) N1QL is not running on Mac (SecureTransport)
+* https://issues.couchbase.com/browse/NCBC-1254[NCBC-1254] -
+Revert IQueryResult<T> refactoring
+* https://issues.couchbase.com/browse/NCBC-1259[NCBC-1259] -
+StreamingQueryClient fails on multiple queries
+* https://issues.couchbase.com/browse/NCBC-1261[NCBC-1261] -
+Ensure (N1QL & View) streams are correctly disposed
+* https://issues.couchbase.com/browse/NCBC-1267[NCBC-1267] -
+SslConnection fails when two or more threads write using MuxIO
+* https://issues.couchbase.com/browse/NCBC-1268[NCBC-1268] -
+CAS-based observe unit tests hangs
+* https://issues.couchbase.com/browse/NCBC-1269[NCBC-1269] -
+ClientConfiguration should have UseConnectionPooling property
+* https://issues.couchbase.com/browse/NCBC-1270[NCBC-1270] -
+Ignore lock files in gitignore
+* https://issues.couchbase.com/browse/NCBC-1275[NCBC-1275] -
+Remove EnsureNuGetPackageBuildImports from csproj
+* https://issues.couchbase.com/browse/NCBC-1277[NCBC-1277] -
+Make ConnectionPoolingFactory create MultiplexingConnection's when
+UseConnectionPooling is false
+* https://issues.couchbase.com/browse/NCBC-1285[NCBC-1285] -
+Disable HTTP 1.1 pipelining to query service, if enabled
+* https://issues.couchbase.com/browse/NCBC-1288[NCBC-1288] -
+NullReferenceException thrown unless the LogManager is explicitly
+configured.
+* https://issues.couchbase.com/browse/NCBC-1290[NCBC-1290] -
+N1QL queries continue to fail after a node goes on/offline
+* https://issues.couchbase.com/browse/NCBC-1297[NCBC-1297] -
+.NETCore SDK causes ClientFailure for SubDoc operation on Windows
+with muxio
+* https://issues.couchbase.com/browse/NCBC-1302[NCBC-1302] -
+SemVer Breaking Change In Method Signature For
+ClusterHelper.GetBucket
+* https://issues.couchbase.com/browse/NCBC-1303[NCBC-1303] - add
+missing extensions to nuspec
+* https://issues.couchbase.com/browse/NCBC-1307[NCBC-1307] -
+.NetCore SDK fails connect to nodes after restart all nodes
+
+===
+
+== Version 2.3.11 (3 Jan 2017)
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1254[NCBC-1254]
+- Revert IQueryResult<T> refactoring
+
+== Version 2.3.10 (7 Dec 2016)
+
+=== New features and behavioral changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1204[NCBC-1204] -
+CouchbaseClientDefinition should use interface for Buckets property
+* https://issues.couchbase.com/browse/NCBC-1237[NCBC-1237] - Add
+custom "sort" param for FTS
+* https://issues.couchbase.com/browse/NCBC-1227[NCBC-1227] - Add
+QueuePush, QueuePop, and QueueSize to IBucket
+* https://issues.couchbase.com/browse/NCBC-1036[NCBC-1036] -
+Create writeup on how to provision a cluster programmatically with
+code sample
+* https://issues.couchbase.com/browse/NCBC-1101[NCBC-1101] -
+Implement WatchIndexes for index managment
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1104[NCBC-1104] -
+When SSL certificate is not setup correctly System.ArgumentException
+is thrown.
+* https://issues.couchbase.com/browse/NCBC-1232[NCBC-1232] -
+.NET client may not automatically re-prepare when an index is
+removed
+* https://issues.couchbase.com/browse/NCBC-1233[NCBC-1233] -
+Release 2.3.9 assembly is not strongly named and does not have a
+publicKeyToken
+* https://issues.couchbase.com/browse/NCBC-1236[NCBC-1236] -
+Remove DotMemory unresolved reference from IntegrationTests
+
+== Version 2.3.9 (1 Nov 2016)
+
+=== New features and behavioral changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1128[NCBC-1128] -
+Refactor FTS ISearchQueryResult so that it has parity with Java SDK
+* https://issues.couchbase.com/browse/NCBC-1141[NCBC-1141] -
+When Id is not present in doc fail-fast
+* https://issues.couchbase.com/browse/NCBC-1210[NCBC-1210] -
+Upgrade NetStandard projects to Common.Logging Core and Portable
+3.4-Alpha2
+* https://issues.couchbase.com/browse/NCBC-1220[NCBC-1220] -
+Update SearchClient to use CouchbaseHttpClient
+* https://issues.couchbase.com/browse/NCBC-854[NCBC-854] - N1QL
+Cross Bucket Joins
+* https://issues.couchbase.com/browse/NCBC-1060[NCBC-1060] -
+Include Datastructure Support
+* https://issues.couchbase.com/browse/NCBC-1062[NCBC-1062] - Add
+Cluster Level Authenticator Interface
+* https://issues.couchbase.com/browse/NCBC-1223[NCBC-1223] - Add
+MediaType constants to be used instead of inline strings
+* https://issues.couchbase.com/browse/NCBC-1215[NCBC-1215] - Add
+nuspec file for generating Net45 and NetStandard1.5 targets
+* https://issues.couchbase.com/browse/NCBC-1217[NCBC-1217] - Set
+AllowUnsafe to false in Couchbase.NetStandard project
+* https://issues.couchbase.com/browse/NCBC-1221[NCBC-1221] -
+Make OpenBucket throws Auth exception when cred not provided
+* https://issues.couchbase.com/browse/NCBC-1224[NCBC-1224] - Add
+IBucket level Data Structure methods
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1222[NCBC-1222] -
+Fixup unit tests
+* https://issues.couchbase.com/browse/NCBC-1194[NCBC-1194] -
+Bucket.Exists() returns False for a document that DOES exist when
+using Swedish Characters (at least) in document ID
+* https://issues.couchbase.com/browse/NCBC-1218[NCBC-1218] - Fix
+broken tests impacting CI
+* https://issues.couchbase.com/browse/NCBC-1219[NCBC-1219] -
+Improve or fix unit tests
+* https://issues.couchbase.com/browse/NCBC-958[NCBC-958] -
+Provide sane checks for max and min pool sizes.
+* https://issues.couchbase.com/browse/NCBC-1209[NCBC-1209] -
+Ensure CAS is passed to Sub-Doc operations
+* https://issues.couchbase.com/browse/NCBC-1211[NCBC-1211] -
+Error Bootstrapping Using .Net Core on Linux Due To Socket Keep
+Alives
+* https://issues.couchbase.com/browse/NCBC-1213[NCBC-1213] -
+Unable to submit Compound FTS query
+* https://issues.couchbase.com/browse/NCBC-1214[NCBC-1214] -
+BooleanQuery should only require one sub-query, not one of each type
+* https://issues.couchbase.com/browse/NCBC-1216[NCBC-1216] -
+PhraseQuery and DocId Query throw exception during Export
+* https://issues.couchbase.com/browse/NCBC-1225[NCBC-1225] -
+PoolConfigurationTests do not match min and max values
+
+== Version 2.3.8 (4 Oct 2016)
+
+=== New features and behavioral changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1187[NCBC-1187] -
+Refactor SCRAM-SHA hash algo calls to be Core compliant
+* https://issues.couchbase.com/browse/NCBC-1188[NCBC-1188] -
+Refactor DNS calls to be Core compliant
+* https://issues.couchbase.com/browse/NCBC-1189[NCBC-1189] -
+Merge development Core branch with couchbase-net-client/master
+* https://issues.couchbase.com/browse/NCBC-1199[NCBC-1199] -
+Create IList implementation
+* https://issues.couchbase.com/browse/NCBC-1190[NCBC-1190] -
+Couchbase.UnitTests.Management Test Failing
+* https://issues.couchbase.com/browse/NCBC-1191[NCBC-1191] -
+Honor connectionTimeout configuration setting when initializing
+streaming provider.
+* https://issues.couchbase.com/browse/NCBC-1192[NCBC-1192] -
+Remove NewtonSoft dependency from ViewResult
+* https://issues.couchbase.com/browse/NCBC-1201[NCBC-1201] -
+Make Visual Studio download Nuget.exe
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1091[NCBC-1091] -
+Session provider causes infinite loop when CB Cluster goes down
+* https://issues.couchbase.com/browse/NCBC-1186[NCBC-1186] -
+KeyObserver and SeqnoKeyObserver mix async and sync paths
+* https://issues.couchbase.com/browse/NCBC-1193[NCBC-1193] -
+Management API Is Broken With KeyNotFoundException
+* https://issues.couchbase.com/browse/NCBC-1195[NCBC-1195] - Fix
+BinaryToJsonTranscoder tests
+* https://issues.couchbase.com/browse/NCBC-1202[NCBC-1202] -
+LookupCommand gets cast to the Type of T causing cast exception
+* https://issues.couchbase.com/browse/NCBC-1203[NCBC-1203] -
+Single lookup calls base ReadExtras
+* https://issues.couchbase.com/browse/NCBC-1212[NCBC-1212] -
+Mono Doesn't Support
+HttpClientHandler.ServerCertificateCustomValidationCallback
+
+== Version 2.3.6/2.3.7 (6 Sept 2016)
+
+=== New features and behavioral changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1173[NCBC-1173] -
+Make internal IO constructors public for Core version of Activator
+* https://issues.couchbase.com/browse/NCBC-1169[NCBC-1169] -
+Make exception behavior more like Java SDK
+* https://issues.couchbase.com/browse/NCBC-1171[NCBC-1171] -
+.Net client should send HELO command during bootstrap
+* https://issues.couchbase.com/browse/NCBC-1172[NCBC-1172] -
+Remove references to ServicePointManager and replace with core
+compatible API's
+* https://issues.couchbase.com/browse/NCBC-1168[NCBC-1168] -
+Resolve compiler warnings
+* https://issues.couchbase.com/browse/NCBC-1176[NCBC-1176] -
+Upgrade management API to use NewtonSoft 8.0.3
+* https://issues.couchbase.com/browse/NCBC-1182[NCBC-1182] -
+When ConfigThreadState shuts down log INFO instead of ERROR
+* https://issues.couchbase.com/browse/NCBC-1183[NCBC-1183] -
+Update NUnit package from v3.4.0 to v3.4.1
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1178[NCBC-1178] - Fix
+NRE due to mock config info object not containing client config
+* https://issues.couchbase.com/browse/NCBC-1184[NCBC-1184] -
+Document objects missing Token for RYOW
+* https://issues.couchbase.com/browse/NCBC-1174[NCBC-1174] -
+Rename file to match class name of IViewQuery
+* https://issues.couchbase.com/browse/NCBC-1175[NCBC-1175] - Fix
+minor issues related to n1ql request tests
+* https://issues.couchbase.com/browse/NCBC-1177[NCBC-1177] - Fix
+minor issues related to n1ql request tests
+* https://issues.couchbase.com/browse/NCBC-1181[NCBC-1181] - Fix
+Failing Unit Tests
+
+== Version 2.3.5 (4 Aug 2016)
+
+This is another bug-fix and enhancement GA release of the 2.3 series.
+You can read read about the details on this http://blog.couchbase.com/2016/august/couchbase-.net-sdk-2.3.5-now-available[blog post].
+
+=== New features and behavioral changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1170[NCBC-1170] -
+Make Insert and Upsert return the Document - similar to Java SDK
+* https://issues.couchbase.com/browse/NCBC-1094[NCBC-1094] -
+Implement SCRAM-SHA1 Support
+* https://issues.couchbase.com/browse/NCBC-1160[NCBC-1160] - Add
+option to enable N1QL timing logging
+* https://issues.couchbase.com/browse/NCBC-1111[NCBC-1111] -
+Remove exp. backoff for NMV and replace with static 100ms backoff
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-1080[NCBC-1080] -
+Buckets get opened with a password provided for another in the
+config .NET SDK
+* https://issues.couchbase.com/browse/NCBC-1108[NCBC-1108] -
+Index Mgmt methods lack ContinueOnAnyContext and may deadlock
+* https://issues.couchbase.com/browse/NCBC-1157[NCBC-1157] -
+Queries fail if DefaultSerializer.ContractResolver is null
+* https://issues.couchbase.com/browse/NCBC-1158[NCBC-1158] -
+Exception for subdoc get during rb2out
+* https://issues.couchbase.com/browse/NCBC-1159[NCBC-1159] -
+Async calls deadlock while running tests under NUnit 3
+* https://issues.couchbase.com/browse/NCBC-1161[NCBC-1161] - Sub
+Document - MutateIn does not support POCO's
+* https://issues.couchbase.com/browse/NCBC-1162[NCBC-1162] -
+Make Observe fail-fast when document mutation is encountered
+* https://issues.couchbase.com/browse/NCBC-1163[NCBC-1163] - MUX
+IO - OperationTimeout when Enhanced Durability is enabled
+* https://issues.couchbase.com/browse/NCBC-1164[NCBC-1164] -
+Document mutation incorrectly indicated while performing CAS-based
+observe
+* https://issues.couchbase.com/browse/NCBC-1125[NCBC-1125] -
+Switch SslStream to using Async TPL pattern
+* https://issues.couchbase.com/browse/NCBC-1152[NCBC-1152] - Net
+Core Doesn't Support Socket.BeginConnect
+* https://issues.couchbase.com/browse/NCBC-1167[NCBC-1167] -
+ensure the README on github points clearly to current start using
+
+== Version 2.3.4 (18 July 2016)
+
+Version 2.3.4 is a bug-fix and enhancement general availability release
+of the 2.3 series. It adds new features for async bulk query methods,
+upgrades to dependencies and configuration updates, in addition to bug
+fixes and improvements. Please note that, 2.3.3 and 2.3.4 are the same
+releases; 2.3.4 fixes a packaging issue where the
+Couchbase.NetClient.dll was incorrectly versioned to 0.0.0.0. Also, note
+that version 2.3.2 was skipped.
+
+=== New features and behavioral changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1092[NCBC-1092] -
+Upgrade NewtonSoft dependency to 8.x
+* https://issues.couchbase.com/browse/NCBC-1116[NCBC-1116] - Add
+async/await methods for bulk operations
+* https://issues.couchbase.com/browse/NCBC-1118[NCBC-1118] -
+Allow programmatic configuration for IO services
+* https://issues.couchbase.com/browse/NCBC-1087[NCBC-1087] -
+IPv6 Support in Client Configuration
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1143[NCBC-1143] -
+Subdocument Exists always returns true
+* https://issues.couchbase.com/browse/NCBC-1146[NCBC-1146] -
+replace GetWithLock with GetAndLock
+* https://issues.couchbase.com/browse/NCBC-1148[NCBC-1148] -
+MemcachedBucket.CreateManager throws NotSupportedException
+* https://issues.couchbase.com/browse/NCBC-1149[NCBC-1149] -
+Correct issue in bucket reference counting
+* https://issues.couchbase.com/browse/NCBC-1151[NCBC-1151] -
+Subdocument - Singular Replace always fails
+* https://issues.couchbase.com/browse/NCBC-1154[NCBC-1154] -
+Calling ToString on QueryResult may throw NRE
+* https://issues.couchbase.com/browse/NCBC-1150[NCBC-1150] -
+Subdocument - Lookup fails when getting hierarchical subdocument
+
+== Version 2.3.1 (22 June 2016)
+
+Version 2.3.1 is the first patch release and addresses a packaging issue
+with Common.Logging found in the 2.3.0 release. It also includes two
+minor fixes.
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1147[NCBC-1147] -
+MutationToken uses wrong bucket - impacts RYOW
+* https://issues.couchbase.com/browse/NCBC-1140[NCBC-1140] - If
+CarrierPublicationProvider is disposed do not reset timer
+
+== Version 2.3.0 (13 June 2016)
+
+Version 2.3.0 is the first general availability release of the 2.3
+series. It adds new features for N1QL query, performance enhancements
+and supports the developer preview full text search available in
+Couchbase Server 4.5.
+
+=== New features and behavioral changes
+
+This release contains the following enhancements:
+
+* https://issues.couchbase.com/browse/NCBC-1096[NCBC-1096] -
+Make Configuration system more abstract to support JSON configs
+* https://issues.couchbase.com/browse/NCBC-1114[NCBC-1114] -
+Refactor System.Timers.Timer to System.Threading.Timer
+* https://issues.couchbase.com/browse/NCBC-1117[NCBC-1117] -
+HttpServerConfig Doesn't Validate Server Certificate
+* https://issues.couchbase.com/browse/NCBC-1013[NCBC-1013] - Add
+certificate validation to SslConnection
+* https://issues.couchbase.com/browse/NCBC-1051[NCBC-1051] -
+Investigate making IO layer pluggable via code configuration
+* https://issues.couchbase.com/browse/NCBC-1079[NCBC-1079] - Add
+streaming JSON parser for N1QL and Views
+* https://issues.couchbase.com/browse/NCBC-1122[NCBC-1122] - Add
+IgnoreRemoteCertificateNameMismatch config flag to ignore TLS
+hostname validation
+* https://issues.couchbase.com/browse/NCBC-1105[NCBC-1105] - Add
+integration tests for AT_PLUS
+
+=== Fixed Issues
+
+This release fixes the following issues:
+
+* https://issues.couchbase.com/browse/NCBC-1110[NCBC-1110] -
+GetFromReplica times out if key does not exist
+* https://issues.couchbase.com/browse/NCBC-1119[NCBC-1119] -
+MutationTokens Do Not Work Because BucketRef Is Always Null
+* https://issues.couchbase.com/browse/NCBC-1120[NCBC-1120] -
+Cannot Set UseEnhancedDurability To True Without Defining A
+ConnectionPool
+* https://issues.couchbase.com/browse/NCBC-1121[NCBC-1121] -
+RYOW ConsistentWith Doesn't Function For N1QL Queries
+* https://issues.couchbase.com/browse/NCBC-1131[NCBC-1131] -
+Regression causes HttpStreamingProvider to auth invalid password
+* https://issues.couchbase.com/browse/NCBC-1135[NCBC-1135] - Use
+Endpoint instead of Uri for SslStream.Authenticate
+* https://issues.couchbase.com/browse/NCBC-1136[NCBC-1136] -
+Regression - MutationToken are not set when UseEnhancedDurabity is
+true
+* https://issues.couchbase.com/browse/NCBC-769[NCBC-769] -
+Ensure support for "Consistency Parameters" is implemented correctly
