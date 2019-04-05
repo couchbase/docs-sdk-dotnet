@@ -95,14 +95,29 @@ Certain Prepared statements could produce _Fatal error: unexpected end of JSON i
 
 === Fixed Issues
 
-* https://issues.couchbase.com/browse/NCBC-1877[NCBC-1877]: If more than one Bucket is configured, ConfigManager only fetches the first config.
-* https://issues.couchbase.com/browse/NCBC-1879[NCBC-1879]: Only use KV nodes when updating bootstrap URIs
-* https://issues.couchbase.com/browse/NCBC-1891[NCBC-1891]: Subdoc MultiMutation doesn't set extras (expiry and/or doc flags)
-* https://issues.couchbase.com/browse/NCBC-1892[NCBC-1892]: Unable to set document body as part of subdoc operation
-* https://issues.couchbase.com/browse/NCBC-1899[NCBC-1899]: Span created to auto-dispose is generating WARN when manually closed
-* https://issues.couchbase.com/browse/NCBC-1904[NCBC-1904]: Error converting value "failed" to type 'Couchbase.N1QL.QueryStatus'
-* https://issues.couchbase.com/browse/NCBC-1905[NCBC-1905]: AnalyticsResult throws NRE when Errors is NULL
-* https://issues.couchbase.com/browse/NCBC-1906[NCBC-1906]: Error: There was a problem retrieving a valid URI to submit the N1QL query to
+* https://issues.couchbase.com/browse/NCBC-1877[NCBC-1877]: 
+If more than one Bucket is configured, ConfigManager only fetches the first config.
+This has been fixed, and it should now fetch each Bucket's config.
+* https://issues.couchbase.com/browse/NCBC-1879[NCBC-1879]: 
+The SDK will now only use KV nodes when updating bootstrap URIs.
+* https://issues.couchbase.com/browse/NCBC-1891[NCBC-1891]: 
+Subdoc MultiMutation didn't include a document expiry and/or relevant subdoc doc flags.
+Subdoc MultiMutation will now set expiry and/or doc flags.
+* https://issues.couchbase.com/browse/NCBC-1892[NCBC-1892]: 
+Added support for upserting document body with subdoc operation.
+* https://issues.couchbase.com/browse/NCBC-1899[NCBC-1899]: 
+Span created to auto-dispose was generating WARN when manually closed, for some tracer implementations.
+This no longer happens.
+* https://issues.couchbase.com/browse/NCBC-1904[NCBC-1904]: 
+Error converting value "failed" to type 'Couchbase.N1QL.QueryStatus'.
+This has been fixed, and the actual N1QL error will now be returned.
+* https://issues.couchbase.com/browse/NCBC-1905[NCBC-1905]: 
+AnalyticsResult was throwing a NullReferenceException when Errors was NULL.
+NRE is no longer thrown, and the actual error returned by the server should be available to determine what failed.
+* https://issues.couchbase.com/browse/NCBC-1906[NCBC-1906]: 
+Error: There was a problem retrieving a valid URI to submit the N1QL query to.
+This was caused by no Analytics URIs left in the URI cache following a failover/rebalance on a cluster with analytics services.
+URIs should now always be available, whether or not they succeed initially - this is the same behavior as Views, N1QL, and FTS.
 
 == Version 2.7.5 (12th March 2019)
 
