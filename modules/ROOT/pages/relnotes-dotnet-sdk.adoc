@@ -79,6 +79,46 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 2.7.6 (5th April 2019)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.6.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.6[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-1877[NCBC-1877]: 
+If more than one Bucket is configured, ConfigManager only fetches the first config.
+This has been fixed, and it should now fetch each Bucket's config.
+* https://issues.couchbase.com/browse/NCBC-1879[NCBC-1879]: 
+The SDK will now only use KV nodes when updating bootstrap URIs.
+* https://issues.couchbase.com/browse/NCBC-1891[NCBC-1891]: 
+Subdoc MultiMutation didn't include a document expiry and/or relevant subdoc doc flags.
+Subdoc MultiMutation will now set expiry and/or doc flags.
+* https://issues.couchbase.com/browse/NCBC-1892[NCBC-1892]: 
+Added support for upserting document body with subdoc operation.
+* https://issues.couchbase.com/browse/NCBC-1899[NCBC-1899]: 
+Span created to auto-dispose was generating WARN when manually closed, for some tracer implementations.
+This no longer happens.
+* https://issues.couchbase.com/browse/NCBC-1904[NCBC-1904]: 
+Error converting value "failed" to type 'Couchbase.N1QL.QueryStatus'.
+This has been fixed, and the actual N1QL error will now be returned.
+* https://issues.couchbase.com/browse/NCBC-1905[NCBC-1905]: 
+AnalyticsResult was throwing a NullReferenceException when Errors was NULL.
+NRE is no longer thrown, and the actual error returned by the server should be available to determine what failed.
+* https://issues.couchbase.com/browse/NCBC-1906[NCBC-1906]: 
+Error: There was a problem retrieving a valid URI to submit the N1QL query to.
+This was caused by no Analytics URIs left in the URI cache following a failover/rebalance on a cluster with analytics services.
+URIs should now always be available, whether or not they succeed initially - this is the same behavior as Views, N1QL, and FTS.
+
 == Version 2.7.5 (12th March 2019)
 
 http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.5.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.5[API Reference]
@@ -95,13 +135,13 @@ Certain Prepared statements could produce _Fatal error: unexpected end of JSON i
 
 === Fixed Issues
 
-* https://issues.couchbase.com/browse/NCBC-1838[NCBC-1838]: 
+* https://issues.couchbase.com/browse/NCBC-1838[NCBC-1838]:
 Default timeout was set as seconds as opposed to milliseconds.
 It has now been set to 2500ms.
-* https://issues.couchbase.com/browse/NCBC-1843[NCBC-1843]: 
+* https://issues.couchbase.com/browse/NCBC-1843[NCBC-1843]:
 In LookupIn last command is not always parsed correctly, leading to an incorrect response status.
 This has been fixed, and the correct response status should now be returned.
-* https://issues.couchbase.com/browse/NCBC-1845[NCBC-1845]: 
+* https://issues.couchbase.com/browse/NCBC-1845[NCBC-1845]:
 Status code OperationTimeout (Code 512) was returned under some circumstances with DocumentDoesNotExistException.
 This is now fixed, and a Timeout status no longer returns when the server returns KeyNotFound.
 
@@ -214,7 +254,7 @@ http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.1.zip[Dow
 This release has the following known issues:
 
 * https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
-.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms. 
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
  A workaround is available.
 * https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
 Fatal error: unexpected end of JSON input
@@ -266,7 +306,7 @@ http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.0.zip[Dow
 This release has the following known issues:
 
 * https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
-.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.  
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
 A workaround is available.
 * https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
 Fatal error: unexpected end of JSON input
