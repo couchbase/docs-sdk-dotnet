@@ -183,6 +183,8 @@ This will release only the resources allocated for this bucket and it is possibl
 If you do not Dispose of the Cluster or bucket instance that you are using in your application, eventually the AppDomain or process will destroy the objects however, any underlying resources (sockets for example) will be closed by the OS whenever it decides to do so.
 This can lead to other problems so always Dispose of your Cluster and bucket objects before the hosting application shuts down.
 
+include::6.0@sdk:pages:partial$max-connections.adoc[tag=limits]
+
 [#ssl]
 == Connecting with SSL
 
