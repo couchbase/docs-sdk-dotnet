@@ -22,7 +22,7 @@ Add the Couchbase .NET SDK to your Visual Studio solution using one of the follo
 * Downloading and referencing the binaries
 * Building from source yourself
 
-Information on new features, fixes, known issues as well as information on how to install older release versions is  xref:relnotes-dotnet-sdk.adoc[in the release notes].
+Information on new features, fixes, known issues as well as information on how to install older release versions is  xref:sdk-release-notes.adoc[in the release notes].
 
 The following sections explain in detail how to get started using each method.
 
@@ -74,7 +74,7 @@ If you chose this route, you’ll also be responsible for including and resolvin
 
 To download and reference the binaries directly:
 
-. Download the version of the SDK you want to install - xref:relnotes-dotnet-sdk.adoc[Releases^]
+. Download the version of the SDK you want to install - xref:sdk-release-notes.adoc[Releases^]
 . In Visual Studio, right-click the project you want to include the SDK in and then click [.ui]*Add*.
 . Click [.ui]*Reference* to open the Reference Manager.
 . On the left side, click [.ui]*Browse* and select the binaries you downloaded.
