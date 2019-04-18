@@ -1,5 +1,5 @@
 = Couchbase .NET SDK Release Notes and Archives
-:page-aliases: relnotes-dotnet-sdk,sdk-release-notes
+:page-aliases: relnotes-dotnet-sdk
 
 == Installation
 
