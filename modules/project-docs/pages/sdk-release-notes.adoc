@@ -82,6 +82,231 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 3.0.0-alpha3 (26th April 2019)
+
+https://packages.couchbase.com/clients/net/3.0/CouchbaseNetClient.3.0.0-alpha3.zip[Download] | NA[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-alpha3[Nuget]
+
+=== Known Issues
+NA
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-1893[NCBC-1893]:
+SDK 3.0 requires C# version 7.2 or greater
+* https://issues.couchbase.com/browse/NCBC-1919[NCBC-1919]:
+Full Text Search Conjunctive Query - .Boost Type Mismatch
+* https://issues.couchbase.com/browse/NCBC-1941[NCBC-1941]:
+Remove IntervalsVisibleTo ref for LoadTests project in Release mode
+
+=== New Features and Behavioral Changes
+* https://issues.couchbase.com/browse/NCBC-1940[NCBC-1940]:
+ DotNet: Pathfind-author docs for SubDocument MutateIn
+* https://issues.couchbase.com/browse/NCBC-1841[NCBC-1841]:
+Compatibility for 3.0
+* https://issues.couchbase.com/browse/NCBC-1867[NCBC-1867]:
+Support pluggable logging w/default of MS
+* https://issues.couchbase.com/browse/NCBC-1876[NCBC-1876]:
+Improve Query error handling
+* https://issues.couchbase.com/browse/NCBC-1862[NCBC-1862]:
+Implement Binary operations
+* https://issues.couchbase.com/browse/NCBC-1872[NCBC-1872]:
+Port and integrate Analytics client
+* https://issues.couchbase.com/browse/NCBC-1873[NCBC-1873]:
+Port and integrate View client
+* https://issues.couchbase.com/browse/NCBC-1874[NCBC-1874]:
+Port and integrate Search client
+* https://issues.couchbase.com/browse/NCBC-1875[NCBC-1875]:
+Add Couchbase Connection string protocol support per RFC
+* https://issues.couchbase.com/browse/NCBC-1881[NCBC-1881]:
+LEB128 algorithm performs unnecessary heap allocations
+* https://issues.couchbase.com/browse/NCBC-1882[NCBC-1882]:
+Implement DefaultConverter Unit Tests In v3
+* https://issues.couchbase.com/browse/NCBC-1884[NCBC-1884]:
+Reduce Heap Allocations In DefaultConverter
+* https://issues.couchbase.com/browse/NCBC-1885[NCBC-1885]:
+Provide Span&lt;T&gt; based implementations on IByteConverter
+* https://issues.couchbase.com/browse/NCBC-1886[NCBC-1886]:
+Replace init of empty byte arrays with Array.Empty
+* https://issues.couchbase.com/browse/NCBC-1887[NCBC-1887]:
+Convert ReadExtras To Use ReadOnlySpan&lt;T&gt;
+* https://issues.couchbase.com/browse/NCBC-1888[NCBC-1888]:
+Update ITypeSerialize To Deserialize From Memory&lt;byte&gt;
+* https://issues.couchbase.com/browse/NCBC-1889[NCBC-1889]:
+Convert ITypeTranscoder.Decode To Use ReadOnlyMemory&lt;byte&gt;
+* https://issues.couchbase.com/browse/NCBC-1890[NCBC-1890]:
+Update OperationHeaderExtensions To Use ReadOnlySpan&lt;byte&gt;
+* https://issues.couchbase.com/browse/NCBC-1894[NCBC-1894]:
+Use Spans For Parsing SubDoc Operations
+* https://issues.couchbase.com/browse/NCBC-1895[NCBC-1895]:
+Use Spans For GetValue on Operations
+* https://issues.couchbase.com/browse/NCBC-1896[NCBC-1896]:
+Use Shared Memory Buffers For Operation Response Data
+* https://issues.couchbase.com/browse/NCBC-1897[NCBC-1897]:
+Use Shared Memory Buffers For Result Objects
+* https://issues.couchbase.com/browse/NCBC-1898[NCBC-1898]:
+SDK Load Test Framework
+* https://issues.couchbase.com/browse/NCBC-1900[NCBC-1900]:
+Use OperationBuilder For OperationBase.CreateExtras
+* https://issues.couchbase.com/browse/NCBC-1901[NCBC-1901]:
+Refactor ITypeTranscoder.Encode and ITypeSerializer.Serialize To Use Streams
+* https://issues.couchbase.com/browse/NCBC-1902[NCBC-1902]:
+Drop Deprecated IByteConverter.ToXXX byte array based overloads
+* https://issues.couchbase.com/browse/NCBC-1903[NCBC-1903]:
+Refactor IOperation.Write to IOperation.SendAsync
+* https://issues.couchbase.com/browse/NCBC-1908[NCBC-1908]:
+Create OperationBuilder for building K/V operations
+* https://issues.couchbase.com/browse/NCBC-1909[NCBC-1909]:
+Remove OperationBase.SendAsync Overrides For Non-SubDoc Operations
+* https://issues.couchbase.com/browse/NCBC-1910[NCBC-1910]:
+Remove OperationBase.SendAsync Overrides For SubDoc Operations
+* https://issues.couchbase.com/browse/NCBC-1911[NCBC-1911]:
+Use OperationBuilder For OperationBase.CreateKey
+* https://issues.couchbase.com/browse/NCBC-1912[NCBC-1912]:
+Use OperationBuilder For OperationBase.CreateFramingExtras
+* https://issues.couchbase.com/browse/NCBC-1914[NCBC-1914]:
+Use OperationBuilder For OperationBase.CreateBody
+* https://issues.couchbase.com/browse/NCBC-1916[NCBC-1916]:
+Enhance OperationBuilder For SubDoc Operations
+* https://issues.couchbase.com/browse/NCBC-1918[NCBC-1918]:
+Phase out ByteConverter.FromXXX byte array overloads
+* https://issues.couchbase.com/browse/NCBC-1920[NCBC-1920]:
+Create Operation Write Performance Tests
+* https://issues.couchbase.com/browse/NCBC-1921[NCBC-1921]:
+Optimize OperationBuilder.Write For MemoryPool On .Net Core 2.0 and Full Framework
+* https://issues.couchbase.com/browse/NCBC-1922[NCBC-1922]:
+Fix Load Test Rate Limiter Performance
+* https://issues.couchbase.com/browse/NCBC-1923[NCBC-1923]:
+Replace Enum.IsDefined in OperationBuilder.AdvanceToSegment
+* https://issues.couchbase.com/browse/NCBC-1924[NCBC-1924]:
+Create Load Tests For OperationBase.ReadAsync
+* https://issues.couchbase.com/browse/NCBC-1925[NCBC-1925]:
+Replace Enum.IsDefined In OperationHeaderExtensions.GetResponseStatus
+* https://issues.couchbase.com/browse/NCBC-1928[NCBC-1928]:
+Use Bit Shifting For NBO Swap Where Possible
+* https://issues.couchbase.com/browse/NCBC-1929[NCBC-1929]:
+Replace SemaphoreSlim In LoadTests RateLimiter
+* https://issues.couchbase.com/browse/NCBC-1935[NCBC-1935]:
+Address GC Interference In Operation Read Tests
+* https://issues.couchbase.com/browse/NCBC-1936[NCBC-1936]:
+Make Large Document Load Tests More Realistic
+* https://issues.couchbase.com/browse/NCBC-1937[NCBC-1937]:
+Use Shared ArrayPool To Support Serialization/Deserialization
+
+== Version 2.7.6 (5th April 2019)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.6.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.6[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-1877[NCBC-1877]:
+If more than one Bucket is configured, ConfigManager only fetches the first config.
+This has been fixed, and it should now fetch each Bucket's config.
+* https://issues.couchbase.com/browse/NCBC-1879[NCBC-1879]:
+The SDK will now only use KV nodes when updating bootstrap URIs.
+* https://issues.couchbase.com/browse/NCBC-1891[NCBC-1891]:
+Subdoc MultiMutation didn't include a document expiry and/or relevant subdoc doc flags.
+Subdoc MultiMutation will now set expiry and/or doc flags.
+* https://issues.couchbase.com/browse/NCBC-1892[NCBC-1892]:
+Added support for upserting document body with subdoc operation.
+* https://issues.couchbase.com/browse/NCBC-1899[NCBC-1899]:
+Span created to auto-dispose was generating WARN when manually closed, for some tracer implementations.
+This no longer happens.
+* https://issues.couchbase.com/browse/NCBC-1904[NCBC-1904]:
+Error converting value "failed" to type 'Couchbase.N1QL.QueryStatus'.
+This has been fixed, and the actual N1QL error will now be returned.
+* https://issues.couchbase.com/browse/NCBC-1905[NCBC-1905]:
+AnalyticsResult was throwing a NullReferenceException when Errors was NULL.
+NRE is no longer thrown, and the actual error returned by the server should be available to determine what failed.
+* https://issues.couchbase.com/browse/NCBC-1906[NCBC-1906]:
+Error: There was a problem retrieving a valid URI to submit the N1QL query to.
+This was caused by no Analytics URIs left in the URI cache following a failover/rebalance on a cluster with analytics services.
+URIs should now always be available, whether or not they succeed initially - this is the same behavior as Views, N1QL, and FTS.
+
+== Version 3.0.0-alpha2 (20th March 2019)
+
+https://packages.couchbase.com/clients/net/3.0/CouchbaseNetClient.3.0.0-alpha2.zip[Download] | NA[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-alpha2[Nuget]
+
+=== Known Issues
+NA
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-1878[NCBC-1878]:
+NullException when using a collection-less server version
+
+=== New Features and Behavioral Changes
+NA
+
+== Version 3.0.0-alpha (12th March 2019) DO NOT USE - USE 3.0.0-alpha2 or greater
+
+https://packages.couchbase.com/clients/net/3.0/CouchbaseNetClient.3.0.0-alpha1.zip[Download] | NA[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-alpha1[Nuget]
+
+=== Known Issues
+
+This release has the following known issues:
+* https://issues.couchbase.com/browse/NCBC-1878[NCBC-1878]:
+NullException when using a collection-less server version
+
+=== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-1851[NCBC-1851]:
+Fix struct immutability issues when using options/actions
+* https://issues.couchbase.com/browse/NCBC-1852[NCBC-1852]:
+Use &#39;http&#39; scheme for Query when &#39;couchbase://&#39; scheme is used
+* https://issues.couchbase.com/browse/NCBC-1854[NCBC-1854]:
+Query does not throw execeptions, but returns them as a property and a status
+* https://issues.couchbase.com/browse/NCBC-1855[NCBC-1855]:
+Remove CouchbaseCollection2.cs
+* https://issues.couchbase.com/browse/NCBC-1856[NCBC-1856]:
+Default parameter value for &#39;options&#39; must be a compile-time constant
+* https://issues.couchbase.com/browse/NCBC-1858[NCBC-1858]:
+LookupIn results in a Task canceled on every operation
+* https://issues.couchbase.com/browse/NCBC-1865[NCBC-1865]:
+ Error CS0579: Duplicate attributes
+
+=== New Features and Behavioral Changes
+* https://issues.couchbase.com/browse/NCBC-1789[NCBC-1789]:
+Add .NET KV Collections Protocol Plumbing
+* https://issues.couchbase.com/browse/NCBC-1790[NCBC-1790]:
+Add new volatile Collections API to .NET
+* https://issues.couchbase.com/browse/NCBC-1811[NCBC-1811]:
+Add Basic CRUD for SDK 3.0
+* https://issues.couchbase.com/browse/NCBC-1812[NCBC-1812]:
+Add Basic Query for SDK 3.0
+* https://issues.couchbase.com/browse/NCBC-1840[NCBC-1840]:
+ Add Synchronous Durability Operations
+* https://issues.couchbase.com/browse/NCBC-1857[NCBC-1857]:
+Migrate temp SDK 3.0 repo to github.com/couchbase/couchbase-net-client
+* https://issues.couchbase.com/browse/NCBC-1864[NCBC-1864]:
+Update SDK 3.0 csproj Nuget information
+*https://issues.couchbase.com/browse/NCBC-1850[NCBC-1850]:
+Remove CouchbaseCollectionsTests.cs - used as a POC for interface design
+* https://issues.couchbase.com/browse/NCBC-1833[NCBC-1833]:
+Update Error Handling for SDK3
+* https://issues.couchbase.com/browse/NCBC-1847[NCBC-1847]:
+Move integration tests into Couchbase.IntergrationTests project
+* https://issues.couchbase.com/browse/NCBC-1848[NCBC-1848]:
+Remove all named parameters
+* https://issues.couchbase.com/browse/NCBC-1849[NCBC-1849]:
+ Discussion: Make Options consistent - use either properties or methods
+* https://issues.couchbase.com/browse/NCBC-1853[NCBC-1853]:
+Make VBucket.VBucketIndex a short
+* https://issues.couchbase.com/browse/NCBC-1859[NCBC-1859]:
+Update Cluster creation / initialization
+* https://issues.couchbase.com/browse/NCBC-1860[NCBC-1860]:
+Fix Jenkins build scripts post v3 migration to gerrit/master
+* https://issues.couchbase.com/browse/NCBC-1861[NCBC-1861]:
+Don&#39;t reference Couchbase.UnitTests in Release mode
+
 == Version 2.7.5 (12th March 2019)
 
 http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.5.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.5[API Reference]
