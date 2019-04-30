@@ -1,1 +1,1 @@
-include::dotnet-sdk::page$relnotes-dotnet-sdk.adoc[]
+include::dotnet-sdk::page$sdk-release-notes.adoc[tag=latest]
