@@ -1,6 +1,8 @@
 = Couchbase .NET SDK Release Notes and Archives
+:page-partial:
 :page-aliases: relnotes-dotnet-sdk
 
+// tag::latest[]
 == Installation
 
 === Quick Installation Using NuGet
@@ -2212,4 +2214,4 @@ Regression - MutationToken are not set when UseEnhancedDurabity is
 true
 * https://issues.couchbase.com/browse/NCBC-769[NCBC-769] -
 Ensure support for "Consistency Parameters" is implemented correctly
-
+// end::latest[]
