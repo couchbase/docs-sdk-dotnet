@@ -81,7 +81,7 @@ In most cases your query will return more than one result, and you may be lookin
 [source,csharp]
 ----
 var result = await collection.Query<dynamic>(
-    "SELECT x.* FROM `default` WHERE x.Type=$0",
+    "SELECT x.* FROM `default` WHERE x.Type=$1",
     parameters => parameters.Add("User"),
     options => {}
 );
@@ -124,8 +124,8 @@ var upsertResult = await collection.Upsert("id", new { name = "Mike", type = "Us
 var state = MutationState.From(upsertResult);
 
 // use mutation state with query option
-var result = cluster.Query<dynamic>(
-    "SELECT x.* FROM `default` WHERE x.Type=$0",
+var result = await cluster.Query<dynamic>(
+    "SELECT x.* FROM `default` WHERE x.Type=$1",
     parameters => parameters.Add("User"),
     options => options.ConsistentWith(state)
 );
