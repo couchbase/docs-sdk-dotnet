@@ -99,9 +99,11 @@ Certain Prepared statements could produce _Fatal error: unexpected end of JSON i
 === Fixed Issues
 
 * https://issues.couchbase.com/browse/NCBC-1919[NCBC-1919]:
-Full Text Search Conjunctive Query - .Boost Type Mismatch 
+There was a type mismatch between _Conjunctive Query_ and _.Boost_ in Full Text Search.
+This has been fixed, with query constructors and builder APIs for compound queries now accepting `IFtsQuery`, 
+allowing boosted queries to be used directly.
 * https://issues.couchbase.com/browse/NCBC-1926[NCBC-1926]:
-Ensure connections that fail SelectBucket are Disposed
+After `SelectBucket` fails with an `AuthenticationException`, the socket is now explicitly closed.
 
 == Version 2.7.6 (5th April 2019)
 
