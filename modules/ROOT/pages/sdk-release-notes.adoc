@@ -82,6 +82,29 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 2.7.7 (7th May 2019)
+
+http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.7.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.7[API Reference]
+
+=== Known Issues
+
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-1919[NCBC-1919]:
+There was a type mismatch between _Conjunctive Query_ and _.Boost_ in Full Text Search.
+This has been fixed, with query constructors and builder APIs for compound queries now accepting `IFtsQuery`, 
+allowing boosted queries to be used directly.
+* https://issues.couchbase.com/browse/NCBC-1926[NCBC-1926]:
+After `SelectBucket` fails with an `AuthenticationException`, the socket is now explicitly closed.
+
 == Version 2.7.6 (5th April 2019)
 
 http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.6.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.6[API Reference]
