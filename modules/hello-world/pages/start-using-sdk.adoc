@@ -33,7 +33,7 @@ Now you have the .NET client installed grab the code from link:href://devguideex
 var config = new Configuration()
     .WithServers("couchbase://10.112.180.101")
     .WithCredentials("username", "password")
-    .WithBucket("defualt");
+    .WithBucket("default");
 ----
 
 Couchbase uses xref:6.0@server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
