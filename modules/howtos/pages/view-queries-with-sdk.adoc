@@ -56,9 +56,6 @@ function (doc, meta) {
 
 == Querying Views through the .NET SDK
 
-
-
-
 Once you have a view defined, it can be queried from the .NET SDK by using the `ViewQuery` method on a Bucket instance.
 
 Here is an example:
