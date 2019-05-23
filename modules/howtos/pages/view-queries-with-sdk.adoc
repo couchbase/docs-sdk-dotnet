@@ -31,7 +31,8 @@ var result = bucket.ViewQuery<Landmark>("landmarks", "by_name", options => {
 
 include::6.5@sdk:shared:partial$views.adoc[tag=example-geo-travel]
 
-
+[source,javascript]
+----
 (10)
 );
 
@@ -43,7 +44,7 @@ foreach (var row in result.Rows)
 }
 ----
 
-// We only need the briefest of samples - the content brought in at the top of the page will recommend avoiding Views.[source,javascript]
+[source,javascript]
 ----
 function (doc, meta) {
     if (doc.type && doc.type == "landmark" && doc.geo) {
