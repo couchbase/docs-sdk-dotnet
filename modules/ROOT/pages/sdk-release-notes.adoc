@@ -101,6 +101,7 @@ https://issues.couchbase.com/browse/NCBC-1957[NCBC-1957] - PooledIOService doesn
 
 === New Features and Behavioral Changes
 https://issues.couchbase.com/browse/NCBC-1816[NCBC-1816] - Add Import/Export for deferred analytics queries
+https://issues.couchbase.com/browse/NCBC-1917[NCBC-1917] - Add support for ingesting Analytics queries into KV
 
 == Version 2.7.7 (7th May 2019)
 
