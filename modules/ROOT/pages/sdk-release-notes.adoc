@@ -82,6 +82,34 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 2.7.8 (4th June 2019)
+
+https://packages.couchbase.com/clients/net/2.5/CouchbaseNetClient.2.7.8.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.8[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.8[Nuget]
+
+=== Known Issues
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
+=== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-1927[NCBC-1927]: 
+SDK now works correctly with publicly-addressable Kubernetes clusters.
+* https://issues.couchbase.com/browse/NCBC-1957[NCBC-1957]: 
+Connections now released at the end of a PooledIOService constructor.
+
+=== New Features and Behavioral Changes
+* https://issues.couchbase.com/browse/NCBC-1816[NCBC-1816]: 
+Added Import/Export for deferred analytics queries, 
+so deferred queries can be generated in one location and then queried in another. 
+* https://issues.couchbase.com/browse/NCBC-1917[NCBC-1917]: 
+Added support for ingesting Analytics queries into KV. 
+This allows the results themselves to be queried in turn.
+
+
 == Version 2.7.7 (7th May 2019)
 
 http://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.7.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.7[API Reference]
