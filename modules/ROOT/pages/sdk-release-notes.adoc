@@ -96,16 +96,16 @@ This release has the following known issues:
 Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
 
 === Fixed Issues
-https://issues.couchbase.com/browse/NCBC-1927[NCBC-1927]: 
+* https://issues.couchbase.com/browse/NCBC-1927[NCBC-1927]: 
 SDK now works correctly with publicly-addressable Kubernetes clusters.
-https://issues.couchbase.com/browse/NCBC-1957[NCBC-1957]: 
+* https://issues.couchbase.com/browse/NCBC-1957[NCBC-1957]: 
 Connections now released at the end of a PooledIOService constructor.
 
 === New Features and Behavioral Changes
-https://issues.couchbase.com/browse/NCBC-1816[NCBC-1816]: 
+* https://issues.couchbase.com/browse/NCBC-1816[NCBC-1816]: 
 Added Import/Export for deferred analytics queries, 
 so deferred queries can be generated in one location and then queried in another. 
-https://issues.couchbase.com/browse/NCBC-1917[NCBC-1917]: 
+* https://issues.couchbase.com/browse/NCBC-1917[NCBC-1917]: 
 Added support for ingesting Analytics queries into KV. 
 This allows the results themselves to be queried in turn.
 
