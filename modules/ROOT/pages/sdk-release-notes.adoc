@@ -84,7 +84,7 @@ _Note that you can checkout a specific tag for each release as well._
 
 == Version 2.7.8 (4th June 2019)
 
-https://packages.couchbase.com/clients/net/2.5/CouchbaseNetClient.2.7.8.zip[Download] | NA[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.8[Nuget]
+https://packages.couchbase.com/clients/net/2.5/CouchbaseNetClient.2.7.8.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.8[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.8[Nuget]
 
 === Known Issues
 This release has the following known issues:
