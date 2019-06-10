@@ -3,7 +3,7 @@
 // :version: 3.0.0 alpha
 [WARNING]
 ====
-These pages cover the _Alpha_ of the Couchbase PHP SDK.
+These pages cover the _Alpha_ of the Couchbase .NET SDK.
 As such they are likely to change without notice.
 This alpha code _should not_ be used in production.
 
