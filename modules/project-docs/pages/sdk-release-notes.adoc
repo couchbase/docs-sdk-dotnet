@@ -84,7 +84,7 @@ _Note that you can checkout a specific tag for each release as well._
 
 == Version 3.0.0-alpha4 (11th June 2019)
 
-https://packages.couchbase.com/clients/net/3.0/CouchbaseNetClient.3.0.0-alpha4.zip[Download] | NA[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-alpha4[Nuget]
+https://packages.couchbase.com/clients/net/3.0/CouchbaseNetClient.3.0.0-alpha4.zip[Download] | API Reference -- N/A | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-alpha4[Nuget]
 
 === Known Issues
 NA
@@ -119,7 +119,7 @@ IConnection now has a single identity field
 
 == Version 3.0.0-alpha3 (26th April 2019)
 
-https://packages.couchbase.com/clients/net/3.0/CouchbaseNetClient.3.0.0-alpha3.zip[Download] | NA[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-alpha3[Nuget]
+https://packages.couchbase.com/clients/net/3.0/CouchbaseNetClient.3.0.0-alpha3.zip[Download] | API Reference -- N/A | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-alpha3[Nuget]
 
 === Known Issues
 NA
