@@ -24,6 +24,7 @@
  ** xref:howtos:sdk-authentication-overview.adoc[Authentication]
 ////
 .Errors & Diagnostics
+* xref:howtos:handling-errors.adoc[Handling Errors]
 * xref:howtos:health-check.adoc[Health Check]
 
 ////
