@@ -7,6 +7,8 @@
 [abstract]
 Common errors and exceptions, and how to handle them.
 
+include::partial$alpha-warning.adoc[]
+
 Errors are inevitable.
 The developer’s job is to be prepared for whatever is likely to come up -- and to try and be prepared for anything that conceivably could come up.
 Couchbase gives you a lot of flexibility, but it is recommended that you equip yourself with an understanding of the possibilities.
