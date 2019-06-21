@@ -180,9 +180,11 @@ There are some errors which can be surfaced from across all of the SDK services.
 
 The KV Service exposes several common errors that can be encountered - both during development, and to be handled by the production app. Here we will cover some of the most common errors.
 
+
+=== Doc does not exist
+
 [source,csharp]
 ----
-=== Doc does not exist [EH5]
             try
             {
                 await collection.Replace("my-key", new { });
