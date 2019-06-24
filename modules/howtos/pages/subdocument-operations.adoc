@@ -283,6 +283,31 @@ If CAS is required then it can be provided like this:
 include::example$SubDocument.cs[tag=cas,indent=0]
 ----
 
+
+
+== Durability
+
+Couchbase's xref:2.7@dotnet-sdk::durability.adoc[traditional durability], using `PersistTo` and `ReplicateTo`, is still available, particuarly for talking to Couchbase Server 6.0 and earlier:
+
+[source,csharp]
+---
+await collection.MutateIn("key",
+    specs => { specs.Insert("name", "mike"); },
+    options => { options.WithDurability(PersistTo.One, ReplicateTo.One); }
+);
+---
+
+This is built upon in Couchbase Server 6.5 and up with xref:concept-docs:durability.adoc#[Synchronous durability]:
+
+[source,csharp]
+---
+await collection.MutateIn("key",
+    specs => { specs.Insert("name", "mike"); },
+    options => { options.WithDurability(DurabilityLevel.Majority); }
+);
+---
+
+
 == Error Handling
 
 Sub-Document operations have their own set of errors.
