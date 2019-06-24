@@ -17,7 +17,7 @@ Couchbase gives you a lot of flexibility, but it is recommended that you equip y
 == How the SDK Handles Errors
 
 Couchbase-specific exceptions are all derived from `CouchbaseException`.
-Errors that cannot be recovered by the SDK will be returned to the application. 
+Errors that cannot be recovered by the SDK will be returned to the application.
 These unrecoverable errors are left to the application developer to handle -- this section covers handling many of the common error scenarios.
 
 
@@ -29,64 +29,9 @@ Is it even recoverable?
 Below we examine error handling strategies in relation to the Couchbase SDKs, then take a practical walk through some common error scenarios you are likely to have to handle when working with a Couchbase cluster.
 
 
-=== Failing
-
-While most of the time you want more sophisticated error handling strategies, sometimes you just need to fail. 
-It makes no sense for some errors to be retried, either because they are not transient, or because you already tried everything to make it work and it still keeps failing.
-If containment is not able to handle the error, then it needs to propagate up to a parent component that can handle it.
-
-In the asynchronous case, errors are events like any other for your subscribers. 
-Once an error occurs, your `Subscriber` is notified in the method `onError(Throwable)`, and you can handle it the way you want to. Note that by `Observable` contract, after the `onError` event, no more `onNext` events will happen.
-
-[source,java]
-----
-// Will be replaced with C# example
-Observable
-    .error(new Exception("I'm failing"))
-    .subscribe(new Subscriber<Object>() {
-        @Override
-        public void onCompleted() {
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            System.err.println("Got Error: " + e);
-        }
-
-        @Override
-        public void onNext(Object o) {
-        }
-    });
-----
-
-For synchronous programs, every error is converted into an Exception and thrown so that you can use regular `try`/`catch` semantics.
-
-[source,java]
-----
-// Will be replaced with C# example
-try {
-    Object data = Observable.error(new Exception("I'm failing"))
-        .toBlocking()
-        .single();
-} catch(Exception ex) {
-    System.err.println("Got Exception: " + ex);
-}
-----
-
-If you do not catch the Exception, it will bubble up:
-
-[source,java]
-----
-// Will be replaced with C# example
-Exception in thread "main" java.lang.RuntimeException: java.lang.Exception: I'm failing
- at rx.observables.BlockingObservable.blockForSingle(BlockingObservable.java:482)
- at rx.observables.BlockingObservable.single(BlockingObservable.java:349)
-----
-
-
 === Logging
 
-It is always important to log errors, but even more so in the case of reactive applications. Because of the event driven nature, stack traces get harder to look at, and caller context is sometimes lost.
+It is always important to log errors, but even more so with highly concurrent asynchronous applications.
 
 // Note that Logging has its own page.
 
@@ -103,134 +48,102 @@ Transient errors -- such as those caused by resource starvation -- are best tack
 * Retry with an exponentially increasing delay.
 * Retry with a random delay.
 
-// 
-// This is Graham’s attempt at an example of error handling for idempotent operations (such as the full-doc op seen here).  Feel free to iterate it and/or provide one for non-idempotent operations...
-
-[source,java]
+[source,csharp]
 ----
-// Will be replaced with C# example
-void changeEmail(Collection collection, int maxRetries) {
-   try {
-     Optional<GetResult> result = collection.get("doc_id");
 
-     if (!result.isPresent()) {	
-       throw new DocumentDoesNotExistException();
-     }
-     else {
-       JsonObject content = result.get().contentAsObject();
+async Task changeEmail()
+{
+		var attempts = MaxRetries; // eg 5
+		while (attempts-- > 0)
+		{
+			  // will throw KeyNotfoundException if key doesn't exist
+	  		var document = await collection.GetAsync("doc_id");
+				var user = document.ContentAs<User>();
+				user.Email = "john.smith@couchbase.com";
 
-       content.put("email", "john.smith@couchbase.com");
+				try
+				{
+						await collection.ReplaceAsync("doc_id", user);
 
-       collection.replace("doc_id", content);
-     }
-   }
-   catch (CouchbaseException err) {
-     // isRetryable will be true for transient errors, such as a CAS mismatch (indicating
-     // another agent concurrently modified the document), or a temporary failure (indicating
-     // the server is temporarily unavailable or overloaded).  The operation may or may not
-     // have been written, but since it is idempotent we can simply retry it.
-     if (err.isRetryable()) {
-       if (maxRetries > 0) {
-         System.out.println("Retrying operation on retryable err " + err);
-         changeEmail(collection, maxRetries - 1);
-       }
-       else {
-         // Errors can be transient but still exceed our SLA.
-         System.out.println("Too many attempts, aborting on err " + err);
-         throw err;
-       }
-     }
+						// replace succeeded, break from loop
+						break;
+				}
+				catch (CouchbaseException exception)
+				{
+						if (!exception.IsRetryable())
+						{
+								// unrecoverable error (network failure, etc)
+								throw;
+						}
+				}
 
-     // If the err is not isRetryable, there is perhaps a more permanent or serious error,
-     // such as a network failure.
-     else {
-       System.out.println("Aborting operation on err " + err);
-       throw err;
-     }
-   }
+				// wait 100 milliseconds before trying again
+				Task.Delay(100);
+		}
 }
-    
-
-
-    try {
-      changeEmail(collection, MAX_RETRIES);
-    }
-    catch (RuntimeException err) {
-      // What to do here is highly application dependent.  Options could include:
-      // - Returning a "please try again later" error back to the end-user (if any)
-      // - Logging it for manual human review, and possible follow-up with the end-user (if any)
-      System.out.println("Failed to change email");
-    }
 ----
 
-=== Fallback
-
-Instead of (or in addition to) retrying, another valid option is falling back to either a different `Observable`, or to a default value.
-
-////
-== Generic Errors
-
-There are some errors which can be surfaced from across all of the SDK services. These include... 
-
-=== Temporary Failure
-=== Timeout (possibly covered below in connections?)
-=== ServiceNotAvailable
-=== ServiceNotConfigured
-////
 
 == KV
 
 The KV Service exposes several common errors that can be encountered - both during development, and to be handled by the production app. Here we will cover some of the most common errors.
 
 
-=== Doc does not exist
-
-[source,csharp]
-----
-            try
-            {
-                await collection.Replace("my-key", new { });
-            }
-            catch (KeyNotFoundException)
-            {
-                // key does not exist
-            }
-----
-
-
-=== Doc already exists
+=== Key does not exist
 
 [source,csharp]
 ----
 try
-            {
-                await collection.Insert("my-key", new { });
-            }
-            catch (KeyExistsException)
-            {
-                // key already exists
-            }
+{
+    await collection.Replace("my-key", new { });
+}
+catch (KeyNotFoundException)
+{
+    // key does not exist
+}
 ----
 
 
-=== Doc too large
+=== Key already exists
 
 [source,csharp]
 ----
-RequestTooBigException
+try
+{
+    await collection.Insert("my-key", new { });
+}
+catch (KeyExistsException)
+{
+    // key already exists
+}
+----
+
+
+=== Document body too large
+
+[source,csharp]
+----
+try
+{
+	  await collection.Insert("my-key", myReallyLargeObject);
+}
+catch (RequestTooBigException)
+{
+	  // document body is too large
+}
 ----
 
 === CAS Mismatch
 
 [source,csharp]
 ----
-            try
-            {
-                var result = await collection.Get("my-key");
-                await collection.Replace("my-key", new { }, options => options.WithCas(result.Cas));
-            }
-            catch (CasMismatchException)
-            {
-                // the CAS value has changed
-            }
+try
+{
+    var result = await collection.Get("my-key");
+    await collection.Replace("my-key", new { }, options => options.WithCas(result.Cas));
+}
+catch (CasMismatchException)
+{
+    // the CAS value has changed
+}
 ----
