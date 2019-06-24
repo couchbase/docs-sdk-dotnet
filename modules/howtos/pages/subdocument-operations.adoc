@@ -297,7 +297,8 @@ await collection.MutateIn("key",
 );
 ---
 
-This is built upon in Couchbase Server 6.5 and up with xref:concept-docs:durability.adoc#[Synchronous durability]:
+In Couchbase Server 6.5 and up, this is built upon with xref:concept-docs:durability.adoc#synchronous-durability[Synchronous Durability], 
+which uses the concept of xref:6.5@server:learn:data/durability.adoc#majority[majority] to indicate the number of configured Data Service nodes to which commitment is required:
 
 [source,csharp]
 ---
