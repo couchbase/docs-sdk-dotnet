@@ -1,0 +1,12 @@
+= Compression
+:page-topic-type: concept
+:page-edition: Enterprise Edition
+:page-aliases:ROOT:compression-intro,compression-intro
+
+Couchbase Data Platform can store documents compressed with Snappy. 
+
+IMPORTANT: The .NET SDK does not support Snappy compression. 
+
+The .NET SDK operates with compression mode set to `OFF`.
+This means that any compressed documents stored in Couchbase Server will be presented to the SDK in uncompressed form.
+More information is available in the xref:3.0@java-sdk:concept-docs:compression.adoc[Compression documentation] of the other SDKs.
