@@ -24,7 +24,8 @@
 * xref:howtos:handling-errors.adoc[Handling Errors]
 * xref:howtos:health-check.adoc[Health Check]
 
-xref:concept-docs:concepts.adoc[.Learn]
+.Learn
+// * xref:concept-docs:concepts.adoc[.Learn]
 * xref:concept-docs:buckets-and-clusters.adoc[Buckets & Clusters [from existing Managing Clusters doc]]
 * xref:concept-docs:collections.adoc[Collections & Scope]
 * xref:concept-docs:compression.adoc[Compression]
