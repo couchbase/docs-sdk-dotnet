@@ -1,4 +1,4 @@
-.Hello World!
+.Getting Started
 * xref:hello-world:start-using-sdk.adoc[Start Using the SDK]
 // * xref:hello-world:sample-application.adoc[Sample Application]
 
@@ -6,13 +6,12 @@
 * xref:howtos:kv-operations.adoc[Key Value Operations]
 * xref:howtos:subdocument-operations.adoc[Sub-Document Operations]
 //  ** xref:howtos:sdk-xattr-example.adoc[Extended Attributes]
-* xref:howtos:n1ql-queries-with-sdk.adoc[N1QL from the SDK]
+* xref:howtos:n1ql-queries-with-sdk.adoc[Query from the SDK]
 * xref:howtos:analytics-using-sdk.adoc[Analytics from the SDK]
 // ** xref:howtos:advanced-analytics-querying.adoc[Advanced Analytics Querying]
 * xref:howtos:full-text-searching-with-sdk.adoc[Full Text Search from the SDK]
-// * xref:howtos:view-queries-with-sdk.adoc[MapReduce Views]
+ * xref:howtos:view-queries-with-sdk.adoc[MapReduce Views]
 
-////
 .Advanced Working with Data
 * xref:howtos:durability.adoc[Durability]
  ** * xref:howtos:transactions.adoc[ACID Transactions]
@@ -20,23 +19,38 @@
 .Managing Couchbase
 * User Management
  ** xref:howtos:sdk-authentication-overview.adoc[Authentication]
-////
+
 .Errors & Diagnostics
 * xref:howtos:handling-errors.adoc[Handling Errors]
 * xref:howtos:health-check.adoc[Health Check]
 
-////
-.Concepts
-* xref:concept-docs:concepts.adoc[Concepts]
- ** xref:concept-docs:document-operations.adoc[Documents & Doc Ops]
-// ** xref:concept-docs:collections.adoc[Collections]
-////
+* xref:concept-docs:concepts.adoc[.Learn]
+* xref:concept-docs:buckets-and-clusters.adoc[Buckets & Clusters [from existing Managing Clusters doc]]
+* xref:concept-docs:collections.adoc[Collections & Scope]
+* xref:concept-docs:compression.adoc[Compression]
+* xref:concept-docs:data-model.adoc[Data Model]
+** xref:concept-docs:documents.adoc[Documents (includes discussion of Counters)]
+** xref:concept-docs:nonjson.adoc[Non-json Docs]
+** xref:concept-docs:subdocument-operations.adoc[Sub-Documents]
+** xref:concept-docs:xattr.adoc[XATTR & Virtual XATTR]
+* xref:concept-docs:errors.adoc[Errors, Exceptions, and Diagnostics]
+** xref:concept-docs:health-check.adoc[Health Check]
+** xref:concept-docs:response-time-observability.adoc[Tracing]
+* xref:concept-docs:durability.adoc[Failure Considerations]
+* xref:concept-docs:encryption.adoc[Field Level Encryption]
+* xref:concept-docs:http-services.adoc[Choosing the Right Service]
+** xref:concept-docs:analytics-for-sdk-users.adoc[Analytics]
+** xref:concept-docs:understanding-views.adoc[Map Reduce Views]
+** xref:concept-docs:n1ql-query.adoc[Query]
+** xref:concept-docs:full-text-search-overview.adoc[Search]
+* xref:concept-docs:sdk-user-management-overview.adoc[User Management]
+** xref:concept-docs:certificate-based-authentication.adoc[Cert Auth]
+** xref:concept-docs:rbac.adoc[RBAC]
+
 .Project Docs
 * xref:project-docs:sdk-release-notes.adoc[Release Notes]
-////
 * xref:project-docs:compatibility-versions-features.adoc[Compatibility]
  ** xref:project-docs:migrating-sdk-code-to-3.n.adoc[Migrating to SDK 3 API]
-////
 * xref:project-docs:sdk-licenses.adoc[Licenses]
 * xref:project-docs:get-involved.adoc[Get involved]
  ** https://docs.couchbase.com/home/contribute/index.html[Improve the Docs]
