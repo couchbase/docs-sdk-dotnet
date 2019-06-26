@@ -1,7 +1,7 @@
 = Services -- Choosing the Right One
 :nav-title: Services
 :page-topic-type: landing-page
-:page-aliases: http-services,choosing-the-right-service
+:page-aliases: choosing-the-right-service
 
 [abstract]
 Data in the Couchbase Data Platform can be accessed through  Key Value (KV) Operations (including the Sub-Document API), the Analytics Service, the Query Service, Full Text Search, or even MapReduce Views: 
