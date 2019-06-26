@@ -1,3 +1,5 @@
+_*Couchbase .NET SDK*_
+
 .Getting Started
 * xref:hello-world:start-using-sdk.adoc[Start Using the SDK]
 // * xref:hello-world:sample-application.adoc[Sample Application]
@@ -25,7 +27,7 @@
 * xref:howtos:health-check.adoc[Health Check]
 
 .Learn
-// * xref:concept-docs:concepts.adoc[.Learn]
+* xref:concept-docs:concepts.adoc[Overview]
 * xref:concept-docs:buckets-and-clusters.adoc[Buckets & Clusters [from existing Managing Clusters doc]]
 * xref:concept-docs:collections.adoc[Collections & Scope]
 * xref:concept-docs:compression.adoc[Compression]
