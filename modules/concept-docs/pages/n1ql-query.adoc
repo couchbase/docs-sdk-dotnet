@@ -116,7 +116,7 @@ ensuring that indexes are synchronized with the data service before querying.
 
 The following options are available:
 
-include::6.5@server:learn:services-and-indexes:indexes/index-replication.adoc[tag=scan_consistency]
+include::6.5@server:learn:services-and-indexes/indexes/index-replication.adoc[tag=scan_consistency]
 
 Consider the following snippet:
 
