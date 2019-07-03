@@ -1,4 +1,5 @@
-._*Couchbase .NET SDK*_
+.Couchbase .NET SDK
+// * xref
 
 .Getting Started
 * xref:hello-world:start-using-sdk.adoc[Start Using the SDK]
