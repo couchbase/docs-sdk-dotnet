@@ -9,8 +9,8 @@ The Couchbase SDK docs aim to be practical, and example-led, to get you working 
 At some point during your journey through these Howto docs, you may feel the need for a deeper dive into certain topics.
 This section contains discussion-style expansions of key Couchbase features, which go beyond the dry, bare-bones reference of the API docs, and aim to give a clear understanding of the chosen topic.
 
-* xref:[Buckets & Clusters [from existing Managing Clusters doc]]
-* xref:[Collections & Scope]
+* xref:buckets-and-clusters.adoc[Buckets & Clusters [from existing Managing Clusters doc]]
+* xref:collections.adoc[Collections & Scope]
 * xref:[Compression]
 * xref:[Data Model]
 ** xref:[Documents (includes discussion of Counters)]
@@ -22,11 +22,11 @@ This section contains discussion-style expansions of key Couchbase features, whi
 ** xref:[Tracing]
 * xref:[Failure Considerations (Durability / Synchronous Replication/Brief Transactions Note)]
 * xref:[Field Level Encryption]
-* xref:[Services - choosing the right one. - DOC-5325]
-** xref:[Analytics]
-** xref:[FTS]
-** xref:[MapReduce Views]
-** xref:[N1QL]
+* xref:http-services.adoc[Services - choosing the right one. - DOC-5325]
+** xref:analytics-for-sdk-users.adoc[Analytics]
+** xref:full-text-search-overview.adoc[Full Text Search]
+** xref:understanding-views.adoc[MapReduce Views]
+** xref:n1ql-query.adoc[N1QL Query]
 * xref:[User Management]
 ** xref:[Cert Auth]
 ** xref:[RBAC]
