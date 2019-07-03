@@ -20,7 +20,7 @@ This section contains discussion-style expansions of key Couchbase features, whi
 * xref:[Errors, Exceptions, and Diagnostics]
 ** xref:[Health Check]
 ** xref:[Tracing]
-* xref:durability.adoc[Failure Considerations (Durability / Synchronous Replication/Brief Transactions Note)]
+// * xref:durability.adoc[Failure Considerations (Durability / Synchronous Replication/Brief Transactions Note)]
 * xref:[Field Level Encryption]
 * xref:http-services.adoc[Services - choosing the right one. - DOC-5325]
 ** xref:analytics-for-sdk-users.adoc[Analytics]
