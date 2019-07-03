@@ -15,13 +15,13 @@ the Couchbase SDKs abstract away many of the differences -- offering consistency
 You can follow the links below for more information on the services with the Couchbase SDKs, or read on to see which use case matches which service.
 
 .Couchbase HTTP Services
-xref:[KV Operations]
-xref:subdocument-operations.adoc[Sub-Document API]
-xref:analytics-for-sdk-users.adoc[Couchbase Analytics Service (CBAS)]
-xref:n1ql-query.adoc[Query Service]
-xref:full-text-search-overview.adoc[Full Text Search]
-xref:understanding-views.adoc[MapReduce Views]
-xref:6.5@server:connectors/intro[Connectors]
+* xref:[KV Operations]
+* xref:subdocument-operations.adoc[Sub-Document API]
+* xref:analytics-for-sdk-users.adoc[Couchbase Analytics Service (CBAS)]
+* xref:n1ql-query.adoc[Query Service]
+* xref:full-text-search-overview.adoc[Full Text Search]
+* xref:understanding-views.adoc[MapReduce Views]
+* xref:6.5@server:connectors/intro[Connectors]
 
 
 == Use Cases
@@ -78,11 +78,11 @@ otherwise, for high throughput, simple queries, pick our Query Service.
 Use the Full Text Search (FTS) service when you want to take advantage of natural-language querying.
 For phrase matching, over free-form text, or matching over word stems, FTS is a powerful solution.
 
-=== FTS
-
 There are more concepts to learn, as FTS offers a very flexible service.
 In particular, care should be taken over building indexes, to stop them becoming unnecessarily large -- see our xref:server:fts/full-text-intro.adoc[FTS documentation].
 Once again, the SDK abstracts away much of the complexity from deeply nested queries, and the interface is similar to our Query Service.
+
+From Couchbase Server 6.5, xref:6.5@server:n1ql:n1ql-language-reference/searchfun.adoc[Search Functions] allow the use of FTS _within_ N1QL queries.
 
 
 === Querying
@@ -92,6 +92,7 @@ For operational queries -- such as the front-end queries behind every page d
 The Query Service using N1QL - SQL for JSON - is ideal for retrieving multiple documents that match specific queries. 
 Data can be joined together, and Global Secondary Indexes can be used to speed up searches.
 It’s a powerful and flexible way of querying, retrieving, and updating data, using a familiar language, but if you know the document’s key, then regular KV (or Sub-Doc) operations will always be faster.
+
 
 === Lowest Latency
 Streaming in a distributed system is complex, and thus we do not make our internal streams and changes feed directly available.
@@ -106,6 +107,7 @@ This is something we have link:https://blog.couchbase.com/caching-queries-couchb
 
 We could do with a new DA blog post to point to here, perhaps?
 (existing one is several years old)
+
+Could take something from Caching use tutorial?
+https://docs.couchbase.com/tutorials/session-storage/java.html
 ////	
-
-
