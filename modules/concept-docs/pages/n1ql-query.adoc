@@ -21,7 +21,7 @@ with discussion of a few areas of the Query service where more background knowle
 The Couchbase query service makes use of xref:6.5@server:learn:services-and-indexes/indexes/indexes.adoc[_indexes_] in order to do its work.
 Indexes replicate subsets of documents from data nodes over to index nodes, 
 allowing specific data (for example, specific document properties) to be retrieved quickly, 
-and to distribute load away from data nodes in MDS topologies.
+and to distribute load away from data nodes in xref:6.5@server:clustersetup:services-mds.adoc[MDS] topologies.
 
 [IMPORTANT]
 In order to make a bucket queryable, it must have at least one index defined.
@@ -52,7 +52,7 @@ SELECT name, email FROM `users` WHERE name="Monty Python" OR email="monty@python
 
 Indexes help improve the performance of a query.
 When an index includes the actual values of all the fields specified in the query, 
-the index _*covers*_ the query, and eliminates the need to fetch the actual values from the Data Service.
+the index _covers_ the query, and eliminates the need to fetch the actual values from the Data Service.
 An index, in this case, is called a _covering index_, and the query is called a _covered_ query.
 For more information, see xref:6.5@server:n1ql:n1ql-language-reference/covering-indexes.adoc[Covering Indexes].
 
@@ -69,7 +69,7 @@ await bucketManager.CreateN1qlIndexAsync("index_emai", new string[] { "email" })
 
 == Index Building
 
-Creating indexeson buckets with many existing documents can take a long time.
+Creating indexes on buckets with many existing documents can take a long time.
 You can build indexes in the background, creating _deferred_ indexes.
 The deferred indexes can be built together, rather than having to re-scan the entire bucket for each index.
 

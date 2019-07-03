@@ -2,6 +2,9 @@
 :navtitle: Concepts
 :page-topic-type: landing-page
 
+include::partial$alpha-warning.adoc[]
+
+
 The Couchbase SDK docs aim to be practical, and example-led, to get you working with any of our features as quickly as possible.
 At some point during your journey through these Howto docs, you may feel the need for a deeper dive into certain topics.
 This section contains discussion-style expansions of key Couchbase features, which go beyond the dry, bare-bones reference of the API docs, and aim to give a clear understanding of the chosen topic.
