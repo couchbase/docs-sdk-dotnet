@@ -163,6 +163,10 @@ and allows optimization on a case-by-case basis.
 
 == Building Statements with LINQ
 
+[NOTE]
+LINQ is a community project.
+Although it works well with Couchbase, it is not part of the officially-supported product.
+
 LINQ (Language Integrated Query), is a powerful way to guide you in building your statements: 
 you obtain Type safety and auto completion of relevant methods and N1QL clauses. 
 It implements https://msdn.microsoft.com/en-us/library/mt693024.aspx[Microsoft’s language integrated query extensions to the C# language], 
