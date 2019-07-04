@@ -31,11 +31,11 @@
 
 .Learn
 * xref:concept-docs:concepts.adoc[Overview]
-* xref:concept-docs:buckets-and-clusters.adoc[Buckets & Clusters [from existing Managing Clusters doc]]
+* xref:concept-docs:buckets-and-clusters.adoc[Buckets & Clusters]
 * xref:concept-docs:collections.adoc[Collections & Scope]
 * xref:concept-docs:compression.adoc[Compression]
 * xref:concept-docs:data-model.adoc[Data Model]
-** xref:concept-docs:documents.adoc[Documents (includes discussion of Counters)]
+** xref:concept-docs:documents.adoc[Documents]
 ** xref:concept-docs:nonjson.adoc[Non-json Docs]
 ** xref:concept-docs:subdocument-operations.adoc[Sub-Documents]
 ** xref:concept-docs:xattr.adoc[XATTR & Virtual XATTR]
@@ -55,7 +55,7 @@
 
 .Project Docs
 * xref:project-docs:sdk-release-notes.adoc[Release Notes]
-* xref:project-docs:compatibility-versions-features.adoc[Compatibility]
+* xref:project-docs:compatibility.adoc[Compatibility]
  ** xref:project-docs:migrating-sdk-code-to-3.n.adoc[Migrating to SDK 3 API]
 * xref:project-docs:sdk-licenses.adoc[Licenses]
 * xref:project-docs:get-involved.adoc[Get involved]
