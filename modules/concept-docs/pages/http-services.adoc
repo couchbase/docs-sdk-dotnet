@@ -37,7 +37,7 @@ If you know the path to the piece of information that you need within a JSON doc
 
 === Long Running Queries & Big Data
 
-xref:server:analytics/introduction.adoc[Couchbase Analytics Service (CBAS)] performs well on huge datasets, with complex aggregations, and uses the first commercial implementation of SQL++ -- _N1QL for Analytics_ -- which gives a similar query experience to our SQL-like N1QL language.
+xref:6.5@server:learn:services-and-indexes/services/analytics-service.adoc[Couchbase Analytics Service (CBAS)] performs well on huge datasets, with complex aggregations, and uses the first commercial implementation of SQL++ -- _N1QL for Analytics_ -- which gives a similar query experience to our SQL-like N1QL language.
 CBAS supports workloads involving only SELECT (not INSERT or UPDATE), and uses local secondary indexes.
 Scalable performance comes from multi-node partitioned-parallel join, sort, aggregate, and grouped aggregate operators, and multiple storage devices (vbuckets over several nodes).
 
