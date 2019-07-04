@@ -3,9 +3,7 @@
 :page-topic-type: howto
 :page-aliases: document-operations.adoc
 
-WARNING: These pages cover the first _Developer Preview_ of the Couchbase .NET SDK -- 3.0 _alpha_.
-As such they are likely to change without notice.
-The _alpha_ code _should not_ be used in production.
+include::partial$alpha-warning.adoc[]
 
 // The complete code sample used on this page can be downloaded from
 //  xref::example$document.cs[here]

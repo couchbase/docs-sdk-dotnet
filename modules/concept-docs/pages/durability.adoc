@@ -1,1 +1,3 @@
 = Durability
+
+include::partial$alpha-warning.adoc[]
