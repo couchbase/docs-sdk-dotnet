@@ -6,6 +6,7 @@
 [abstract]
 Durability must be traded off against performance.
 
+include::partial$alpha-warning.adoc[]
 
 == Client-Side Durability
 
