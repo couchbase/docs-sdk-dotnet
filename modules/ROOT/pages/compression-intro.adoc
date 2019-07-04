@@ -8,4 +8,5 @@ However, stable Snappy support is not yet available in .NET.
 
 Couchbase Server (in the Enterprise Edition) stores documents in compressed form, xref:6.0@server:learn:buckets-memory-and-storage/compression.adoc#compression-modes[when it is enabled in the server for a particular bucket], using Snappy Compression.
 As the Snappy compression library is not available for .NET, the server will automatically uncompress any compressed documents before sending them to the .NET client.
+
 If compression is set to _active_ on the server, documents will be stored there in compressed form, even though the .NET client has sent them uncompressed, thus saving storage space (but not network bandwidth).
