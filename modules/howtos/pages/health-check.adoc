@@ -1,5 +1,5 @@
 = Diagnosing and preventing Network Problems with Health Check
-:navtitle: Healtch Check
+:navtitle: Health Check
 :page-topic-type: howto
 
 [abstract]
