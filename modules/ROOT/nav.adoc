@@ -39,7 +39,7 @@
 ** xref:concept-docs:nonjson.adoc[Non-json Docs]
 ** xref:concept-docs:subdocument-operations.adoc[Sub-Documents]
 ** xref:concept-docs:xattr.adoc[XATTR & Virtual XATTR]
-* xref:concept-docs:errors.adoc[Errors, Exceptions, and Diagnostics]
+* xref:concept-docs:errors.adoc[Errors and Diagnostics]
 ** xref:concept-docs:health-check.adoc[Health Check]
 ** xref:concept-docs:response-time-observability.adoc[Tracing]
 * xref:concept-docs:durability.adoc[Failure Considerations]
