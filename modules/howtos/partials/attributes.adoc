@@ -1,0 +1,4 @@
+////
+:lcb-api-link: http://docs.couchbase.com/sdk-api/couchbase-c-client-2.10.0
+:lcb-current-version: 2.10.0
+////
