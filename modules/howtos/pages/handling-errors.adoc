@@ -38,6 +38,7 @@ It is always important to log errors, but even more so with highly concurrent as
 // recommendation of good practice ADMONITION link
 
 
+[#retry]
 === Retry
 
 Transient errors -- such as those caused by resource starvation -- are best tackled with one of the following retry strategies:
