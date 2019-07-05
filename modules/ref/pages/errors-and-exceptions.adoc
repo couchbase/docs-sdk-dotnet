@@ -1,0 +1,9 @@
+= Errors & Exceptions Reference
+:nav-title: Error Reference
+:page-topic-type: reference
+:page-aliases: 
+
+[abstract]
+Error codes and messages, and some links to further actions.
+
+include::partial$alpha-warning.adoc[]
