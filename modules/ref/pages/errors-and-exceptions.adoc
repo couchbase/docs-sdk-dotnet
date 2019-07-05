@@ -7,3 +7,5 @@
 Error codes and messages, and some links to further actions.
 
 include::partial$alpha-warning.adoc[]
+
+== Analytics Errors

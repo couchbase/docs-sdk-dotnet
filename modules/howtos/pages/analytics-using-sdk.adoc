@@ -72,7 +72,7 @@ Uses the `ClientContextId(String)` builder; default is a random UUID
 * *Server Side Timeout*, customizes the timeout sent to the server. 
 Does not usually have to be set, as the client sets it based on the timeout on the operation. 
 Uses the `Timeout(TimeSpan)` builder, and defaults to the Analytics timeout set on the client (75s).
-This can be adjusted at the xref:project-docs:client-settings.html#timeout-options[cluster global config level].
+This can be adjusted at the xref:ref:client-settings.html#timeout-options[cluster global config level].
 * *Priority*, set if the request should have priority over others.
 The `Priority(boolean)` builder defaults to `false`.
 
