@@ -1,7 +1,7 @@
 = Client Settings
 :nav-title: Client Settings
 :page-topic-type: reference
-:page-aliases: ROOT:core-operations, ROOT:datastructures
+:page-aliases: ROOT:client-settings
 
 [abstract]
 Client settings
