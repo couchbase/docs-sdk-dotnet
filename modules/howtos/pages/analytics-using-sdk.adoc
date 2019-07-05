@@ -151,7 +151,7 @@ Console.WriteLine($”Result count: {result.MetaData.Metrics.ResultCount}”);
 Console.WriteLine($”Error count: {result.MetaData.Metrics.ErrorCount}”);
 ----
 
-For a listing of available `Metrics` in `MetaData`, see the xref:concept-docs:analytics-for-SDK-users.adoc[Understanding Analytics] SDK doc.
+For a listing of available `Metrics` in `MetaData`, see the xref:concept-docs:analytics-for-sdk-users.adoc[Understanding Analytics] SDK doc.
 
 
 == Advanced Analytics Topics
