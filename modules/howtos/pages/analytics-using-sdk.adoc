@@ -72,7 +72,7 @@ Uses the `ClientContextId(String)` builder; default is a random UUID
 * *Server Side Timeout*, customizes the timeout sent to the server. 
 Does not usually have to be set, as the client sets it based on the timeout on the operation. 
 Uses the `Timeout(TimeSpan)` builder, and defaults to the Analytics timeout set on the client (75s).
-This can be adjusted at the xref:ref:client-settings.html#timeout-options[cluster global config level].
+This can be adjusted at the xref:ref:client-settings.adoc#timeout-options[cluster global config level].
 * *Priority*, set if the request should have priority over others.
 The `Priority(boolean)` builder defaults to `false`.
 
@@ -165,7 +165,7 @@ Deferred queries enable the decoupling of the long-running query execution from 
 A handle is created, allowing the in-progress query to be checked, and the result returned later, without locking up resources or network bandwidth.
 
 WARNING: In Couchbase Data Platform 6.5, Deferred Queries is in _Developer Preview_. 
-In .NET SDK 3.0, Deferred Queries have an Interface Level of xref:project-docs:compatibility-versions-features.adoc#interface-stability[Volatile].
+In .NET SDK 3.0, Deferred Queries have an Interface Level of xref:project-docs:compatibility.adoc#interface-stability[Volatile].
 
 Deferred querying is enabled with `options.WithDeferred(true)`, 
 and by checking `QueryStatus` as appropriate to the task at hand.
@@ -223,7 +223,7 @@ var handle = _fixture.Cluster.ImportDeferredAnalyticsQueryHandle<dynamic>(json);
 You can ingest the results of an Analytics query directly back into a given collection. 
 This then allows the results themselves to be queried in turn.
 
-NOTE: In .NET SDK 3.0, KV Ingest has an Interface Level of xref:project-docs:compatibility-versions-features.adoc#interface-stability[Uncommited].
+NOTE: In .NET SDK 3.0, KV Ingest has an Interface Level of xref:project-docs:compatibility.adoc#interface-stability[Uncommited].
 
 [source,csharp]
 ----
