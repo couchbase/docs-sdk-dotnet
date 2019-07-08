@@ -96,7 +96,7 @@ Other versions might not be compatible with the current SDK version.
 
 == Building from source
 
-If none of the other installation options suffice or if you want to debug the source or perhaps contribute, building directly from the source is the best option for you.
+If none of the other installation options satisfy or if you want to debug the source or perhaps contribute, building directly from the source is the best option for you.
 All source is located on GitHub.
 
 NOTE: The software provided via NuGet and S3 are the official releases that have been through a rigorous testing process.
