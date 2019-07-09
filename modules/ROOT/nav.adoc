@@ -2,18 +2,18 @@
 // * xref
 
 .Getting Started
-* xref:hello-world:start-using-sdk.adoc[Start Using the SDK]
+* xref:hello-world:start-using-sdk.adoc[Start Using the .NET SDK]
 // * xref:hello-world:sample-application.adoc[Sample Application]
 
 .Working with Data
 * xref:howtos:kv-operations.adoc[Key Value Operations]
 * xref:howtos:subdocument-operations.adoc[Sub-Document Operations]
 //  ** xref:howtos:sdk-xattr-example.adoc[Extended Attributes]
-* xref:howtos:n1ql-queries-with-sdk.adoc[Query from the SDK]
-* xref:howtos:analytics-using-sdk.adoc[Analytics from the SDK]
+* xref:howtos:n1ql-queries-with-sdk.adoc[Query]
+* xref:howtos:analytics-using-sdk.adoc[Analytics]
 // ** xref:howtos:advanced-analytics-querying.adoc[Advanced Analytics Querying]
-* xref:howtos:full-text-searching-with-sdk.adoc[Full Text Search from the SDK]
- * xref:howtos:view-queries-with-sdk.adoc[MapReduce Views]
+* xref:howtos:full-text-searching-with-sdk.adoc[Full Text Search]
+* xref:howtos:view-queries-with-sdk.adoc[MapReduce Views]
 
 ////
 .Advanced Working with Data
