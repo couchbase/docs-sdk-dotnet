@@ -1,0 +1,16 @@
+= Tracing from the .NET SDK
+:navtitle: Tracing from the SDK
+:page-topic-type: howto
+
+[abstract]
+Threshold logging
+
+// https://issues.couchbase.com/browse/DOC-4791 - 
+
+
+opentelemetry
+
+// need KV _and_ query examples.
+
+
+
