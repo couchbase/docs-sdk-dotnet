@@ -10,7 +10,7 @@ Threshold logging
 
 opentelemetry
 
-// need KV _and_ query examples.
+// need KV _and_ query examples - with note on what it *doesn't* tell you (server-side timings).
 
 
 
