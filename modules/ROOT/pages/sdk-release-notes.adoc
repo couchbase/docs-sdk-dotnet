@@ -82,6 +82,40 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 2.7.9 (11th July 2019)
+
+https://packages.couchbase.com/clients/net/2.5/CouchbaseNetClient.2.7.9.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.9[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.9[Nuget]
+
+=== Known Issues
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
+=== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-1927[NCBC-1927]: 
+SDK now works with publicly addressable Kubernetes clusters.
+* https://issues.couchbase.com/browse/NCBC-1975[NCBC-1975]: 
+UpsertAsync overload now has expiration and CAS params in correct order.
+* https://issues.couchbase.com/browse/NCBC-1984[NCBC-1984]: 
+Timestamp underflow no longer causes expiration to be set to infinite.
+* https://issues.couchbase.com/browse/NCBC-1998[NCBC-1998]: 
+Invalid Encoding parameter no longer causes HTTP 400 bad request in Query.
+* https://issues.couchbase.com/browse/NCBC-2002[NCBC-2002]: 
+Data service is no longer hidden by null node during bootstrap.
+* https://issues.couchbase.com/browse/NCBC-2017[NCBC-2017]: 
+Subsequent calls to same MutateInBuilders no longer cause fields to be set to null.
+* https://issues.couchbase.com/browse/NCBC-2021[NCBC-2021]: 
+MutateIn With Counter and Upsert now works as expected.
+* https://issues.couchbase.com/browse/NCBC-2025[NCBC-2025]: 
+Query timeouts are now supported on all platforms.
+
+=== New Features and Behavioral Changes
+* https://issues.couchbase.com/browse/NCBC-1983[NCBC-1983] - Add ServiceState to EndpointDiagnostics
+
 == Version 2.7.8 (4th June 2019)
 
 https://packages.couchbase.com/clients/net/2.5/CouchbaseNetClient.2.7.8.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.8[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.8[Nuget]
@@ -96,17 +130,17 @@ This release has the following known issues:
 Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
 
 === Fixed Issues
-* https://issues.couchbase.com/browse/NCBC-1927[NCBC-1927]: 
+* https://issues.couchbase.com/browse/NCBC-1927[NCBC-1927]:
 SDK now works correctly with publicly-addressable Kubernetes clusters.
-* https://issues.couchbase.com/browse/NCBC-1957[NCBC-1957]: 
+* https://issues.couchbase.com/browse/NCBC-1957[NCBC-1957]:
 Connections now released at the end of a PooledIOService constructor.
 
 === New Features and Behavioral Changes
-* https://issues.couchbase.com/browse/NCBC-1816[NCBC-1816]: 
-Added Import/Export for deferred analytics queries, 
-so deferred queries can be generated in one location and then queried in another. 
-* https://issues.couchbase.com/browse/NCBC-1917[NCBC-1917]: 
-Added support for ingesting Analytics queries into KV. 
+* https://issues.couchbase.com/browse/NCBC-1816[NCBC-1816]:
+Added Import/Export for deferred analytics queries,
+so deferred queries can be generated in one location and then queried in another.
+* https://issues.couchbase.com/browse/NCBC-1917[NCBC-1917]:
+Added support for ingesting Analytics queries into KV.
 This allows the results themselves to be queried in turn.
 
 
@@ -128,7 +162,7 @@ Certain Prepared statements could produce _Fatal error: unexpected end of JSON i
 
 * https://issues.couchbase.com/browse/NCBC-1919[NCBC-1919]:
 There was a type mismatch between _Conjunctive Query_ and _.Boost_ in Full Text Search.
-This has been fixed, with query constructors and builder APIs for compound queries now accepting `IFtsQuery`, 
+This has been fixed, with query constructors and builder APIs for compound queries now accepting `IFtsQuery`,
 allowing boosted queries to be used directly.
 * https://issues.couchbase.com/browse/NCBC-1926[NCBC-1926]:
 After `SelectBucket` fails with an `AuthenticationException`, the socket is now explicitly closed.
@@ -149,26 +183,26 @@ Certain Prepared statements could produce _Fatal error: unexpected end of JSON i
 
 === Fixed Issues
 
-* https://issues.couchbase.com/browse/NCBC-1877[NCBC-1877]: 
+* https://issues.couchbase.com/browse/NCBC-1877[NCBC-1877]:
 If more than one Bucket is configured, ConfigManager only fetches the first config.
 This has been fixed, and it should now fetch each Bucket's config.
-* https://issues.couchbase.com/browse/NCBC-1879[NCBC-1879]: 
+* https://issues.couchbase.com/browse/NCBC-1879[NCBC-1879]:
 The SDK will now only use KV nodes when updating bootstrap URIs.
-* https://issues.couchbase.com/browse/NCBC-1891[NCBC-1891]: 
+* https://issues.couchbase.com/browse/NCBC-1891[NCBC-1891]:
 Subdoc MultiMutation didn't include a document expiry and/or relevant subdoc doc flags.
 Subdoc MultiMutation will now set expiry and/or doc flags.
-* https://issues.couchbase.com/browse/NCBC-1892[NCBC-1892]: 
+* https://issues.couchbase.com/browse/NCBC-1892[NCBC-1892]:
 Added support for upserting document body with subdoc operation.
-* https://issues.couchbase.com/browse/NCBC-1899[NCBC-1899]: 
+* https://issues.couchbase.com/browse/NCBC-1899[NCBC-1899]:
 Span created to auto-dispose was generating WARN when manually closed, for some tracer implementations.
 This no longer happens.
-* https://issues.couchbase.com/browse/NCBC-1904[NCBC-1904]: 
+* https://issues.couchbase.com/browse/NCBC-1904[NCBC-1904]:
 Error converting value "failed" to type 'Couchbase.N1QL.QueryStatus'.
 This has been fixed, and the actual N1QL error will now be returned.
-* https://issues.couchbase.com/browse/NCBC-1905[NCBC-1905]: 
+* https://issues.couchbase.com/browse/NCBC-1905[NCBC-1905]:
 AnalyticsResult was throwing a NullReferenceException when Errors was NULL.
 NRE is no longer thrown, and the actual error returned by the server should be available to determine what failed.
-* https://issues.couchbase.com/browse/NCBC-1906[NCBC-1906]: 
+* https://issues.couchbase.com/browse/NCBC-1906[NCBC-1906]:
 Error: There was a problem retrieving a valid URI to submit the N1QL query to.
 This was caused by no Analytics URIs left in the URI cache following a failover/rebalance on a cluster with analytics services.
 URIs should now always be available, whether or not they succeed initially - this is the same behavior as Views, N1QL, and FTS.
