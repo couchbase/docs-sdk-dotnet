@@ -84,7 +84,7 @@ _Note that you can checkout a specific tag for each release as well._
 
 == Version 2.7.9 (11th July 2019)
 
-https://packages.couchbase.com/clients/net/2.5/CouchbaseNetClient.2.7.9.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.9[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.9[Nuget]
+https://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.9.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.9[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.9[Nuget]
 
 === Known Issues
 This release has the following known issues:
@@ -96,21 +96,21 @@ This release has the following known issues:
 Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
 
 === Fixed Issues
-* https://issues.couchbase.com/browse/NCBC-1927[NCBC-1927]: 
+* https://issues.couchbase.com/browse/NCBC-1927[NCBC-1927]:
 SDK now works with publicly addressable Kubernetes clusters.
-* https://issues.couchbase.com/browse/NCBC-1975[NCBC-1975]: 
+* https://issues.couchbase.com/browse/NCBC-1975[NCBC-1975]:
 UpsertAsync overload now has expiration and CAS params in correct order.
-* https://issues.couchbase.com/browse/NCBC-1984[NCBC-1984]: 
+* https://issues.couchbase.com/browse/NCBC-1984[NCBC-1984]:
 Timestamp underflow no longer causes expiration to be set to infinite.
-* https://issues.couchbase.com/browse/NCBC-1998[NCBC-1998]: 
+* https://issues.couchbase.com/browse/NCBC-1998[NCBC-1998]:
 Invalid Encoding parameter no longer causes HTTP 400 bad request in Query.
-* https://issues.couchbase.com/browse/NCBC-2002[NCBC-2002]: 
+* https://issues.couchbase.com/browse/NCBC-2002[NCBC-2002]:
 Data service is no longer hidden by null node during bootstrap.
-* https://issues.couchbase.com/browse/NCBC-2017[NCBC-2017]: 
+* https://issues.couchbase.com/browse/NCBC-2017[NCBC-2017]:
 Subsequent calls to same MutateInBuilders no longer cause fields to be set to null.
-* https://issues.couchbase.com/browse/NCBC-2021[NCBC-2021]: 
+* https://issues.couchbase.com/browse/NCBC-2021[NCBC-2021]:
 MutateIn With Counter and Upsert now works as expected.
-* https://issues.couchbase.com/browse/NCBC-2025[NCBC-2025]: 
+* https://issues.couchbase.com/browse/NCBC-2025[NCBC-2025]:
 Query timeouts are now supported on all platforms.
 
 === New Features and Behavioral Changes
@@ -118,7 +118,7 @@ Query timeouts are now supported on all platforms.
 
 == Version 2.7.8 (4th June 2019)
 
-https://packages.couchbase.com/clients/net/2.5/CouchbaseNetClient.2.7.8.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.8[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.8[Nuget]
+https://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.8.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.8[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.8[Nuget]
 
 === Known Issues
 This release has the following known issues:
