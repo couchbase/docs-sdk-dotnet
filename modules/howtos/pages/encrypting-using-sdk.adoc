@@ -6,6 +6,7 @@
 // From 2.7 - needs updating
 
 [abstract]
+Encryption at rest, implemented per field for maximum flexibility.
 Field Level Encryption is available in Couchbase Data Platform 5.5, from .NET SDK version 2.6.0, allowing encryption of any field within a document.
 
 [#package]
