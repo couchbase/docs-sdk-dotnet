@@ -205,7 +205,7 @@ The full source can be found on https://github.com/couchbaselabs/couchbase-net-e
 
 == API Reference
 
-The API reference is generated for each release and the latest can be found https://docs.couchbase.com/sdk-api/sdk-api/couchbase-net-client/[here^].
+The API reference is generated for each release and the latest can be found https://docs.couchbase.com/sdk-api/couchbase-net-client/[here^].
 Links to API references for older .NET SDK releases can be found on the xref:sdk-release-notes.adoc[Release Notes & Archives page].
 
 == Contributing
