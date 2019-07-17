@@ -11,6 +11,15 @@ include::partial$alpha-warning.adoc[]
 
 For complex and long-running queries, involving large ad hoc join, set, aggregation, and grouping operation.
 
+
+////
+== MetaData
+
+=== List of Metrics
+
+////
+
+
 == Additional Resources
 
 * Start with our  xref:6.5@server:analytics:primer-beer.adoc[introductory primer].
