@@ -4,29 +4,5 @@
 
 include::partial$alpha-warning.adoc[]
 
+include::6.5@sdk:shared:partial$concepts.adoc[tag=concepts]
 
-The Couchbase SDK docs aim to be practical, and example-led, to get you working with any of our features as quickly as possible.
-At some point during your journey through these Howto docs, you may feel the need for a deeper dive into certain topics.
-This section contains discussion-style expansions of key Couchbase features, which go beyond the dry, bare-bones reference of the API docs, and aim to give a clear understanding of the chosen topic.
-
-* xref:buckets-and-clusters.adoc[Buckets & Clusters]
-* xref:collections.adoc[Collections & Scope]
-* xref::compression.adoc[Compression]
-* xref:data-model.adoc[Data Model]
-** xref:documents.adoc[Documents (includes discussion of Counters)]
-** xref:nonjson.adoc[Non-json Docs]
-** xref:subdocument-operations.adoc[Sub-Documents]
-** xref:xattr.adoc[XATTR & Virtual XATTR]
-* xref:errors.adoc[Errors, Exceptions, and Diagnostics]
-** xref:health-chack.adoc[Health Check]
-** xref:response-time-observability.adoc[Tracing]
-// * xref:durability.adoc[Failure Considerations (Durability / Synchronous Replication/Brief Transactions Note)]
-* xref:encryption.adoc[Field Level Encryption]
-* xref:http-services.adoc[Services - choosing the right one. - DOC-5325]
-** xref:analytics-for-sdk-users.adoc[Analytics]
-** xref:full-text-search-overview.adoc[Full Text Search]
-** xref:understanding-views.adoc[MapReduce Views]
-** xref:n1ql-query.adoc[N1QL Query]
-* xref:sdk-user-management-overview.adoc[User Management]
-** xref:certificate-based-authentication.adoc[Cert Auth]
-** xref:rbac.adoc[RBAC]
