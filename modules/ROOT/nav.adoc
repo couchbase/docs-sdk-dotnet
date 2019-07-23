@@ -16,9 +16,8 @@
 * xref:howtos:view-queries-with-sdk.adoc[MapReduce Views]
 
 ////
-.Advanced Working with Data
+.Advanced Data Operations
 * xref:howtos:durability.adoc[Durability]
- ** * xref:howtos:transactions.adoc[ACID Transactions]
 ////
 
 .Managing Couchbase
@@ -54,7 +53,7 @@
 ** xref:concept-docs:rbac.adoc[RBAC]
 
 .References
-// https://docs.couchbase.com/sdk-api/couchbase-net-client-current[.NET API Reference]
+https://docs.couchbase.com/sdk-api/couchbase-net-client[.NET API Reference]
 
 .Project Docs
 * xref:project-docs:sdk-release-notes.adoc[Release Notes]
