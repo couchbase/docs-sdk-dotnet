@@ -53,7 +53,7 @@
 ** xref:concept-docs:rbac.adoc[RBAC]
 
 .References
-https://docs.couchbase.com/sdk-api/couchbase-net-client[.NET API Reference]
+* https://docs.couchbase.com/sdk-api/couchbase-net-client[.NET API Reference]
 
 .Project Docs
 * xref:project-docs:sdk-release-notes.adoc[Release Notes]
