@@ -6,6 +6,7 @@
 [abstract]
 Durability must be traded off against performance.
 
+include::partial$alpha-warning.adoc[]
 
 == Client-Side Durability
 
@@ -21,7 +22,7 @@ xref: /// old docs[more in-depth discussion can be found in the old docs].
 With the release of Couchbase Data Platform 6.5, we introduce Synchronous Replication. 
 
 
-
+////
 == Transactions
 
 Couchbase Data Platform 6.5 also sees a _*Beta*_ release of our _Multi-Document Atomicity_ feature, _a.k.a._ _Transactions_.
@@ -29,3 +30,4 @@ Although atomicity guarantees occur a performance overhead, there are some circu
 
 
 
+////

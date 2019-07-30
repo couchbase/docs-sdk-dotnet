@@ -1,4 +1,109 @@
-= Full Text Search from the SDK
+= Full Text Search (FTS) Using the .NET SDK with Couchbase Server
+:navtitle: Searching from the SDK
+:page-topic-type: howto
 
-(FTS)
 
+[abstract]
+You can use the Full Text Search service (FTS) to create queryable full-text indexes in Couchbase Server.
+
+include::partial$alpha-warning.adoc[]
+
+Full Text Search or FTS allows you to create, manage, and query full text indexes on JSON documents stored in Couchbase buckets.
+It uses natural language processing for querying documents, provides relevance scoring on the results of your queries, and has fast indexes for querying a wide range of possible text searches.
+Some of the supported query types include simple queries like Match and Term queries; range queries like Date Range and Numeric Range; and compound queries for conjunctions, disjunctions, and/or boolean queries.
+The .NET SDK exposes an API for performing FTS queries which abstracts some of the complexity of using the underlying REST API.
+
+
+// As of Couchbase Server 6.5, FTS...
+
+== Examples
+
+Search queries are executed at Cluster level (not bucket or collection).
+Here is a simple MatchQuery that looks for the text “swanky” using a defined index:
+
+[source,csharp]
+----
+var result = cluster.SearchQuery(
+    “travel-sample-index-hotel-description”,
+    new MatchQuery(“swanky”),
+    options => {
+        options.WithLimit(10);
+    }
+);
+----
+
+All simple query types are created in the same manner, some have additional properties, which can be seen in common query type descriptions.
+Couchbase FTS's xref:6.5@server:fts:fts-query-types.adoc[range of query types] enable powerful searching using multiple options, to ensure results are just within the range wanted.
+Here is a date range query that looks for dates between 1st January 2019 and 31st January:
+
+[source,csharp]
+----
+var result = cluster.SearchQuery(
+    “index-name”,
+    new DateRangeQuery()
+        .Start(DateTime.Parse("2019-01-01"), true) // final parameter is if the range is inclusive
+        .End(DateTime.Parse("2019-02-01"), false),
+    options => options.Limit(10)
+);
+----
+
+A conjunction query contains multiple child queries; its result documents must satisfy all of the child queries:
+
+[source,csharp]
+----
+var result = cluster.SearchQuery(
+    “index-name”,
+    new ConjunctionQuery(
+        new DateRangeQuery()
+            .Start(DateTime.Parse("2019-01-01"), true)
+            .Start(DateTime.Parse("2019-02-01"), false),
+        new MatchQuery("Swanky")
+);
+----
+
+== Working with Results
+
+The result of a search query has three components: hits, facets, and metdata. 
+Hits are the documents that match the query. 
+Facets allow the aggregation of information collected on a particular result set. 
+Metdata holds additional information not directly related to your query, 
+such as success total hits and how long the query took to execute in the cluster.
+
+[source,csharp]
+.Iterating hits
+----
+foreach (var hit in result.Hits)
+{
+    string documentId = hit.Id;
+    double score = hit.Score;
+    ...
+}
+----
+
+[source,csharp]
+.Iterating facets
+----
+foreach (var facet in result.Facets)
+{
+    var name = facet.Name;
+    var total = facet.Total;
+    ...
+}
+----
+
+
+== Consistency
+
+Like the Couchbase Query Service,
+FTS allows `RequestPlus` queries -- _Read-Your-Own_Writes (RYOW)_ consistency, ensuring results contain information from updated indexes:
+
+[source,csharp]
+----
+var result = cluster.SearchQuery(
+    “travel-sample-index-hotel-description”,
+    new MatchQuery(“swanky”),
+    options => {
+        options.WithConsistency(ScanConsistency.RequestPlus);
+    }
+);
+----

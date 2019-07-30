@@ -1,0 +1,26 @@
+= Choosing an API
+:navtitle: Choosing an API
+:page-topic-type: howto
+:page-aliases: ROOT:async-programming,ROOT:batching-operations
+
+include::partial$alpha-warning.adoc[]
+
+[abstract]
+All async
+
+
+
+By preference, the .NET API uses the _Task-based Asynchronous Pattern (TAP)_, with `await`, and synchronous programming is undesirable in the vast majority of use-cases.
+
+
+// work with Jeff on a good illustrative example
+
+
+// rx.net for reactive -- add section later, when appears on Couchbaselabs?
+
+
+
+== Batching
+
+// await Task.WhenAll()
+
