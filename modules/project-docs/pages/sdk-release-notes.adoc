@@ -82,6 +82,85 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+= Version 3.0.0-alpha5 (30th July 2019)
+
+https://packages.couchbase.com/clients/net/3.0/CouchbaseNetClient.3.0.0-alpha5.zip[Download] | API Reference -- N/A | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-alpha5[Nuget]
+
+=== Known Issues
+NA
+
+=== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-1970[NCBC-1970]: 
+Implementations of IOperation.GetValue hide XError response
+* https://issues.couchbase.com/browse/NCBC-1987[NCBC-1987]: 
+Add JsonProperty to Term
+* https://issues.couchbase.com/browse/NCBC-1988[NCBC-1988]: 
+Ensure only single XAttr commands are used with Sub-Doc
+* https://issues.couchbase.com/browse/NCBC-1994[NCBC-1994]: 
+Remove thread.sleep from unit tests
+* https://issues.couchbase.com/browse/NCBC-1996[NCBC-1996]: 
+Random LogManagerTests bug - Key Not Found thrown
+* https://issues.couchbase.com/browse/NCBC-1998[NCBC-1998]: 
+Invalid Encoding parameter causes HTTP 400 bad request in Query
+* https://issues.couchbase.com/browse/NCBC-2011[NCBC-2011]: 
+Allow LogManager&#39;s LoggerFactory to be set
+* https://issues.couchbase.com/browse/NCBC-2014[NCBC-2014]: 
+Don't throw PlatformNotSupported when unable to set KeepAlives
+* https://issues.couchbase.com/browse/NCBC-2015[NCBC-2015]: 
+Configuration loses values when chaining fluent methods together
+* https://issues.couchbase.com/browse/NCBC-2032[NCBC-2032]: 
+Single node cluster doesn&#39;t have nodeExt.Hostname set properly
+* https://issues.couchbase.com/browse/NCBC-2034[NCBC-2034]: 
+Cluster fails to bootstrap because cluster config is null
+* https://issues.couchbase.com/browse/NCBC-2042[NCBC-2042]: 
+JSON.NET uses Pascal casing instead of Camel casing on Ubuntu16
+
+=== New Features and Behavioral Changes
+* https://issues.couchbase.com/browse/NCBC-1960[NCBC-1960]: 
+Add support for enhanced prepared queries
+* https://issues.couchbase.com/browse/NCBC-1944[NCBC-1944]: 
+Add cluster config manager component
+* https://issues.couchbase.com/browse/NCBC-1985[NCBC-1985]: 
+Provide config polling configuration settings and wireup
+* https://issues.couchbase.com/browse/NCBC-1986[NCBC-1986]: 
+Enable cluster map update changes to refresh client state
+* https://issues.couchbase.com/browse/NCBC-1997[NCBC-1997]: 
+Support G3CP bootstrapping
+* https://issues.couchbase.com/browse/NCBC-1630[NCBC-1630]: 
+Investigate JSON.NET async API
+* https://issues.couchbase.com/browse/NCBC-1959[NCBC-1959]: 
+Suffix all public asynchronous methods with 'Async'
+* https://issues.couchbase.com/browse/NCBC-1990[NCBC-1990]: 
+Support refreshing connections when terminated
+* https://issues.couchbase.com/browse/NCBC-1991[NCBC-1991]: 
+analytics using the .NET SDK at draft level
+* https://issues.couchbase.com/browse/NCBC-1993[NCBC-1993]: 
+Throw NetworkErrorException when connection broken
+* https://issues.couchbase.com/browse/NCBC-1995[NCBC-1995]: 
+Refresh error map and server features when creating new connection
+* https://issues.couchbase.com/browse/NCBC-2000[NCBC-2000]: 
+Allow SDKD to view SDK internals
+* https://issues.couchbase.com/browse/NCBC-2003[NCBC-2003]: 
+Add View Manager implementation
+* https://issues.couchbase.com/browse/NCBC-2004[NCBC-2004]: 
+Implement Bucket Manager
+* https://issues.couchbase.com/browse/NCBC-2005[NCBC-2005]: 
+Implement User Manager
+* https://issues.couchbase.com/browse/NCBC-2007[NCBC-2007]: 
+Implement Query Index Manger
+* https://issues.couchbase.com/browse/NCBC-2010[NCBC-2010]: 
+Fix build warnings
+* https://issues.couchbase.com/browse/NCBC-2012[NCBC-2012]: 
+Make DefaultCollection a function, not property
+* https://issues.couchbase.com/browse/NCBC-2039[NCBC-2039]: 
+Allow easy discoverability of configured services
+* https://issues.couchbase.com/browse/NCBC-2040[NCBC-2040]: 
+Query fails if no GCCCP and don&#39;t open a bucket
+* https://issues.couchbase.com/browse/NCBC-2041[NCBC-2041]: 
+Query API requires optional parameters
+* https://issues.couchbase.com/browse/NCBC-2045[NCBC-2045]: 
+Cluster service clients / manager should be lazily loaded
+
 == Version 3.0.0-alpha4 (11th June 2019)
 
 https://packages.couchbase.com/clients/net/3.0/CouchbaseNetClient.3.0.0-alpha4.zip[Download] | API Reference -- N/A | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-alpha4[Nuget]
