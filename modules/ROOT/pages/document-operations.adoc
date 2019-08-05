@@ -1,6 +1,7 @@
 = CRUD Document Operations Using the .NET SDK with Couchbase Server
 :navtitle: Document Operations
 :page-topic-type: concept
+:page-aliases: documents-creating,documents-updating,documents-retrieving,documents-deleting,howtos:kv-operations
 
 You can access documents in Couchbase using methods of the [.api]`Couchbase.CouchbaseBucket` object.
 The methods for retrieving documents are [.api]`Get<T>()` and [.api]`LookupIn<TDocument>()` and the methods for mutating documents are [.api]`Upsert<T>()`, [.api]`Insert<T>()`, [.api]`Replace<T>()` and [.api]`MutateIn<TDocument>()`.

@@ -1,5 +1,6 @@
 = Managing Clusters Using the .NET SDK with Couchbase Server
 :navtitle: Managing Clusters
+:page-aliases: concept-docs:buckets-and-clusters,concept-docs:collections,howtos:provisioning-cluster-resources
 
 [abstract]
 The Couchbase .NET SDK provides an API for managing a Couchbase cluster programmatically: list, configure and create buckets, get cluster information, manipulate nodes in a cluster\...

@@ -1,5 +1,6 @@
 = .NET Sample App Backend Tutorial
 :navtitle: Sample App Backend
+:page-aliases: tutorial4
 
 [abstract]
 The .NET SDK tutorial bridges the gap between simple and advanced concepts by walking through a complete web application.

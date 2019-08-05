@@ -1,5 +1,7 @@
 = Batching Operations
 :page-topic-type: concept
+:page-aliases: documents-bulk
+
 include::partial$attributes.adoc[]
 
 // tag::intro[]

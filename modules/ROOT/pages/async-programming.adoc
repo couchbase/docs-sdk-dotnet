@@ -1,5 +1,6 @@
 = Asynchronous Programming Using the .NET SDK with Couchbase Server
 :navtitle: Asynchronous Programming
+:page-aliases: reactive-apps,observables,rxjava,howtos:concurrent-async-apis
 
 [#dotnet-async-programming-intro]
 == Introduction

@@ -1,4 +1,6 @@
 = Sample Code
+:page-aliases: howtos:sdk-xattr-example
+
 
 [abstract]
 The .NET SDK supports creation and handling of _extended attributes_.
