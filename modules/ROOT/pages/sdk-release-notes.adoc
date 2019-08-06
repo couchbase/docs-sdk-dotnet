@@ -96,12 +96,13 @@ This release has the following known issues:
 Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
 
 === Fixed Issues
-* https://issues.couchbase.com/browse/NCBC-2036[NCBC-2036]: RTO tick precision is not consistent between platforms
-* https://issues.couchbase.com/browse/NCBC-2037[NCBC-2037]: Setting CertAuthenticator in config doesn&#39;t set EnableCertificateAuthentication
-* https://issues.couchbase.com/browse/NCBC-2038[NCBC-2038]: SubDoc MutateIn multimutate cannot set property values to null
-
-=== New Features and Behavioral Changes
-* https://issues.couchbase.com/browse/NCBC-1974[NCBC-1974]: Add nuget.config that includes default package source
+* https://issues.couchbase.com/browse/NCBC-2036[NCBC-2036]: 
+RTO tick precision is not consistent between platforms.
+Span duration is now expressed in microseconds, for consistency across all platforms.
+* https://issues.couchbase.com/browse/NCBC-2037[NCBC-2037]: 
+Setting CertAuthenticator in config now sets EnableCertificateAuthentication.
+* https://issues.couchbase.com/browse/NCBC-2038[NCBC-2038]: 
+SubDoc MutateIn multimutate can now successfully set property values to null,
 
 == Version 2.7.10 (15th July 2019)
 
