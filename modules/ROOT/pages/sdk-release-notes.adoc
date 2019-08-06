@@ -82,6 +82,28 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 2.7.11 (6th August 2019)
+
+https://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.11.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.11[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.11[Nuget]
+
+=== Known Issues
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
+=== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-2036[NCBC-2036]: 
+RTO tick precision is not consistent between platforms.
+Span duration is now expressed in microseconds, for consistency across all platforms.
+* https://issues.couchbase.com/browse/NCBC-2037[NCBC-2037]: 
+Setting CertAuthenticator in config now sets EnableCertificateAuthentication.
+* https://issues.couchbase.com/browse/NCBC-2038[NCBC-2038]: 
+SubDoc MutateIn multimutate can now successfully set property values to null,
+
 == Version 2.7.10 (15th July 2019)
 
 https://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.10.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.10[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.10[Nuget]
