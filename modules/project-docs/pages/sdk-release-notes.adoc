@@ -2361,7 +2361,7 @@ Failing Unit Tests
 == Version 2.3.5 (4 Aug 2016)
 
 This is another bug-fix and enhancement GA release of the 2.3 series.
-You can read read about the details on this http://blog.couchbase.com/2016/august/couchbase-.net-sdk-2.3.5-now-available[blog post].
+You can read read about the details on this https://blog.couchbase.com/couchbase-.net-sdk-2.3.5-now-available/[blog post].
 
 === New features and behavioral changes
 
