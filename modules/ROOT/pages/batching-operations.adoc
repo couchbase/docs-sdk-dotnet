@@ -2,8 +2,6 @@
 :page-topic-type: concept
 :page-aliases: documents-bulk
 
-include::partial$attributes.adoc[]
-
 // tag::intro[]
 [abstract]
 Batching operations allows you to make better utilization of your network and speed up your application by increasing network throughput and reducing latency.
