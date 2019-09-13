@@ -199,3 +199,23 @@ Now the timeout itself provides you valuable information like the local and remo
 You can take this information and correlate it to the top slow operations in the threshold log.
 
 The [.api]`TimeoutException` now provides you more information into _what_ went wrong and then you can go look at the log to figure out _why_ it was slow.
+
+
+== Specifying a Scope
+
+When using a separate tracer, such as Jaeger, it can be beneficial to specify a scope as an outer trace.
+This can be used to ???
+Here we show an outer trace being specifies in just that way:
+
+[source,csharp]
+----
+using (var scope = tracer.Scope("my-scope"))
+{
+    var result = cluster.QueryAsync<dynamic>("statement");
+    foreach(var row in result)
+    {
+        Console.WriteLine(row.Value);    
+    }
+}
+----
+
