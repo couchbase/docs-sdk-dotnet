@@ -82,6 +82,33 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 2.7.12 (13th Sept 2019)
+
+https://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.12.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.12[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.12[Nuget]
+
+=== Known Issues
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
+=== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-2047[NCBC-2047]: 
+Removed unnecessary lock causing bottleneck in EnsureIPEndPointsAreLoaded.
+
+=== New Features and Behavioral Changes
+* https://issues.couchbase.com/browse/NCBC-2022[NCBC-2022]: 
+Improved logging when an ODE is raised.
+* https://issues.couchbase.com/browse/NCBC-2057[NCBC-2057]: 
+Additional debug logging added for x509 cert authentication.
+* https://issues.couchbase.com/browse/NCBC-2058[NCBC-2058]: 
+Fast fail for cert authentication added when certificate lookup returns empty list.
+* https://issues.couchbase.com/browse/NCBC-2097[NCBC-2097]: 
+Ignore Kubernetes cluster map parse test when URIs are unresolvable locally.
+
 == Version 2.7.11 (6th August 2019)
 
 https://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.11.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.11[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.11[Nuget]
