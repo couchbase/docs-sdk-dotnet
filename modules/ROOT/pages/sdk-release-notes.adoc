@@ -97,17 +97,17 @@ Certain Prepared statements could produce _Fatal error: unexpected end of JSON i
 
 === Fixed Issues
 * https://issues.couchbase.com/browse/NCBC-2047[NCBC-2047]: 
-.NET SDK bottleneck in EnsureIPEndPointsAreLoaded
+Removed unnecessary lock causing bottleneck in EnsureIPEndPointsAreLoaded.
 
 === New Features and Behavioral Changes
 * https://issues.couchbase.com/browse/NCBC-2022[NCBC-2022]: 
-Improve logging when an ODE is raised
+Improved logging when an ODE is raised.
 * https://issues.couchbase.com/browse/NCBC-2057[NCBC-2057]: 
-Add additional log output for x509 cert authentication
+Additional debug logging added for x509 cert authentication.
 * https://issues.couchbase.com/browse/NCBC-2058[NCBC-2058]: 
-Fast fail cert authentication when certificate lookup returns empty list
+Fast fail for cert authentication added when certificate lookup returns empty list.
 * https://issues.couchbase.com/browse/NCBC-2097[NCBC-2097]: 
-Ignore k8 cluster map parse test because URI&#39;s are unresolvable locally
+Ignore Kubernetes cluster map parse test when URIs are unresolvable locally.
 
 == Version 2.7.11 (6th August 2019)
 
