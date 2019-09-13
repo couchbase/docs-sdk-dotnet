@@ -156,17 +156,25 @@ This tells us the following:
 
 * *operation_name:* The operation type, eg for KV it is the command type 'Get'.
 * *last_operation_id:* The last unique ID for the opeation (in this case the opaque value), useful for diagnosing and troubleshooting in combination with the last_local_id.
-* *last_local_address:* The local socket used for this operation.
-* *last_remote_address:* The remote socket on the server used for this operation.
+* *last_local_address:* The local socket hostname / IP and port, separated by a colon.
+* *last_remote_address:* The remote socket on the server used for this operation (the server hostname / IP and port, separated by a colon).
 Useful to figure out which node is affected.
-* *last_local_id:* With Server 5.5 and later, this id is negotiated with the server and can be used to correlate logging information on both sides in a simpler fashion.
-* *last_dispatch_us:* The time when the client sent the request and got the response took around 1 millisecond.
-* *total_us:* The total time it took to perform the full operation: here around 1.5 milliseconds.
-* *dispatch_us:* The amount of time observed between sending the request over the network to when a response was received.
-* *server_us:* The server reported that its work performed took 22 microseconds (this does not include network time or time in the buffer before picked up at the cluster).
-* *decode_us:* Decoding the response took the client 12 microseconds.
+* *last_local_id:* The last connection ID used to send a packet to the server.
+With Server 5.5 and later, this id is negotiated with the server and can be used to correlate logging information on both sides in a simpler fashion.
+* *last_dispatch_us:* The time taken for the last dispatch to the server: around 1 millisecond.
+* *total_us:* The total time it took to perform the full operation -- the sum total time taken for _all_ operations,
+including any possible retries -- so will usually be longer than *last_dispatch_us*: here around 1.5 milliseconds.
+* *dispatch_us:* The calculated sum of all dispatch sub-spans.
+* *server_us:* The calculated sum of all server duration sub-spans -- only present if server durations are enabled.
+Here the server reported that its work performed took 22 microseconds (this does not include network time or time in the buffer before picked up at the cluster).
+* *decode_us:* The calculated sum of all decode sub-spans.
+Here, decoding the response took the client 12 microseconds.
 
 You can see that if the thresholds are set the right way based on production requirements, without much effort slow operations can be logged and pinpointed more easily than before.
+
+NOTE: Fields like *total_us* give 
+
+
 
 [#timeout_visibility]
 == Timeout Visibility.
