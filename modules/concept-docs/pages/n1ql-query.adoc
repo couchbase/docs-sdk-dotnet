@@ -21,7 +21,7 @@ with discussion of a few areas of the Query service where more background knowle
 The Couchbase query service makes use of xref:6.5@server:learn:services-and-indexes/indexes/indexes.adoc[_indexes_] in order to do its work.
 Indexes replicate subsets of documents from data nodes over to index nodes, 
 allowing specific data (for example, specific document properties) to be retrieved quickly, 
-and to distribute load away from data nodes in xref:6.5@server:clustersetup:services-mds.adoc[MDS] topologies.
+and to distribute load away from data nodes in xref:6.5@server:learn:services-and-indexes/services/services.adoc[MDS] topologies.
 
 [IMPORTANT]
 In order to make a bucket queryable, it must have at least one index defined.
