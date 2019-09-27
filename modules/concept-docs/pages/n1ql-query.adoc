@@ -1,7 +1,7 @@
 = Querying with N1QL
 :nav-title: Querying with N1QL
 :page-topic-type: concept
-:page-aliases: ROOT:n1ql-query,
+:page-aliases: ROOT:n1ql-query,ROOT:prepared-statements,ROOT:querying
 
 [abstract]
 Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
