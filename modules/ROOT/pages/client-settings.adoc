@@ -1,6 +1,6 @@
 = Client Settings for the .NET SDK with Couchbase Server
 :navtitle: Client Settings
-:page-aliases: env-config,ref:client-settings
+:page-aliases: env-config,ref:client-settings,configuring-the-client
 
 The Couchbase .NET SDK offers a configuration API for customizing bootstrapping, timeouts, reliability and for performance tuning.
 You can configure the client programmatically via the [.api]`ClientConfiguration`, [.api]`PoolConfiguration` and [.api]`BucketConfiguration` classes, using XML configuration `App.Config` and or `Web.Config` files or by using JSON config files.
