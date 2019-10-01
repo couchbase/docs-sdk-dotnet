@@ -205,8 +205,10 @@ The [.api]`TimeoutException` now provides you more information into _what_ went 
 == Specifying a Scope
 
 When using a separate tracer, such as Jaeger, it can be beneficial to specify a scope as an outer trace.
-This can be used to ???
-Here we show an outer trace being specifies in just that way:
+This can be used for handling Span lifetime when using certain asynchronous frameworks, such as Akka or Play, or with `async/await`.
+
+
+Here we simply show an outer trace being specified:
 
 [source,csharp]
 ----
@@ -219,4 +221,6 @@ using (var scope = tracer.Scope("my-scope"))
     }
 }
 ----
+
+There are more detailed examples in the documentation of third-party tracers, and in the  https://opentracing.io/guides/csharp/[OpenTracing documentation^].
 
