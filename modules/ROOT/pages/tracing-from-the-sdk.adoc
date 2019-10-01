@@ -173,9 +173,9 @@ Here, decoding the response took the client 12 microseconds.
 
 You can see that if the thresholds are set the right way based on production requirements, without much effort slow operations can be logged and pinpointed more easily than before.
 
-NOTE: Fields like *total_us* give a time that includes not just the operation, but all possible retries, so will often be longer than a single operation such as that given by *last_dispatch_us*.
+NOTE: Fields like *total_us* give a time that includes not just the operation, but all possible retries (which the SDK will attempt in response to errors caused by node failure or rebalancing), so will often be longer than a single operation such as that given by *last_dispatch_us*.
 
-
+// TODO look into the Java bug whereby one of them is not aggregated
 
 [#timeout_visibility]
 == Timeout Visibility.
