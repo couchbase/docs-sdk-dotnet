@@ -162,6 +162,20 @@ namespace ConsoleApp1
 // #end::create-path[]
         }
 
+// #tag concurrent
+// thread one
+await collection.MutateInAsync("customer123", builder =>
+{
+   builder.ArrayAppend("purchases.complete", 99); 
+});
+
+// thread two
+await collection.MutateInAsync("customer123", builder =>
+{
+   builder.ArrayAppend("purchases.abandoned", 101); 
+});
+        // #end concurrent
+        
         async Task Cas() {
 // #tag::cas[]
             var player = await _collection.Get("player432");
