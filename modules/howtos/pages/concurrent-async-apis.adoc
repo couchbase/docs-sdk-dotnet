@@ -130,7 +130,33 @@ This will configure the Task to not use the synchronization context even if it e
 
 // rx.net for reactive -- add section later, when appears on Couchbaselabs?
 
-// == Batching
+== Batching
 
-// await Task.WhenAll()
+Asynchronous clients inherently batch operations: because the application receives the response at a later stage in the application, batching will be the result of issuing many requests in sequence. 
 
+Batching in .NET using TAP is relively simple.
+`await Task.WhenAll()` will group together tasks and wait until they are complete before running, 
+useful where you do not want the main thread to run through the main method before getting the results back.
+
+[source,dotnet]
+----
+// collection of things that will complete in the future
+var tasks = new List<Task>();
+
+// create tasks to be executed concurrently
+// NOTE: these tasks have not yet been scheduled
+for (var i = 0; i <100; i++)
+{
+    var task = collection.GetAsync($"mykey-{i}");
+    tasks.Add(task);
+}
+
+// Waits until all of the tasks have completed
+await Task.WhenAll(tasks);
+
+// can iterate task list to get results
+foreach (var task in tasks)
+{
+    var result = tasks.Result;
+}
+----
