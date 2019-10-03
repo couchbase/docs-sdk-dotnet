@@ -82,6 +82,74 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+= Version 3.0.0-beta1 (3rd Oct 2019)
+
+https://packages.couchbase.com/clients/net/3.0/CouchbaseNetClient.3.0.0-beta1.zip[Download] | API Reference -- N/A | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-beta1[Nuget]
+
+=== Known Issues
+* https://issues.couchbase.com/browse/NCBC-2137[NCBC-2137]: SDK does not retry NMVB responses
+
+=== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-1992[NCBC-1992]: Query fails if bucket does not bootstrap when G3CP not supported
+* https://issues.couchbase.com/browse/NCBC-2035[NCBC-2035]: Default transcoder is having issues with deserialize
+* https://issues.couchbase.com/browse/NCBC-2043[NCBC-2043]: Make IBucketInternal.Send implicit (hidden) in CouchbaseBucket
+* https://issues.couchbase.com/browse/NCBC-2048[NCBC-2048]: Get and Exist return do not return CAS with result
+* https://issues.couchbase.com/browse/NCBC-2067[NCBC-2067]: SDK3 LookupIn doesn&#39;t support retrieving full doc
+* https://issues.couchbase.com/browse/NCBC-2068[NCBC-2068]: Add ClusterOptions to Cluster Ctor and static Connect method per RFC
+* https://issues.couchbase.com/browse/NCBC-2070[NCBC-2070]: ConnectionExtension doesn&#39;t print bucket name when failing auth
+* https://issues.couchbase.com/browse/NCBC-2073[NCBC-2073]: Add Collection accessor methods to IBucket w/CollectionOptions
+* https://issues.couchbase.com/browse/NCBC-2074[NCBC-2074]: No way to get default Scope from the bucket
+* https://issues.couchbase.com/browse/NCBC-2076[NCBC-2076]: Couchbase.Management.User name property does not match RFC
+* https://issues.couchbase.com/browse/NCBC-2078[NCBC-2078]: Manager method names don&#39;t match RFC
+* https://issues.couchbase.com/browse/NCBC-2079[NCBC-2079]: UserManager.create should be called upsert, and not throw UserAlreadyExistsException
+* https://issues.couchbase.com/browse/NCBC-2080[NCBC-2080]: IUserManager.upsertUser signature doesn&#39;t match RFC
+* https://issues.couchbase.com/browse/NCBC-2081[NCBC-2081]: User manager doesn&#39;t distinguish between innate roles and roles inherited from groups
+* https://issues.couchbase.com/browse/NCBC-2082[NCBC-2082]: User Manager needs to be updated for latest RFC changes
+* https://issues.couchbase.com/browse/NCBC-2083[NCBC-2083]: BucketSettings field names diverge from RFC
+* https://issues.couchbase.com/browse/NCBC-2085[NCBC-2085]: Off-by-one error in subdoc threshold calculation
+* https://issues.couchbase.com/browse/NCBC-2086[NCBC-2086]: Projections with more than 16 fields not implemented
+* https://issues.couchbase.com/browse/NCBC-2088[NCBC-2088]: Fix bootstrapping isssues introduced by refactoring
+* https://issues.couchbase.com/browse/NCBC-2089[NCBC-2089]: Unable to bootstrap if more than one scope/collection defined
+* https://issues.couchbase.com/browse/NCBC-2091[NCBC-2091]: Sub-Document ArrayAppend and others stores each element as a JSON array
+* https://issues.couchbase.com/browse/NCBC-2092[NCBC-2092]: Add array overloads to ArrayAppend, ArrayPrepend and ArrayInsert
+* https://issues.couchbase.com/browse/NCBC-2095[NCBC-2095]: AggregateException when timeouts occur
+* https://issues.couchbase.com/browse/NCBC-2096[NCBC-2096]: Fix build warnings
+* https://issues.couchbase.com/browse/NCBC-2101[NCBC-2101]: There are no XXXOptions for Sub-Doc Operations/Specs
+* https://issues.couchbase.com/browse/NCBC-2110[NCBC-2110]: Don&#39;t reorder bucket config nodeExts during bootstrap
+* https://issues.couchbase.com/browse/NCBC-2126[NCBC-2126]: Update Query parameter types
+* https://issues.couchbase.com/browse/NCBC-2132[NCBC-2132]: Bucket manager performing racey operations
+* https://issues.couchbase.com/browse/NCBC-2135[NCBC-2135]: Extras are not correctly read for all operations
+* https://issues.couchbase.com/browse/NCBC-2136[NCBC-2136]: SDK doesn&#39;t apply updated cluster map during rebalance
+
+=== New Features and Behavioral Changes
+* https://issues.couchbase.com/browse/NCBC-2063[NCBC-2063]: Add Datastructures v2 for &quot;SDK3&quot;
+* https://issues.couchbase.com/browse/NCBC-2027[NCBC-2027]: Port HTTP Streaming from SDK 2.0
+* https://issues.couchbase.com/browse/NCBC-2029[NCBC-2029]: Integrate HTTP streaming into Bootstrapping process when CCCP/GC3P not supported
+* https://issues.couchbase.com/browse/NCBC-2099[NCBC-2099]: Add Scope accessor overloads to IBucket
+* https://issues.couchbase.com/browse/NCBC-2100[NCBC-2100]: Add Collection accessor to IScope w/CollectionOptions
+* https://issues.couchbase.com/browse/NCBC-2102[NCBC-2102]: GetAsync lacks ability to include expiry in result via Sub-Doc
+* https://issues.couchbase.com/browse/NCBC-1930[NCBC-1930]: Decrease the default &#39;TcpKeepAliveTime&#39; for SDK3
+* https://issues.couchbase.com/browse/NCBC-1938[NCBC-1938]: Implement GetAnyReplica and GetAllReplicas methods
+* https://issues.couchbase.com/browse/NCBC-2001[NCBC-2001]: Unify Nodes and NodesExt into a single structure
+* https://issues.couchbase.com/browse/NCBC-2006[NCBC-2006]: Implement Search Index Manager
+* https://issues.couchbase.com/browse/NCBC-2009[NCBC-2009]: Add Collection Manager
+* https://issues.couchbase.com/browse/NCBC-2020[NCBC-2020]: Use IAsyncEnumerable For Streaming Queries
+* https://issues.couchbase.com/browse/NCBC-2023[NCBC-2023]: Implement Memcached bucket
+* https://issues.couchbase.com/browse/NCBC-2052[NCBC-2052]: Make SDK components support Unit Testing with Mocks
+* https://issues.couchbase.com/browse/NCBC-2060[NCBC-2060]: Update enhanced prepared statements to use combined prepare &amp; execute
+* https://issues.couchbase.com/browse/NCBC-2064[NCBC-2064]: Add query service fast prepare support
+* https://issues.couchbase.com/browse/NCBC-2066[NCBC-2066]: Refactor ConfigContext and Unit Tests
+* https://issues.couchbase.com/browse/NCBC-2077[NCBC-2077]: Suggestion: separate namespaces for each management service
+* https://issues.couchbase.com/browse/NCBC-2087[NCBC-2087]: Suggestion: separate namespace for KV service
+* https://issues.couchbase.com/browse/NCBC-2093[NCBC-2093]: Move QueryClient with Action&lt;QueryOptions&gt; to extension method
+* https://issues.couchbase.com/browse/NCBC-2104[NCBC-2104]: Add Transcoder/Serializer to options for all CRUD method on ICollection
+* https://issues.couchbase.com/browse/NCBC-2108[NCBC-2108]: Refactor StaleState to ScanConsistency in ViewOptions
+* https://issues.couchbase.com/browse/NCBC-2111[NCBC-2111]: Cluster implementation class should be internal
+* https://issues.couchbase.com/browse/NCBC-2112[NCBC-2112]: Reorganise services into simplified structure
+* https://issues.couchbase.com/browse/NCBC-2121[NCBC-2121]: Move expiry from IResult to IGetResult as it is now specific to Get operations.
+* https://issues.couchbase.com/browse/NCBC-2124[NCBC-2124]: Replace bool flag values for StoreSemantics enum
+* https://issues.couchbase.com/browse/NCBC-2125[NCBC-2125]: Refactor Parameters param to QueryOptions
+
 = Version 3.0.0-alpha5 (30th July 2019)
 
 https://packages.couchbase.com/clients/net/3.0/CouchbaseNetClient.3.0.0-alpha5.zip[Download] | API Reference -- N/A | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-alpha5[Nuget]
