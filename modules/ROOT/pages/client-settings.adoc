@@ -115,6 +115,8 @@ To use this configuration, the appropriate constructor is called, passing the se
 var cluster = new Cluster("couchbaseClients/couchbase");
 ----
 
+
+
 [#dotnet-json-configuration]
 == JSON Configuration
 
@@ -460,6 +462,139 @@ These settings apply to the connection level of a specific bucket configuration 
 | The amount time allotted for the client to establish a TCP connection with a server before failing
 | 10000ms
 |===
+
+
+== Threshold Configuration Settings
+
+For more information on using Response Time Observability see xref:threshold-logging.adoc[the Tracing introduction].
+
+.Threshold Logging Tracer Properties
+[#threshold-logging-tracer-ref,cols="3,3,1"]
+|===
+| Property Name | Description | Default Value
+
+| `OperationTracingEnabled`
+| Boolean used to determine tracing is enabled.
+Defaults to using the `ThesholdLoggingTracer` if enabled.
+When false a Noop tracing implementation is used instead.
+| true
+
+| `OperationTracingServerDurationEnabled`
+| Boolean used to instruct the SDK to try and retrieve duration metrics from the server for KV operations.
+| true
+
+| `ThresholdLoggingTracerInterval`
+| The interval between executions that process the collected operation spans.
+Expressed in milliseconds.
+| 10,000 (10 seconds)
+
+| `ThresholdLoggingTracerSampleSize`
+| The maximum number of sampled traces to log per service.
+| 10
+
+| `ThresholdLoggingTracerKVThreshold`
+| The KV operation operation threshold.
+Expressed in microseconds.
+| 500,000 (500 milliseconds)
+
+| `ThresholdLoggingTracerViewsThreshold`
+| The View query operation threshold.
+Expressed in microseconds.
+| 1,000,000 (1 second)
+
+| `ThresholdLoggingTracerQueryThreshold`
+| The Query operation threshold.
+Expressed in microseconds.
+| 1,000,000 (1 second)
+
+| `ThresholdLoggingTracerSearchThreshold`
+| The Search operation threshold.
+Expressed in microseconds.
+| 1,000,000 (1 second)
+
+| `ThresholdLoggingTracerAnalyticsThreshold`
+| The Analytics query operation threshold.
+Expressed in microseconds.
+| 1,000,000 (1 second)
+
+| `OrphanedResponseLoggingEnabled`
+| Boolean used to determine if orphaned response logging is enabled.
+| true
+
+| `OrphanedResponseLoggingInterval`
+| The interval between executions that process orphaned responses to the log.
+Expressed in microseconds.
+| 10,000 (10 seconds)
+
+| `OrphanedResponseLoggingSampleSize`
+| The maximum number of sampled orphaned responses to log.
+| 10
+|===
+
+
+
+Applying these as client-level settings with app.config (or web.config) can be done as follows:
+
+[source,csharp]
+----
+<couchbase operationTracingEnabled="false">
+  <servers>
+    <add uri="http://cb01:8091" />
+    <add uri="http://cb02:8091" />
+    <add uri="http://cb03:8091" />
+  </servers>
+</couchbase>
+----
+
+Using the settings programmatically simply requires the `ThresholdLoggingTracer` or `OrphanedResponseLogging` part of the property name to be removed, to give the method:
+
+.Cluster Level Tracing Properties
+[#threshold-logging-tracer-ref,cols="3,3,1"]
+|===
+| Property Name (_see previous table_) | Method | Default Value
+
+| `ThresholdLoggingTracerInterval`
+| `Interval`
+| 10,000 (10 seconds)
+
+| `ThresholdLoggingTracerSampleSize`
+| `SampleSize`
+| 10
+
+| `ThresholdLoggingTracerKVThreshold`
+| `KVThreshold`
+| 500,000 (500 milliseconds)
+
+| `ThresholdLoggingTracerViewsThreshold`
+| `ViewsThreshold`
+| 1,000,000 (1 second)
+
+| `ThresholdLoggingTracerQueryThreshold`
+| `QueryThreshold`
+| 1,000,000 (1 second)
+
+| `ThresholdLoggingTracerSearchThreshold`
+| `SearchThreshold`
+| 1,000,000 (1 second)
+
+| `ThresholdLoggingTracerAnalyticsThreshold`
+| `AnalyticsThreshold`
+| 1,000,000 (1 second)
+
+| `OrphanedResponseLoggingEnabled`
+| `LoggingEnabled`
+| true
+
+| `OrphanedResponseLoggingInterval`
+| `LoggingInterval`
+| 10,000 (10 seconds)
+
+| `OrphanedResponseLoggingSampleSize`
+| `LoggingSampleSize`
+| 10
+|===
+
+
 
 == IOService
 

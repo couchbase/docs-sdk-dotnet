@@ -156,23 +156,33 @@ This tells us the following:
 
 * *operation_name:* The operation type, eg for KV it is the command type 'Get'.
 * *last_operation_id:* The last unique ID for the opeation (in this case the opaque value), useful for diagnosing and troubleshooting in combination with the last_local_id.
-* *last_local_address:* The local socket used for this operation.
-* *last_remote_address:* The remote socket on the server used for this operation.
+* *last_local_address:* The local socket hostname / IP and port, separated by a colon.
+The operation may have been retried: the `last_` properties are for the _most recent_ socket hostname & port used to send the operation.
+* *last_remote_address:* The remote socket on the server used for this operation (the server hostname / IP and port, separated by a colon).
 Useful to figure out which node is affected.
-* *last_local_id:* With Server 5.5 and later, this id is negotiated with the server and can be used to correlate logging information on both sides in a simpler fashion.
-* *last_dispatch_us:* The time when the client sent the request and got the response took around 1 millisecond.
-* *total_us:* The total time it took to perform the full operation: here around 1.5 milliseconds.
-* *dispatch_us:* The amount of time observed between sending the request over the network to when a response was received.
-* *server_us:* The server reported that its work performed took 22 microseconds (this does not include network time or time in the buffer before picked up at the cluster).
-* *decode_us:* Decoding the response took the client 12 microseconds.
+* *last_local_id:* The last connection ID used to send a packet to the server.
+With Server 5.5 and later, this id is negotiated with the server and can be used to correlate logging information on both sides in a simpler fashion.
+* *last_dispatch_us:* The time taken for the last dispatch to the server: around 1 millisecond.
+* *total_us:* The total time it took to perform the full operation --
+the sum total time taken for _all_ operations, including any possible retries --
+so will usually be longer than *last_dispatch_us*: here around 1.5 milliseconds.
+* *dispatch_us:* The calculated sum of all dispatch sub-spans.
+* *server_us:* The calculated sum of all server duration sub-spans -- only present if server durations are enabled.
+Here the server reported that its work performed took 22 microseconds (this does not include network time or time in the buffer before picked up at the cluster).
+* *decode_us:* The calculated sum of all decode sub-spans.
+Here, decoding the response took the client 12 microseconds.
 
 You can see that if the thresholds are set the right way based on production requirements, without much effort slow operations can be logged and pinpointed more easily than before.
+
+NOTE: Fields like *total_us* give a time that includes not just the operation, but all possible retries (which the SDK will attempt in response to errors caused by node failure or rebalancing), so will often be longer than a single operation such as that given by *last_dispatch_us*.
+
 
 [#timeout_visibility]
 == Timeout Visibility.
 
-Previously, when an operation takes longer than the timeout specified allows, a `TimeoutException` is thrown.
-It usually looks like this:.
+Previously, when an operation takes longer than the timeout specified allows, a `TimeoutException` was thrown.
+Now the timeout itself provides you valuable information like the local and remote sockets, and the operation id, as well as the timeout set and the local ID used for troubleshooting.
+You can take this information and correlate it to the top slow operations in the threshold log.
 
 [source,csharp]
 ----
@@ -187,7 +197,28 @@ It usually looks like this:.
    at Couchbase.Configuration.Server.Providers.CarrierPublication.CarrierPublicationProvider.GetConfig(String bucketName, String username, String password)
 ----
 
-Now the timeout itself provides you valuable information like the local and remote sockets, and the operation id, as well as the timeout set and the local ID used for troubleshooting.
-You can take this information and correlate it to the top slow operations in the threshold log.
-
 The [.api]`TimeoutException` now provides you more information into _what_ went wrong and then you can go look at the log to figure out _why_ it was slow.
+
+
+== Specifying a Scope
+
+When using a separate tracer, such as Jaeger, it can be beneficial to specify a scope as an outer trace.
+This can be used for handling Span lifetime when using certain asynchronous frameworks, such as Akka or Play, or with `async/await`.
+
+
+Here we simply show an outer trace being specified:
+
+[source,csharp]
+----
+using (var scope = tracer.Scope("my-scope"))
+{
+    var result = cluster.QueryAsync<dynamic>("statement");
+    foreach(var row in result)
+    {
+        Console.WriteLine(row.Value);    
+    }
+}
+----
+
+There are more detailed examples in the documentation of third-party tracers, and in the  https://opentracing.io/guides/csharp/[OpenTracing documentation^].
+
