@@ -476,7 +476,7 @@ For more information on using Response Time Observability see xref:threshold-log
 | `OperationTracingEnabled`
 | Boolean used to determine tracing is enabled.
 Defaults to using the `ThesholdLoggingTracer` if enabled.
-When false a Noop or similar tracing implementation should be used instead.
+When false a Noop tracing implementation is used instead.
 | true
 
 | `OperationTracingServerDurationEnabled`
@@ -489,7 +489,7 @@ Expressed in milliseconds.
 | 10,000 (10 seconds)
 
 | `ThresholdLoggingTracerSampleSize`
-| The maximum number of items to log per service.
+| The maximum number of sampled traces to log per service.
 | 10
 
 | `ThresholdLoggingTracerKVThreshold`
@@ -503,12 +503,12 @@ Expressed in microseconds.
 | 1,000,000 (1 second)
 
 | `ThresholdLoggingTracerQueryThreshold`
-| The N1QL query operation threshold.
+| The Query operation threshold.
 Expressed in microseconds.
 | 1,000,000 (1 second)
 
 | `ThresholdLoggingTracerSearchThreshold`
-| The FTS query operation threshold.
+| The Search operation threshold.
 Expressed in microseconds.
 | 1,000,000 (1 second)
 
@@ -522,18 +522,18 @@ Expressed in microseconds.
 | true
 
 | `OrphanedResponseLoggingInterval`
-| The interval used to flush orphaned response information to the log.
+| The interval between executions that process orphaned responses to the log.
 Expressed in microseconds.
 | 10,000 (10 seconds)
 
 | `OrphanedResponseLoggingSampleSize`
-| The number of sample orphaned responses whose to log additional information for per execution.
+| The maximum number of sampled orphaned responses to log.
 | 10
 |===
 
 
 
-Applying these as client-level settings with App.Config (or Web.Config) can be done as follows:
+Applying these as client-level settings with app.config (or web.config) can be done as follows:
 
 [source,csharp]
 ----
