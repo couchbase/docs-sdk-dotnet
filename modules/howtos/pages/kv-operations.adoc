@@ -38,7 +38,7 @@ Options may be added to operations:
 [source,csharp]
 ----
 var document = new {foo = "bar", bar = "foo"};
-var result = await collection.Insert("document-key", document,
+var result = await collection.InsertAsync("document-key", document,
     options =>
     {
         options.WithCas(12345);
@@ -59,7 +59,7 @@ We will add to these options for the _Replace_ example:
 [source,csharp]
 ----
 var document = new {foo = "bar", bar = "foo"};
-var result = await collection.Replace("document-key", document,
+var result = await collection.ReplaceAsync("document-key", document,
     options =>
     {
         options.WithCas(12345);
@@ -77,7 +77,7 @@ xref:6.0@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-buck
 [source,csharp]
 ----
 var document = new {foo = "bar", bar = "foo"};
-var result = await collection.Upsert("document-key", document,
+var result = await collection.UpsertAsync("document-key", document,
     options =>
     {
         options.WithCas(12345);
@@ -98,7 +98,7 @@ The following example demonstrates using the newer durability features available
 [source,csharp]
 ----
 var document = new {foo = "bar", bar = "foo"};
-var result = await collection.Upsert("document-key", document,
+var result = await collection.UpsertAsync("document-key", document,
     options =>
     {
         options.WithCas(12345);
@@ -122,7 +122,7 @@ Using the `Get()` method with the document key can be done in a similar fashion 
 
 [source,csharp]
 ----
-var result = await collection.Get(“document-key”);
+var result = await collection.GetAsync(“document-key”);
 var content = result.ContentAs<string>();
 ----
 
@@ -131,7 +131,7 @@ Timeout can also be set - as in the earlier `Insert` example:
 .Get (with options)
 [source,csharp]
 ----
-var result = await collection.Get(“document-key”,
+var result = await collection.GetAsync(“document-key”,
     options =>
     {
         options.WithTimeout(TimeSpan.FromSeconds(5));
@@ -148,7 +148,7 @@ When removing a document, you will have the same concern for durability as with 
 .Remove (with options)
 [source,csharp]
 ----
-var result = await collection.Remove("document-key",
+var result = await collection.RemoveAsync("document-key",
     options =>
     {
         options.WithCas(12345);
@@ -164,14 +164,14 @@ Using `Touch()`, you can set expiration values on documents to handle transient 
 
 [source,csharp]
 ----
-var result = await collection.Touch("document-key", TimeSpan.FromSeconds(10));
+var result = await collection.TouchAsync("document-key", TimeSpan.FromSeconds(10));
 ----
 
 A network timeout can be set with the optional `TouchOptions()`, in the same fashion as earlier examples on this page:
 
 [source,csharp]
 ----
-var result = await collection.Touch("document-key", TimeSpan.FromSeconds(30),
+var result = await collection.TouchAsync("document-key", TimeSpan.FromSeconds(30),
     options =>
     {
         options.WithTimeout(TimeSpan.FromSeconds(5));
@@ -187,13 +187,13 @@ The value of a document can be increased or decreased atomically using `Binary.I
 [source,csharp]
 ----
 // increment binary value by 1, if document doesn’t exist, seed it at 1
-await collection.Binary.Increment("document-key");
+await collection.Binary.IncrementAsync("document-key");
 ----
 
 .Increment (with options)
 [source,csharp]
 ----
-await collection.Binary.Increment("document-key",
+await collection.Binary.IncrementAsync("document-key",
     options =>
     {
         options.WithDelta(1);
@@ -209,13 +209,13 @@ await collection.Binary.Increment("document-key",
 [source,csharp]
 ----
 // decrement binary value by 1, if document doesn’t exist, seed it at 1
-await collection.Binary.Decrement("document-key");
+await collection.Binary.DecrementAsync("document-key");
 ----
 
 .Decrement (with options)
 [source,csharp]
 ----
-await collection.Binary.Decrement("document-key",
+await collection.Binary.DecrementAsync("document-key",
     options =>
     {
         options.WithDelta(1);

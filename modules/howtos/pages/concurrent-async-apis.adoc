@@ -27,7 +27,7 @@ var cluster = new Cluster("couchbase://localhost", new ClusterOptions()
             );
 
 var bucket = await cluster.BucketAsync("default");
-var collection = await bucket.DefaultCollectionAsync();
+var collection = bucket.DefaultCollection();
 ----
 
 == Asynchronous Programming using `await`
@@ -119,7 +119,7 @@ Another handy way of avoiding deadlocks is to not use a synchronization context:
 
 [source,csharp]
 ----
-var person = getResult.ContentAs<dynamic>().ConfigureAwait(false);
+var result = collection.GetAsync("TheKey").ConfigureAwait(false);
 ----
 
 This will configure the Task to not use the synchronization context even if it exists.

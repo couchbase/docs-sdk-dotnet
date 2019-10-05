@@ -15,7 +15,7 @@ include::6.5@sdk:shared:partial$views.adoc[tag=example-beer]
 
 [source,csharp]
 ----
-var result = bucket.ViewQuery<Beer>("beers", "by_name", options => {
+var result = await bucket.ViewQuery<Beer>Async("beers", "by_name", options => {
     options.WithStartKey("A");
     options.WithLimit(10);
 });
@@ -26,7 +26,7 @@ include::6.5@sdk:shared:partial$views.adoc[tag=example-travel]
 
 [source,csharp]
 ----
-var result = bucket.ViewQuery<Landmark>("landmarks", "by_name", options => {
+var result = await bucket.ViewQueryAsync<Landmark>("landmarks", "by_name", options => {
     options.WithKey("<landmark-name>");
 });
 ----
@@ -64,5 +64,5 @@ Here is an example:
 
 [source,csharp]
 ----
-var result = bucket.ViewQuery<Type>(“design-doc”, “view-name”, options =>
+var result = await bucket.ViewQueryAsync<Type>(“design-doc”, “view-name”, options =>
     options.WithLimit
