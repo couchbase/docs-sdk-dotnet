@@ -43,27 +43,18 @@ Note that both parameters and options are optional.
 .Positional parameter example:
 [source,csharp]
 ----
-var parameters = new QueryParameters()
-    .Add("User");
-var options = new QueryOptions();
-var result = await collection.Query<dynamic>(
+var result = await cluster.QueryAsync<dynamic>(
     "SELECT x.* FROM `default` WHERE x.Type=$1",
-    parameters,
-    options
+    options => options.AddPositionalParameter("User")
 );
 ----
 
 .Named parameter example:
 [source,csharp]
 ----
-var parameters = new QueryParameters()
-    .Add("type", "User");
-var options = new QueryOptions();
-
-var result = await collection.Query<dynamic>(
+var result = await cluster.QueryAsync<dynamic>(
     "SELECT x.* FROM `default` WHERE x.Type=$type",
-    parameters,
-    options
+    options = > AddNamedParameter("type", "User")
 );
 ----
 
@@ -77,10 +68,9 @@ In most cases your query will return more than one result, and you may be lookin
 
 [source,csharp]
 ----
-var result = await collection.Query<dynamic>(
+var result = await cluster.QueryAsync<dynamic>(
     "SELECT x.* FROM `default` WHERE x.Type=$1",
-    parameters => parameters.Add("User"),
-    options => {}
+    options => options.AddPositionalParameter("User")
 );
 
 // check query was successful
@@ -115,16 +105,18 @@ Select this when consistency is always more important than performance.
 [source,csharp]
 ----
 // create / update document (mutation)
-var upsertResult = await collection.Upsert("id", new { name = "Mike", type = "User" });
+var upsertResult = await collection.UpsertAsync("id", new { name = "Mike", type = "User" });
 
 // create mutation state from mutation results
 var state = MutationState.From(upsertResult);
 
 // use mutation state with query option
-var result = await cluster.Query<dynamic>(
+var result = await cluster.QueryAsync<dynamic>(
     "SELECT x.* FROM `default` WHERE x.Type=$1",
-    parameters => parameters.Add("User"),
-    options => options.ConsistentWith(state)
+    options => {
+        options.ConsistentWith(state),
+        options.AddPositionalParameter("User")
+    }
 );
 ----
 
