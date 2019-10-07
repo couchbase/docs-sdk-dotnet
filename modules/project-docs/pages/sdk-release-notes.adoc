@@ -84,7 +84,7 @@ _Note that you can checkout a specific tag for each release as well._
 
 = Version 3.0.0-beta1 (3rd Oct 2019)
 
-https://packages.couchbase.com/clients/net/3.0/CouchbaseNetClient.3.0.0-beta1.zip[Download] | API Reference -- N/A | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-beta1[Nuget]
+https://packages.couchbase.com/clients/net/3.0/CouchbaseNetClient.3.0.0-beta1.zip[Download] |  https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0-beta1[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-beta1[Nuget]
 
 === Known Issues
 * https://issues.couchbase.com/browse/NCBC-2137[NCBC-2137]: SDK does not retry NMVB responses
