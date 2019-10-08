@@ -3,7 +3,7 @@
 :page-topic-type: howto
 :page-aliases: document-operations.adoc
 
-include::partial$alpha-warning.adoc[]
+include::partial$beta-warning.adoc[]
 
 // The complete code sample used on this page can be downloaded from
 //  xref::example$document.cs[here]
