@@ -162,7 +162,7 @@ namespace ConsoleApp1
 // #end::create-path[]
         }
 
-// #tag concurrent
+// #tag::concurrent
 // thread one
 await _collection.MutateInAsync("customer123", specs =>{
    specs.ArrayAppend("purchases.complete", 99)
@@ -173,7 +173,7 @@ await _collection.MutateInAsync("customer123", specs =>
 {
    specs.ArrayAppend("purchases.abandoned", 101)
 });
-// #end concurrent
+// #end::concurrent
         
         async Task CasAsync() {
 // #tag::cas[]
