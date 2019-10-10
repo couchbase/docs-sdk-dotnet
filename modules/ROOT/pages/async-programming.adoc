@@ -60,7 +60,7 @@ Within your code you will await on the [.api]`Task` or [.api]`Task<Result>` retu
 DocumentResult<string> docResult = await GetDocumentAsync<string>("somekey");
 ----
 
-Note that if the await keyword is omitted, then a [.api]`+Task&lt;IDocumentResult&lt;string>>+` would be returned:
+Note that if the await keyword is omitted, then a [.api]`+Task<IDocumentResult<string>>+` would be returned:
 
 [source,csharp]
 ----
