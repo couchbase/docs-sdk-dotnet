@@ -1,0 +1,42 @@
+= Sample Application
+
+
+
+Our Travel Sample Application gives you a quick introduction to using the SDK with Couchbase Server, in particular the powerful N1QL language of our Query service.
+
+
+== Requirements
+
+* We assume that you have xref:6.5@server:[already installed Couchbase Server 6.5] -- locally, or on a virtual machine.
+* Install the SDK -- using the xref:getting-started.adoc[Getting Started instructions].
+
+
+
+
+We will cover the setting up of the app, then using the app.
+The data model is covered in a xref:travel-sample-data-model/adoc[separate page],
+so as not to interrupt the flow for those in a hurry to get onto working with the code,
+and understanding how to use the key HTTP services (KV, Query, Search) with Couchbase Server.
+
+
+== Setting up the App
+
+
+
+
+
+== Using the App
+
+
+
+
+
+
+
+
+== Inside the App
+
+
+
+
+
