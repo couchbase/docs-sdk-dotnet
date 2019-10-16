@@ -8,7 +8,7 @@ Our Travel Sample Application gives you a quick introduction to using the SDK wi
 == Requirements
 
 * We assume that you have xref:6.5@server:[already installed Couchbase Server 6.5] -- locally, or on a virtual machine.
-* Install the SDK -- using the xref:getting-started.adoc[Getting Started instructions].
+* Install the SDK -- using the xref:start-using-sdk.adoc[Getting Started instructions].
 
 
 
