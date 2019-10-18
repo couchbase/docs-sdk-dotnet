@@ -15,7 +15,7 @@ include::6.5@sdk:shared:partial$views.adoc[tag=example-beer]
 
 [source,csharp]
 ----
-var result = await bucket.ViewQuery<Beer>Async("beers", "by_name", options => {
+var result = await bucket.ViewQueryAsync("beers", "by_name", options => {
     options.WithStartKey("A");
     options.WithLimit(10);
 });
@@ -26,33 +26,9 @@ include::6.5@sdk:shared:partial$views.adoc[tag=example-travel]
 
 [source,csharp]
 ----
-var result = await bucket.ViewQueryAsync<Landmark>("landmarks", "by_name", options => {
+var result = await bucket.ViewQueryAsync("landmarks", "by_name", options => {
     options.WithKey("<landmark-name>");
 });
-----
-
-include::6.5@sdk:shared:partial$views.adoc[tag=example-geo-travel]
-
-[source,javascript]
-----
-(10)
-);
-
-foreach (var row in result.Rows)
-{
-    var id = row.Id;
-    var key = row.Key;
-    var value = row.Value;
-}
-----
-
-[source,javascript]
-----
-function (doc, meta) {
-    if (doc.type && doc.type == "landmark" && doc.geo) {
-        emit([doc.geo.lon, doc.geo.lat], null);
-    }
-}
 ----
 
 
@@ -65,4 +41,13 @@ Here is an example:
 [source,csharp]
 ----
 var result = await bucket.ViewQueryAsync<Type>(“design-doc”, “view-name”, options =>
-    options.WithLimit
+{
+	options.WithLimit(10);
+});
+
+foreach (var row in result.Rows)
+{
+	var id = row.Id;
+	var key = row.Key<string[]>();
+	var value = row.Value<Type>();
+}
