@@ -18,7 +18,7 @@ In addition to the prerequisites mentioned in xref:sample-application.adoc[Sampl
 
 To get set up for the tutorial proper, follow these steps:
 
-* `+git clone https://github.com/couchbaselabs/try-cb-dotnet.git+` or https://github.com/couchbaselabs/try-cb-dotnet/releases/tag/v2.0.0[download the source^]
+* `+git clone https://github.com/couchbaselabs/try-cb-dotnet.git+` or https://github.com/couchbaselabs/try-cb-dotnet/releases/tag/v4.5[download the source^]
 * if you don't want to connect to `localhost`, change the couchbaseServer entry in https://github.com/couchbaselabs/try-cb-dotnet/blob/master/src/try-cb-dotnet/Web.config[`src/try-cb-dotnet/Web.config`^]
 * open the project in Visual Studio and build the project, nuget references will be restored automatically
 
