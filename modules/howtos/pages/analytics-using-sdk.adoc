@@ -238,8 +238,9 @@ await cluster.IngestAsync<dynamic>(
 );
 ----
 
-
+////
 == Additional Resources 
 
 To learn more about using N1QL for Analytics -- the first commercial implementation of SQL++ -- see our link:https://sqlplusplus-tutorial.couchbase.com[Tutorial Introduction to SQL++ for SQL users].
 
+////
