@@ -1,0 +1,5 @@
+= Couchbase .NET SDK 3.0
+
+:page-type: landing-page
+
+include::partial$beta-warning.adoc[]
