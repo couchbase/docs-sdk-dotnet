@@ -97,14 +97,20 @@ Certain Prepared statements could produce _Fatal error: unexpected end of JSON i
 
 === Fixed Issues
 
-* https://issues.couchbase.com/browse/NCBC-2146[NCBC-2146]: SSL connection shouldn&#39;t release itself
-* https://issues.couchbase.com/browse/NCBC-2152[NCBC-2152]: SslConnection doesn&#39;t clean-up correctly
-* https://issues.couchbase.com/browse/NCBC-2159[NCBC-2159]: SslConnection.Send doesn&#39;t configure awaiter correctly
+* https://issues.couchbase.com/browse/NCBC-2146[NCBC-2146]: 
+When the `SslConnection.Send` was called, it released itself from the ConnectionPool.
+This is no longer the case, and the connection should now rely on the connection pool to deal with both acquiring and releasing connection.
+* https://issues.couchbase.com/browse/NCBC-2152[NCBC-2152]: 
+`SslConnection` now cleans up correctly, no longer suppressing finalizer method when not in DEBUG mode.
+* https://issues.couchbase.com/browse/NCBC-2159[NCBC-2159]: 
+A task awaiter is now configured by SslConnection to ensure no blocking when it calls SendAsync.
 
 === New Features and Behavioral Changes
 
-* https://issues.couchbase.com/browse/NCBC-2148[NCBC-2148]: Bootstrap connection pool connections in parallel
-* https://issues.couchbase.com/browse/NCBC-2163[NCBC-2163]: Don&#39;t jump to async from sync call in SslConnection
+* https://issues.couchbase.com/browse/NCBC-2148[NCBC-2148]: 
+When a connection pool calls `Initialize`, it now bootstraps the connections in parallel to improve startup time.
+* https://issues.couchbase.com/browse/NCBC-2163[NCBC-2163]: 
+The SDK no longer hops to an async path when executing synchronous operations using SSL.
 
 == Version 2.7.12 (13th Sept 2019)
 
