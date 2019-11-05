@@ -82,6 +82,36 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 2.7.13 (5th Nov 2019)
+
+https://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.13.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.13[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.13[Nuget]
+
+=== Known Issues
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2146[NCBC-2146]: 
+When the `SslConnection.Send` was called, it released itself from the ConnectionPool.
+This is no longer the case, and the connection should now rely on the connection pool to deal with both acquiring and releasing connection.
+* https://issues.couchbase.com/browse/NCBC-2152[NCBC-2152]: 
+`SslConnection` now cleans up correctly, no longer suppressing finalizer method when not in DEBUG mode.
+* https://issues.couchbase.com/browse/NCBC-2159[NCBC-2159]: 
+A task awaiter is now configured by SslConnection to ensure no blocking when it calls SendAsync.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-2148[NCBC-2148]: 
+When a connection pool calls `Initialize`, it now bootstraps the connections in parallel to improve startup time.
+* https://issues.couchbase.com/browse/NCBC-2163[NCBC-2163]: 
+The SDK no longer hops to an async path when executing synchronous operations using SSL.
+
 == Version 2.7.12 (13th Sept 2019)
 
 https://packages.couchbase.com/clients/net/2.5/Couchbase-Net-Client-2.7.12.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.12[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.12[Nuget]
