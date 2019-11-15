@@ -1,8 +1,34 @@
 = SDK Licence
 
+
+[abstract]
+Couchbase SDKs' source code is licensed under the Apache Licence 2.0.
+Dependencies carry their own licenses.
+
 The Couchbase .NET Client is distributed as source under the https://www.apache.org/licenses/LICENSE-2.0[Apache License, Version 2.0].
-Any dependencies may have their https://www.couchbase.com/legal/agreements[own, separate licenses].
+
+
+== Binary Distribution
 
 Binary distributions are made under Couchbase's own license agreements. 
 * https://www.couchbase.com/LA03262019[Enterprise License Agreement]
 * https://www.couchbase.com/binaries/content/assets/website/legal/ce-license-agreement.pdf[Community License Agreement (PDF)]
+
+
+== Dependencies
+
+Any dependencies may have their https://www.couchbase.com/legal/agreements[own, separate licenses].
+
+.Third Party Component Licenses
+|===
+| Component | License
+
+|`BenchmarkDotNet` 0.11.5 | MIT License
+|`Json.NET` 11.0.2 | MIT License
+|`Microsoft.CSharp` 4.5.0 | MIT License
+|`Microsoft.Extensions.Logging` 2.1.1 | Apache License 2.0
+|`Microsoft.NET.Test.Sdk` 15.9.0 | Microsoft .NET Library License
+|`Moq` 4.10.0 | BSD 3-clause "New" or "Revised" License
+|`Open Tracing` 0.12.0 | Apache License 2.0
+|`System.Memory` 4.5.2 | MIT License
+|===
