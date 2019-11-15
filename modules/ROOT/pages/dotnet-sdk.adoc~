@@ -1,0 +1,43 @@
+= .NET SDK 3.0
+:page-topic-type: landing-page
+:page-role: tiles -toc
+:!sectids:
+
+[abstract]
+The Couchbase .NET SDK enables you to interact with a Couchbase Server cluster from the .NET Framework using C# and other .NET languages.
+It offers both a traditional synchronous API and an asynchronous API based on the Task-based Asynchronous Pattern (TAP).
+
+
+// row 1, 2 squares [format after UI change]
+== .NET SDK 2.0
+
+
+// row 1, 1 square
+== Get Started
+
+
+
+// row2, 1 square
+== HOWTOs
+
+
+// row2, 2 squares
+== Hot Stuff
+
+
+
+// row3, 1 square
+== Practical Information
+
+
+// row3, 1 square
+== Integrations
+
+
+
+// row3, 1 square
+== In the Community
+
+
+
+
