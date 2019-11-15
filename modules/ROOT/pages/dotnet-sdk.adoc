@@ -1,7 +1,7 @@
 = .NET SDK 3.0
-:page-topic-type: landing-page
 :page-role: tiles -toc
 :!sectids:
+// :page-topic-type: landing-page
 
 [abstract]
 The Couchbase .NET SDK enables you to interact with a Couchbase Server cluster from the .NET Framework using C# and other .NET languages.
