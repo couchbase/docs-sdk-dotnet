@@ -92,6 +92,7 @@ After you have referenced the Couchbase .NET SDK binaries, you need to locate an
 
 * Microsoft.Extensions.Logging v1.0.1: https://github.com/aspnet/Logging[^]
 * Json.NET v9.0.1: https://github.com/JamesNK/Newtonsoft.Json/releases[^]
+* OpenTracing 0.12.0: https://github.com/opentracing/opentracing-csharp[^]
 
 Other versions might not be compatible with the current SDK version.
 
