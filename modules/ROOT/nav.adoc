@@ -1,5 +1,5 @@
 .Couchbase .NET SDK
-* xref:dotnet-sdk.adoc[.NET SDK 3.0]
+* xref:ROOT:dotnet-sdk.adoc[.NET SDK 3.0]
 
 .Getting Started
 * xref:hello-world:start-using-sdk.adoc[Start Using the .NET SDK]
