@@ -7,6 +7,8 @@
 The Couchbase .NET SDK enables you to interact with a Couchbase Server cluster from the .NET Framework using C# and other .NET languages.
 It offers both a traditional synchronous API and an asynchronous API based on the Task-based Asynchronous Pattern (TAP).
 
+include::ref:partial$beta-warning.adoc[]
+
 
 // row 1, 2 squares [format after UI change]
 == .NET SDK 2.0
