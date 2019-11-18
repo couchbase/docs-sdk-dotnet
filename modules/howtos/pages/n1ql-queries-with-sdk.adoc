@@ -129,7 +129,7 @@ This decreases pressure on CLR Garbage Collection and helps to prevent an `OutOf
 == Additional Resources
 
 NOTE: N1QL is not the only query option in Couchbase.
-Be sure to check that xref:concept-docs:http-services.adoc[your use case fits your selection of query service].
+Be sure to check that xref:concept-docs:data-services.adoc[your use case fits your selection of query service].
 
 * For a deeper dive into N1QL from the SDK, refer to our xref:concept-docs:n1ql-query.adoc[N1QL SDK concept doc].
 * The xref:6.5@server:n1ql:n1ql-language-reference/index.adoc[Server doc N1QL intro] introduces a complete guide to the N1QL language, including all of the latest additions.
