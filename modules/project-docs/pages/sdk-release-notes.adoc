@@ -82,6 +82,95 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+= Version 3.0.0-beta2 (20th Nov 2019)
+
+https://packages.couchbase.com/clients/net/3.0/CouchbaseNetClient.3.0.0-beta2.zip[Download] |  https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0-beta2[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-beta2[Nuget]
+
+=== Known Issues
+* https://issues.couchbase.com/browse/NCBC-2187[NCBC-2187]: 
+CollectionManager  - 400: Not allowed on this version of cluster
+* https://issues.couchbase.com/browse/NCBC-2168[NCBC-2168]: 
+QueryException does not provide textual details coming from the server
+* https://issues.couchbase.com/browse/NCBC-2153[NCBC-2153]: 
+Fix failing integration tests for SDK3
+
+=== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-1977[NCBC-1977]: 
+LogManager.Test_LogLevel_Debug unit test intermittently fails CI
+* https://issues.couchbase.com/browse/NCBC-2123[NCBC-2123]: 
+FTS queries using wrong REST endpoint
+* https://issues.couchbase.com/browse/NCBC-2136[NCBC-2136]: 
+SDK doesn&#39;t apply updated cluster map during rebalance
+* https://issues.couchbase.com/browse/NCBC-2137[NCBC-2137]: 
+SDK does not retry NMVB responses
+* https://issues.couchbase.com/browse/NCBC-2138[NCBC-2138]: 
+NetworkType.Default should not use external hostname / ports
+* https://issues.couchbase.com/browse/NCBC-2140[NCBC-2140]: 
+Getting a document as a POCO doesn&#39;t serialize content properly
+* https://issues.couchbase.com/browse/NCBC-2142[NCBC-2142]: 
+Make ConfigPollInterval default to 2.5 Seconds
+* https://issues.couchbase.com/browse/NCBC-2149[NCBC-2149]: 
+ConfigConext throws NullReferenceException when processing new cluster maps
+* https://issues.couchbase.com/browse/NCBC-2150[NCBC-2150]: 
+BootstrapUri is null for non-bootstrapped nodes
+* https://issues.couchbase.com/browse/NCBC-2160[NCBC-2160]: 
+PublishDesignDocument should not remove _dev version
+* https://issues.couchbase.com/browse/NCBC-2161[NCBC-2161]: 
+Update ViewQuery API to match SDK3 RFC
+* https://issues.couchbase.com/browse/NCBC-2162[NCBC-2162]: 
+Fix build warnings in CouchbaseCollectionTests.SendAsync
+* https://issues.couchbase.com/browse/NCBC-2173[NCBC-2173]: 
+Bootstrapping via config.json ignores connectionString property
+* https://issues.couchbase.com/browse/NCBC-2186[NCBC-2186]: 
+Fix regression where collection support is not detected on the server.
+* https://issues.couchbase.com/browse/NCBC-2188[NCBC-2188]: 
+When bootstrapping with GC3P the bootflag completed flag is not set
+* https://issues.couchbase.com/browse/NCBC-2189[NCBC-2189]: 
+Fix view unit test where design doc name does not match what is expected
+
+=== New Features and Behavioral Changes
+* https://issues.couchbase.com/browse/NCBC-2061[NCBC-2061]: 
+Implement Retry Handling API - Config and K/V only
+* https://issues.couchbase.com/browse/NCBC-1802[NCBC-1802]: 
+CI Feature/Integration Test Completion for .NET SDK
+* https://issues.couchbase.com/browse/NCBC-1869[NCBC-1869]: 
+Support TLS/SSL encryption
+* https://issues.couchbase.com/browse/NCBC-2065[NCBC-2065]: 
+Review interface to verify &quot;SDK 3&quot; sdk-rfc compliance
+* https://issues.couchbase.com/browse/NCBC-2134[NCBC-2134]: 
+Add support for SSL/TLS connections
+* https://issues.couchbase.com/browse/NCBC-2143[NCBC-2143]: 
+Make config polling enabled by default
+* https://issues.couchbase.com/browse/NCBC-2144[NCBC-2144]: 
+Make NMVB publish config returned in body
+* https://issues.couchbase.com/browse/NCBC-2145[NCBC-2145]: 
+Update README with reference to release27 branch info
+* https://issues.couchbase.com/browse/NCBC-2155[NCBC-2155]: 
+Consolidate Cluster constructors
+* https://issues.couchbase.com/browse/NCBC-2174[NCBC-2174]: 
+Port Error Map from 2.X and integrate into 3.x
+* https://issues.couchbase.com/browse/NCBC-2175[NCBC-2175]: 
+Port diagnostics API from SDK 2 and update to 3.0 RFC
+* https://issues.couchbase.com/browse/NCBC-2181[NCBC-2181]: 
+Refactor exceptions and error handling to current RFC revision
+* https://issues.couchbase.com/browse/NCBC-1846[NCBC-1846]: 
+.NET Core configuration support for multiple providers
+* https://issues.couchbase.com/browse/NCBC-2046[NCBC-2046]: 
+Create zip and push to S3 during publishing
+* https://issues.couchbase.com/browse/NCBC-2139[NCBC-2139]: 
+Update View Index manager
+* https://issues.couchbase.com/browse/NCBC-2154[NCBC-2154]: 
+Add support for DNS-SRV
+* https://issues.couchbase.com/browse/NCBC-2157[NCBC-2157]: 
+Refactor cluster and bucket internals into a Context class
+* https://issues.couchbase.com/browse/NCBC-2158[NCBC-2158]: 
+Refactor Dispose pattern on cluster and context
+* https://issues.couchbase.com/browse/NCBC-2171[NCBC-2171]: 
+Make scope and collection definitions sync with RFC
+* https://issues.couchbase.com/browse/NCBC-2184[NCBC-2184]: 
+Exists should use getMeta instead of observe
+
+
 = Version 3.0.0-beta1 (3rd Oct 2019)
 
 https://packages.couchbase.com/clients/net/3.0/CouchbaseNetClient.3.0.0-beta1.zip[Download] |  https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0-beta1[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-beta1[Nuget]
