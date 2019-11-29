@@ -78,6 +78,11 @@ It implements https://msdn.microsoft.com/en-us/library/mt693024.aspx[Microsoft's
 The difference is that it emits N1QL in place of SQL.
 If you have used any other LINQ provider, you will find its familiarity and consistency make it an easy transition.
 
+[IMPORTANT]
+====
+Although https://github.com/couchbaselabs/Linq2Couchbase[Linq2Couchbase] is actively maintained, it is not an officially supported Couchbase project.
+====
+
 The Linq2Couchbase, the LINQ provider for the Couchbase .NET SDK, is a stand-alone project which depends on Couchbase .NET SDK and can be found on https://www.nuget.org/packages/linq2Couchbase[NuGet^] and by using the NuGet package manager to include the dependency:
 
 [source,csharp]
