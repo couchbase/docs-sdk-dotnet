@@ -34,7 +34,7 @@ From the Package Manager Console within your project:
  ** To install a specific version, include the version parameter.
 For example:
 
- Install-Package CouchbaseNetClient -Version 2.7.14
+ Install-Package CouchbaseNetClient -Version 2.7.15
 
 === Downloading and referencing the binaries
 
@@ -82,9 +82,9 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
-== Version 2.7.14 (4th Dec 2019)
+== Version 2.7.15 (5th Dec 2019) - NOTE: 2.7.14 is unlisted on NuGet and has a packaging issue
 
-https://packages.couchbase.com/clients/net/2.7/Couchbase-Net-Client-2.7.14.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.14[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.14[Nuget]
+https://packages.couchbase.com/clients/net/2.7/Couchbase-Net-Client-2.7.15.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.15[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.15[Nuget]
 
 === Known Issues
 This release has the following known issues:
