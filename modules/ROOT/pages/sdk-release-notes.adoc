@@ -34,7 +34,7 @@ From the Package Manager Console within your project:
  ** To install a specific version, include the version parameter.
 For example:
 
- Install-Package CouchbaseNetClient -Version 2.7.0
+ Install-Package CouchbaseNetClient -Version 2.7.14
 
 === Downloading and referencing the binaries
 
@@ -81,6 +81,28 @@ https://github.com/couchbase/couchbase-net-client/fork
 
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
+
+== Version 2.7.13 (4th Dec 2019)
+
+https://packages.couchbase.com/clients/net/2.7/Couchbase-Net-Client-2.7.14.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.14[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.14[Nuget]
+
+=== Known Issues
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2179[NCBC-2179]: LookupIn does not correctly parse config returned by NMVB
+* https://issues.couchbase.com/browse/NCBC-2192[NCBC-2192]: Sub-document remove encodes null value and triggers server invalid arguments.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-2198[NCBC-2198]: Create additional Sub-Document test to verify NCBC-2038
 
 == Version 2.7.13 (5th Nov 2019)
 
