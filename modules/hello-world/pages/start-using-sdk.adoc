@@ -19,8 +19,8 @@ The Couchbase .NET SDK targets https://docs.microsoft.com/en-us/dotnet/standard/
 
 |===
 |Nuget |Nuget package host at https://www.nuget.org/packages/CouchbaseNetClient/[nuget.org] (_recommended_)
-|Zip |Zip file with can be downloaded [here]
-|Build from Source |Build the library from source
+|Zip |Zip file with can be downloaded https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client.3.0.0-beta2.zip[here]
+|Build from Source |Build the library from source https://github.com/couchbase/couchbase-net-client/tree/master[here]
 |===
 
 // VS Code stuff here
@@ -31,21 +31,13 @@ Now you have the .NET client installed, open a fresh project in _VS Code_, and t
 
 [source,csharp]
 ----
-var options = new ClusterOptions()
-    .WithServers("couchbase://10.112.180.101")
-    .WithCredentials("username", "password")
-    .WithBucket("default");
+var cluster = Cluster.Connect("couchbase://localhost", "Administrator", "password");
 ----
 
 Couchbase uses xref:6.0@server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
 Here we will use the _Full Admin_ role created during installation of the Couchbase Data Platform.
 For production client code, you will want to use more appropriate, restrictive settings -- but here we want to get you up and running quickly.
 If you're developing client code on the same VM or machine as the Couchbase Server, your URI can be _couchbase://localhost_.
-
-[source,csharp]
-----
-var cluster = new Cluster(options);
-----
 
 [source,csharp]
 ----
@@ -56,7 +48,7 @@ If you installed the travel sample data bucket, substitute _travel-sample_ for _
 
 [source,csharp]
 ----
-var collection = await bucket.DefaultCollection();
+var collection = bucket.DefaultCollection();
 ----
 
 The 3.0 SDK is ready for the introduction of xref:concept-docs:collections.adoc[Collections] in Cheshire Cat, the next release of the Couchbase Data Platform.
@@ -65,8 +57,8 @@ Here we will use the `DefaultCollection`, which covers the whole Bucket.
 
 [source,csharp]
 ----
-var upsertResult = await collection.UpsertAsync("my-document", new {name = "mike"});
-var getResult = await collection.GetAsync("my-document");
+var upsertResult = await collection.UpsertAsync("doc1", new {Name = "Ted", Age = 31});
+var getResult = await collection.GetAsync("doc1");
 ----
 
 KV Operations are described in detail on the xref:howtos:kv-operations.adoc[KV Operations page].
@@ -83,9 +75,9 @@ NOTE: The _Developer Preview_ version of the 3.0 .NET Client is entirely asynchr
 
 == Additional Resources
 
-The API reference is generated for each release and can be found xref:http://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0-beta1/[here].
+The API reference is generated for each release and can be found http://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0-beta2/[here].
 
 // xref:project-docs:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code.
 
 Couchbase welcomes community contributions to the .NET SDK.
-The .NET SDK source code is available on xref:https://github.com/couchbase/couchbase-net-client[GitHub].
+The .NET SDK source code is available on https://github.com/couchbase/couchbase-net-client[GitHub].
