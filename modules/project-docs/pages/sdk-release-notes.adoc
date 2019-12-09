@@ -87,6 +87,8 @@ _Note that you can checkout a specific tag for each release as well._
 https://packages.couchbase.com/clients/net/3.0/CouchbaseNetClient.3.0.0-beta2.zip[Download] |  https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0-beta2[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-beta2[Nuget]
 
 === Known Issues
+* .NET Client 3.0.0-beta2 only works with Couchbase Server 6.5 beta releases, and will not work with Couchbase 6.0 and earlier.
+This will be fixed in the upcoming .NET CLient 3.0.0-beta3.
 * https://issues.couchbase.com/browse/NCBC-2187[NCBC-2187]: 
 CollectionManager  - 400: Not allowed on this version of cluster
 * https://issues.couchbase.com/browse/NCBC-2168[NCBC-2168]: 
