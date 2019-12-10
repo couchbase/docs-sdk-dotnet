@@ -11,7 +11,7 @@ include::ref:partial$beta-warning.adoc[]
 
 
 // row 1, 2 squares [format after UI change]
-== .NET SDK 2.0
+== .NET SDK 3.0
 A brand new API, offering a cleaner interface for faster development, and preparing for future Couchbase Server releases.
 
 // row 1, 1 square
