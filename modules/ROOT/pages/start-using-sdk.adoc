@@ -162,6 +162,8 @@ This is fully described in the section xref:6.0@server:learn:security/authorizat
 A username and password for the current user must be specified.
 Following successful authentication, the bucket is opened.
 
+IMPORTANT: Any Cluster nodes addresses passed in to establish (bootstrap) the connection should be for data (KV) nodes.
+
 Note: If you have an environment with port mapping, such as Couchbase Server and the SDK in separate containers under Kubernetes, see the multi-network configuration _note_ under xref:managing-connections.adoc#connecting-to-a-bucket[Managing Connections].
 
 Once you have connected to a Couchbase bucket, you can create a document and add it to the database:
