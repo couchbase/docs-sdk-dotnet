@@ -57,6 +57,8 @@ ClusterHelper.Initialize(config, credentials);
 var bucket = ClusterHelper.GetBucket("mybucket");
 ----
 
+IMPORTANT: Any Cluster nodes addresses passed in to establish (bootstrap) the connection should be for data (KV) nodes.
+
 The ClientConfiguration object also exposes per bucket configuration settings, for example:
 
 [source,csharp]
