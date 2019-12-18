@@ -1,4 +1,4 @@
-= SDK Licence
+= SDK License
 
 
 [abstract]
@@ -11,6 +11,7 @@ The Couchbase .NET Client is distributed as source under the https://www.apache.
 == Binary Distribution
 
 Binary distributions are made under Couchbase's own license agreements. 
+
 * https://www.couchbase.com/LA03262019[Enterprise License Agreement]
 * https://www.couchbase.com/binaries/content/assets/website/legal/ce-license-agreement.pdf[Community License Agreement (PDF)]
 
