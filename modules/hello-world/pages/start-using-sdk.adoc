@@ -75,7 +75,7 @@ NOTE: The _Developer Preview_ version of the 3.0 .NET Client is entirely asynchr
 
 == Additional Resources
 
-The API reference is generated for each release and can be found http://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0-beta2/[here].
+The API reference is generated for each release and can be found http://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0-beta3/[here].
 
 // xref:project-docs:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code.
 
