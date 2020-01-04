@@ -20,10 +20,10 @@ The Couchbase .NET SDK targets https://docs.microsoft.com/en-us/dotnet/standard/
 |===
 |Nuget |Nuget package host at https://www.nuget.org/packages/CouchbaseNetClient/[nuget.org] (_recommended_)
 |Zip |Zip file with can be downloaded https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client.3.0.0-beta2.zip[here]
-|Build from Source |Build the library from source https://github.com/couchbase/couchbase-net-client/tree/master[here]
+|Build from Source |Build the library from source https://github.com/couchbase/couchbase-net-client/[here] (not officially supported)
 |===
 
-// VS Code stuff here
+In VS Code, with the https://marketplace.visualstudio.com/items?itemName=jmrog.vscode-nuget-package-manager[NuGet Package Manager Extension], open the command palette and type "nuget", then "CouchbaseNetClient", and select the latest 3.0 version available.
 
 == Hello Couchbase
 
