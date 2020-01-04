@@ -27,16 +27,16 @@ The Couchbase .NET SDK targets https://docs.microsoft.com/en-us/dotnet/standard/
 
 == Hello Couchbase
 
-Now you have the .NET client installed, open a fresh project in _VS Code_, and try out the following:
+Now you have the .NET client installed, open a fresh project in _VS Code_, and try out the following, which assumes a user named "user" with permissions to access the cluster, typically the "Application Access" role:
 
 [source,csharp]
 ----
-var cluster = Cluster.Connect("couchbase://localhost", "Administrator", "password");
+using Couchbase;
+…
+var cluster = Cluster.Connect("couchbase://localhost", "user", "pass");
 ----
 
 Couchbase uses xref:6.0@server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
-Here we will use the _Full Admin_ role created during installation of the Couchbase Data Platform.
-For production client code, you will want to use more appropriate, restrictive settings -- but here we want to get you up and running quickly.
 If you're developing client code on the same VM or machine as the Couchbase Server, your URI can be _couchbase://localhost_.
 
 [source,csharp]
@@ -71,7 +71,7 @@ Now that you know the basics, you may wish to go straight to that page.
 //
 //
 
-NOTE: The _Developer Preview_ version of the 3.0 .NET Client is entirely asynchronous -- synchronous alternatives may be added in the future.
+NOTE: The _Developer Preview_ version of the 3.0 .NET Client is entirely asynchronous, following modern .NET development recommendations.
 
 == Additional Resources
 
