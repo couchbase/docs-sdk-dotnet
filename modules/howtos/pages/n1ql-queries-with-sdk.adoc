@@ -82,9 +82,9 @@ if (result.Status != QueryStatus.Success)
 // iterate over rows
 foreach (var row in result)
 {
-    // each row is an instance of the Query<T> call (eg dynamic or custom type
+    // each row is an instance of the Query<T> call (e.g. dynamic or custom type)
     var name = row.username; // “mike”
-    Var age = row.age;
+    var age = row.age;
 }
 ----
 

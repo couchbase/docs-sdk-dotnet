@@ -82,6 +82,54 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+= Version 3.0.0-beta3 (20th Dec 2019)
+
+https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.0-beta3.zip[Download] |  https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0-beta3[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-beta3[Nuget]
+
+=== Known Issues
+* https://issues.couchbase.com/browse/NCBC-2187[NCBC-2187]: 
+CollectionManager -- 400: Not allowed on this version of cluster.
+* https://issues.couchbase.com/browse/NCBC-2168[NCBC-2168]: 
+QueryException does not provide textual details coming from the server.
+* https://issues.couchbase.com/browse/NCBC-2153[NCBC-2153]: 
+Fix failing integration tests for SDK3.
+* https://issues.couchbase.com/browse/NCBC-2214[NCBC-2214]:
+N1QL situational test failure - SvcRestartQuery.
+* https://issues.couchbase.com/browse/NCBC-2213[NCBC-2213]:
+N1QL situational test failure -- Rb1SwapQuery.
+
+=== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-2185[NCBC-2185]:
+Issue getting cluster map after Fo/Rebalance.
+* https://issues.couchbase.com/browse/NCBC-2190[NCBC-2190]:
+Error returned on bucket.DefaultCollection().
+* https://issues.couchbase.com/browse/NCBC-2191[NCBC-2191]:
+Services failing due to GetRandomNodeForService error.
+* https://issues.couchbase.com/browse/NCBC-2205[NCBC-2205]:
+No View service found after failover EP node.
+* https://issues.couchbase.com/browse/NCBC-2210[NCBC-2210]:
+Make EnableDnsSrveResolution be EnableDnsSrvResolution in ClusterOptions.
+* https://issues.couchbase.com/browse/NCBC-2215[NCBC-2215]:
+KV port missing when bootstrapping with GCCCP.
+
+=== New Features and Behavioral Changes.
+* https://issues.couchbase.com/browse/NCBC-2206[NCBC-2206]:
+Support custom logging factories via ILoggerFactory.
+* https://issues.couchbase.com/browse/NCBC-2207[NCBC-2207]:
+Remove all instances of 'master' to `active'.
+* https://issues.couchbase.com/browse/NCBC-2211[NCBC-2211]:
+Need to ensure that ClusterOptions properties are same as Foundation RFC.
+* https://issues.couchbase.com/browse/NCBC-2212[NCBC-2212]:
+Align exception names with changes made to Error Handling RFC.
+* https://issues.couchbase.com/browse/NCBC-2195[NCBC-2195]:
+Fix typo on cluster connect string validation.
+* https://issues.couchbase.com/browse/NCBC-2196[NCBC-2196]:
+Correct typo on view query internal variable.
+* https://issues.couchbase.com/browse/NCBC-2203[NCBC-2203]:
+Make all XxxOptions parameters optional and use defaults.
+* https://issues.couchbase.com/browse/NCBC-2221[NCBC-2221]:
+NotImplementedException thrown by PersistentListTests.
+
 = Version 3.0.0-beta2 (20th Nov 2019)
 
 https://packages.couchbase.com/clients/net/3.0/CouchbaseNetClient.3.0.0-beta2.zip[Download] |  https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0-beta2[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-beta2[Nuget]
