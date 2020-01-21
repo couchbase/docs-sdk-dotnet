@@ -47,9 +47,34 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 Note the https://www.couchbase.com/support-policy[End of Life dates^] for Couchbase Server and SDK versions.
 See the notes there for Support details.
 
-== Couchbase Feature Availability Matrix
+== Couchbase New Feature Availability Matrix
 
-TBI
+.Couchbase Server and SDK Supported Version Matrix
+|===
+| | Server 5.0, 5.1, & 5.5 | Server 6.0 | Server 6.5
+
+| Enhanced Durability
+3+| All SDK versions
+
+| Durable Writes 
+2+| Not Supported
+| Since 3.0
+
+| Analytics
+| DP in 5.5 with 2.6
+2+| Since 2.7
+
+| Distributed ACID Transactions
+2+| Not Supported
+| Since 3.0
+
+| Collections
+2+| Not Supported
+| SDK 3.0 for Developer Preview in Server 6.5
+
+|===
+
+
 
 
 == .NET Framework Version Compatibility
