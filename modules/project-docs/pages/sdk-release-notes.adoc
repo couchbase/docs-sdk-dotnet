@@ -82,6 +82,71 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+= Version 3.0.0-beta4 (21st Jan 2020)
+
+https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.0-beta4.zip[Download] |  https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0-beta4[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-beta4[Nuget]
+
+=== Known Issues
+* https://issues.couchbase.com/browse/NCBC-2187[NCBC-2187]: 
+CollectionManager -- 400: Not allowed on this version of cluster.
+* https://issues.couchbase.com/browse/NCBC-2168[NCBC-2168]: 
+QueryException does not provide textual details coming from the server.
+* https://issues.couchbase.com/browse/NCBC-2153[NCBC-2153]: 
+Fix failing integration tests for SDK3.
+* https://issues.couchbase.com/browse/NCBC-2214[NCBC-2214]:
+N1QL situational test failure - SvcRestartQuery.
+* https://issues.couchbase.com/browse/NCBC-2213[NCBC-2213]:
+N1QL situational test failure -- Rb1SwapQuery.
+
+=== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-2229[NCBC-2229]: Client context ID should be a UUID
+* https://issues.couchbase.com/browse/NCBC-2231[NCBC-2231]: Remove Rows from the QueryResults
+* https://issues.couchbase.com/browse/NCBC-2239[NCBC-2239]: CollectionNotFoundException when collections enabled as DP in CB 6.5-beta
+* https://issues.couchbase.com/browse/NCBC-2240[NCBC-2240]: Cluster constructor duplicates Cluster connect
+* https://issues.couchbase.com/browse/NCBC-2242[NCBC-2242]: Cluster exposes deferred analytics queries
+* https://issues.couchbase.com/browse/NCBC-2243[NCBC-2243]: Cluster exposes &quot;ClusterManager&quot;
+* https://issues.couchbase.com/browse/NCBC-2246[NCBC-2246]: QueryOptions do not align with the RFC
+* https://issues.couchbase.com/browse/NCBC-2247[NCBC-2247]: QueryResult must have metadata not at the toplevel
+* https://issues.couchbase.com/browse/NCBC-2249[NCBC-2249]: Bucket#views must be called Bucket#viewIndexes
+* https://issues.couchbase.com/browse/NCBC-2250[NCBC-2250]: View MetaData must be called ViewMetaData
+* https://issues.couchbase.com/browse/NCBC-2251[NCBC-2251]: AnalyticsOptions do not align with RFC
+* https://issues.couchbase.com/browse/NCBC-2252[NCBC-2252]: AnalyticsResult must not expose deferred handle
+* https://issues.couchbase.com/browse/NCBC-2253[NCBC-2253]: Analytics &quot;MetaData&quot; must be called &quot;AnalyticsMetaData&quot;
+* https://issues.couchbase.com/browse/NCBC-2254[NCBC-2254]: Analytics MetaData does not align with the RFC
+* https://issues.couchbase.com/browse/NCBC-2257[NCBC-2257]: GetAndLock argument not called expiry but lockTime
+* https://issues.couchbase.com/browse/NCBC-2258[NCBC-2258]: Unlock must have cas as mandatory argument
+* https://issues.couchbase.com/browse/NCBC-2259[NCBC-2259]: MutateIn must return MutateInResult
+* https://issues.couchbase.com/browse/NCBC-2261[NCBC-2261]: GetOptions must not have WithCreatePath
+* https://issues.couchbase.com/browse/NCBC-2262[NCBC-2262]: UpsertOptions must not take cas
+* https://issues.couchbase.com/browse/NCBC-2263[NCBC-2263]: InsertOptions must not take cas
+* https://issues.couchbase.com/browse/NCBC-2264[NCBC-2264]: GetAndTouchOptions must not take cas
+* https://issues.couchbase.com/browse/NCBC-2265[NCBC-2265]: TouchOptions must not take cas
+* https://issues.couchbase.com/browse/NCBC-2269[NCBC-2269]: BucketManager#UpsertBucketAsync should be UpdateBucketAsync
+* https://issues.couchbase.com/browse/NCBC-2281[NCBC-2281]: Cannot bootstrap when cluster contains a non-k/v node
+* https://issues.couchbase.com/browse/NCBC-2283[NCBC-2283]: missing not_bounded in view stale consistency
+* https://issues.couchbase.com/browse/NCBC-2296[NCBC-2296]: InvalidCastException in RetryOrchestrator 
+
+=== New Features and Behavioral Changes.
+* https://issues.couchbase.com/browse/NCBC-2133[NCBC-2133]: Implement Retry Handling API - FTS, Analytics, Query, Views
+* https://issues.couchbase.com/browse/NCBC-2208[NCBC-2208]: Add Circuit Breakers per RFC for KV
+* https://issues.couchbase.com/browse/NCBC-2228[NCBC-2228]: Add Circuit Breakers per RFC for Services
+* https://issues.couchbase.com/browse/NCBC-2020[NCBC-2020]: Use IAsyncEnumerable For Streaming Queries
+* https://issues.couchbase.com/browse/NCBC-2223[NCBC-2223]: Update xUnit.net 2.4.0 to a later version
+* https://issues.couchbase.com/browse/NCBC-2224[NCBC-2224]: Remove .netcoreapp2.1 from Couchbase.csproj
+* https://issues.couchbase.com/browse/NCBC-2225[NCBC-2225]: Update Microsoft.NET.Test.Sdk to v16.4.0 in tests
+* https://issues.couchbase.com/browse/NCBC-2226[NCBC-2226]: Add .NET Standard 2.1 Target
+* https://issues.couchbase.com/browse/NCBC-2248[NCBC-2248]: All (non-default) collection APIs must be marked as volatile
+* https://issues.couchbase.com/browse/NCBC-2255[NCBC-2255]: Use IAsyncEnumerable for View Queries
+* https://issues.couchbase.com/browse/NCBC-2256[NCBC-2256]: Use IAsyncEnumerable for Analytics Queries
+* https://issues.couchbase.com/browse/NCBC-2271[NCBC-2271]: Align QueryMetaData with the RFC
+* https://issues.couchbase.com/browse/NCBC-2278[NCBC-2278]: Support asynchronous stream custom deserializers
+* https://issues.couchbase.com/browse/NCBC-2284[NCBC-2284]: Convert IByteConverter from an interface to static implementation
+* https://issues.couchbase.com/browse/NCBC-2285[NCBC-2285]: Public API Pre-3.0 Cleanup
+* https://issues.couchbase.com/browse/NCBC-2291[NCBC-2291]: Add CancellationToken to ISaslMechanism.AuthenticateAsync
+* https://issues.couchbase.com/browse/NCBC-2292[NCBC-2292]: Remove Optional&lt;T&gt; experiment
+* https://issues.couchbase.com/browse/NCBC-2294[NCBC-2294]: Remove sync overloads for FTS search
+* https://issues.couchbase.com/browse/NCBC-2295[NCBC-2295]: Replace Cluster.Connect with Cluster.ConnectAsync
+
 = Version 3.0.0-beta3 (20th Dec 2019)
 
 https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.0-beta3.zip[Download] |  https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0-beta3[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-beta3[Nuget]
