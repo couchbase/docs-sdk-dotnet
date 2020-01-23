@@ -1,1 +1,1 @@
-include::dotnet-sdk::page$sdk-release-notes.adoc[tag=latest]
+include::2.7@dotnet-sdk::page$sdk-release-notes.adoc[tag=latest]
