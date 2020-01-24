@@ -19,20 +19,4 @@ Binary distributions are made under Couchbase's own license agreements.
 
 == Dependencies
 
-Any dependencies may have their https://www.couchbase.com/legal/agreements[own, separate licenses].
-
-.Third Party Component Licenses
-|===
-| Component | License
-
-|`BenchmarkDotNet` 0.11.5 | MIT License
-|`DnsClient`	1.2.0	| Apache License 2.0
-|`Json.NET` 11.0.2 | MIT License
-|`Microsoft.CSharp` 4.5.0 | MIT License
-|`Microsoft.Extensions.Logging` 2.1.1 | Apache License 2.0
-|`Microsoft.NET.Test.Sdk` 15.9.0 | Microsoft .NET Library License
-|`Moq` 4.10.0 | BSD 3-clause "New" or "Revised" License
-|`Open Tracing` 0.12.0 | Apache License 2.0
-|`System.Linq.Async`	4.0.0	| Apache License 2.0
-|`System.Memory` 4.5.2 | MIT License
-|===
+Any dependencies may have their https://www.couchbase.com/legal/agreements#ThirdPartyComponents[own, separate licenses].
