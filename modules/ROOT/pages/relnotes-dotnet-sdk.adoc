@@ -1,1 +1,4 @@
+= Couchbase .NET SDK Release Notes and Archives
+:page-aliases: sdk-release-notes,release-notes,download-links,project-docs:migrating-sdk-code-to-3.n,project-docs:sdk-release-notes
+
 include::2.7@dotnet-sdk::page$sdk-release-notes.adoc[tag=latest]
