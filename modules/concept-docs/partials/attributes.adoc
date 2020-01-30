@@ -1,7 +1,4 @@
 :dotnet-api-link: http://docs.couchbase.com/sdk-api/couchbase-dotnet-client-3.0.0
 :dotnet-current-version: 3.0.0
-////
-use -
+:version-server: 6.5
 
-The API reference for version `{lcb-current-version}` is at {lcb-api-link}[]
-////
