@@ -82,6 +82,32 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 2.7.16 (11th Feb 2020)
+
+https://packages.couchbase.com/clients/net/2.7/Couchbase-Net-Client-2.7.16.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.16[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.16[Nuget]
+
+=== Known Issues
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2200[NCBC-2200]: 
+Thrown `SendTimeoutExpiredException` was not closing the connection.
+This connection closure should now be handled gracefully.
+* https://issues.couchbase.com/browse/NCBC-2235[NCBC-2235]: 
+`MultiLookup` was failing if more than one lookup spec was added.
+`GetResultWithValue` now calls `GetMultiValues` instead of `GetValue`, so `MultipleLookupIn` operations specs can be chained.
+* https://issues.couchbase.com/browse/NCBC-2342[NCBC-2342]: 
+`Couchbase.IO.SharedConnectionPools.Acquire` was sometimes throwing an  `IndexIndexOutOfRangeException`.
+Parallel connection pool initialization has been reverted to ensure this no longer occurs.
+
+
 == Version 2.7.15 (5th Dec 2019)
 
 https://packages.couchbase.com/clients/net/2.7/Couchbase-Net-Client-2.7.15.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.15[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.15[Nuget]
