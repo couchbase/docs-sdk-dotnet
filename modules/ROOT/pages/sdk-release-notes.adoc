@@ -97,11 +97,16 @@ Certain Prepared statements could produce _Fatal error: unexpected end of JSON i
 
 === Fixed Issues
 
-* https://issues.couchbase.com/browse/NCBC-2200[NCBC-2200]: Thrown SendTimeoutExpiredException does not close the connection 
-* https://issues.couchbase.com/browse/NCBC-2235[NCBC-2235]: Executing multiple lookup gets with different types fails
-* https://issues.couchbase.com/browse/NCBC-2342[NCBC-2342]: Couchbase.IO.SharedConnectionPools.Acquire sometimes throws IndexIndexOutOfRangeException
+* https://issues.couchbase.com/browse/NCBC-2200[NCBC-2200]: 
+Thrown `SendTimeoutExpiredException` was not closing the connection.
+This connection closure should now be handled gracefully.
+* https://issues.couchbase.com/browse/NCBC-2235[NCBC-2235]: 
+`MultiLookup` was failing if more than one lookup spec was added.
+`GetResultWithValue` now calls `GetMultiValues` instead of `GetValue`, so `MultipleLookupIn` operations specs can be chained.
+* https://issues.couchbase.com/browse/NCBC-2342[NCBC-2342]: 
+`Couchbase.IO.SharedConnectionPools.Acquire` was sometimes throwing an  `IndexIndexOutOfRangeException`.
+Parallel connection pool initialization has been reverted to ensure this no longer occurs.
 
-=== New Features and Behavioral Changes
 
 == Version 2.7.15 (5th Dec 2019)
 
