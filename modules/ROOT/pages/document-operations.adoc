@@ -262,7 +262,7 @@ The .NET SDK supports the async/await keywords so batching can easily be done by
 
 [source,csharp]
 ----
-var tasks = new List<Task>IDocumentResult<string>>>();
+var tasks = new List<Task<IDocumentResult<string>>>();
 ids.ForEach(x => tasks.Add(bucket.GetDocumentAsync<string>(x)));
 
 var results = await Task.WhenAll(tasks);
