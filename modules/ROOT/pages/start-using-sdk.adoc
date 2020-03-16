@@ -211,7 +211,7 @@ The full source can be found on https://github.com/couchbaselabs/couchbase-net-e
 == Different Tooling
 
 If you're not using Visual Studio or a comparable IDE, and tools such as _Resharper_, you'll need to bolt together some pieces by hand.
-Key to getting the above code sampl to compile is starting the listing with:
+Key to getting the above code sample to compile is starting the listing with:
 
 [source,csharp]
 ----
