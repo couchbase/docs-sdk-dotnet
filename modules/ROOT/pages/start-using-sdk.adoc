@@ -207,6 +207,22 @@ Hello Couchbase!
 Congratulations, you have successfully created the Hello Couchbase Tutorial!
 The full source can be found on https://github.com/couchbaselabs/couchbase-net-examples/tree/master/Src/Couchbase.HelloCouchbase[GitHub^].
 
+
+== Different Tooling
+
+If you're not using Visual Studio or a comparable IDE, and tools such as _Resharper_, you'll need to bolt together some pieces by hand.
+Key to getting the above code sample to compile is starting the listing with:
+
+[source,csharp]
+----
+using Couchbase;
+using Couchbase.Authentication;
+using Couchbase.Configuration.Client;
+----
+
+To see fully worked examples of accessing Couchbase Server services from the .NET SDK, take a look at our https://github.com/couchbaselabs/devguide-examples/tree/master/dotnet[Developer Guide examples repository on GitHub].
+
+
 == API Reference
 
 The API reference is generated for each release and the latest can be found https://docs.couchbase.com/sdk-api/couchbase-net-client/[here^].
