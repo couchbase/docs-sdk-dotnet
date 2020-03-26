@@ -8,7 +8,7 @@ For applications that are targeting .NET Framework 4.5.2+ the SDK uses the Apach
 
 == Logging in applications targeting .NET Framework 4.5.2+
 
-The Apache Common Infrstucture libraries provides a common interface for logging adapters.
+The Apache Common infrastructure libraries provides a common interface for logging adapters.
 The SDK currently uses version 3.4.1 of Common.Logging for versions Couchbase .NET SDK v2.6.0 and greater.
 
 In order to use logging within the SDK, you need to reference the packages for the adapter you want to use.
