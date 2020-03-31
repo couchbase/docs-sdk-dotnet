@@ -51,11 +51,12 @@ include::6.5@sdk:shared:partial$migration.adoc[tag=lang]
 
 ==  Installation and Configuration
 
-The .NET SDK 3.x is available for download from the same resources as the previous generation
-SDK 3.0 is available from the same locations as the 2.0 SDK:
+The .NET SDK 3.x is available for download from the same resources as the previous generation 2.0 SDK:
+
 * From NuGet (the most popular choice): `Install-Package CouchbaseNetClient -Version 3.0.0-beta4`
 * By downloading a [zip]https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client.3.0.0-beta4.zip file directly
 * (Not officially supported) By cloning and building the source code directly on [github]https://github.com/couchbase/couchbase-net-client/tree/master
+
 Please see the xref:sdk-release-notes.adoc[Release Notes] for up-to-date information.
 
 Couchbase .NET SDK 3.0 targets the .NET Standard 2.0.
@@ -67,7 +68,7 @@ The goal is to use the latest and greatest .NET Core libraries available, but st
 There are few dependency changes from SDK 2.x.
 SDK 3.0 and later no longer has any dependencies on .NET Framework 4.5.2.
 It is based on .NET Standard 2.0.
-One dependency addition is DnsClient, which was previously in SDK 2.x through a transitive dependency via the [Couchbase.Extensions.DnsDiscovery]https://github.com/couchbaselabs/Couchbase.Extensions/blob/master/docs/dns-srv.md project.
+One dependency addition is DnsClient, which was previously in SDK 2.x through a transitive dependency via the https://github.com/couchbaselabs/Couchbase.Extensions/blob/master/docs/dns-srv.md[Couchbase.Extensions.DnsDiscovery] project.
 
 Current dependencies:
 
@@ -79,7 +80,7 @@ Current dependencies:
 * System.Memory (>= 4.5.2)
 
 Note that if using the NuGet package these dependencies will all be handled for you by the NuGet Package Manager tool in Visual Studio or Visual Studio Code.
-See the xref:start-using-sdk.adoc[Start Using] document for information on adding it via NuGet.
+See the xref:hello-world:start-using-sdk.adoc[Start Using] document for information on adding it via NuGet.
 
 === Configuring the Environment
 
@@ -278,7 +279,8 @@ With this change, the SDK follows the same idioms in the base class library's Ht
 The application then waits as appropriate on these calls with either the `await` keyword or by calling the `.Wait()` method, depending on how it fits into the rest of the applciation.
 
 
-//// Transcoders section needs revisiting
+////
+// Transcoders section needs revisiting
 == Serialization and Transcoding
 
 In SDK 2 the API was oriented around an `IDocument` interface with additonal methods to get to metadata.
@@ -361,7 +363,7 @@ x      try {
       }
 ----
 
-//TODO: make this a little more clear, is it a property of the exception or something else?
+// TODO: make this a little more clear, is it a property of the exception or something else?
 [source]
 ----
 -----------------------Context Info---------------------------
@@ -415,7 +417,8 @@ using Microsoft.Extensions.Logging;
       config.WithConnectionString("couchbase://localhost");
 ----
 
-//// Need to fix this after seeing logging
+////
+// Need to fix this after seeing logging
 [source]
 ----
 ITODO
@@ -520,7 +523,8 @@ Compare SDK 2 and SDK 3 custom timeout setting:
 ----
 
 
-//// TODO: couldn't make sense of this from the SDK2 docs on replica read
+////
+TODO: couldn't make sense of this from the SDK2 docs on replica read
 In SDK 2, the `GetFromReplica` method had a `ReplicaMode` argument which allowed you to customize its behavior on how many replicas should be reached.
 We have identified this as a potential source of confusion and as a result split it up in two methods that simplify usage significantly.
 There is now a `GetAllReplicasAsync` method and a `GetAnyReplicaAsync` method.
@@ -575,7 +579,8 @@ Compare a simple N1QL query from SDK 2 with its SDK 3 equivalent:
       }
 ----
 
-//// TODO: break this out from the one above
+////
+TODO: break this out from the one above
 Note that there is no `N1qlQuery.simple` any more -- parameter option have been moved to the `queryOptions()` for consistency reasons.
 The following shows how to do named and positional parameters in SDK 2, and their SDK 3 counterparts:
 
@@ -616,7 +621,8 @@ Much of the non-row metadata has been moved into a specific `QueryMetaData` sect
 It is no longer necessary to check for a specific error in the stream: if an error happened during processing it will throw an exception at the top level of the query.
 The stream with terminate with an error as soon as one is received.
 
-//// TODO: Improve the examples
+////
+TODO: Improve the examples
 
 In SDK 2 you had to manually check for errors, otherwise you would get an empty row collection:
 
@@ -642,7 +648,8 @@ Not only does it throw a `CouchbaseException`, it also tries to map it to a spec
 
 ////
 
-//// TODO: from here to end of migration still needs to be done, stopped at KV and query for now
+////
+TODO: from here to end of migration still needs to be done, stopped at KV and query for now
 
 === Analytics
 
