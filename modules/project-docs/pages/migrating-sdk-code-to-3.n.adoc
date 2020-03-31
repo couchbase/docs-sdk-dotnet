@@ -355,7 +355,7 @@ Here is an example of the error context if a N1QL query is performed with an inv
 
 [source,csharp]
 ----
-x      try {
+      try {
           IQueryResult<dynamic> result = await cluster.QueryAsync<dynamic>("select 1 = ");
       }
       catch (CouchbaseException ex) {
