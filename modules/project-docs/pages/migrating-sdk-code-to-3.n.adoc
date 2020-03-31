@@ -7,9 +7,10 @@
 The 3.0 API breaks the existing 2.0 APIs in order to provide a number of improvements.
 Collections and Scopes are introduced.
 The Document class and structure has been completely removed from the API, and the returned value is now `Result`.
-Retry behaviour is more proactive, and lazy bootstrapping moves all error handling to a single place.
+Retry behavior is more proactive, and lazy bootstrapping moves all error handling to a single place.
 Individual behaviour changes across services are explained here.
 
+In following Microsoft recommendations on .NET, the API has also been changed to surface many of the APIs as async using Tasks.
 
 include::partial$beta-warning.adoc[]
 
@@ -21,18 +22,23 @@ include::6.5@sdk:shared:partial$migration.adoc[tag=terms]
 
 As an example here is a KeyValue document fetch:
 
-// change to $Your_language
-[source,java]
+[source,csharp]
 ----
-GetResult getResult = collection.get("key", getOptions().timeout(Duration.ofSeconds(3));
+IGetResult getResult = await collection.GetAsync("doc1");
+var docContent = getResult.ContentAs<dynamic>();
 ----
+
+Compared to the 2.x SDK, you will note that the result is now oriented around the result of the operation.
+Retrieval of the content of the document is accomplished through the `ContentAs()` method.
+Also, in most cases you do not need to check the result object returned as exceptions are thrown for most error conditions.
+Check the API reference for details.
 
 Compare this to a N1QL query:
 
-// change to $Your_language
-[source,java]
+[source,csharp]
 ----
-QueryResult queryResult = cluster.query("select 1=1", queryOptions().timeout(Duration.ofSeconds(3));
+IQueryResult<dynamic> result = await cluster.QueryAsync<dynamic>("select 1 = 1", QueryOptions.Create().Timeout(TimeSpan.FromSeconds(3)));
+
 ----
 
 include::6.5@sdk:shared:partial$migration.adoc[tag=terms2]
@@ -43,78 +49,923 @@ include::6.5@sdk:shared:partial$migration.adoc[tag=new]
 
 include::6.5@sdk:shared:partial$migration.adoc[tag=lang]
 
+==  Installation and Configuration
+
+The .NET SDK 3.x is available for download from the same resources as the previous generation 2.0 SDK:
+
+* From NuGet (the most popular choice): `Install-Package CouchbaseNetClient -Version 3.0.0-beta4`
+* By downloading a [zip]https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client.3.0.0-beta4.zip file directly
+* (Not officially supported) By cloning and building the source code directly on [github]https://github.com/couchbase/couchbase-net-client/tree/master
+
+Please see the xref:sdk-release-notes.adoc[Release Notes] for up-to-date information.
+
+Couchbase .NET SDK 3.0 targets the .NET Standard 2.0.
+This was chosen so .NET Full Framework 4.8 can be supported along with .NET Core 3.x and earlier and follows the suggested path for library authors.
+The goal is to use the latest and greatest .NET Core libraries available, but still allow fallback for developers still using .NET Full Framework as they progress towards .NET Standard compliance.
+
+==== Dependencies
+
+There are few dependency changes from SDK 2.x.
+SDK 3.0 and later no longer has any dependencies on .NET Framework 4.5.2.
+It is based on .NET Standard 2.0.
+One dependency addition is DnsClient, which was previously in SDK 2.x through a transitive dependency via the https://github.com/couchbaselabs/Couchbase.Extensions/blob/master/docs/dns-srv.md[Couchbase.Extensions.DnsDiscovery] project.
+
+Current dependencies:
+
+* DnsClient (>= 1.2.0)
+* Microsoft.CSharp (>= 4.5.0)
+* Microsoft.Extensions.Logging (>= 2.1.1)
+* Newtonsoft.Json (>= 11.0.2)
+* OpenTracing (>= 0.12.0)
+* System.Memory (>= 4.5.2)
+
+Note that if using the NuGet package these dependencies will all be handled for you by the NuGet Package Manager tool in Visual Studio or Visual Studio Code.
+See the xref:hello-world:start-using-sdk.adoc[Start Using] document for information on adding it via NuGet.
+
+=== Configuring the Environment
+
+Configuration is essentially the same as SDK 2.x retaining capabilites with less tunable properties.
+Instead of using a `ClientConfiguration` object, you would use a `ClusterOptions` object.
+For example, to use a custom timeout for Key/Value (K/V) operations in SDK 2.x you would do something like this:
 
 
-// Outline below for individual SDKs -- please expand as appropriate, many topics can be covered lightly
-//
-// Please use before(2.n) / after (3.0) snippets in all cases where it is helpful
-// (probably nearly everywhere, I'm afraid)
+[source,csharp]
+----
+// SDK 2.0 custom k/v timeout
+ var config = new ClientConfiguration
+{
+    DefaultOperationLifespan = (uint)TimeSpan.FromMilliseconds(5).TotalMilliseconds
+};
+----
+
+You can perform the same custom K/V timeout in SDK 3.0, however, you will use the `ClusterOptions` class:
+
+[source,csharp]
+----
+// SDK 3.0 custom k/v timeout
+ var options = new ClusterOptions
+{
+    KvTimeout = TimeSpan.FromMilliseconds(5)
+};
+----
+
+The configuration options are passed into the `Cluster` object via a constructor:
+
+[source,csharp]
+----
+var cluster = new Cluster("couchbase://localhost", options);
+----
+
+Or by using one of the static `Cluster.Connect(...)` methods:
+
+[source,csharp]
+----
+var cluster = Cluster.Connect("couchbase://localhost", options);
+----
+
+In order to free all resources associated with a cluster, simply call the `.Dispose()` method:
+
+[source,csharp]
+----
+cluster.Dispose();
+----
+
+When creating a configuration, you may customize settings through the ClusterOptions or the connection string.
+See xref:ref:client-settings.adoc[client configuration] for further configuration details.
+
+[source,csharp]
+----
+            // Will set the max http connections to 23
+            var config = new ClusterOptions()
+            {
+                UserName = "user",
+                Password = "pass",
+                MaxHttpConnections =  23
+            };
+
+            config.WithConnectionString("couchbase://localhost");
+
+            cluster = await Cluster.ConnectAsync(config);
+----
 
 ////
-===  Installation and Configuration
+The above has this equivalent with a connection string
 
- - where to get the new artifacts / vs old place
- - discuss new dependencies if needed
- - discuss configuration old and new, especially if certain
-   custom options are not present anymore (why they are not used)
-   and how users might want to transfer this config over to the
-   new one
- - discuss cert auth
- - discuss encryption config
+// disabled for https://issues.couchbase.com/browse/NCBC-2435
+[source,csharp]
+----
+            // Will set the max http connections to 23
+            var config = new ClusterOptions()
+            {
+                Password = "pass"
+            };
 
-===  Connection Lifecycle
+            config.WithConnectionString("couchbase://user@localhost?MaxHttpConnections=32");
 
- - discuss bootstrapping
- - important: bootstrapping is now "lazy" so also discuss how to do the eager
-   checks and any impact it might have on the first op being slow?
- - discuss shutdown
- - if external state is passed in optionally, discuss
-   management of this state
- - discuss the impact of 6.5 "gcccp" and cluster level queries
- - SASL by default on non-PLAIN (if applicable)
+            cluster = await Cluster.ConnectAsync(config);
+----
+////
 
-===  Exception Handling
 
- - discuss new exception hierachy in principle and how users should
-   approach it when migrating
- - explain maybe new error handling strategies that are in place,
-   around retry strategies especially and their behavior
+The SDK offers a configuration API for customizing bootstrapping, timeouts, reliability and performance tuning.
+Configuration options have changed since the 2.x release.
+See the xref:ref:client-settings.adoc[configuration section] for specifics.
 
-=== Serialization and Transcoding
+At the end of this guide you'll find a xref:#configurations-options-reference[reference] that describes the SDK 2 environment options and their SDK 3 equivalents where applicable.
 
- - describe how it works for your language, how to override and any platform-specific
-   encoding and decoding guidelines. 
- - Also important how to convert from the document types to the new approach
 
-=== Logging and Events
+=== Authentication
 
- - discuss any changes to the logging infrastructure or event system if made
+Since SDK 2 supports Couchbase Server clusters older than 5.0, it had to support both Role-Based access control as well as bucket-level passwords.
+The minimum cluster version supported by SDK 3 is Server 5.0, which means that only RBAC is supported.
+This is why you can set the username and password when directly connecting:
 
-===  Migrating Services
+[source,csharp]
+----
+var cluster = await Cluster.ConnectAsync("couchbase://localhost1", "user", "pass");
+----
 
- - one section for each service that goes in-depth on each command 
-   and discusses old vs. new
+This is just a shorthand for:
 
-==== Key Value
+[source,csharp]
+----
+            var cluster = await Cluster.ConnectAsync("localhost", new ClusterOptions
+            {
+                UserName = "user",
+                Password = "pass"
 
- - don't forget the get replica changes!
+            });
+----
 
-==== Query
+You may also use this approach to configure certificate-based authentication:
 
-==== Analytics
+
+[source,csharp]
+----
+            cluster = Cluster.Connect("127.0.0.1", new ClusterOptions
+            {
+                EnableCertificateAuthentication = true
+            });
+
+----
+
+// TODO: Please see the xref:howtos:authentication.adoc[documentation on certificate-based authentication] for detailed information on how to configure this properly.
+
+
+== Connection Lifecycle
+
+From a high-level perspective, bootstrapping and shutdown is very similar to SDK 2.
+One notable difference is that the `Collection` is introduced and that the individual methods like `bucket` immediately return, and do not throw an exception.
+Compare SDK 2: the `openBucket` method would not work if it could not open the bucket.
+
+The reason behind this change is that even if a bucket can be opened, a millisecond later it may not be available any more.
+All this state has been moved into the actual operation so there is only a single place where the error handling needs to take place.
+This simplifies error handling and retry logic for an application.
+
+In SDK 2, you connected, opened a bucket, performed a KV op, and disconnected like this:
+
+[source,csharp]
+----
+            var cluster = new Cluster(new ClientConfiguration
+            {
+                Servers = new List<Uri> { new Uri("http://localhost:8091") }
+            });
+
+            var authenticator = new PasswordAuthenticator("user", "pass");
+            cluster.Authenticate(authenticator);
+            var bucket = cluster.OpenBucket("travel-sample");
+
+            var result = bucket.Get<dynamic>("airline_10");
+
+            bucket.Dispose();
+            cluster.Dispose();
+----
+
+Here is the SDK 3 equivalent:
+
+[source,csharp]
+----
+            var cluster = await Cluster.ConnectAsync("127.0.0.1", "user", "pass");
+            var bucket = await cluster.BucketAsync("travel-sample");
+            var collection = bucket.DefaultCollection();
+
+            var getResult = await collection.GetAsync("airline_10");
+
+            cluster.Dispose();
+----
+
+`Collections` will be generally available with an upcoming Couchbase Server release, but the SDK already encodes it in its API to be future-proof.
+If you are using a Couchbase Server version which does not support `Collections` such as 6.0, always use the `defaultCollection()` method to access the KV API; it will map to the full bucket.
+
+IMPORTANT: You'll notice that `BucketAsync(String)` returns immediately, even if the bucket resources are not completely opened.
+This means that the subsequent `Get` operation may be dispatched even before the connection is opened in the background.
+The SDK will handle this case transparently, and reschedule the operation until the bucket is opened properly.
+This also means that if a bucket could not be opened (say, because no server was reachable) the operation will time out.
+Please check the logs to see the cause of the timeout.
+In this example case, you'll see network socket connection failures.
+
+Also note you will now find Query, Search, and Analytics at the `Cluster` level.
+This is where they logically belong.
+If you are using Couchbase Server 6.5 or later, you will be able to perform cluster-level queries even if no bucket is open.
+If you are using an earlier version of the cluster you must open at least one bucket, otherwise cluster-level queries will fail.
+
+== Async and Await by Default
+
+SDK 2 followed a pattern of having a `Method()` and a `MethodAsync()` as was the common approach in most C# code at the time.
+Subsequently, it has become more common in contemporary C# code for all methods to return a Task from all asynchronous methods.
+This is now considered to be the best practice.
+Read more about it in MSDN's post https://docs.microsoft.com/en-us/archive/msdn-magazine/2013/march/async-await-best-practices-in-asynchronous-programming#async-all-the-way[Async All the Way].
+With this change, the SDK follows the same idioms in the base class library's HttpClient.
+The application then waits as appropriate on these calls with either the `await` keyword or by calling the `.Wait()` method, depending on how it fits into the rest of the applciation.
+
+
+////
+// Transcoders section needs revisiting
+== Serialization and Transcoding
+
+In SDK 2 the API was oriented around an `IDocument` interface with additonal methods to get to metadata.
+As earlier mentioned, in SDK 3 many methods return 'result' objects with all metadata and content, where transcoding to either a C# POCO or to a dynamic object is done via method calls.
+While most of the time decoding to a dynamic object or a POCO is all that is necessary, these can, optionally, have custom deserializers.
+
+In SDK 2 the main method to control transcoding was through providing different `Document` instances (which in turn had their own transcoder associated), such as the `JsonDocument`.
+This only worked for the KV APIs though -- Query, Search, Views, and other services exposed their JSON rows/hits in different ways.
+All of this has been unified in SDK 3 under a single concept: serializers and transcoders.
+
+By default, all KV APIs transcode to and from JSON either with dynamic objects or POCOs.
+
+// TODO: update after NCBC-2437
+If you want to write already-encoded JSON, instead of using the `RawJsonDocument` you now need to use the `RawJsonTranscoder.INSTANCE`:
+
+[source,csharp]
+----      var content = System.Text.Encoding.UTF8.GetBytes("{}");
+      var upsertTranscoded = await collection.UpsertAsync(
+          "foo",
+          content,
+          new UpsertOptions().Transcoder(new RawJsonTranscoder())
+      );
+----
+
+Here is a mapping table from the SDK 2 `Document` types to the new transcoder types:
+
+.SDK 2.x Document vs. SDK 3.x Transcoder
+[options="header"]
+|=======================
+| SDK 2                          | SDK 3
+|`JsonDocument`                  | `JsonTranscoder` (default)
+|`JsonArrayDocument`             | `JsonTranscoder` (default)
+|`JsonBooleanDocument`           | `JsonTranscoder` (default)
+|`JsonLongDocument`              | `JsonTranscoder` (default)
+|`JsonStringDocument`            | `JsonTranscoder` (default)
+|`JsonDoubleDocument`            | `JsonTranscoder` (default)
+|`LegacyDocument`                | removed
+|`RawJsonDocument`               | `RawJsonTranscoder`
+|`SerializableDocument`          | removed
+|`StringDocument`                | `RawStringTranscoder`
+|`ByteArrayDocument`             | `RawBinaryTranscoder`
+|`BinaryDocument`                | `RawBinaryTranscoder`
+|`EntityDocument`                | `JsonTranscoder` (default)
+|=======================
+
+Serializers and transcoders can also be customized and overwritten on a per-operation basis, please see the appropriate documentation section for details.
+
+The JSON `Transcoders` use a `Serializer` underneath.
+While a transcoder can handle many different storage types, the serializer is specialized for JSON encoding and decoding.
+On all JSON-only APIs (i.e. Sub-doc, Query, Search,...) you'll only find a `Serializer`, not a `Transcoder`, in the operation options.
+Usually there is no need to override it unless you want to provide your own implementation (i.e. if you have your own POCO mapping json logic in place, and want to reuse it).
+
+////
+
+== Exception Handling
+
+How to _handle_ exceptions is unchanged from SDK 2.
+You should still use `try/catch`.
+
+There have been changes made in the following areas:
+
+- Exception hierachy and naming.
+- Proactive retry where possible.
+
+
+=== Exception hierachy
+
+The exception hierachy is now flat and unified under a `CouchbaseException`.
+Each `CouchbaseException` has an associated `ErrorContext` which is populated with as much information as possible and then dumped alongside the stack trace if an error happens.
+
+Here is an example of the error context if a N1QL query is performed with an invalid syntax (i.e. `select 1= from`):
+
+[source,csharp]
+----
+x      try {
+          IQueryResult<dynamic> result = await cluster.QueryAsync<dynamic>("select 1 = ");
+      }
+      catch (CouchbaseException ex) {
+          Console.WriteLine(ex);
+      }
+----
+
+// TODO: make this a little more clear, is it a property of the exception or something else?
+[source]
+----
+-----------------------Context Info---------------------------
+{"Statement":"[{\"statement\":\"select 1 = \",\"timeout\":\"3000ms\",\"client_context_id\":\"e3003393-e54b-4f5b-b620-f91903556282\"}]","ClientContextId":"e3003393-e54b-4f5b-b620-f91903556282","Parameters":"{\"Named\":{},\"Raw\":{},\"Positional\":[]}","HttpStatus":400,"QueryStatus":6,"Errors":[{"msg":"syntax error - at end of input","Code":3000,"Name":null,"Severity":0,"Temp":false}],"Message":null}
+----
+
+The expectation is that the application catches the `CouchbaseException` and deals with it as an unexpected error (e.g. logging with subsequent bubbling up of the exception or failing).
+In addition to that, each method exposes exceptions that can be caught separately if needed.
+For example, a `GetAsync()` may throw a `DocumentNotFoundException` or a `TimeoutException` in addition to a more generic `CouchbaseException`.
+These exceptions extend `CouchbaseException`, but both the `TimeoutException` and the `DocumentNotFoundException` can be caught individually if specific logic should be executed to handle them.
+
+=== Proactive Retry
+
+One reason why the APIs do not expose a long list of exceptions is that the SDK now retries as many operations as it can if it can do so safely.
+This depends on the type of operation (idempotent or not), in which state of processing it is (already dispatched or not), and what the actual response code is if it arrived already.
+As a result, many transient cases -- such as locked documents, or temporary failure -- are now retried by default and should less often impact applications.
+It also means, when migrating to the new SDK API, you may observe a longer period of time until an error is returned by default.
+
+NOTE: Operations are retried by default as described above with the default `BestEffortRetryStrategy`.
+Like in SDK 2 you can configure fail-fast retry strategies to not retry certain or all operations.
+The `RetryStrategy` interface has been extended heavily in SDK 3 -- please see the xref:howtos:error-handling.adoc[error handling documentation].
+
+When migrating your SDK 2 exception handling code to SDK 3, make sure to wrap every call with a catch for `CouchbaseException` (or let it bubble up immediately).
+You can likely remove your user-level retry code for temporary failures, backpressure exception, and so on.
+One notable exception from this is the `CasMismatchException`, which is still thrown since it requires more app-level code to handle (most likely identical to SDK 2).
+
+
+== Logging and Events
+
+Configuring and consuming logs has not greatly changed.
+
+The SDK is still compatible with multiple loggers and works well with the .NET Core Runtime abstraction interface in Microsoft.Extensions.Logging.
+The biggest impact you'll see from it is that the log messages now look very structured and contain contextual information where possible.
+
+The logger may be configured from the ClusterOptions.
+
+[source,csharp]
+----
+
+using Microsoft.Extensions.Logging;
+…
+      var loggerFactory = new LoggerFactory().AddConsole();
+
+      var config = new ClusterOptions()
+      {
+          UserName = "user",
+          Password = "pass",
+          Logging = loggerFactory
+      };
+
+      config.WithConnectionString("couchbase://localhost");
+----
+
+////
+// Need to fix this after seeing logging
+[source]
+----
+ITODO
+13:36:46 INFO  [com.couchbase.node:470] [com.couchbase.node][NodeConnectedEvent] Node connected {"coreId":1,"managerPort":"8091","remote":"127.0.0.1"}
+13:36:46 INFO  [com.couchbase.core:470] [com.couchbase.core][BucketOpenedEvent][393161µs] Opened bucket "travel-sample" {"coreId":1}
+----
+
+ITODO: Notice the package path (which you can also filter on if needed), the event name, an optional time that it took to perform the operation, the message and surrounding context.
+This makes it easier to debug potential problems but also allows consuming all the events and feeding them in other monitoring systems without having to round-trip a file log.
+Please see xref:howtos:collecting-information-and-logging.adoc[the logging documentation] for further information.
+////
+
+== Migrating Services
+
+The following section discusses each service in detail and covers specific bits that have not been covered by the more generic sections above.
+
+=== Key Value
+
+The Key/Value (KV) API is now located under the `Collection` interface, so even if you do not use collections, the `DefaultCollection()` needs to be opened in order to access it.
+
+The following table describes the SDK 2 KV APIs and where they are now located in SDK 3:
+
+.SDK 2.x KV API vs. SDK 3.x KV API
+[options="header"]
+|====
+| SDK 2                                                   | SDK 3
+|`Bucket.Upsert` and `Bucket.UpsertAsync`                 | `Collection.UpsertAsync`
+|`Bucket.Get` and `Bucket.GetAsync`                       | `Collection.GetAsync`
+|`Bucket.Exists` and `Bucket.ExistsAsync`                 | `Collection.ExistsAsync`
+|`Bucket.GetFromReplica` and `Bucket.GetFromReplicaAsync` | `Collection.GetAnyReplicaAsync` and `Collection.GetAllReplicasAsync`
+|`Bucket.GetAndLock` and `Bucket.GetAndLockAsync`         | `Collection.GetAndLockAsync`
+|`Bucket.GetAndTouch` and `Bucket.GetAndTouchAsync`            | `Collection.GetAndTouchAsync`
+|`Bucket.Insert` and `Bucket.InsertAsync`   | `Collection.InsertAsync`
+|`Bucket.Upsert` and `Bucket.UpsertAsync`  | `Collection.UpsertAsync`
+|`Bucket.Replace` and `Bucket.ReplaceAsync` | `Collection.ReplaceAsync`
+|`Bucket.Remove` and `Bucket.RemoveAsync` | `Collection.RemoveAsync`
+|`Bucket.Unlock` and `Bucket.UnlockAsync`   | `Collection.UnlockAsync`
+|`Bucket.Touch` and `Bucket.TouchAsync`  | `Collection.TouchAsync`
+|`Bucket.LookupIn`                     | `Collection.LookupInAsync`
+|`Bucket.MutateIn`        | `Collection.MutateInAsync`
+|`Bucket.Increment`, `Bucket.IncrementAsync` |
+|`Bucket.Decrement` and `Bucket.DecrementAsync` | `Collection.Binary.IncrementAsync` and `Collection.Binary.DecrementAsync`
+|`Bucket.Append` and  `Bucket.AppendAsync`  | `Collection.Binary.IncrementAsync.AppendAsync`
+|`Bucket.Prepend` and `Bucket.PrependAsync` | `Collection.Binary.IncrementAsync.PrependAsync`
+|====
+
+////
+TODO: are these implemented?
+In addition, the datastructure APIs have been renamed and moved:
+
+.Datastructure API Changes
+[options="header"]
+|====
+| SDK 2                   | SDK 3
+|`Bucket.mapAdd`                 | `Collection.map`
+|`Bucket.mapGet`                 | `Collection.map`
+|`Bucket.mapRemove`              | `Collection.map`
+|`Bucket.mapSize`                | `Collection.map`
+|`Bucket.listGet`                | `Collection.list`
+|`Bucket.listAppend`             | `Collection.list`
+|`Bucket.listRemove`             | `Collection.list`
+|`Bucket.listPrepend`            | `Collection.list`
+|`Bucket.listSet`                | `Collection.list`
+|`Bucket.listSize`               | `Collection.list`
+|`Bucket.setAdd`                 | `Collection.set`
+|`Bucket.setContains`            | `Collection.set`
+|`Bucket.setRemove`              | `Collection.set`
+|`Bucket.setSize`                | `Collection.set`
+|`Bucket.queuePush`              | `Collection.queue`
+|`Bucket.queuePop`               | `Collection.queue`
+|====
+////
+
+There are two important API changes:
+
+* On the request side, overloads have been reduced and moved under a `Options` block
+* On the response side, the return types have been unified.
+
+The signatures now look very similar.
+The concept of the `Document` as a type is gone in SDK 3 and instead you need to pass in the properties explicitly.
+This makes it very clear what is returned, especially on the response side.
+
+Thus, the `GetAsync` method does not return a `Document` but a `GetResult` instead, and the `UpsertAsync` does not return a `Document` but a `MutationResult`.
+Each of those results only contain the field that the specific method can actually return, making it impossible to accidentally try to access the `expiry` on the `Document` after a mutation, for example.
+
+Instead of having many overloads, all optional params are now part of the `Option` block.
+All required params are still part of the method signature, making it clear what is required and what is not (or has default values applied if not overridden).
+
+The timeout can be overridden on every operation and now takes a `Duration` from java 8.
+Compare SDK 2 and SDK 3 custom timeout setting:
+
+[source,csharp]
+----
+            // SDK 2 custom timeout
+            IOperationResult getResult = bucket.Get<dynamic>("mydoc-id", TimeSpan.FromMilliseconds(2250));
+----
+
+[source,csharp]
+----
+            IGetResult getaResult = await collection.GetAsync("mydoc-id",
+                options => options.Timeout(TimeSpan.FromMilliseconds(2250)));
+----
+
+
+////
+TODO: couldn't make sense of this from the SDK2 docs on replica read
+In SDK 2, the `GetFromReplica` method had a `ReplicaMode` argument which allowed you to customize its behavior on how many replicas should be reached.
+We have identified this as a potential source of confusion and as a result split it up in two methods that simplify usage significantly.
+There is now a `GetAllReplicasAsync` method and a `GetAnyReplicaAsync` method.
+
+* `GetAllReplicasAsync` asks the active node and all available replicas and returns the results as a stream.
+* `GetAnyReplicaAsync` uses `GetAllReplicasAsync`, and returns the first result obtained.
+
+Unless you want to build some kind of consensus between the different replica responses, we recommend `GetAnyReplicaAsync` for a fallback to a regular `GetAsync` when the active node times out.
+
+NOTE: Operations which cannot be performed on JSON documents have been moved to the `IBinaryCollection`, accessible through `ICollection.Binary()`.
+These operations include `AppendAsync`, `PrependAsync`, `IncrementAsync`, and `DecrementAsync` (previously called `counter` in SDK 2).
+These operations should only be used against non-json data.
+Similar functionality is available through `MutateIn` on JSON documents.
+
+////
+
+=== Query
+
+N1QL querying is now available at the `Cluster` level instead of the bucket level, because you can also write N1QL queries that span multiple buckets.
+Querying is now async by default as discussed earlier.
+One related change is that query results come back in an async stream by default as well.
+To convert results to IEnumerable to iterate like you would in the 2.x SDK, you can call `.ToEnumerable()` on the results.
+
+Compare a simple N1QL query from SDK 2 with its SDK 3 equivalent:
+
+[source,csharp]
+----
+      // SDK 2 simple query
+      var query = new QueryRequest("SELECT * FROM `travel-sample` LIMIT 10");
+      foreach (var row in bucket.Query<dynamic>(query))
+      {
+          Console.WriteLine(JsonConvert.SerializeObject(row));
+      }
+----
+
+[source,csharp]
+----
+      try {
+          var queryResult = await cluster.QueryAsync<dynamic>("SELECT `travel-sample`.* FROM `travel-sample` LIMIT 10",
+              parameter =>
+              {
+                  parameter.Parameter("type", "airline");
+              }).ConfigureAwait(false);
+
+          await foreach (var o in queryResult.ConfigureAwait(false))
+          {
+              Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(o, Newtonsoft.Json.Formatting.None));
+          }
+      }
+      catch (CouchbaseException) {
+          // SDK 3 throws exceptions where possible
+      }
+----
+
+////
+TODO: break this out from the one above
+Note that there is no `N1qlQuery.simple` any more -- parameter option have been moved to the `queryOptions()` for consistency reasons.
+The following shows how to do named and positional parameters in SDK 2, and their SDK 3 counterparts:
+
+[source,java]
+----
+// SDK 2 named parameters
+bucket.query(N1qlQuery.parameterized(
+  "select * from bucket where type = $type",
+  JsonObject.create().put("type", "airport")
+));
+
+// SDK 2 positional parameters
+bucket.query(N1qlQuery.parameterized(
+  "select * from bucket where type = $1",
+  JsonArray.from("airport")
+));
+----
+////
+
+If you want to use prepared statements, the `AdHoc()` method is still available on the `QueryOptions`, alongside every other option that used to be exposed on the SDK 2 Query options.
+
+Much of the non-row metadata has been moved into a specific `QueryMetaData` section:
+
+.Query Metadata Changes
+[options="header"]
+|====
+| SDK 2                          | SDK 3
+|`IQueryResult.Signature`        | `QueryResult.QueryMetaData.Signature`
+|`IQueryResult.Metrics`          | `QueryResult.QueryMetaData.Metrics`
+|`IQueryResult.Profile`          | `QueryResult.QueryMetaData.Profile`
+|`IQueryResult.Success`          | removed
+|`IQueryResult.Status`           | `QueryResult.QueryMetaData.status` containing any warnings
+|`IQueryResult.Errors`           | throws an Exception on `QueryResult`
+|`IQueryResult.RequestId`        | `QueryResult.QueryMetaData.RequestId`
+|`IQueryResult.ClientContextId`  | `QueryResult.QueryMetaData.ClientContextId`
+|====
+
+It is no longer necessary to check for a specific error in the stream: if an error happened during processing it will throw an exception at the top level of the query.
+The stream with terminate with an error as soon as one is received.
+
+////
+TODO: Improve the examples
+
+In SDK 2 you had to manually check for errors, otherwise you would get an empty row collection:
+
+[source,java]
+----
+N1qlQueryResult queryResult = bucket.query(N1qlQuery.simple("select 1="));
+if (!queryResult.errors().isEmpty()) {
+  // errors contain [{"msg":"syntax error - at end of input","code":3000}]
+}
+----
+
+In SDK 3 the top level `query` method will throw an exception:
+
+[source]
+----
+ITODO: need a sample for this
+Exception in thread "main" com.couchbase.client.core.error.ParsingFailedException: Parsing of the input failed {"completed":true,"coreId":1,"errors":[{"code":3000,"message":"syntax error - at end of input"}],"idempotent":false,"lastDispatchedFrom":"127.0.0.1:51703","lastDispatchedTo":"127.0.0.1:8093","requestId":5,"requestType":"QueryRequest","retried":0,"service":{"operationId":"1c623a77-196a-4890-96cd-9d4f3f596477","statement":"select 1=","type":"query"},"timeoutMs":75000,"timings":{"dispatchMicros":13798,"totalMicros":70789}}
+	at com.couchbase.client.java.AsyncUtils.block(AsyncUtils.java:51)
+	at com.couchbase.client.java.Cluster.query(Cluster.java:225)
+----
+
+Not only does it throw a `CouchbaseException`, it also tries to map it to a specific exception type and include extensive contextual information for a better troubleshooting experience.
+
+////
+
+////
+TODO: from here to end of migration still needs to be done, stopped at KV and query for now
+
+=== Analytics
+
+Analytics querying, like N1QL, is also moved to the `Cluster` level: it is now accessible through the `Cluster.AnalyticsQueryAsync` method.
+As with the Query service, parameters for the Analytics queries have moved into the `AnalyticsOptions`:
+
+[source,java]
+----
+      AnalyticsResult analyticsResult = cluster.analyticsQuery("select * from dataset");
+      for (JsonObject value : analyticsResult.rowsAsObject()) {
+----
+
+[source,java]
+----
+      // SDK 3 named parameters for analytics
+      cluster.analyticsQuery(
+        "select * from dataset where type = $type",
+        analyticsOptions().parameters(JsonObject.create().put("type", "airport"))
+      );
+----
+
+Also, errors will now be thrown as top level exceptions and it is no longer necessary to explicitly check for errors:
+
+[source,java]
+----
+// SDK 2 error check
+AnalyticsQueryResult analyticsQueryResult = b1.query(AnalyticsQuery.simple("select * from foo"));
+if (!analyticsQueryResult.errors().isEmpty()) {
+  // errors contain [{"msg":"Cannot find dataset foo in dataverse Default nor an alias with name foo! (in line 1, at column 15)","code":24045}]
+}
+----
+
+[source]
+----
+// SDK 3 top level exception
+com.couchbase.client.core.error.DatasetNotFoundException: The analytics dataset is not found {"completed":true,"coreId":1,"errors":[{"code":24045,"message":"Cannot find dataset foo in dataverse Default nor an alias with name foo! (in line 1, at column 15)"}],"idempotent":false,"lastDispatchedFrom":"127.0.0.1:51942","lastDispatchedTo":"127.0.0.1:8095","requestId":5,"requestType":"AnalyticsRequest","retried":0,"service":{"operationId":"80265061-62e0-4c35-860f-a07a97e1a5ee","priority":0,"statement":"select * from foo","type":"analytics"},"timeoutMs":75000,"timings":{"dispatchMicros":27005,"totalMicros":89888}}
+	at com.couchbase.client.java.AsyncUtils.block(AsyncUtils.java:51)
+	at com.couchbase.client.java.Cluster.analyticsQuery(Cluster.java:250)
+----
 
 === Search
 
- - especial focus, since the API has been reordered quite a bit
- - if applicable: Change in FTS Geospatial Lat/Lon ordering (i.e. node)
+The Search API has changed a bit in SDK 3 so that it aligns with the other query APIs.
+The type of queries have stayed the same, but all optional parameters moved into `SearchOptions`.
+Also, similar to the other query APIs, it is now available at the `Cluster` level.
+
+Here is a SDK 2 Search query with some options, and its SDK 3 equivalent:
+
+[source,java]
+----
+//  SDK 2 search query
+SearchQueryResult searchResult = bucket.query(new SearchQuery(
+  "indexname",
+  SearchQuery.queryString("airports")).limit(5).fields("a", "b", "c"),
+  2,
+  TimeUnit.SECONDS
+);
+for (SearchQueryRow row : searchResult.hits()) {
+  // ...
+}
+----
+
+[source,java]
+----
+      // SDK 3 search query
+      SearchResult searchResult = cluster.searchQuery(
+        "indexname",
+        SearchQuery.queryString("airports"),
+        searchOptions()
+          .timeout(Duration.ofSeconds(2))
+          .limit(5)
+          .fields("a", "b", "c")
+      );
+      for (SearchRow row : searchResult.rows()) {
+        // ...
+      }
+----
+
+Error handling for streaming is handled differently.
+While fatal errors will still raise top-level exceptions, any errors that happend during streaming (for example if one node is down, and only partial results are returned) they will not terminate the result.
+The reasoning behind this is that usually with search results, having partial results is better than none.
+
+Here is a top level exception, for _the index does not exist_:
+
+[source]
+----
+com.couchbase.client.core.error.SearchIndexNotFoundException: The search index is not found on the server {"completed":true,"coreId":1,"httpStatus":400,"idempotent":true,"lastDispatchedFrom":"127.0.0.1:53280","lastDispatchedTo":"127.0.0.1:8094","requestId":5,"requestType":"SearchRequest","retried":0,"service":{"indexName":"myindex","type":"search"},"status":"INVALID_ARGS","timeoutMs":75000,"timings":{"dispatchMicros":12741,"totalMicros":66262}}
+	at com.couchbase.client.java.AsyncUtils.block(AsyncUtils.java:51)
+	at com.couchbase.client.java.Cluster.searchQuery(Cluster.java:275)
+----
+
+If you want to be absolutely sure that you didn't get only partial data, you can check the error map:
+
+[source,java]
+----
+      SearchResult searchResult = cluster.searchQuery(
+        "myindex",
+        SearchQuery.queryString("searchstring")
+      );
+      if (searchResult.metaData().errors().isEmpty()) {
+        // no errors present, so full data got returned
+      }
+----
 
 === Views
 
- - don't forget that the consistency bit has been renamed, biggest change there
+Views have stayed at the `Bucket` level, because it does not have the concept of collections and is scoped at the bucket level on the server as well.
+The API has stayed mostly the same, the most important change is that `staleness` is unified under the `ViewConsistency` enum.
 
-== Management APIs
+.View Staleness Mapping
+[options="header"]
+|====
+| SDK 2                             | SDK 3
+|`Stale.TRUE`                       | `ViewScanConsistency.NotBounded`
+|`Stale.FALSE`                      | `ViewScanConsistency.RequestPlus`
+|`Stale.UPDATE_AFTER`               | `ViewScanConsistency.UpdateAfter`
+|====
 
- - discusses how to migrate from each old management api to the new one
- - where it is found, what exceptions it throws, etc.
+Compare this SDK 2 view query with its SDK 3 equivalent:
+
+[source,java]
+----
+// SDK 2 view query
+ViewResult query = bucket.query(
+  ViewQuery.from("design", "view").limit(5).skip(2),
+  10,
+  TimeUnit.SECONDS
+);
+for (ViewRow row : query) {
+  // ...
+}
+----
+
+[source,java]
+----
+include::example$Migrating.java[tag=viewquery,indent=0]
+----
+
+Exceptions are exclusively raised at the top level: for example, if the design document is not found:
+
+[source]
+----
+com.couchbase.client.core.error.ViewNotFoundException: The queried view is not found on the server {"completed":true,"coreId":1,"httpStatus":404,"idempotent":true,"lastDispatchedFrom":"127.0.0.1:53474","lastDispatchedTo":"127.0.0.1:8092","requestId":5,"requestType":"ViewRequest","retried":0,"service":{"bucket":"travel-sample","designDoc":"foo","development":false,"type":"views","viewName":"bar"},"status":"NOT_FOUND","timeoutMs":75000,"timings":{"dispatchMicros":77572,"totalMicros":189389},"viewError":"not_found","viewErrorReason":"Design document _design/foo not found"}
+	at com.couchbase.client.java.AsyncUtils.block(AsyncUtils.java:51)
+	at com.couchbase.client.java.Bucket.viewQuery(Bucket.java:182)
+
+----
+
+=== Management APIs
+
+In SDK 2, the management APIs were centralized in the `ClusterManager` at the cluster level and the `BucketManager` at the bucket level.
+Since SDK 3 provides more management APIs, they have been split up in their respective domains.
+So for example when in SDK 2 you needed to remove a bucket you would call `ClusterManager.removeBucket` you will now find it under `BucketManager.dropBucket`.
+Also, creating a N1QL index now lives in the `QueryIndexManager`, which is accessible through the `Cluster`.
+
+The following table provides a mapping from the SDK 2 management APIs to those of SDK 3:
+
+.SDK 2.x vs SDK 3.x ClusterManager
+[options="header"]
+|====
+| SDK 2                          | SDK 3
+|`ClusterManager.info`           | removed
+|`ClusterManager.getBuckets`     | `BucketManager.getAllBuckets`
+|`ClusterManager.getBucket`      | `BucketManager.getBucket`
+|`ClusterManager.hasBucket`      | removed
+|`ClusterManager.insertBucket`   | `BucketManager.createBucket`
+|`ClusterManager.updateBucket`   | `BucketManager.updateBucket`
+|`ClusterManager.removeBucket`   | `BucketManager.dropBucket`
+|`ClusterManager.upsertUser`     | `UserManager.upsertUser`
+|`ClusterManager.removeUser`     | `UserManager.dropUser`
+|`ClusterManager.getUsers`       | `UserManager.getAllUsers`
+|`ClusterManager.getUser`        | `UserManager.getUser`
+|`ClusterManager.apiClient`      | removed
+|====
+
+.SDK 2.x vs SDK 3.x BucketManager
+[options="header"]
+|====
+| SDK 2                                    | SDK 3
+|`BucketManager.info`                      | removed
+|`BucketManager.flush`                     | `BucketManager.flushBucket`
+|`BucketManager.getDesignDocuments`        | `ViewIndexManager.getAllDesignDocuments`
+|`BucketManager.getDesignDocument`         | `ViewIndexManager.getDesignDocument`
+|`BucketManager.insertDesignDocument`      | `ViewIndexManager.upsertDesignDocument`
+|`BucketManager.upsertDesignDocument`      | `ViewIndexManager.upsertDesignDocument`
+|`BucketManager.removeDesignDocument`      | `ViewIndexManager.dropDesignDocument`
+|`BucketManager.publishDesignDocument`     | `ViewIndexManager.publishDesignDocument`
+|`BucketManager.listN1qlIndexes`           | `QueryIndexManager.getAllIndexes`
+|`BucketManager.createN1qlIndex`           | `QueryIndexManager.createIndex`
+|`BucketManager.createN1qlPrimaryIndex`    | `QueryIndexManager.createPrimaryIndex`
+|`BucketManager.dropN1qlIndex`             | `QueryIndexManager.dropIndex`
+|`BucketManager.dropN1qlPrimaryIndex`      | `QueryIndexManager.dropPrimaryIndex`
+|`BucketManager.buildN1qlDeferredIndexes`  | `QueryIndexManager.buildDeferredIndexes`
+|`BucketManager.watchN1qlIndexes`          | `QueryIndexManager.watchIndexes`
+|====
+
+
+== Reactive and Async APIs
+
+The move to Java 8 as a baseline has opened the door to expose `CompletableFuture` in addition to a reactive API.
+You can now find it under the `async()` namespace of each level (for example, `Cluster.async()` -> `AsyncCluster`).
+We also moved from `RxJava` to `Reactor` because it provides native Java 8 support and better performance out of the box.
+`Reactor` has a growing community, and integrates very well into the Spring ecosystem.
+The reactive API can now be found under the `reactive()` namespace (for example, `Collection.reactive()` -> `ReactiveCollection`).
+
+Like in SDK 2, the async and reactive APIs provide the same functionality as their blocking counterpart.
+There are only a couple places in the SDK where it does not make sense (such as the blocking datastructure APIs, which at the collection level implement the Java interfaces which do not have async or reactive counterparts).
+
+IMPORTANT: if you need to use non-blocking APIs, we recommend using the reactive one.
+The async API based on `CompletableFuture` should only be used as a building block for higher level abstractions, or if you absolutely need the last drop of performance.
+The `Flux` and `Mono` types of reactor are very powerful and allow you to build efficient and flexible domain logic without blocking.
+
+Since `Reactor` implements the reactive stream specification, you can still use `RxJava` through the interoperability interfaces.
+This is out of scope for the migration guide -- please consult the reactor and rxjava documentations for further information.
+
+As a starting point, the following types are comparable:
+
+.SDK Reactor vs RxJava
+[options="header"]
+|====
+| SDK 2 RxJava          | SDK 3 Reactor
+|`Observable<T>`        | `Flux<T>`
+|`Single<T>`            | `Mono<T>`
+|`Completable`          | `Mono<Void>`
+|====
+
+
+== Configuration Options Reference
+
+The following table provides commonly used configuration options in SDK 2 and where they can be now applied in SDK 3.
+Note that some options have been removed, and others have different ways to configure them.
+
+.SDK 2.x vs SDK 3.x Environment Configs
+[options="header"]
+|====
+| SDK 2                        | SDK 3
+|`sslEnabled`                  | `SecurityConfig.enableTls`
+|`sslKeystoreFile`             | on `CertificateAuthenticator`
+|`sslKeystorePassword`         | on `CertificateAuthenticator`
+|`sslKeystore`                 | on `CertificateAuthenticator`
+|`sslTruststoreFile`           | `SecurityConfig.trustCertificate`
+|`sslTruststorePassword`       | `SecurityConfig.trustCertificate`
+|`sslTruststore`               | `SecurityConfig.trustManagerFactory`
+|`bootstrapCarrierEnabled`     | removed
+|`bootstrapHttpDirectPort`     | via custom `SeedNode`
+|`bootstrapHttpSslPort`        | via custom `SeedNode`
+|`bootstrapCarrierDirectPort`  | via custom `SeedNode`
+|`bootstrapCarrierSslPort`     | via custom `SeedNode`
+|`ioPoolSize`                  | via custom `IoEnvironment` pools
+|`computationPoolSize`         | removed
+|`requestBufferSize`           | removed
+|`responseBufferSize`          | removed
+|`kvEndpoints`                 | `IoConfig.numKvConnections`
+|`viewEndpoints`               | `IoConfig.maxHttpConnections`
+|`queryEndpoints`              | `IoConfig.maxHttpConnections`
+|`searchEndpoints`             | `IoConfig.maxHttpConnections`
+|`userAgent`                   | removed
+|`packageNameAndVersion`       | removed
+|`observeIntervalDelay`        | removed
+|`reconnectDelay`              | removed
+|`retryDelay`                  | removed
+|`ioPool`                      | via custom `IoEnvironment` pools
+|`kvIoPool`                    | via custom `IoEnvironment` pools
+|`viewIoPool`                  | via custom `IoEnvironment` pools
+|`queryIoPool`                 | via custom `IoEnvironment` pools
+|`searchIoPool`                | via custom `IoEnvironment` pools
+|`analyticsIoPool`             | via custom `IoEnvironment` pools
+|`scheduler`                   | `scheduler`
+|`retryStrategy`               | `retryStrategy`
+|`maxRequestLifetime`          | removed
+|`keepAliveInterval`           | removed
+|`autoreleaseAfter`            | removed
+|`eventBus`                    | `eventBus`
+|`bufferPoolingEnabled`        | removed
+|`tcpNodelayEnabled`           | `IoConfig.enableTcpKeepAlives`
+|`mutationTokensEnabled`       | `IoConfig.enableMutationTokens`
+|`runtimeMetricsCollectorConfig`         | removed
+|`networkLatencyMetricsCollectorConfig`  | removed
+|`defaultMetricsLoggingConsumer`         | removed
+|`socketConnectTimeout`        | removed
+|`callbacksOnIoPool`           | removed
+|`requestBufferWaitStrategy`   | removed
+|`memcachedHashingStrategy`    | removed
+|`keyValueServiceConfig`       | removed
+|`viewServiceConfig`           | removed
+|`queryServiceConfig`          | removed
+|`searchServiceConfig`         | removed
+|`analyticsServiceConfig`      | removed
+|`configPollInterval`          | removed
+|`configPollFloorInterval`     | removed
+|`certAuthEnabled`             | on `CertificateAuthenticator`
+|`continuousKeepAliveEnabled`  | removed
+|`keepAliveErrorThreshold`     | removed
+|`keepAliveTimeout`            | removed
+|`couchbaseCoreSendHook`       | removed
+|`forceSaslPlain`              | on `PasswordAuthenticator.allowedSaslMechanisms`
+|`operationTracingEnabled`     | removed
+|`operationTracingServerDurationEnabled`  | removed
+|`tracer`                      | `requestTracer`
+|`compressionMinSize`          | `CompressionConfig.minSize`
+|`compressionMinRatio`         | `CompressionConfig.minRatio`
+|`compressionEnabled`          | `CompressionConfig.enable`
+|`orphanResponseReportingEnabled`         | removed
+|`orphanResponseReporter`                 | removed
+|`networkResolution`           | `IoConfig.networkResolution`
+|`managementTimeout`           | `TimeoutConfig.managementTimeout`
+|`queryTimeout`                | `TimeoutConfig.queryTimeout`
+|`kvTimeout`                   | `TimeoutConfig.kvTimeout`
+|`viewTimeout`                 | `TimeoutConfig.viewTimeout`
+|`searchTimeout`               | `TimeoutConfig.searchTimeout`
+|`analyticsTimeout`            | `TimeoutConfig.analyticsTimeout`
+|`connectTimeout`              | `TimeoutConfig.connectTimeout`
+|`disconnectTimeout`           | `TimeoutConfig.disconnectTimeout`
+|`dnsSrvEnabled`               | `IoConfig.enableDnsSrv`
+|`cryptoManager`               | removed
+|`propagateParentSpan`         | removed
+|====
 
 ////
