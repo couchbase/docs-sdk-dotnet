@@ -2,4 +2,4 @@
 
 :page-type: landing-page
 
-include::partial$beta-warning.adoc[]
+

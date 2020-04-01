@@ -6,7 +6,7 @@
 [abstract]
 You can use MapReduce views to create queryable indexes in Couchbase Data Platform.
 
-include::partial$beta-warning.adoc[]
+
 
 include::6.5@sdk:shared:partial$views.adoc[tag=views-intro]
 

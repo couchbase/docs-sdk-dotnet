@@ -12,7 +12,7 @@ Individual behaviour changes across services are explained here.
 
 In following Microsoft recommendations on .NET, the API has also been changed to surface many of the APIs as async using Tasks.
 
-include::partial$beta-warning.adoc[]
+
 
 
 include::6.5@sdk:shared:partial$migration.adoc[tag=intro]

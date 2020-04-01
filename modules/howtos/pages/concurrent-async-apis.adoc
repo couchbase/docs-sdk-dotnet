@@ -3,7 +3,7 @@
 :page-topic-type: howto
 :page-aliases: ROOT:async-programming,ROOT:batching-operations
 
-include::partial$beta-warning.adoc[]
+
 
 [abstract]
 The Couchbase .NET SDK uses the _Task-based Asynchronous Pattern (TAP)_ using types in the System.Threading.Tasks namespace to represent asynchronous operations against the Couchbase Server which can be awaited via the `await` keyword. There is no separate synchronous API, however, all tasks can be run synchronously in a blocking fashion using the `Task.Result` method. Batching may be done with Task.WhenAll.

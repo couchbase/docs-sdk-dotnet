@@ -6,7 +6,7 @@
 [abstract]
 Client settings
 
-include::partial$beta-warning.adoc[]
+
 
 == Timeout Options
 

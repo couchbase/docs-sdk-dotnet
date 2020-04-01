@@ -1,0 +1,57 @@
+= Browser and CLI Access
+:page-topic-type: tutorial
+:page-aliases: ROOT:webui-cli-access
+// for C page -- ,server:developer-guide:retrieving,server:developer-guide:cli-overview
+include::partial$attributes.adoc[]
+
+[abstract]
+You can browse and access documents in Couchbase using browser and command line tools without writing any code.
+This can be helpful to you if you simply wish to inspect cluster data without writing code.
+You can access individual documents using the _command line_ and _web console_.
+
+
+[#cli-access]
+== Command-Line
+
+You can access documents in Couchbase using command line interfaces.
+You can use the `cbc` tool for simple document lookups by their IDs (or _keys_) and the xref:{version-server}@server:n1ql:n1ql-intro/cbq.adoc[cbq] tool to issue N1QL queries.
+This section will discuss the installation and usage of the `cbc` tool, and is targeted towards Linux and Mac OS X users.
+
+NOTE: You can also use `cbc` on Windows by extracting the archive with libcouchbase.
+The archive contains `cbc.exe` by default.
+
+== Installing the command-line KV client
+
+To use the `cbc` tool, first install the C SDK (libcouchbase -- LCB).
+Note that you will also need to install the _command line tools_.
+
+A version of LCB ships with some releases of Couchbase Server, but here we are assuming you want to install the command line tools on another machine, or to acquire the latest version.
+Installation of LCB is dealt with in deth for all platforms on the xref:3.0@c-sdk:project-docs:sdk-release-notes.adoc#installation[].
+
+
+
+.Debian/Ubuntu
+[source,bash]
+----
+wget http://packages.couchbase.com.s3.amazonaws.com/releases/couchbase-release/couchbase-release-1.0-6-amd64.deb
+sudo dpkg -i couchbase-release-1.0-6-amd64.deb
+sudo apt-get update
+sudo apt-get install libcouchbase2-bin
+----
+
+.CentOS/RHEL
+[source,bash]
+----
+wget http://packages.couchbase.com.s3.amazonaws.com/releases/couchbase-release/couchbase-release-1.0-6-x86_64.rpm
+sudo rpm -ivh couchbase-release-1.0-6-x86_64.rpm
+sudo yum install libcouchbase2-bin
+----
+
+.Mac OS X
+[source,bash]
+----
+brew install libcouchbase
+----
+
+NOTE: The `cbc` tool is part of the C SDK.
+Refer to the xref:c-sdk:hello-world:start-using-sdk.adoc[C SDK pages] for other installation options.
