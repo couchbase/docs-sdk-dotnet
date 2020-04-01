@@ -82,6 +82,166 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+
+= Version 3.0.0 (31st Mar 2020)
+
+// https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.0.zip[Download] |  https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0[API Reference] | 
+https://www.nuget.org/packages/CouchbaseNetClient/3.0.0[Nuget]
+
+This is the first GA release of the third generation .NET SDK.
+
+This release features significant changes to the API, simplifies the programming model, adds support for newer Durability Requirements and enables simple extension for features coming in future Couchbase Server releases.
+See the xref:project-docs:migrating-sdk-code-to-3.n.adoc[Migration Guide] for help with migrating from .NET SDK 2.x.
+
+
+=== Known Issues
+* https://issues.couchbase.com/browse/NCBC-2187[NCBC-2187]: CollectionManager -- 400: Not allowed on this version of cluster.
+
+=== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-2187[NCBC-2187]: CollectionManager -- 400: Not allowed on this version of cluster.
+* https://issues.couchbase.com/browse/NCBC-2149[NCBC-2149]: ConfigConext throws NullReferenceException when processing new cluster maps
+* https://issues.couchbase.com/browse/NCBC-2153[NCBC-2153]: Fix failing integration tests for SDK3
+* https://issues.couchbase.com/browse/NCBC-2166[NCBC-2166]: Authentication Errors after adding nodes to cluster
+* https://issues.couchbase.com/browse/NCBC-2168[NCBC-2168]: QueryException does not provide textual details coming from the server 
+* https://issues.couchbase.com/browse/NCBC-2199[NCBC-2199]: Missing string interpolation sign in CouchbaseBucket
+* https://issues.couchbase.com/browse/NCBC-2213[NCBC-2213]: N1QL situational test failure - Rb1SwapQuery
+* https://issues.couchbase.com/browse/NCBC-2214[NCBC-2214]: N1QL situational test failure - SvcRestartQuery
+* https://issues.couchbase.com/browse/NCBC-2217[NCBC-2217]: Deserialization issues with GetAsync<T>
+* https://issues.couchbase.com/browse/NCBC-2219[NCBC-2219]: Cluster instantiation using ClusterOptions ignores WithServers servers
+* https://issues.couchbase.com/browse/NCBC-2222[NCBC-2222]: AuthenticationFailure thrown when accessing bucket while combination testing
+* https://issues.couchbase.com/browse/NCBC-2230[NCBC-2230]: QueryException missing XxxxContext
+* https://issues.couchbase.com/browse/NCBC-2241[NCBC-2241]: Defer bootstrapping errors on buckets to first operation
+* https://issues.couchbase.com/browse/NCBC-2266[NCBC-2266]: UserManager#AvailableRolesAsync must be called getRoles
+* https://issues.couchbase.com/browse/NCBC-2268[NCBC-2268]: CollectionManager does not align with RFC
+* https://issues.couchbase.com/browse/NCBC-2273[NCBC-2273]: Incorrect ScopeMissingException
+* https://issues.couchbase.com/browse/NCBC-2274[NCBC-2274]: Can't connect to two buckets from one cluster object
+* https://issues.couchbase.com/browse/NCBC-2277[NCBC-2277]: SearchOptions does not map query parameters
+* https://issues.couchbase.com/browse/NCBC-2282[NCBC-2282]: fix test and implementation of positional params
+* https://issues.couchbase.com/browse/NCBC-2286[NCBC-2286]: Make all options have no "With" prefix
+* https://issues.couchbase.com/browse/NCBC-2288[NCBC-2288]: MutateIn ContentAs() functionality missing
+* https://issues.couchbase.com/browse/NCBC-2290[NCBC-2290]:  Add Timeout to all options classes in BucketManager
+* https://issues.couchbase.com/browse/NCBC-2306[NCBC-2306]: Match RFC requirement for Rows property for query services
+* https://issues.couchbase.com/browse/NCBC-2307[NCBC-2307]: Cannot query using any type other than dynamic
+* https://issues.couchbase.com/browse/NCBC-2308[NCBC-2308]: N1QL query situational failure
+* https://issues.couchbase.com/browse/NCBC-2309[NCBC-2309]: Hybrid/view query errors with situational testing
+* https://issues.couchbase.com/browse/NCBC-2316[NCBC-2316]: Ensure view request get default timeout if not supplied
+* https://issues.couchbase.com/browse/NCBC-2324[NCBC-2324]: Random KeyNotFoundException in LogManagerTests.Test_LogLevel_Debug
+* https://issues.couchbase.com/browse/NCBC-2350[NCBC-2350]: SearchOptions.Raw is unused, and throws an NRE
+* https://issues.couchbase.com/browse/NCBC-2351[NCBC-2351]: View timeout is not applied to view query string
+* https://issues.couchbase.com/browse/NCBC-2352[NCBC-2352]: Cleanup Service Exceptions Hiding Context
+* https://issues.couchbase.com/browse/NCBC-2353[NCBC-2353]: Cleanup .NET SDK 3 Build Warnings
+* https://issues.couchbase.com/browse/NCBC-2354[NCBC-2354]: Most Integration Tests Failing
+* https://issues.couchbase.com/browse/NCBC-2365[NCBC-2365]: Ensure Exists checks if deleted is true then exists returns false
+* https://issues.couchbase.com/browse/NCBC-2366[NCBC-2366]: AnalyticsManager does not exist
+* https://issues.couchbase.com/browse/NCBC-2367[NCBC-2367]: Methods in ClusterNode have unused "connections" parameter
+* https://issues.couchbase.com/browse/NCBC-2369[NCBC-2369]: Ping diagnostics are not accurately reporting ping times
+* https://issues.couchbase.com/browse/NCBC-2372[NCBC-2372]: NRE thrown while initializing cluster
+* https://issues.couchbase.com/browse/NCBC-2384[NCBC-2384]: SSL connections cannot find node for K/V operations
+* https://issues.couchbase.com/browse/NCBC-2389[NCBC-2389]: ClusterNode must be associated with a bucket once a bucket has been opened
+* https://issues.couchbase.com/browse/NCBC-2397[NCBC-2397]: OPS pulses between zero and the expected performance
+* https://issues.couchbase.com/browse/NCBC-2402[NCBC-2402]: Add ConfigureAwait(false) to all asynchronous code
+* https://issues.couchbase.com/browse/NCBC-2407[NCBC-2407]: Couchbase.ServiceNotAvailableException: Service n1ql not available
+* https://issues.couchbase.com/browse/NCBC-2416[NCBC-2416]: ViewQuery failure/hanging
+* https://issues.couchbase.com/browse/NCBC-2421[NCBC-2421]: Remove default to NotBounded in FTS
+* https://issues.couchbase.com/browse/NCBC-2422[NCBC-2422]: Error replacing dead connections on N1QL Failover rebalance
+* https://issues.couchbase.com/browse/NCBC-2426[NCBC-2426]: Service Restart failure - replacing dead connections failure
+* https://issues.couchbase.com/browse/NCBC-2429[NCBC-2429]: Should be MaxHttpConnections instead of MaxHttpConnection
+* https://issues.couchbase.com/browse/NCBC-2446[NCBC-2446]: Ensure bootstrapping continues after BucketNotConnected on pre-6.5 servers
+* https://issues.couchbase.com/browse/NCBC-2448[NCBC-2448]: unpublish concurrent document mutations
+* https://issues.couchbase.com/browse/NCBC-2183[NCBC-2183]: Exists must use "getMeta" (0xa0)  instead of Observe
+* https://issues.couchbase.com/browse/NCBC-2410[NCBC-2410]: LookupInResult has NotImplementedException for some methods
+* https://issues.couchbase.com/browse/NCBC-2412[NCBC-2412]: Cluster.AnaytlicsIndexes throws NotImplementedException
+* https://issues.couchbase.com/browse/NCBC-2414[NCBC-2414]: Connection terminated when packet exceeds NetworkStream buffer size
+* https://issues.couchbase.com/browse/NCBC-2415[NCBC-2415]: error CS0649: Field 'SubDocSingularBase<T>.CurrentSpec' is null
+* https://issues.couchbase.com/browse/NCBC-2430[NCBC-2430]: HttpMaxConnections renaming breaks DI unit tests
+* https://issues.couchbase.com/browse/NCBC-2431[NCBC-2431]: Failed DNS resolution throws NullReferenceException
+* https://issues.couchbase.com/browse/NCBC-2433[NCBC-2433]: Fix failing tests involving MaxHttpConnection
+* https://issues.couchbase.com/browse/NCBC-2305[NCBC-2305]: RequestId, ClientContextId, and Signature Lost After N1QL Query Enumeration
+* https://issues.couchbase.com/browse/NCBC-2358[NCBC-2358]: Timeout is not written to the packet when using Durability
+
+=== New Features and Behavioral Changes.
+* https://issues.couchbase.com/browse/NCBC-2315[NCBC-2315]: Improve logging for each service request
+* https://issues.couchbase.com/browse/NCBC-2325[NCBC-2325]: Add SCRAM-SHA Sasl Authentication
+* https://issues.couchbase.com/browse/NCBC-1863[NCBC-1863]: Add Flushing or Deleting a Collection logic
+* https://issues.couchbase.com/browse/NCBC-1870[NCBC-1870]: Support Log Redaction
+* https://issues.couchbase.com/browse/NCBC-1915[NCBC-1915]: Add new consistency API to SDK 3.0
+* https://issues.couchbase.com/browse/NCBC-2151[NCBC-2151]: Migrating from SDK 2 to 3.0
+* https://issues.couchbase.com/browse/NCBC-2169[NCBC-2169]: Migrating from SDK 2 to 3.0
+* https://issues.couchbase.com/browse/NCBC-2209[NCBC-2209]:  Add Converters/Transcoders per RFC
+* https://issues.couchbase.com/browse/NCBC-2220[NCBC-2220]: Ensure ClusterOptions properties are integrated into SDK
+* https://issues.couchbase.com/browse/NCBC-2234[NCBC-2234]: Mark all ErrorContexts as Uncomitted
+* https://issues.couchbase.com/browse/NCBC-2302[NCBC-2302]: Getting Started Tidy Up
+* https://issues.couchbase.com/browse/NCBC-2413[NCBC-2413]: Add XxxErrorContext information to K/V
+* https://issues.couchbase.com/browse/NCBC-2417[NCBC-2417]: Remove all Singular Sub-Document classes
+* https://issues.couchbase.com/browse/NCBC-1799[NCBC-1799]: Analytics client needs to support streaming results
+* https://issues.couchbase.com/browse/NCBC-1989[NCBC-1989]: Add connection pooling
+* https://issues.couchbase.com/browse/NCBC-2244[NCBC-2244]: WaitUntilReady not available at the cluster and bucket levels
+* https://issues.couchbase.com/browse/NCBC-2245[NCBC-2245]: Cluster-level ping missing
+* https://issues.couchbase.com/browse/NCBC-2260[NCBC-2260]: Tighten OperationSpec for lookupIn and mutateIn
+* https://issues.couchbase.com/browse/NCBC-2293[NCBC-2293]: Remove deprecated ErrorAttribute enum
+* https://issues.couchbase.com/browse/NCBC-2297[NCBC-2297]: Decrease API surface surrounding K/V operations/connections
+* https://issues.couchbase.com/browse/NCBC-2299[NCBC-2299]: Implement non-streaming fallback for N1QL queries
+* https://issues.couchbase.com/browse/NCBC-2300[NCBC-2300]: Support custom stream deserializers for view queries
+* https://issues.couchbase.com/browse/NCBC-2310[NCBC-2310]: Make IQueryResult implementations internal
+* https://issues.couchbase.com/browse/NCBC-2312[NCBC-2312]: Make IServiceResult.RetryReason read only
+* https://issues.couchbase.com/browse/NCBC-2313[NCBC-2313]: Align StreamAlreadyReadException with other Couchbase exceptions
+* https://issues.couchbase.com/browse/NCBC-2314[NCBC-2314]: Implement non-streaming fallback for view queries
+* https://issues.couchbase.com/browse/NCBC-2318[NCBC-2318]: Refactor view queries to be strongly typed
+* https://issues.couchbase.com/browse/NCBC-2319[NCBC-2319]: Implement non-streaming fallback for analytics queries
+* https://issues.couchbase.com/browse/NCBC-2320[NCBC-2320]: Cleanup K/V classes in root namespace
+* https://issues.couchbase.com/browse/NCBC-2322[NCBC-2322]: Enable symbol packages and SourceLink for debugging
+* https://issues.couchbase.com/browse/NCBC-2323[NCBC-2323]: Enable C# 8 nullable ref types for buckets/scopes/collections
+* https://issues.couchbase.com/browse/NCBC-2327[NCBC-2327]: Create Lightweight DI system for Couchbase SDK
+* https://issues.couchbase.com/browse/NCBC-2328[NCBC-2328]: Update Cluster and Bucket to use DI for Logging
+* https://issues.couchbase.com/browse/NCBC-2329[NCBC-2329]: Update RetryOrchestrator to use DI for logging
+* https://issues.couchbase.com/browse/NCBC-2330[NCBC-2330]: Make transaction/serializer/mapper configurable via DI
+* https://issues.couchbase.com/browse/NCBC-2331[NCBC-2331]: Use DI for Scope and Collection logging
+* https://issues.couchbase.com/browse/NCBC-2332[NCBC-2332]: Remove default constructor added to BucketBase (CS8618 warning)
+* https://issues.couchbase.com/browse/NCBC-2334[NCBC-2334]: All integration tests fail, cannot bootstrap
+* https://issues.couchbase.com/browse/NCBC-2336[NCBC-2336]: Use DI for CouchbaseHttpClient
+* https://issues.couchbase.com/browse/NCBC-2337[NCBC-2337]: Remove ClusterContext requirement from service clients
+* https://issues.couchbase.com/browse/NCBC-2338[NCBC-2338]: Use DI for service clients and their loggers
+* https://issues.couchbase.com/browse/NCBC-2340[NCBC-2340]: Use DI for logging in configuration handlers
+* https://issues.couchbase.com/browse/NCBC-2341[NCBC-2341]: Use DI for OrphanedResponseLogger logging
+* https://issues.couchbase.com/browse/NCBC-2343[NCBC-2343]: Use DI for logging in data structures
+* https://issues.couchbase.com/browse/NCBC-2344[NCBC-2344]: Use DI for logging in managers
+* https://issues.couchbase.com/browse/NCBC-2345[NCBC-2345]: Use DI for logging in DNS resolver
+* https://issues.couchbase.com/browse/NCBC-2346[NCBC-2346]: Use DI for logging in GetResult
+* https://issues.couchbase.com/browse/NCBC-2347[NCBC-2347]: Use DI for logging in QueryUriTesters 
+* https://issues.couchbase.com/browse/NCBC-2348[NCBC-2348]: Use DI for VBucket and ErrorMap logging
+* https://issues.couchbase.com/browse/NCBC-2349[NCBC-2349]: Enable Nullable Ref Types in ClusterOptions
+* https://issues.couchbase.com/browse/NCBC-2355[NCBC-2355]: Support deserialization of ClusterOptions from configuration
+* https://issues.couchbase.com/browse/NCBC-2356[NCBC-2356]: Move content services directory to root in Couchbase.UnitTests
+* https://issues.couchbase.com/browse/NCBC-2357[NCBC-2357]: Enable nullable ref types for XxxOptions classes
+* https://issues.couchbase.com/browse/NCBC-2359[NCBC-2359]: Use DNS resolver for IP address resolution
+* https://issues.couchbase.com/browse/NCBC-2360[NCBC-2360]: Use DNS resolver in Ketama key mapper and ClusterContext
+* https://issues.couchbase.com/browse/NCBC-2362[NCBC-2362]: Make ConfigChanged handling async
+* https://issues.couchbase.com/browse/NCBC-2363[NCBC-2363]: Use DNS resolver for VBucketServerMap.IPEndPoints
+* https://issues.couchbase.com/browse/NCBC-2364[NCBC-2364]: Enable null reference types for K/V specs/results
+* https://issues.couchbase.com/browse/NCBC-2368[NCBC-2368]: Remove Servers From ClusterOptions
+* https://issues.couchbase.com/browse/NCBC-2370[NCBC-2370]: Support custom port numbers in ConnectionString
+* https://issues.couchbase.com/browse/NCBC-2371[NCBC-2371]: Make BucketConfig and other config serialization classes internal
+* https://issues.couchbase.com/browse/NCBC-2373[NCBC-2373]: Implement abstraction layer for connection pool implementations
+* https://issues.couchbase.com/browse/NCBC-2374[NCBC-2374]: Replace TKey with string parameter in persistent collections
+* https://issues.couchbase.com/browse/NCBC-2376[NCBC-2376]: Cleanup BootstrapUri on ClusterNode
+* https://issues.couchbase.com/browse/NCBC-2377[NCBC-2377]: Implement auto scaling on connection pools
+* https://issues.couchbase.com/browse/NCBC-2378[NCBC-2378]: Add log redaction to DataFlowConnectionPool
+* https://issues.couchbase.com/browse/NCBC-2379[NCBC-2379]: Respect couchbases scheme for DNS SRV lookup
+* https://issues.couchbase.com/browse/NCBC-2380[NCBC-2380]: ClusterOptions MgmtPort and EnableTls cleanup
+* https://issues.couchbase.com/browse/NCBC-2381[NCBC-2381]: Cleanup IConnection interface
+* https://issues.couchbase.com/browse/NCBC-2382[NCBC-2382]: Support multiplexing on SslConnection
+* https://issues.couchbase.com/browse/NCBC-2383[NCBC-2383]: NodeAdapter is null on non-bootstrap nodes
+* https://issues.couchbase.com/browse/NCBC-2387[NCBC-2387]: Reduce heap allocations related to K/V operation response handling
+* https://issues.couchbase.com/browse/NCBC-2391[NCBC-2391]: Include XML documentation in NuGet package
+* https://issues.couchbase.com/browse/NCBC-2392[NCBC-2392]: Reduce heap allocations around MultiplexingConnection async state
+* https://issues.couchbase.com/browse/NCBC-2393[NCBC-2393]: Align QueryScanConsistency with the RFC
+* https://issues.couchbase.com/browse/NCBC-2398[NCBC-2398]: Change ICollection interface to ICouchbaseCollection interface
+* https://issues.couchbase.com/browse/NCBC-2399[NCBC-2399]: Add bootstrap service
+* https://issues.couchbase.com/browse/NCBC-2408[NCBC-2408]: Add BucketContext or equivalent for cohesion and less coupling
+* https://issues.couchbase.com/browse/NCBC-2409[NCBC-2409]: Route nodes into service specific CouchbaseNodeCollections
+* https://issues.couchbase.com/browse/NCBC-2425[NCBC-2425]: Reduce heap allocations calling BucketAsync
+
+
 = Version 3.0.0-beta4 (21st Jan 2020)
 
 https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.0-beta4.zip[Download] |  https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0-beta4[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/3.0.0-beta4[Nuget]
