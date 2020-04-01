@@ -661,7 +661,7 @@ var config = new ClientConfiguration
         new Uri(ConfigurationManager.AppSettings["bootstrapUrl"])
     }
 };
-config = ConnectionPoolFactory.GetFactory<ConnectionPool<MultiplexingConnection>>();
+config.ConnectionPoolCreator  = ConnectionPoolFactory.GetFactory<ConnectionPool<MultiplexingConnection>>();
 config.IOServiceCreator = IOServiceFactory.GetFactory<MultiplexingIOService>();
 ClusterHelper.Initialize(config);
 ----
