@@ -88,7 +88,7 @@ _Note that you can checkout a specific tag for each release as well._
 // https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.0.zip[Download] |  https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0[API Reference] | 
 https://www.nuget.org/packages/CouchbaseNetClient/3.0.0[Nuget]
 
-This is the fjrst GA release of the third generation .NET SDK.
+This is the first GA release of the third generation .NET SDK.
 
 This release features significant changes to the API, simplifies the programming model, adds support for newer Durability Requirements and enables simple extension for features coming in future Couchbase Server releases.
 See the xref:project-docs:migrating-sdk-code-to-3.n.adoc[Migration Guide] for help with migrating from .NET SDK 2.x.
