@@ -1,6 +1,5 @@
 name: dotnet-sdk
 version: '3.0'
-prerelease: BETA
 title: ".NET SDK"
 start_page: hello-world:start-using-sdk.adoc
 nav:
