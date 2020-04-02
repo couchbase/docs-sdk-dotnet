@@ -80,7 +80,7 @@ var credentials = new PasswordAuthenticator("Administrator", "password");
 
 //create the cluster and open the new bucket
 var cluster = new Cluster(config, credentials);
-var bucket = cluster.OpenBucket("mybucket");
+var bucket = cluster.OpenBucket() // the bucket configuration should set the default  bucket to be mybucket;
 
 //or alternately
 ClusterHelper.Initialize(config, credentials);
