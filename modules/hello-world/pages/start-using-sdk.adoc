@@ -28,55 +28,103 @@ In VS Code, with the https://marketplace.visualstudio.com/items?itemName=jmrog.v
 
 == Hello Couchbase
 
-Now you have the .NET client installed, open a fresh project in _VS Code_, and try out the following, which assumes a user named "user" with permissions to access the cluster, typically the "Application Access" role:
+Now you have the .NET client installed, open a fresh project in _VS Code_, and try out the following, which assumes a user named "username" with permissions to access the cluster, typically the "Application Access" role.
+
+Of course, you will need to have a few using statements:
+[source,csharp]
+----
+include::example$StartUsing.cs[tag=using,indent=0]
+----
+
+Then you can connect to the cluster:
 
 [source,csharp]
 ----
-using Couchbase;
-…
-var cluster = Cluster.Connect("couchbase://localhost", "user", "pass");
+include::example$StartUsing.cs[tag=connect,indent=0]
 ----
 
 Couchbase uses xref:6.0@server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
 If you're developing client code on the same VM or machine as the Couchbase Server, your URI can be _couchbase://localhost_.
 
+Then open the bucket:
 [source,csharp]
 ----
-var bucket = await cluster.BucketAsync("bucket-name");
+include::example$StartUsing.cs[tag=bucket,indent=0]
 ----
 
 If you installed the travel sample data bucket, substitute _travel-sample_ for _bucket-name_.
 
-[source,csharp]
-----
-var collection = bucket.DefaultCollection();
-----
 
-The 3.0 SDK is ready for the introduction of xref:concept-docs:collections.adoc[Collections] in Cheshire Cat, the next release of the Couchbase Data Platform.
-The latest release, Mad Hatter, brings a limited _Developer Preview_ of Collections, allowing Documents to be grouped by purpose or theme, according to specified _Scope_.
-Here we will use the `DefaultCollection`, which covers the whole Bucket.
+The 3.0 SDK is ready for the introduction of xref:concept-docs:collections.adoc[Collections] in an upcoming release of the Couchbase Data Platform.
+The latest release, Couchbase Server 6.5, brings a limited _Developer Preview_ of Collections, allowing Documents to be grouped by purpose or theme, according to specified _Scope_.
+Here we will use the `DefaultCollection`, which covers the whole Bucket and _must be used when connecting to a 6.5 cluster or earlier_.
 
 [source,csharp]
 ----
-var upsertResult = await collection.UpsertAsync("doc1", new {Name = "Ted", Age = 31});
-var getResult = await collection.GetAsync("doc1");
+include::example$StartUsing.cs[tag=collection,indent=0]
 ----
 
 KV Operations are described in detail on the xref:howtos:kv-operations.adoc[KV Operations page].
 Now that you know the basics, you may wish to go straight to that page.
-//
-//
-//
-//
-// -- or first see a complete worked example of using the Couchbase .NET client, our xref:3.0dp1@sample-application.adoc[Travel Sample Application].
-//
-//
+To get you started the following code creates a new document and then fetches it again, printing the result.
 
-NOTE: The _Developer Preview_ version of the 3.0 .NET Client is entirely asynchronous, following modern .NET development recommendations.
+NOTE: This version of the 3.0 .NET Client is entirely asynchronous, following modern .NET development recommendations.
+
+[source,csharp]
+----
+include::example$StartUsing.cs[tag=upsert-get,indent=0]
+----
+
+You can also perform a N1QL query at the cluster level:
+
+[source,csharp]
+----
+include::example$StartUsing.cs[tag=n1ql-query,indent=0]
+----
+
+You can learn more about N1QL queries on the xref:howtos:n1ql-queries-with-sdk.adoc[Query page].
+Other services (like analytics, search or views) work very similar to the two shown above.
+Please refer to their respective documentation sections to learn more.
+
+== Full Example
+
+If you want to copy and paste to run the full example, here it is:
+
+[source,csharp]
+----
+using System;
+using System.Threading.Tasks;
+using Couchbase;
+
+namespace examples
+{
+    class Program
+    {
+        static async Task Main(string[] args)
+        {
+            await using var cluster = await Cluster.ConnectAsync("couchbase://localhost", "username", "password");
+            var bucket = await cluster.BucketAsync("bucket-name");
+            var collection = bucket.DefaultCollection();
+
+            var upsertResult = await collection.UpsertAsync("my-document", new { Name = "Ted", Age = 31 });
+            var getResult = await collection.GetAsync("my-document");
+            Console.WriteLine(getResult.ContentAs<dynamic>());
+
+            var queryResult = await cluster.QueryAsync<dynamic>("select \"Hello World\" as greeting", new Couchbase.Query.QueryOptions());
+            await foreach (var row in queryResult) {
+                Console.WriteLine(row);
+            }
+        }
+    }
+}
+
+}
+----
+
 
 == Additional Resources
 
-The API reference is generated for each release and can be found http://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0-beta3/[here].
+The API reference is generated for each release and can be found http://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0/[here].
 Older API references are linked from their respective sections in the xref:project-docs:sdk-release-notes.adoc[Release Notes].
 
 // xref:project-docs:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code.
