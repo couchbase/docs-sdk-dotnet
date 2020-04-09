@@ -53,8 +53,8 @@ include::6.5@sdk:shared:partial$migration.adoc[tag=lang]
 
 The .NET SDK 3.x is available for download from the same resources as the previous generation 2.0 SDK:
 
-* From NuGet (the most popular choice): `Install-Package CouchbaseNetClient -Version 3.0.0-beta4`
-* By downloading a [zip]https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client.3.0.0-beta4.zip file directly
+* From NuGet (the most popular choice): `Install-Package CouchbaseNetClient -Version 3.0.0`
+* By downloading a [zip]https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client.3.0.0.zip file directly
 * (Not officially supported) By cloning and building the source code directly on [github]https://github.com/couchbase/couchbase-net-client/tree/master
 
 Please see the xref:sdk-release-notes.adoc[Release Notes] for up-to-date information.
