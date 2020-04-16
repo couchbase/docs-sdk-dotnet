@@ -251,7 +251,7 @@ public class Program
 }
 ----
 
-. In startup.cs update the _Startup_ method to look like the following:
+. In startup.cs update the _Configure_ method to look like the following:
 +
 [source,csharp]
 ----
