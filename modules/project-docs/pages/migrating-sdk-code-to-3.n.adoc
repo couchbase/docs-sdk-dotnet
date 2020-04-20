@@ -171,7 +171,7 @@ The SDK offers a configuration API for customizing bootstrapping, timeouts, reli
 Configuration options have changed since the 2.x release.
 See the xref:ref:client-settings.adoc[configuration section] for specifics.
 
-At the end of this guide you'll find a xref:#configurations-options-reference[reference] that describes the SDK 2 environment options and their SDK 3 equivalents where applicable.
+// At the end of this guide you'll find a xref:#configurations-options-reference[reference] that describes the SDK 2 environment options and their SDK 3 equivalents where applicable.
 
 
 === Authentication
