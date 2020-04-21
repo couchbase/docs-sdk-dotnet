@@ -28,7 +28,7 @@ Here is an example of a query executed in .NET:
 [source,csharp]
 ----
 var query = new QueryRequest("SELECT type FROM `travel-sample` LIMIT 4");
-foreach (var row in bucket.Query<dynamci>(query))
+foreach (var row in bucket.Query<dynamic>(query))
 {
     Console.WriteLine(JsonConvert.Serialize(row));
 }
