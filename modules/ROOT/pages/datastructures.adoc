@@ -384,7 +384,7 @@ It supports the following operations:
 | [.api]`this[TKey key]`
 | Indexer - gets a value from the hash map at a given key.
 
-| Keys[.api]````
+| [.api]`Keys`
 | Get all of the keys in the document.
 
 | [.api]`Values`
