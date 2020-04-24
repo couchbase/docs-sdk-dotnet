@@ -208,6 +208,9 @@ var result = await collection.TouchAsync("document-key", TimeSpan.FromSeconds(30
 );
 ----
 
+include::6.5@sdk:shared:partial$documents.adoc[tag=exp-note]
+
+
 == Atomic document modifications
 
 The value of a document can be increased or decreased atomically using `Binary.Increment()` and `Binary.Decrement()`.
