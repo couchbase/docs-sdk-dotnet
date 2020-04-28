@@ -21,9 +21,9 @@ Note: All examples on this page start with initiating a Cluster object and then 
 [source,csharp]
 ----
 var cluster = new Cluster("couchbase://localhost", new ClusterOptions()
-                .WithServers("couchbase://localhost")
-                .WithBucket("default")
-                .WithCredentials("Administrator", "password")
+                 .WithConnectionString("couchbase://localhost")
+                 .WithCredentials(username: "Administrator", password: "password")
+                 .WithBuckets("travel-sample")
             );
 
 var bucket = await cluster.BucketAsync("default");
