@@ -128,7 +128,7 @@ Add the following code to the class that contains your entrypoint into the appli
 
 [source,csharp]
 ----
-include::example$Logger.cs[tag=log,indent=0]
+include::example$Logging.cs[tag=log,indent=0]
 ----
 
 *Using NLog in a Web Application*
@@ -183,7 +183,7 @@ An example config could look like this:
 +
 [source,csharp]
 ----
-include::example$.WebLogging.cs[tag=main,indent=0]
+include::example$WebLogging.cs[tag=main,indent=0]
 ----
 
 . In startup.cs update the _ConfigureServices_ method to look like the following:

@@ -1,4 +1,4 @@
-// #tag::main[]
+// tag::main[]
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
@@ -46,5 +46,5 @@ namespace LoggingWebExample
                 .Build();
     }
 }
-// #end::main[]
+// end::main[]
 
