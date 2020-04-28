@@ -25,7 +25,7 @@ The recommended dependencies for Couchbase .NET SDK v2.6.0 greater are:
 The following steps describe the process for using the Log4Net Adapter with the SDK:
 
 [#steps]
-. Using the NuGet Package Manager in Visual Studio, include the following package in your project: Common.Logging.Log4Net207 image::common-logging-log4net207.png[]
+. Using the NuGet Package Manager in Visual Studio, include the following package in your project: Common.Logging.Log4Net207 image:common-logging-log4net207.png[]
 . In your [.path]_App.Config_ or [.path]_Web.Config_, add the following elements between the `<configuration> and </configuration>` tags so that your configuration looks like this:
 +
 [source,xml]
@@ -89,7 +89,7 @@ Dependencies:
 * NLog.Extensions.Logging 1.6.2
 
 1.
-Add the dependencies above using the NuGet Package Manager: image::logging-nlog-package-reference.png[]
+Add the dependencies above using the NuGet Package Manager: image:logging-nlog-package-reference.png[]
 
 2.
 Copy the following nlog.config file into your project and set "Copy to output directory" to "Copy always" in Visual Studio:
@@ -137,7 +137,7 @@ The following instructions show how to get up and running with the NLog adapter 
 
 . Add the following two nuget dependencies: _CouchbaseNetClient 3.0.0_ and _NLog.Web.AspNetCore 4.9.1_.
 +
-image:::logging-nuget-nlog-web-aspnet.PNG[]
+image:logging-nuget-nlog-web-aspnet.png[]
 
 . Create a _nlog.config_ in the root of your project and  set "Copy to output directory" to "Copy always" in Visual Studio.
 An example config could look like this:
