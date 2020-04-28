@@ -45,7 +45,7 @@ Note that both parameters and options are optional.
 ----
 var result = await cluster.QueryAsync<dynamic>(
     "SELECT x.* FROM `default` WHERE x.Type=$1",
-    options => options.AddPositionalParameter("User")
+    options => options.Parameter("User")
 );
 ----
 
@@ -54,7 +54,7 @@ var result = await cluster.QueryAsync<dynamic>(
 ----
 var result = await cluster.QueryAsync<dynamic>(
     "SELECT x.* FROM `default` WHERE x.Type=$type",
-    options = > AddNamedParameter("type", "User")
+    options = > options.Parameter("type", "User")
 );
 ----
 
@@ -70,11 +70,11 @@ In most cases your query will return more than one result, and you may be lookin
 ----
 var result = await cluster.QueryAsync<dynamic>(
     "SELECT x.* FROM `default` WHERE x.Type=$1",
-    options => options.AddPositionalParameter("User")
+    options => options.Parameter("User")
 );
 
 // check query was successful
-if (result.Status != QueryStatus.Success)
+if (result.Metadata.Status != QueryStatus.Success)
 {
     // error
 }
@@ -113,12 +113,12 @@ var state = MutationState.From(upsertResult);
 // use mutation state with query option
 var result = await cluster.QueryAsync<dynamic>(
     "SELECT x.* FROM `default` WHERE x.Type=$1",
-    options => {
-        options.ConsistentWith(state),
-        options.AddPositionalParameter("User")
-    }
+    options => options.ConsistentWith(state)
+                      .Parameter("User")
 );
 ----
+
+NOTE: *AtPlus* requires the fix in https://issues.couchbase.com/browse/NCBC-2468[NCBC-2468], expected to be in 3.0.1 as of this writing.
 
 == Streaming Large Result Sets
 
