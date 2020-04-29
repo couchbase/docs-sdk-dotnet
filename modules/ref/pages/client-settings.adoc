@@ -198,7 +198,7 @@ Default:  `true`
 If enabled, the client periodically sends a TCP keepalive to the server to prevent firewalls and other network equipment from dropping idle TCP connections.
 
 Name: *Socket Keepalive Interval*::
-Cluster Option: `TcpKeepAliveTime(Duration)`
+Cluster Option: `TcpKeepAliveTime(TimeSpan)`
 +
 Default:  `60s`
 +
@@ -240,7 +240,7 @@ Default:  `true`
 Enables Configuration `heartbeat` checks.
 
 Name: *Config Poll Interval*::
-Cluster Option: `ConfigPollInterval(Duration)`
+Cluster Option: `ConfigPollInterval(TimeSpan)`
 +
 Default:  `2.5s`
 
@@ -280,30 +280,30 @@ var options = new ClusterOptions()
 
 The properties of a circuit breaker are described below.
 
-enabled::
+Enabled::
 Default: `true`
 +
 Enables or disables this circuit breaker.
 +
 If this property is set to false, then the circuit breaker is not used and all other properties are ignored.
 
-volumeThreshold::
+VolumeThreshold::
 Default: `20`
 +
 The volume threshold defines how many operations must be in the window before the threshold percentage can be meaningfully calculated.
 
-errorThresholdPercentage::
+ErrorThresholdPercentage::
 Default: `50`
 +
 The percentage of operations in a window that may fail before the circuit is opened.
 The value is an integer in the range [0,100].
 
-sleepWindow::
+SleepWindow::
 Default: `5s`
 +
 The delay between when the circuit opens and when the canary is tried.
 
-rollingWindow::
+RollingWindow::
 Default: `1m`
 +
 How long the window is in which the number of failed ops are tracked in a rolling fashion.
@@ -342,7 +342,7 @@ Default: `2.5s` -- _but see TIP, below_
 The Key/Value default timeout is used on operations which are performed on a specific key if not overridden by a custom timeout.
 This includes all commands like Get(), GetFromReplica() and all mutation commands, but does not include operations that are performed with enhanced durability requirements.
 +
-TIP: xref:concept-docs:durability-replication-failure-considerations.adoc#synchronous-writes[Durable Write operations] have their own timeout setting, `kvDurableTimeout`, see below.
+TIP: xref:concept-docs:durability-replication-failure-considerations.adoc#synchronous-writes[Durable Write operations] have their own timeout setting, `KvDurableTimeout`, see below.
 
 Name: *Key-Value Durable Operation Timeout*::
 Cluster Option: `KvDurableTimeout(TimeSpan)`
@@ -353,9 +353,6 @@ Key/Value operations with enhanced durability requirements may take longer to co
 +
 WARNING: The `KvDurableTimeout` property is not part of the stable API and may change or be removed at any time.
 
-// todo: is kvDurableTimeout a strictly client-side timeout?
-// When there's a timeout, does it stop the sync write?
-// Does it result in an ambiguous state?
 
 Name: *View Timeout*::
 Cluster Option: `ViewTimeout(TimeSpan)`
@@ -427,7 +424,7 @@ Default:  `ThresholdLoggingTracer`
 +
 The default tracer logs the slowest requests per service.
 +
-Various `RequestTracer` implementations exist, both as part of the core library and as external modules that can be attached (i.e. for OpenTracing and OpenTelemetry).
+Various `Tracer` implementations exist, both as part of the core library and as external modules that can be attached (i.e. for OpenTracing and OpenTelemetry).
 It is recommended to use those modules and not write your own tracer unless absolutely needed.
 +
 NOTE: When using a non-default tracer, you are responsible for starting and stopping it.
