@@ -102,7 +102,7 @@ namespace examples
     {
         static async Task Main(string[] args)
         {
-            await using var cluster = await Cluster.ConnectAsync("couchbase://localhost", "username", "password");
+            var cluster = await Cluster.ConnectAsync("couchbase://localhost", "username", "password");
             var bucket = await cluster.BucketAsync("bucket-name");
             var collection = bucket.DefaultCollection();
 
