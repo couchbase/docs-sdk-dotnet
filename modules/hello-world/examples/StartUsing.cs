@@ -12,7 +12,7 @@ namespace examples
         {
 
             // #tag::connect[]
-            await using var cluster = await Cluster.ConnectAsync("couchbase://localhost", "username", "password");
+             var cluster = await Cluster.ConnectAsync("couchbase://localhost", "username", "password");
             // #end::connect[]
 
 
@@ -38,7 +38,7 @@ namespace examples
             // TODO: also, note the full example in the start-using adoc
             // #tag::n1ql-query[]
             var queryResult = await cluster.QueryAsync<dynamic>("select \"Hello World\" as greeting", new Couchbase.Query.QueryOptions());
-            await foreach (var row in queryResult) {
+            foreach (var row in queryResult) {
                 Console.WriteLine(row);
             }
             // #end::n1ql-query[]
