@@ -82,6 +82,32 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 2.7.17 (5th May 2020)
+
+https://packages.couchbase.com/clients/net/2.7/Couchbase-Net-Client-2.7.17.zip[Download] | 
+// http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.17[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/2.7.17[Nuget]
+
+=== Known Issues
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-1945[NCBC-1945]: 
+The SDK client was failing to apply new a rev map when using HTTP bootstrap.
+This has been fixed and the http config handler will now process new configs from the server.
+* https://issues.couchbase.com/browse/NCBC-2465[NCBC-2465]: 
+Ping now records failures for non-KV services.
+* https://issues.couchbase.com/browse/NCBC-2361[NCBC-2361]: 
+The SDK client no longer exports fuzziness or prefix_length when values less than 1.
+This enables search for an exact value in FTS with Server 6.5, which does not accept a fuzziness value of 0.
+
 == Version 2.7.16 (11th Feb 2020)
 
 https://packages.couchbase.com/clients/net/2.7/Couchbase-Net-Client-2.7.16.zip[Download] | http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.16[API Reference] | https://www.nuget.org/packages/CouchbaseNetClient/2.7.16[Nuget]
