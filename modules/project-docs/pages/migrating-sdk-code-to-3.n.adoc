@@ -116,11 +116,11 @@ The configuration options are passed into the `Cluster` object via a constructor
 var cluster = new Cluster("couchbase://localhost", options);
 ----
 
-Or by using one of the static `Cluster.Connect(...)` methods:
+Or by using one of the static `Cluster.ConnectAsync(...)` methods:
 
 [source,csharp]
 ----
-var cluster = Cluster.Connect("couchbase://localhost", options);
+var cluster = await Cluster.ConnectAsync("couchbase://localhost", options);
 ----
 
 In order to free all resources associated with a cluster, simply call the `.Dispose()` method:
@@ -182,7 +182,7 @@ This is why you can set the username and password when directly connecting:
 
 [source,csharp]
 ----
-var cluster = await Cluster.ConnectAsync("couchbase://localhost1", "user", "pass");
+var cluster = await Cluster.ConnectAsync("couchbase://localhost", "user", "pass");
 ----
 
 This is just a shorthand for:
@@ -202,7 +202,7 @@ You may also use this approach to configure certificate-based authentication:
 
 [source,csharp]
 ----
-            cluster = Cluster.Connect("127.0.0.1", new ClusterOptions
+            cluster = await Cluster.ConnectAsync("127.0.0.1", new ClusterOptions
             {
                 EnableCertificateAuthentication = true
             });
@@ -356,7 +356,7 @@ Here is an example of the error context if a N1QL query is performed with an inv
 [source,csharp]
 ----
       try {
-          IQueryResult<dynamic> result = await cluster.QueryAsync<dynamic>("select 1 = ");
+          IQueryResult<dynamic> result = await cluster.QueryAsync<dynamic>("select 1");
       }
       catch (CouchbaseException ex) {
           Console.WriteLine(ex);
