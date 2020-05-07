@@ -95,7 +95,7 @@ After you have successfully built the source, it's then just a matter of referen
 _Note that you can checkout a specific tag for each release as well._
 
 
-= Version 3.0.0 (31st Mar 2020)
+= Version 3.0.0 (31 March 2020)
 
 https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.0.zip[Download] |  
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0[API Reference] | 
