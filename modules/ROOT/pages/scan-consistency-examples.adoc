@@ -9,6 +9,42 @@ You can balance performance against consistency in N1QL queries via the Couchbas
 --
 Setting a https://developer.couchbase.com/documentation/server/5.1/architecture/querying-data-with-n1ql.html#story-h2-2[Scan Consistency^], lets you choose between NotBounded (the default), for sharpest performance; RequestPlus, for strongest consistency; and AtPlus, for a good balance between increased performance and completeness of results.
 
+== Request_Plus
+
+If consistency is more important than perforance, the `REQUEST_PLUS` ensures that all indexes are updated before a query is completed.
+It also has the advantage of being simpler to use than the _Read Your Own Writes (RYOW)_ option of `AT_PLUS` -- xref:#At_Plus[below].
+
+[source,csharp]
+----
+        {
+            // get the current count
+            var result1 =
+                _bucket.Query<dynamic>("SELECT COUNT(1) as airportCount FROM `travel-sample` WHERE type=&apos;airport&apos;")
+                    .Rows.First();
+            Console.WriteLine($"Initial count: {result1.airportCount}");
+ 
+            // insert a new airport
+            var doc = new Document<dynamic>
+            {
+                Id = "ScanConsistency::airport::" + _random.Next(10000),
+                Content = new
+                {
+                    type = "airport"
+                }
+            };
+            _bucket.Insert(doc);
+ 
+            // get the count again
+            var request =
+                QueryRequest.Create("SELECT COUNT(1) as airportCount FROM `travel-sample` WHERE type='airport'");
+            request.ScanConsistency(ScanConsistency.RequestPlus);
+            var result2 = _bucket.Query<dynamic>(request).Rows.First();
+            Console.WriteLine($"Count after insert with RequestPlus: {result2.airportCount}");
+        }
+----
+
+== At_Plus
+
 In order to use `at_plus`, you'll need to make sure that you explicitly set `UseEnhancedDurability` to `true` when setting up your *ClientConfiguration*:
 
 ----
