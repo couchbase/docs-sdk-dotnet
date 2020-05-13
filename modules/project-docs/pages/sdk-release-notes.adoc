@@ -94,6 +94,48 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+= Version 3.0.1 (13 May 2020)
+// https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.1.zip[Download] |  
+// https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.1[API Reference] | 
+https://www.nuget.org/packages/CouchbaseNetClient/3.0.1[Nuget]
+
+=== Known Issues
+* https://issues.couchbase.com/browse/NCBC-2187[NCBC-2187]: CollectionManager -- 400: Not allowed on this version of cluster.
+
+=== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-2033[NCBC-2033]: 3.0 API Query snippets in concept doc
+* https://issues.couchbase.com/browse/NCBC-2204[NCBC-2204]: Improve exception when bootstrapping fails
+* https://issues.couchbase.com/browse/NCBC-2301[NCBC-2301]: 3.0 Logging / Collecting Info page
+* https://issues.couchbase.com/browse/NCBC-2303[NCBC-2303]: Client Settings page for SDK 3.0
+* https://issues.couchbase.com/browse/NCBC-2388[NCBC-2388]: Ensure that prepared statements that are previously created are not retried
+* https://issues.couchbase.com/browse/NCBC-2435[NCBC-2435]: Connstr not taking username properly
+* https://issues.couchbase.com/browse/NCBC-2439[NCBC-2439]: improve formatting on exception context
+* https://issues.couchbase.com/browse/NCBC-2451[NCBC-2451]: QueryPreparedStatementFailure in situational tests with MH
+* https://issues.couchbase.com/browse/NCBC-2454[NCBC-2454]: EndPoint may be null during SendAsync
+* https://issues.couchbase.com/browse/NCBC-2456[NCBC-2456]: Transient NodeNotAvailableException rebalance under kv load
+* https://issues.couchbase.com/browse/NCBC-2458[NCBC-2458]: QueryAsync(String statement) does not exist
+* https://issues.couchbase.com/browse/NCBC-2460[NCBC-2460]: .NET Core App 3.x targets require consumers add reference to Microsoft.Bcl.AsyncInterfaces
+* https://issues.couchbase.com/browse/NCBC-2462[NCBC-2462]: ConnectAsync is failing "Cannot resolve DNS for localhost"
+* https://issues.couchbase.com/browse/NCBC-2466[NCBC-2466]: Ensure TaskCancelationExceptions are rethrown
+* https://issues.couchbase.com/browse/NCBC-2467[NCBC-2467]: CLONE - Ensure TaskCancelationExceptions are rethrown
+* https://issues.couchbase.com/browse/NCBC-2468[NCBC-2468]: System.ArgumentException: ReadResult does not contain valid MutationToken
+* https://issues.couchbase.com/browse/NCBC-2473[NCBC-2473]: Incorrect Verbiage for NuGet Package
+* https://issues.couchbase.com/browse/NCBC-2475[NCBC-2475]: GetNodes() sometimes returns no results, incorrectly.
+* https://issues.couchbase.com/browse/NCBC-2479[NCBC-2479]: Point config.json for combination tests back at localhost
+* https://issues.couchbase.com/browse/NCBC-2480[NCBC-2480]: SocketException:  Cannot bind to address in SslConnectionTests
+* https://issues.couchbase.com/browse/NCBC-2481[NCBC-2481]: KV operations don't respect IgnoreCertificateNameMismatch
+* https://issues.couchbase.com/browse/NCBC-2488[NCBC-2488]: Couchbase.IntegrationTests.BootstrapFailedTests.Test_BootStrap_Error_Propagates_To_View_Operations [FAIL]
+* https://issues.couchbase.com/browse/NCBC-2493[NCBC-2493]: Improve error logging and handling for Query
+* https://issues.couchbase.com/browse/NCBC-2497[NCBC-2497]: SetKeepAlive fails on Windows
+
+=== New Features and Behavioral Changes.
+
+* https://issues.couchbase.com/browse/NCBC-2304[NCBC-2304]: Managing Connections - SDK3
+* https://issues.couchbase.com/browse/NCBC-2464[NCBC-2464]: Build/deploy the .NET Dependency Injection extension for SDK 3.0
+* https://issues.couchbase.com/browse/NCBC-2478[NCBC-2478]: Cluster.ConnectAsync throws PlatformNotSupportedException
+* https://issues.couchbase.com/browse/NCBC-2492[NCBC-2492]: Log warning when TCPKeepAlive cannot be enabled
+* https://issues.couchbase.com/browse/NCBC-2494[NCBC-2494]: Fix TCPKeepAlive to work on non Windows Platform
+
 
 = Version 3.0.0 (31 March 2020)
 
@@ -111,7 +153,6 @@ See the xref:project-docs:migrating-sdk-code-to-3.n.adoc[Migration Guide] for he
 * https://issues.couchbase.com/browse/NCBC-2187[NCBC-2187]: CollectionManager -- 400: Not allowed on this version of cluster.
 
 === Fixed Issues
-* https://issues.couchbase.com/browse/NCBC-2187[NCBC-2187]: CollectionManager -- 400: Not allowed on this version of cluster.
 * https://issues.couchbase.com/browse/NCBC-2149[NCBC-2149]: ConfigConext throws NullReferenceException when processing new cluster maps
 * https://issues.couchbase.com/browse/NCBC-2153[NCBC-2153]: Fix failing integration tests for SDK3
 * https://issues.couchbase.com/browse/NCBC-2166[NCBC-2166]: Authentication Errors after adding nodes to cluster
