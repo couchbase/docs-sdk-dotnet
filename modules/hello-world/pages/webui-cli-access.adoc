@@ -1,3 +1,6 @@
+include::6.5@sdk:pages:partial$webui-cli-access.adoc[]
+
+////
 = Browser and CLI Access
 :page-topic-type: tutorial
 :page-aliases: ROOT:webui-cli-access
