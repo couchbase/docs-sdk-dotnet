@@ -30,7 +30,7 @@ Here is an example of a query executed in .NET:
 var query = new QueryRequest("SELECT type FROM `travel-sample` LIMIT 4");
 foreach (var row in bucket.Query<dynamic>(query))
 {
-    Console.WriteLine(JsonConvert.Serialize(row));
+    Console.WriteLine(JsonConvert.SerializeObject(row));
 }
 
 ...
@@ -83,7 +83,7 @@ For example:
 var query = new QueryRequest("SELECT airportname as n FROM `travel-sample` where type="airport" LIMIT 4");
 foreach (var row in bucket.Query<dynamic>(query))
 {
-    Console.WriteLine(JsonConvert.Serialize(row));
+    Console.WriteLine(JsonConvert.SerializeObject(row));
 }
 
 ...
