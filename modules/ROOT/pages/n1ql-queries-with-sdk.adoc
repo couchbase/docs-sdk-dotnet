@@ -138,7 +138,7 @@ For example, lets retrieve the first ten documents from the travel-sample bucket
 ----
 public async void PrintTenAllAsync()
 {
-    const string query = "SELECT * FROM `travel-sample` LIMIT 10";
+    const string query = "SELECT ts.* FROM `travel-sample` as ts LIMIT 10";
 
     var result = await _bucket.QueryAsync<dynamic>(query);
     foreach(var row in result.Rows)
