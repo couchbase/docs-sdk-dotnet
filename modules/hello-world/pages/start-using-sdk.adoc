@@ -6,11 +6,13 @@
 The Couchbase .NET SDK enables you to interact with a Couchbase Server cluster from .NET using C# and other .NET languages.
 It offers an asynchronous API based on the _Task-based Asynchronous Pattern (TAP)_.
 
-The Couchbase .NET client allows applications to connect to Couchbase Server using any Common Language Runtime (CLR) language, including C#, F#, and VB.NET. The SDK is written in C#, and some of its idiomatic patterns reflect that choice.
+The Couchbase .NET client allows applications to connect to Couchbase Server using any Common Language Runtime (CLR) language, including C#, F#, and VB.NET. 
+The SDK is written in C#, and some of its idiomatic patterns reflect that choice.
 
 == Installing the SDK
 
-The Couchbase .NET SDK targets https://docs.microsoft.com/en-us/dotnet/standard/net-standard[.NET Standard 2.0], which in turn supports .NET Framework 4.6.2+ and .NET Core (e.g. netcoreapp) 2.1. The library is distributed in a number of ways:
+The Couchbase .NET SDK targets https://docs.microsoft.com/en-us/dotnet/standard/net-standard[.NET Standard 2.0], which in turn supports .NET Framework 4.6.2+ and .NET Core (e.g. netcoreapp) 2.1. 
+The library is distributed in a number of ways:
 
 |===
 |NuGet |NuGet package host at https://www.nuget.org/packages/CouchbaseNetClient/[nuget.org] (_recommended_)
@@ -18,17 +20,19 @@ The Couchbase .NET SDK targets https://docs.microsoft.com/en-us/dotnet/standard/
 |Build from Source |Build the library from https://github.com/couchbase/couchbase-net-client/[source available on GitHub] (not officially supported)
 |===
 
+
 == Hello Couchbase
 
-Start a new console project (in Visual Studio or VS Code, etc). Install the latest 3.0 CouchbaseNetClient NuGet package.
+Start a new console project (in Visual Studio or VS Code, etc). 
+Install the latest 3.0 CouchbaseNetClient NuGet package.
 
 The following code samples assume:
 
 * Couchbase Server is installed and accessible locally (xref:server:getting-started:do-a-quick-install[Do a Quick Install] if you don't already have Couchbase Server installed).
-* You have create a bucket (perhaps using the xref:server:manage:manage-settings:install-sample-buckets[travel-sample dataset], or by creating a new bucket)
+* You have create a bucket (perhaps using the xref:server:manage:manage-settings:install-sample-buckets[travel-sample dataset], or by creating a new bucket).
 * You have created a Couchbase user named "username" with permissions to access the cluster (at least Application Access permissions).
 
-Of course, you will need to have a few using statements at the top of Program.cs in your console program:
+Firstly, you will need to have a few `using` statements at the top of *Program.cs* in your console program:
 [source,csharp]
 ----
 include::example$StartUsing.cs[tag=using,indent=0]
@@ -118,7 +122,7 @@ namespace examples
 
 == Additional Resources
 
-The http://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0/[API reference] is generated for each release.
+The http://docs.couchbase.com/sdk-api/couchbase-net-client/[API reference] is generated for each release.
 Older API references are linked from their respective sections in the xref:project-docs:sdk-release-notes.adoc[Release Notes].
 
-// xref:project-docs:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code.
+/xref:project-docs:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code.
