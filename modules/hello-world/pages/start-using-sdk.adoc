@@ -3,34 +3,36 @@
 :navtitle: Start Using the SDK
 
 [abstract]
-The Couchbase .NET SDK enables you to interact with a Couchbase Server cluster from the .NET Framework using C# and other .NET languages.
-It offers both a traditional synchronous API and an asynchronous API based on the _Task-based Asynchronous Pattern (TAP)_.
+The Couchbase .NET SDK enables you to interact with a Couchbase Server cluster from .NET using C# and other .NET languages.
+It offers an asynchronous API based on the _Task-based Asynchronous Pattern (TAP)_.
 
-
-
-The Couchbase .NET client allows applications to connect to the Couchbase Data Platform using any Common Language Runtime (CLR) language, including C#, F#, and VB.NET.
+The Couchbase .NET client allows applications to connect to Couchbase Server using any Common Language Runtime (CLR) language, including C#, F#, and VB.NET. 
 The SDK is written in C#, and some of its idiomatic patterns reflect that choice.
-The .NET SDK 3.0 is a complete rewrite of the API, reducing the number of overloads to present a simplified surface area, and adding support for future Couchbase Server features like Collections and Scopes (available in Couchbase Server 6.5 as a xref:concept-docs:collections.adoc[developer preview]).
-The API is now fully async.
-
 
 == Installing the SDK
 
-The Couchbase .NET SDK targets https://docs.microsoft.com/en-us/dotnet/standard/net-standard[.NET Standard 2.0], which in turn supports .NET Framework 4.6.2+ and .NET Core (eg netcoreapp) 2.1. The library is distributed in a number of ways:
+The Couchbase .NET SDK targets https://docs.microsoft.com/en-us/dotnet/standard/net-standard[.NET Standard 2.0], which in turn supports .NET Framework 4.6.2+ and .NET Core (e.g. netcoreapp) 2.1. 
+The library is distributed in a number of ways:
 
 |===
-|Nuget |Nuget package host at https://www.nuget.org/packages/CouchbaseNetClient/[nuget.org] (_recommended_)
+|NuGet |NuGet package host at https://www.nuget.org/packages/CouchbaseNetClient/[nuget.org] (_recommended_)
 |Zip |Zip file with can be downloaded https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client.3.0.0-beta2.zip[here]
-|Build from Source |Build the library from source https://github.com/couchbase/couchbase-net-client/[here] (not officially supported)
+|Build from Source |Build the library from https://github.com/couchbase/couchbase-net-client/[source available on GitHub] (not officially supported)
 |===
 
-In VS Code, with the https://marketplace.visualstudio.com/items?itemName=jmrog.vscode-nuget-package-manager[NuGet Package Manager Extension], open the command palette and type "nuget", then "CouchbaseNetClient", and select the latest 3.0 version available.
 
 == Hello Couchbase
 
-Now you have the .NET client installed, open a fresh project in _VS Code_, and try out the following, which assumes a user named "username" with permissions to access the cluster, typically the "Application Access" role.
+Start a new console project (in Visual Studio or VS Code, etc). 
+Install the latest 3.0 CouchbaseNetClient NuGet package.
 
-Of course, you will need to have a few using statements:
+The following code samples assume:
+
+* Couchbase Server is installed and accessible locally (xref:server:getting-started:do-a-quick-install[Do a Quick Install] if you don't already have Couchbase Server installed).
+* You have create a bucket (perhaps using the xref:server:manage:manage-settings:install-sample-buckets[travel-sample dataset], or by creating a new bucket).
+* You have created a Couchbase user named "username" with permissions to access the cluster (at least Application Access permissions).
+
+Firstly, you will need to have a few `using` statements at the top of *Program.cs* in your console program:
 [source,csharp]
 ----
 include::example$StartUsing.cs[tag=using,indent=0]
@@ -43,8 +45,8 @@ Then you can connect to the cluster:
 include::example$StartUsing.cs[tag=connect,indent=0]
 ----
 
-Couchbase uses xref:6.0@server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
-If you're developing client code on the same VM or machine as the Couchbase Server, your URI can be _couchbase://localhost_.
+Couchbase uses xref:server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
+If you're developing client code on the same machine as the Couchbase Server, your URI can be _couchbase://localhost_.
 
 Then open the bucket:
 [source,csharp]
@@ -52,8 +54,7 @@ Then open the bucket:
 include::example$StartUsing.cs[tag=bucket,indent=0]
 ----
 
-If you installed the travel sample data bucket, substitute _travel-sample_ for _bucket-name_.
-
+Substitute whatever bucket name you want for _bucket-name_ in the above example.
 
 The 3.0 SDK is ready for the introduction of xref:concept-docs:collections.adoc[Collections] in an upcoming release of the Couchbase Data Platform.
 The latest release, Couchbase Server 6.5, brings a limited _Developer Preview_ of Collections, allowing Documents to be grouped by purpose or theme, according to specified _Scope_.
@@ -64,18 +65,19 @@ Here we will use the `DefaultCollection`, which covers the whole Bucket and _mus
 include::example$StartUsing.cs[tag=collection,indent=0]
 ----
 
-KV Operations are described in detail on the xref:howtos:kv-operations.adoc[KV Operations page].
-Now that you know the basics, you may wish to go straight to that page.
 To get you started the following code creates a new document and then fetches it again, printing the result.
-
-NOTE: This version of the 3.0 .NET Client is entirely asynchronous, following modern .NET development recommendations.
 
 [source,csharp]
 ----
 include::example$StartUsing.cs[tag=upsert-get,indent=0]
 ----
 
-You can also perform a N1QL query at the cluster level:
+[NOTE]
+====
+Other possible key/value CRUD Operations are described in detail on the xref:howtos:kv-operations.adoc[KV Operations page].
+====
+
+You can also perform a N1QL query with the cluster object:
 
 [source,csharp]
 ----
@@ -83,8 +85,6 @@ include::example$StartUsing.cs[tag=n1ql-query,indent=0]
 ----
 
 You can learn more about N1QL queries on the xref:howtos:n1ql-queries-with-sdk.adoc[Query page].
-Other services (like analytics, search or views) work very similar to the two shown above.
-Please refer to their respective documentation sections to learn more.
 
 == Full Example
 
@@ -106,8 +106,8 @@ namespace examples
             var bucket = await cluster.BucketAsync("bucket-name");
             var collection = bucket.DefaultCollection();
 
-            var upsertResult = await collection.UpsertAsync("my-document", new { Name = "Ted", Age = 31 });
-            var getResult = await collection.GetAsync("my-document");
+            var upsertResult = await collection.UpsertAsync("my-document-key", new { Name = "Ted", Age = 31 });
+            var getResult = await collection.GetAsync("my-document-key");
             Console.WriteLine(getResult.ContentAs<dynamic>());
 
             var queryResult = await cluster.QueryAsync<dynamic>("select \"Hello World\" as greeting", new Couchbase.Query.QueryOptions());
@@ -117,17 +117,12 @@ namespace examples
         }
     }
 }
-
-}
 ----
 
 
 == Additional Resources
 
-The API reference is generated for each release and can be found http://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0/[here].
+The http://docs.couchbase.com/sdk-api/couchbase-net-client/[API reference] is generated for each release.
 Older API references are linked from their respective sections in the xref:project-docs:sdk-release-notes.adoc[Release Notes].
 
-// xref:project-docs:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code.
-
-Couchbase welcomes community contributions to the .NET SDK.
-The .NET SDK source code is available on https://github.com/couchbase/couchbase-net-client[GitHub].
+xref:project-docs:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code.
