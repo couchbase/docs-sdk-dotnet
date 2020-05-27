@@ -63,7 +63,7 @@ Couchbase .NET SDK 3.0 targets the .NET Standard 2.0.
 This was chosen so .NET Full Framework 4.8 can be supported along with .NET Core 3.x and earlier and follows the suggested path for library authors.
 The goal is to use the latest and greatest .NET Core libraries available, but still allow fallback for developers still using .NET Full Framework as they progress towards .NET Standard compliance.
 
-==== Dependencies
+=== Dependencies
 
 There are few dependency changes from SDK 2.x.
 SDK 3.0 and later no longer has any dependencies on .NET Framework 4.5.2.
