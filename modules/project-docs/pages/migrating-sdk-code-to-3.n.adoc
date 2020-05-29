@@ -148,10 +148,8 @@ See xref:ref:client-settings.adoc[client configuration] for further configuratio
             cluster = await Cluster.ConnectAsync(config);
 ----
 
-////
 The above has this equivalent with a connection string
 
-// disabled for https://issues.couchbase.com/browse/NCBC-2435
 [source,csharp]
 ----
             // Will set the max http connections to 23
@@ -160,12 +158,10 @@ The above has this equivalent with a connection string
                 Password = "pass"
             };
 
-            config.WithConnectionString("couchbase://user@localhost?MaxHttpConnections=32");
+            config.WithConnectionString("couchbase://user@localhost?MaxHttpConnections=23");
 
             cluster = await Cluster.ConnectAsync(config);
 ----
-////
-
 
 The SDK offers a configuration API for customizing bootstrapping, timeouts, reliability and performance tuning.
 Configuration options have changed since the 2.x release.
