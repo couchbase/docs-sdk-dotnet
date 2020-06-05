@@ -11,7 +11,7 @@ The SDK is written in C#, and some of its idiomatic patterns reflect that choice
 
 == Installing the SDK
 
-The Couchbase .NET SDK targets https://docs.microsoft.com/en-us/dotnet/standard/net-standard[.NET Standard 2.0], which in turn supports .NET Framework 4.6.2+ and .NET Core (e.g. netcoreapp) 2.1. 
+The Couchbase .NET SDK targets https://docs.microsoft.com/en-us/dotnet/standard/net-standard[.NET Standard] 2.0, which in turn supports .NET Framework 4.6.2+ and .NET Core (e.g. netcoreapp) 2.1. 
 The library is distributed in a number of ways:
 
 |===
@@ -125,4 +125,4 @@ namespace examples
 The http://docs.couchbase.com/sdk-api/couchbase-net-client/[API reference] is generated for each release.
 Older API references are linked from their respective sections in the xref:project-docs:sdk-release-notes.adoc[Release Notes].
 
-xref:project-docs:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code.
+The main difference you should be aware when you are xref:project-docs:migrating-sdk-code-to-3.n.adoc[migrating from SDK2 to SDK3 API] code.
