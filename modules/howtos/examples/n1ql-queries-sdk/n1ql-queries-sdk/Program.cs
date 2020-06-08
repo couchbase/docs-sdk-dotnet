@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Couchbase;
 using Couchbase.KeyValue;
@@ -23,16 +24,81 @@ namespace n1ql_queries_sdk
 
             // await ScanConsistencyRequestPlusExample(cluster, collection);
 
-            await ScanConsistencyAtPlusExample(cluster, collection);
+            // await ScanConsistencyAtPlusExample(cluster, collection);
+
+            // await QueryResultExample(cluster);
+
+            // await ExecutionTimeExample(cluster);
+
+            // await ClientContextIdExample(cluster);
+
+            await ReadonlyExample(cluster);
 
             await cluster.DisposeAsync();
+        }
+
+        private static async Task ReadonlyExample(ICluster cluster)
+        {
+            // tag::readonlyexample[]
+            var result = await cluster.QueryAsync<dynamic>("SELECT 1=1", 
+                options => options.ReadOnly(true));
+            // end::readonlyexample[]            
+        }
+
+        private static async Task ClientContextIdExample(ICluster cluster)
+        {
+            // tag::clientcontextexample[]
+            var result = await cluster.QueryAsync<dynamic>("SELECT 1=1", 
+                options => options.ClientContextId($"azure-resource-group-1-{Guid.NewGuid()}"));
+            // end::clientcontextexample[]
+        }
+
+        private static async Task ExecutionTimeExample(ICluster cluster)
+        {
+            // tag::executiontime[]
+            var result = await cluster.QueryAsync<dynamic>("SELECT 1=1", options => options.Metrics(true));
+
+            var metrics = result.MetaData.Metrics;
+
+            Console.WriteLine($"Execution time: {metrics.ExecutionTime}");
+            // end::executiontime[]
+        }
+
+        private static async Task QueryResultExample(ICluster cluster)
+        {
+            // tag::queryresultexample[]
+            var resultDynamic = await cluster.QueryAsync<dynamic>("SELECT t.* FROM `travel-sample` t WHERE t.type='landmark' LIMIT 10");
+            IAsyncEnumerable<dynamic> dynamicRows = resultDynamic.Rows;
+
+            var resultPoco = await cluster.QueryAsync<Landmark>("SELECT t.* FROM `travel-sample` t WHERE t.type='landmark' LIMIT 10");
+            IAsyncEnumerable<Landmark> pocoRows = resultPoco.Rows;
+            // end::queryresultexample[]
+
+            /*
+            // examples of query results MetaData
+            string requestId = resultPoco.MetaData.RequestId;
+            string clientContextId = resultPoco.MetaData.ClientContextId;
+            QueryStatus queryStatus = resultPoco.MetaData.Status;
+            QueryMetrics queryMetrics = resultPoco.MetaData.Metrics;
+            dynamic signature = resultPoco.MetaData.Signature;
+            List<QueryWarning> warnings = resultPoco.MetaData.Warnings;
+            dynamic profile = resultPoco.MetaData.Profile;
+            */
+        }
+
+        public class Landmark
+        {
+            public string Name {get; set;}
+            public string Url {get;set;}
+            public string Content {get;set;}
+            public string City {get;set;}
         }
 
         private static async Task ScanConsistencyAtPlusExample(ICluster cluster, ICouchbaseCollection collection)
         {
             // tag::atplus[]
             // create / update document (mutation)
-            var upsertResult = await collection.UpsertAsync("id", new { name = "Mike AtPlus", type = "user" });
+            var upsertResult = await collection.UpsertAsync("doc1", new { name = "Mike AtPlus", type = "user" });
 
             // create mutation state from mutation results
             var state = MutationState.From(upsertResult);
@@ -57,7 +123,7 @@ namespace n1ql_queries_sdk
             await foreach (var row in result)
             {
                 // each row is an instance of the Query<T> call (e.g. dynamic or custom type)
-                var name = row.name;        // "Mike"
+                var name = row.name;        // "Mike AtPlus"
                 Console.WriteLine($"{name}");
             }
         }
@@ -65,7 +131,7 @@ namespace n1ql_queries_sdk
         private static async Task ScanConsistencyRequestPlusExample(ICluster cluster, ICouchbaseCollection collection)
         {
             // create / update document (mutation)
-            var upsertResult = await collection.UpsertAsync("id", new { name = "Mike RequestPlus", type = "user" });
+            var upsertResult = await collection.UpsertAsync("doc2", new { name = "Mike RequestPlus", type = "user" });
 
             // tag::requestplus[]
             var result = await cluster.QueryAsync<dynamic>(
@@ -86,7 +152,7 @@ namespace n1ql_queries_sdk
             await foreach (var row in result)
             {
                 // each row is an instance of the Query<T> call (e.g. dynamic or custom type)
-                var name = row.name;        // "Mike"
+                var name = row.name;        // "Mike RequestPlus"
                 Console.WriteLine($"{name}");
             }
         }
@@ -94,7 +160,7 @@ namespace n1ql_queries_sdk
         private static async Task ScanConsistencyNotBoundedExample(ICluster cluster, ICouchbaseCollection collection)
         {
             // create / update document (mutation)
-            var upsertResult = await collection.UpsertAsync("id", new { name = "Mike NotBounded", type = "user" });
+            var upsertResult = await collection.UpsertAsync("doc3", new { name = "Mike NotBounded", type = "user" });
 
             // tag::notbounded[]
             var result = await cluster.QueryAsync<dynamic>(
@@ -115,7 +181,7 @@ namespace n1ql_queries_sdk
             await foreach (var row in result)
             {
                 // each row is an instance of the Query<T> call (e.g. dynamic or custom type)
-                var name = row.name;        // "Mike"
+                var name = row.name;        // "Mike NotBounded"
                 Console.WriteLine($"{name}");
             }
         }
