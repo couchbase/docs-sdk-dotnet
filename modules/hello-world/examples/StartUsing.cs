@@ -34,11 +34,9 @@ namespace examples
             Console.WriteLine(getResult.ContentAs<dynamic>());
             // #end::upsert-get[]
 
-            // TODO: update this to not require the QueryOptions object, NCBC-2459 NCBC-2458
-            // TODO: also, note the full example in the start-using adoc
             // #tag::n1ql-query[]
             var queryResult = await cluster.QueryAsync<dynamic>("select \"Hello World\" as greeting");
-            foreach (var row in queryResult) {
+            await foreach (var row in queryResult) {
                 Console.WriteLine(row);
             }
             // #end::n1ql-query[]
