@@ -16,7 +16,7 @@ The library is distributed in a number of ways:
 
 |===
 |NuGet |NuGet package host at https://www.nuget.org/packages/CouchbaseNetClient/[nuget.org] (_recommended_)
-|Zip |Zip file with can be downloaded https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client.3.0.0-beta2.zip[here]
+|Zip |Zip files for each release are linked from the Release Notes xref:project-docs:sdk-release-notes.adoc[here].
 |Build from Source |Build the library from https://github.com/couchbase/couchbase-net-client/[source available on GitHub] (not officially supported)
 |===
 
