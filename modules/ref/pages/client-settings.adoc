@@ -30,7 +30,7 @@ you can also build the `Cluster Options` in a fluent way for example
 ----
 var options = new ClusterOptions()
                 .WithConnectionString("couchbase://localhost")
-                .WithCredentials(username: "Administrator", password: "password")
+                .WithCredentials(username: "user", password: "password")
                 .WithBuckets("travel-sample")
                 .WithLogging(LoggerFactory.Create(builder =>
                 {
@@ -75,7 +75,7 @@ Below is an example of how `appsettings.json` can be coded for cluster options, 
   "AllowedHosts": "*",
   "ClusterOptions": {
     "ConnectionString": "couchbase://localhost",
-    "UserName": "Administrator",
+    "UserName": "user",
     "Password": "password",
     "BucketName" : "travel-sample"
   }
