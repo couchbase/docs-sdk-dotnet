@@ -22,7 +22,7 @@ Note: All examples on this page start with initiating a Cluster object and then 
 ----
 var cluster = new Cluster("couchbase://localhost", new ClusterOptions()
                  .WithConnectionString("couchbase://localhost")
-                 .WithCredentials(username: "Administrator", password: "password")
+                 .WithCredentials(username: "user", password: "password")
                  .WithBuckets("travel-sample")
             );
 
