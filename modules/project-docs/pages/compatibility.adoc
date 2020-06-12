@@ -82,4 +82,7 @@ which supports .NET Core 2.1.
 The .NET SDK is compatible with .NET framework 4.6.2+ on Windows. 
 Other .NET implementations might work but are not tested and are outside of the scope of our technical support organization.
 
+include::6.5@sdk:shared:partial$network-requirements.adoc
+
+
 include::6.5@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
