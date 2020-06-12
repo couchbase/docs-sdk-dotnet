@@ -11,13 +11,11 @@ Querying can solve typical programming tasks such as finding a user profile by e
 
 Our query service uses N1QL, which will be fairly familiar to anyone who's used any dialect of SQL.
 xref:#additional-resources[Further resources] for learning about N1QL are listed at the bottom of the page.
-Before you get started you may wish to checkout the xref:6.5@server:n1ql:n1ql-language-reference/index.adoc[N1QL intro page], or just dive in with a query against our travel sample data set.
+Before you get started you may wish to checkout the xref:server:n1ql:n1ql-language-reference/index.adoc[N1QL intro page], or just dive in with a query against xref:server:manage:manage-settings/install-sample-buckets.adoc[our travel sample data set].
 In this case, the one thing that you need to know is that in order to make a Bucket queryable, it must have at least one index defined.
-You can define a _primary_ index on a bucket.
-When a primary index is defined you can issue non-covered queries on the bucket as well.
+You can define a _primary_ index on a bucket. When executing queries, if a suitable index is not found, the primary index will ensure that the query will be executed anyway (the primary index should not be used in production to prevent scanning of the whole bucket).
 
-Use
-xref:6.5@server::tools/cbq-shell.html[cbq], our interactive Query shell.
+To execute N1QL, you can use xref:server:tools:query-workbench.adoc[Query Workbench] (or you can use the xref:server:tools:cbq-shell.adoc[cbq command line tool]).
 Open it, and enter the following:
 
 [source,n1ql]
@@ -25,100 +23,152 @@ Open it, and enter the following:
 CREATE PRIMARY INDEX ON `travel-sample`
 ----
 
-or replace _travel-sample_ with a different Bucket name to build an index on a different dataset.
+or replace _travel-sample_ with a different Bucket name to build an index on a different Bucket.
 
-NOTE: The default installation places cbq in `/opt/couchbase/bin/` on Linux, `/Applications/Couchbase Server.app/Contents/Resources/couchbase-core/bin/cbq` on OS X, and `C:\Program Files\Couchbase\Server\bin\cbq.exe` on Microsoft Windows.
-
-// TODO: improving this and/or adding server/6.0/tools/query-workbench.html
+NOTE: If you are using _travel-sample_, it comes with a primary index already created.
 
 
-== Queries & Placeholders
+== Parameterized Queries
 
-Placeholders allow you to specify variable constraints for an otherwise constant query.
-There are two variants of placeholders: postional and named parameters.
-Positional parameters use an ordinal placeholder for substitution and named parameters use variables.
-A named or positional parameter is a placeholder for a value in the WHERE, LIMIT or OFFSET clause of a query.
-Note that both parameters and options are optional.
+Parameters allow you to specify variable constraints for an otherwise constant query. Parameterization is also a good defense against link:https://owasp.org/www-community/attacks/SQL_Injection[SQL injection].
+There are two variants of parameters: positional and named.
+Positional parameters use a numbered placeholder for substitution and named parameters use a named placeholder.
+A named or positional parameter can be used in the WHERE, LIMIT or OFFSET clauses of a query.
 
 .Positional parameter example:
-[source,csharp]
+[source,csharp,indent=0]
 ----
-var result = await cluster.QueryAsync<dynamic>(
-    "SELECT x.* FROM `default` WHERE x.Type=$1",
-    options => options.Parameter("User")
-);
+include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=positional]
 ----
 
 .Named parameter example:
-[source,csharp]
+[source,csharp,indent=0]
 ----
-var result = await cluster.QueryAsync<dynamic>(
-    "SELECT x.* FROM `default` WHERE x.Type=$type",
-    options = > options.Parameter("type", "User")
-);
+include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=namedparameter]
 ----
-
-The complete code for this page's example can be found at xref:[??]
-
-
 
 == Handling Results
 
 In most cases your query will return more than one result, and you may be looking to iterate over those results:
 
-[source,csharp]
+[source,csharp,indent=0]
 ----
-var result = await cluster.QueryAsync<dynamic>(
-    "SELECT x.* FROM `default` WHERE x.Type=$1",
-    options => options.Parameter("User")
-);
+include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=namedparameter]
 
-// check query was successful
-if (result.Metadata.Status != QueryStatus.Success)
-{
-    // error
-}
-
-// iterate over rows
-foreach (var row in result)
-{
-    // each row is an instance of the Query<T> call (e.g. dynamic or custom type)
-    var name = row.username; // “mike”
-    var age = row.age;
-}
+include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=namedparameter2]
 ----
 
-== Scan Consistency
+== Query Results
 
+When performing a query, the response you receive is an `IQueryResult`. If no exception gets raised, the request succeeded and provides access to both the rows returned and also associated `QueryMetaData`.
+
+A type parameter must be used with `QueryAsync`, that will specify the type of rows that will be returned. This can be as generic as using `dynamic` or you can specify a POCO of your choice. For example, any of these are valid:
+
+[source,csharp,indent=0]
+----
+include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=queryresultexample]
+----
+
+The `QueryMetaData` object (e.g. returned from `result.MetaData`) provides insight into some basic profiling/timing information as well as information like the clientContextId.
+
+.QueryMetaData
+[options="header"]
+|====
+| Type | Name       | Description
+| `string` | `RequestId` | Returns the request identifer of this request.
+| `string` | `ClientContextId` | Returns the context ID either generated by the SDK or supplied by the user.
+| `QueryStatus` | `Status` | An enum simply representing the state of the result.
+| `QueryMetrics` | `Metrics` | Returns metrics provided by the query for the request if enabled.
+| `dynamic` | `Signature` | If a signature is present, it will be available to consume in a dynamic fashion.
+| `List<QueryWarning>` | `Warnings` | Non-fatal errors are available to consume as warnings on this method.
+| `dynamic` | `Profile` | If enabled returns additional profiling information of the query.
+|====
+
+For example, here is how you can print the executionTime of a query:
+
+[source,csharp,indent=0]
+----
+include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=executiontime]
+----
+
+== Query Options
+
+The query service provides an array of options to customize your query. The following table lists them all:
+
+.Available Query Options
+[options="header"]
+|====
+| Name       | Description
+| `ClientContextId(string)` | Sets a context ID returned by the service for debugging purposes. See "Client Context Id" section for more detail
+| `Parameter(object)` | Allows to set positional arguments for a parameterized query.
+| `Parameter(string, object)` | Allows to set named arguments for a parameterized query.
+| `Raw(string, object)` | Escape hatch to add arguments that are not covered by these options.
+| `Readonly(bool)` | Tells the client and server that this query is readonly. See "Readonly" section for more detail. 
+| `Adhoc(bool)` | If set to false will prepare the query and later execute the prepared statement.
+| `ConsistentWith(MutationState)` | Allows to be consistent with previously written mutations (AtPlus / "read your own writes").
+| `MaxServerParallelism(int)` | Tunes the maximum parallelism on the server.
+| `Metrics(bool)` | Enables the server to send metrics back to the client as part of the response.
+| `PipelineBatch(int)` | Sets the batch size for the query pipeline.
+| `PipelineCap(int)` | Sets the cap for the query pipeline.
+| `Profile(QueryProfile)` | Allows to enable additional query profiling as part of the response (Off/Phases/Times)
+| `ScanWait(TimeSpan)` | Allows to specify a maximum scan wait time.
+| `ScanCap(int)` | Specifies a maximum cap on the query scan size.
+| `ScanConsistency(QueryScanConsistency)` | Sets a different scan consistency for this query (NotBounded/RequestPlus). See "Scan Consistency" section below for more details.
+| `Serializer` | Allows setting a different serializer (`ITypeSerializer`) for the deserialization of the rows.
+|====
+
+=== Scan Consistency
 
 Setting a staleness parameter for queries, with `scan_consistency`, enables a tradeoff between latency and (eventual) consistency.
 
 * A N1QL query using the default *Not Bounded* Scan Consistency will not wait for any indexes to finish updating before running the query and returning results, meaning that results are returned quickly, but the query will not return any documents that are yet to be indexed.
 
+.ScanConsitency (NotBounded)
+[source,csharp,indent=0]
+----
+include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=notbounded]
+----
+
 * With Scan Consistency set to *RequestPlus*, all document changes and index updates are processed before the query is run.
 Select this when consistency is always more important than performance.
 
+.ScanConsitency (RequestPlus)
+[source,csharp,indent=0]
+----
+include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=requestplus]
+----
+
 * For a middle ground, *AtPlus* is a "read your own write" (RYOW) option, which means it just waits for the new documents that you specify to be indexed, rather than an entire index of multiple documents.
-// See the xref:scan-consistency-examples.adoc[examples] for how to use *AtPlus* for the best performance balance for many circumstances.
 
-.ScanConsisteny (RYOW)
-[source,csharp]
+.ScanConsistency (AtPlus/RYOW example)
+[source,csharp,indent=0]
 ----
-// create / update document (mutation)
-var upsertResult = await collection.UpsertAsync("id", new { name = "Mike", type = "User" });
-
-// create mutation state from mutation results
-var state = MutationState.From(upsertResult);
-
-// use mutation state with query option
-var result = await cluster.QueryAsync<dynamic>(
-    "SELECT x.* FROM `default` WHERE x.Type=$1",
-    options => options.ConsistentWith(state)
-                      .Parameter("User")
-);
+include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=atplus]
 ----
 
-NOTE: *AtPlus* requires the fix in https://issues.couchbase.com/browse/NCBC-2468[NCBC-2468], expected to be in 3.0.1 as of this writing.
+=== Client Context Id
+
+The SDK will always send a client context ID with each query, even if none is provided by the user. By default a UUID/GUID will be generated that is mirrored back from the query engine and can be used for debugging purposes. A custom string can always be provided if you want to introduce application-specific semantics into it. For example, in a network dump it will show up with a certain identifier). Whatever is chosen, make sure it is unique enough that different queries can be distinguished during debugging or monitoring.
+
+[source,csharp,indent=0]
+----
+include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=clientcontextexample]
+----
+
+=== Readonly
+
+If the query is marked as readonly, both the server and the SDK can improve processing of the operation. On the client side, the SDK can be more liberal with retries because it can be sure that there are no state-mutating side-effects happening. The query engine will ensure that no data is actually mutated when parsing and planning the query.
+
+[source,csharp,indent=0]
+----
+include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=readonlyexample]
+----
+
+=== Custom JSON Serializer
+
+Like with all JSON apis, it is possible to customize the JSON serializer. Setting `Serializer` in query options allows to plug in your own library. This in turn makes it possible to serialize rows into POCOs or other structures that your application defines and the SDK has no idea about.
+
+Please see the xref:transcoders-nonjson.adoc[documentation on transcoding and serialization] for more information
 
 == Streaming Large Result Sets
 
@@ -134,6 +184,6 @@ Be sure to check that xref:concept-docs:data-services.adoc[your use case fits yo
 * For a deeper dive into N1QL from the SDK, refer to our xref:concept-docs:n1ql-query.adoc[N1QL SDK concept doc].
 * The xref:6.5@server:n1ql:n1ql-language-reference/index.adoc[Server doc N1QL intro] introduces a complete guide to the N1QL language, including all of the latest additions.
 * The http://query.pub.couchbase.com/tutorial/#1[N1QL interactive tutorial] is a good introduction to the basics of N1QL use.
-* For scaling up queries, be sure to xref:6.5@server:n1ql:n1ql-language-reference/index.adoc[read up on Indexes].
-* N1QL is for operational queries; for analytical workloads, read more on xref:concept-docs:http-services.adoc#Long-Running-Queries-&-Big-Data[when to choose CBAS], our implementation of SQL++.
+* For scaling up queries, be sure to xref:server:learn:services-and-indexes:indexes:index-replication.adoc[read up on Indexes].
+* N1QL is for operational queries; for analytical workloads, read more on xref:concept-docs:http-services.adoc#Long-Running-Queries-&-Big-Data[when to choose Analytics], our implementation of SQL++ available in the Enterprise Edition.
 
