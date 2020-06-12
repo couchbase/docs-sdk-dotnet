@@ -28,8 +28,8 @@ Install the latest 3.0 CouchbaseNetClient NuGet package.
 
 The following code samples assume:
 
-* Couchbase Server is installed and accessible locally (xref:server:getting-started:do-a-quick-install[Do a Quick Install] if you don't already have Couchbase Server installed).
-* You have create a bucket (perhaps using the xref:6.5@server:manage:manage-settings/install-sample-buckets[travel-sample dataset], or by creating a new bucket).
+* Couchbase Server is installed and accessible locally (xref:server:getting-started:do-a-quick-install.adoc[Do a Quick Install] if you don't already have Couchbase Server installed).
+* You have create a bucket (perhaps using the xref:6.5@server:manage:manage-settings/install-sample-buckets.adoc[travel-sample dataset], or by creating a new bucket).
 * You have created a Couchbase user named "username" with permissions to access the cluster (at least Application Access permissions).
 
 Firstly, you will need to have a few `using` statements at the top of *Program.cs* in your console program:
