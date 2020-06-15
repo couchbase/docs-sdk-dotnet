@@ -428,3 +428,7 @@ Various `Tracer` implementations exist, both as part of the core library and as 
 It is recommended to use those modules and not write your own tracer unless absolutely needed.
 +
 NOTE: When using a non-default tracer, you are responsible for starting and stopping it.
+
+// section on wide area network support
+
+include::6.5@sdk:shared:partial$client-settings-wide-network.adoc[]
