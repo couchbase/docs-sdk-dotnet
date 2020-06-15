@@ -430,6 +430,5 @@ It is recommended to use those modules and not write your own tracer unless abso
 NOTE: When using a non-default tracer, you are responsible for starting and stopping it.
 
 // section on wide area network support
-[source,asciidoc]
-----
-include::6.0@sdk:shared:partial$client-settings-wide-network.adoc
+
+include::6.5@sdk:shared:partial$client-settings-wide-network.adoc[]
