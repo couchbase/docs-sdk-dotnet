@@ -75,7 +75,7 @@ See the notes there for Support details.
 
 == .NET Framework Version Compatibility
 
-include::hello-world:partial$installation.adoc[]
+include::hello-world:partial$supported.adoc[]
 Other .NET implementations might work but are not tested and are outside of the scope of our technical support organization.
 
 include::6.5@sdk:shared:partial$network-requirements.adoc[]
