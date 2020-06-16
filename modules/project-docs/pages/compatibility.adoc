@@ -75,11 +75,7 @@ See the notes there for Support details.
 
 == .NET Framework Version Compatibility
 
-The Couchbase .NET SDK targets NetStandard 2.0, 
-on both Windows and Ubuntu GNU/Linux: 
-it is tested with .NET Standard 2.0, 
-which supports .NET Core 2.1. 
-The .NET SDK is compatible with .NET framework 4.6.2+ on Windows. 
+include::hello-world:partial$installation.adoc[]
 Other .NET implementations might work but are not tested and are outside of the scope of our technical support organization.
 
 include::6.5@sdk:shared:partial$network-requirements.adoc[]
