@@ -1,1 +1,1 @@
-The Couchbase .NET SDK targets https://docs.microsoft.com/en-us/dotnet/standard/net-standard[.NET Standard] 2.0, which in turn supports .NET Framework 4.6.2+ and .NET Core (e.g. netcoreapp) 2.1. 
+The Couchbase .NET SDK targets and is tested with https://docs.microsoft.com/en-us/dotnet/standard/net-standard[.NET Standard] 2.0, which in turn supports .NET Framework 4.6.2+ and .NET Core (e.g. netcoreapp) 2.1. 
