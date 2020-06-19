@@ -96,6 +96,63 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+= Version 3.0.2 (20 June 2020)
+https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.2.zip[Download] |  
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.2[API Reference] | 
+https://www.nuget.org/packages/CouchbaseNetClient/3.0.2[Nuget]
+
+=== Known Issues
+* https://issues.couchbase.com/browse/NCBC-2187[NCBC-2187]: CollectionManager -- 400: Not allowed on this version of cluster.
+
+=== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-2436[NCBC-2436]: User connstr example in migration guide
+* https://issues.couchbase.com/browse/NCBC-2459[NCBC-2459]: Remove QueryOptions from StartUsing.cs in docs
+* https://issues.couchbase.com/browse/NCBC-2487[NCBC-2487]: NRE when bootstrapping - BucketConfigExtensions.ReplacePlaceholderWithBootstrapHost
+* https://issues.couchbase.com/browse/NCBC-2506[NCBC-2506]: Connection attempt failed / timeout exception with Cloud and .NET SDK 3.0.1
+* https://issues.couchbase.com/browse/NCBC-2508[NCBC-2508]: Alternate Addresses are not handled correctly in sdk3
+* https://issues.couchbase.com/browse/NCBC-2512[NCBC-2512]: Additional debug logging and improvements
+* https://issues.couchbase.com/browse/NCBC-2525[NCBC-2525]: Connection pool does not scale up to minimum connections after a temporary network failure.
+* https://issues.couchbase.com/browse/NCBC-2526[NCBC-2526]: requests wait forever while cluster is unreachable
+* https://issues.couchbase.com/browse/NCBC-2537[NCBC-2537]: Orphaned nodes when bootstrapping with a Memcached and a Couchbase bucket
+* https://issues.couchbase.com/browse/NCBC-2538[NCBC-2538]: Analytics failures after failover/rebalance of the ept node
+* https://issues.couchbase.com/browse/NCBC-2540[NCBC-2540]: Enumerating query results from SELECT RAW queries throws an exception
+* https://issues.couchbase.com/browse/NCBC-2546[NCBC-2546]: Retry all exceptions with the IRetriable marker interface
+* https://issues.couchbase.com/browse/NCBC-2548[NCBC-2548]: Ensure all operations attempt retrys when NMVB status is returned by server
+* https://issues.couchbase.com/browse/NCBC-2549[NCBC-2549]: Subdoc failures after restarting CB server
+* https://issues.couchbase.com/browse/NCBC-2552[NCBC-2552]: Intermittent cluster connection failures with CB Server &lt;6.5
+* https://issues.couchbase.com/browse/NCBC-2555[NCBC-2555]: Memcached and SSL results in &quot;The handshake failed due to an unexpected packet format.&quot;
+* https://issues.couchbase.com/browse/NCBC-2556[NCBC-2556]: Capture thrown exception and log the error when bootstrapping
+* https://issues.couchbase.com/browse/NCBC-2558[NCBC-2558]: Couchbase.Extensions.DependencyInjection Failing On .NET Core 3.1
+
+=== New Features and Behavioral Changes.
+* https://issues.couchbase.com/browse/NCBC-2202[NCBC-2202]: Integration tests need to configure tests to run based on server version
+* https://issues.couchbase.com/browse/NCBC-2237[NCBC-2237]: PLAIN must not be enabled by default on non-tls connections
+* https://issues.couchbase.com/browse/NCBC-2404[NCBC-2404]: ConnectAsync throws ArgumentNullException when cluster cannot be reached
+* https://issues.couchbase.com/browse/NCBC-2530[NCBC-2530]: Provide navigation properties to get from ICouchbaseCollection back to ICluster
+* https://issues.couchbase.com/browse/NCBC-2533[NCBC-2533]: Provide access to ITypeSerializer on ICluster for Linq2Couchbase
+* https://issues.couchbase.com/browse/NCBC-2544[NCBC-2544]: Add additional DEBUG logging info and ContextIds
+* https://issues.couchbase.com/browse/NCBC-2463[NCBC-2463]: Document documentation .NET
+* https://issues.couchbase.com/browse/NCBC-2469[NCBC-2469]: Make nightly Jenkins builds work
+* https://issues.couchbase.com/browse/NCBC-2495[NCBC-2495]: Update NuGet API Key in deployment pipeline on Jenkins
+* https://issues.couchbase.com/browse/NCBC-2509[NCBC-2509]: CreateAndConnectAsync ONLY creates CouchbaseBuckets (not MemCache or Ephemeral)
+* https://issues.couchbase.com/browse/NCBC-2517[NCBC-2517]: DependencyInjection project refactoring
+* https://issues.couchbase.com/browse/NCBC-2523[NCBC-2523]: Port ClusterVersion from sdk2 to sdk3
+* https://issues.couchbase.com/browse/NCBC-2527[NCBC-2527]: Update DnsClient to 1.3.2
+* https://issues.couchbase.com/browse/NCBC-2529[NCBC-2529]: CB Cloud:  non-KV nodes fail when used for bootstraping
+* https://issues.couchbase.com/browse/NCBC-2534[NCBC-2534]: .NET Collections Functional Testing
+* https://issues.couchbase.com/browse/NCBC-2539[NCBC-2539]: Port UnixMillisecondsConverter from sdk2 to sdk3
+* https://issues.couchbase.com/browse/NCBC-2482[NCBC-2482]: Couchbase.IntegrationTests.Services.Search.SearchIndexManagerTests.TestSearchManager 
+* https://issues.couchbase.com/browse/NCBC-2483[NCBC-2483]: Couchbase.IntegrationTests.UserManagerTests.Test_UserManager 
+* https://issues.couchbase.com/browse/NCBC-2484[NCBC-2484]: Couchbase.IntegrationTests.BucketManagerTests.Test_BucketManager 
+* https://issues.couchbase.com/browse/NCBC-2485[NCBC-2485]: Couchbase.IntegrationTests.Diagnostics.PingReportTests.Can_Get_PingReport_With_ReportId 
+* https://issues.couchbase.com/browse/NCBC-2486[NCBC-2486]: Couchbase.IntegrationTests.CollectionManagerTests.Test_CollectionManager 
+* https://issues.couchbase.com/browse/NCBC-2489[NCBC-2489]: Couchbase.IntegrationTests.ClusterTests.Test_Open_More_Than_One_Bucket 
+* https://issues.couchbase.com/browse/NCBC-2490[NCBC-2490]: Couchbase.ServiceNotAvailableException :  Service views not available.
+* https://issues.couchbase.com/browse/NCBC-2518[NCBC-2518]: HttpStreamingConfigListener should continue running after all streams break.
+* https://issues.couchbase.com/browse/NCBC-2524[NCBC-2524]: Couchbase.IntegrationTests.ClusterTests.Test_WaitUntilReadyAsync 
+* https://issues.couchbase.com/browse/NCBC-2531[NCBC-2531]: Implement OpenTelemetry Stub in CouchbaseNetClient
+* https://issues.couchbase.com/browse/NCBC-2532[NCBC-2532]: Remove existing OpenTracing dependency
+
 = Version 3.0.1 (13 May 2020)
 https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.1.zip[Download] |  
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.1[API Reference] | 
