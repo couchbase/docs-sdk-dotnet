@@ -30,7 +30,7 @@ var bucket = await cluster.BucketAsync("default");
 var collection = bucket.DefaultCollection();
 ----
 
-== Asynchronous Programming using `await`
+== Asynchronous Programming using await
 
 This is the most common and basic ways for consuming Couchbase operations asynchronously via Tasks:
 
@@ -48,7 +48,7 @@ Note that in the `UpsertAsync` method above, an exception will be thrown if the 
 `GetAsync` returns a `GetResult` if it succeeds, you’ll then have to use `ContentAs` to read the returned value.
 
 
-== Synchronous Programming using `Task.Result` 
+== Synchronous Programming using Task.Result
 
 The same methods above can also be called synchronously, blocking the calling thread by using the `Result` property:
 
