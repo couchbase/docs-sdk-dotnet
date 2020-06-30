@@ -21,8 +21,8 @@
 // * xref:howtos:durability.adoc[Durability]
 
 .Managing Couchbase
-// * xref:howtos:managing-connections.adoc[Managing Connections]
-* xref:howtos:troubleshooting-cloud-connections.adoc[Troubleshooting Cloud Connections]
+* xref:howtos:managing-connections.adoc[Managing Connections]
+** xref:howtos:troubleshooting-cloud-connections.adoc[Troubleshooting Cloud Connections]
 // * User Management
 //  ** xref:howtos:sdk-authentication.adoc[Authentication]
 
