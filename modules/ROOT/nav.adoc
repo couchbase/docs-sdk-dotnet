@@ -20,11 +20,12 @@
 // * xref:howtos:concurrent-document-mutations.adoc[Concurrent Document Mutations]
 // * xref:howtos:durability.adoc[Durability]
 
-////
 .Managing Couchbase
-* User Management
- ** xref:howtos:sdk-authentication.adoc[Authentication]
-////
+// * xref:howtos:managing-connections.adoc[Managing Connections]
+* xref:howtos:troubleshooting-cloud-connections.adoc[Troubleshooting Cloud Connections]
+// * User Management
+//  ** xref:howtos:sdk-authentication.adoc[Authentication]
+
 .Errors & Diagnostics
 * xref:howtos:error-handling.adoc[Handling Errors]
 * xref:howtos:collecting-information-and-logging.adoc[Logging]
@@ -57,6 +58,7 @@
 .References
 * https://docs.couchbase.com/sdk-api/couchbase-net-client[.NET API Reference]
 * xref:ref:client-settings.adoc[Client Settings]
+// * xref:ref:error-codes.adoc[Error Messages]
 * xref:ref:travel-app-data-model.adoc[Travel Sample Data Model]
 
 .Project Docs
