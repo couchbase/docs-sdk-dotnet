@@ -76,7 +76,7 @@ For newer applictions we suggest using Dependency Injection and Startup.cs file.
 
 [#connection-di]
 == Dependency Injection
-There is a special https://www.nuget.org/packages/Couchbase.Extensions.DependencyInjection/[NuGet package] to help you get started with Dependency Injection (DI). 
+There is a special https://www.nuget.org/packages/Couchbase.Extensions.DependencyInjection/[NuGet package^] to help you get started with Dependency Injection (DI). 
 
 // Connecting to Couchbase cloud requires that `ClusterOptions.EnableTls` be set to true along with the `"couchbases://"` connection string pre-fix. Additionally, in certain situations `ClusterOptions.IgnoreRemoteCertificateNameMismatch` may also need to be true. 
 
