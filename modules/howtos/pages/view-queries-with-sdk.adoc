@@ -40,7 +40,7 @@ Here is an example:
 
 [source,csharp]
 ----
-var result = await bucket.ViewQueryAsync<Type>(“design-doc”, “view-name”, options =>
+var result = await bucket.ViewQueryAsync<Type>("design-doc", "view-name", options =>
 {
 	options.WithLimit(10);
 });

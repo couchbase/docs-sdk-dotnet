@@ -150,7 +150,7 @@ Using the `Get()` method with the document key can be done in a similar fashion 
 
 [source,csharp]
 ----
-var result = await collection.GetAsync(“document-key”);
+var result = await collection.GetAsync("document-key");
 var content = result.ContentAs<string>();
 ----
 
@@ -159,7 +159,7 @@ Timeout can also be set - as in the earlier `Insert` example:
 .Get (with options)
 [source,csharp]
 ----
-var result = await collection.GetAsync(“document-key”,
+var result = await collection.GetAsync("document-key",
     options =>
     {
         options.WithTimeout(TimeSpan.FromSeconds(5));

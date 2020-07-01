@@ -108,7 +108,7 @@ try
     {
         foreach (var row in result.Rows)
         {
-            Console.WriteLine($“Greeting: {row.greeting}”);
+            Console.WriteLine($"Greeting: {row.greeting}");
         }
     }
 }

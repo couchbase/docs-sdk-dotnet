@@ -110,7 +110,7 @@ public class Person
 
 In the POCO above, we have a field which we wish to encrypt called `Password` which represents a person’s password.
 This property is annotated with `EncryptedFieldAttribute` and the `ICryptoProvider.Provider` name we are using.
-Note, this must match the type of `ICryptoProvider` we supplied in our configuration (“AES-256-HMAC-SHA256").
+Note, this must match the type of `ICryptoProvider` we supplied in our configuration ("AES-256-HMAC-SHA256").
 
 [#storing-and-retrieving]
 == Storing and Retrieving Documents with Encrypted Fields
