@@ -121,4 +121,5 @@ See the xref:#working-in-the-cloud[Cloud section] below for some suggestions of 
 
 // ******** cloud ********
 include::6.5@sdk:shared:partial$managing-connections.adoc[tag=cloud]
+
 Additionally, in certain situations `ClusterOptions.IgnoreRemoteCertificateNameMismatch` may also need to be true. 
