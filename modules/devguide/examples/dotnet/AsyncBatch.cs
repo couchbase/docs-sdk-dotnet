@@ -1,33 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Couchbase;
+using Couchbase.KeyValue;
 
-namespace DevGuide
+namespace Couchbase.Net.DevGuide
 {
     class AsyncBatch : ConnectionBase
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            new AsyncBatch().ExecuteAsync().Wait();
+            await new AsyncBatch().ExecuteAsync().ConfigureAwait(false);
             Console.Read();
         }
 
         public override async Task ExecuteAsync()
         {
+            //Connect to Couchbase
+            await ConnectAsync().ConfigureAwait(false);
+
             var ids = new List<string> { "doc1", "doc2", "doc4" };
-            await PrintAllDocumentsAsync(ids);
-        }
 
-        public async Task PrintAllDocumentsAsync(List<string> ids)
-        {
-            var tasks = new List<Task<IDocumentResult<string>>>();
-            ids.ForEach(x => tasks.Add(_bucket.GetDocumentAsync<string>(x)));
+            // ReSharper disable once IdentifierTypo
+            var upserts = new List<Task<IMutationResult>>();
+            ids.ForEach(x => upserts.Add(Bucket.DefaultCollection().UpsertAsync(x, x))); 
+            await Task.WhenAll(upserts).ConfigureAwait(false);
 
-            var results = await Task.WhenAll(tasks);
-            results.ToList().ForEach(doc => Console.WriteLine(doc.Status));
+            var gets = new List<Task<IGetResult>>();
+            ids.ForEach(x => gets.Add(Bucket.DefaultCollection().GetAsync(x)));
+
+            var results = await Task.WhenAll(gets).ConfigureAwait(false);
+            results.ToList().ForEach(doc => Console.WriteLine("Removed " + doc.ContentAs<dynamic>()));
         }
     }
 }
@@ -37,7 +40,7 @@ namespace DevGuide
 /* ************************************************************
  *
  *    @author Couchbase <info@couchbase.com>
- *    @copyright 2015 Couchbase, Inc.
+ *    @copyright 2020 Couchbase, Inc.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.

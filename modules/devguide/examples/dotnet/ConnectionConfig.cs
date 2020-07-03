@@ -1,44 +1,43 @@
-﻿using Couchbase;
-using Couchbase.Core;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
-namespace DevGuide
+namespace Couchbase.Net.DevGuide
 {
     public class ConnectionConfig
     {
-        protected ICluster _cluster;
-        protected IBucket _bucket;
+        protected ICluster Cluster;
+        protected IBucket Bucket;
 
-        public ConnectionConfig()
+        private async Task ConnectAsync()
         {
-            Connect();
+            var options = new ConfigurationBuilder()
+                .AddJsonFile("config.json")
+                .Build()
+                .GetSection("couchbase")
+                .Get<ClusterOptions>();
+
+            Cluster = await Couchbase.Cluster.ConnectAsync(options).ConfigureAwait(false);
+            Bucket = await Cluster.BucketAsync("default").ConfigureAwait(false);
         }
 
-        private void Connect()
+        private async Task DisconnectAsync()
         {
-            _cluster = new Cluster("couchbaseClients/couchbase");
-            _bucket = _cluster.OpenBucket();
-        }
-
-        private void Disconnect()
-        {
-            _cluster.CloseBucket(_bucket);
-            _bucket.Dispose();
-            _bucket = null;
-            _cluster.Dispose();
-            _cluster = null;
+            await Bucket.DisposeAsync().ConfigureAwait(false);
+            await Cluster.DisposeAsync().ConfigureAwait(false);
         }
 
         public virtual async Task ExecuteAsync()
         {
-            Console.WriteLine("Connected to bucket '{0}'", _bucket.Name);
+            //Connect to Couchbase
+            await ConnectAsync().ConfigureAwait(false);
+
+            Console.WriteLine("Connected to bucket '{0}'", Bucket.Name);
         }
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            new ConnectionConfig().ExecuteAsync().Wait();
+            await new ConnectionConfig().ExecuteAsync().ConfigureAwait(false);
         }
-
     }
 }

@@ -1,38 +1,39 @@
-﻿using Couchbase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
+using Couchbase.KeyValue;
 
-namespace DevGuide
+namespace Couchbase.Net.DevGuide
 {
     public class Counter : ConnectionBase
     {
         public override async Task ExecuteAsync()
         {
+            //Connect to Couchbase
+            await ConnectAsync().ConfigureAwait(false);
+
             var key = "dotnetDevguideExampleCounter-" + DateTime.Now.Ticks;
+            var binaryCollection = Bucket.DefaultCollection().Binary;
 
             // Try to increment a counter that doesn't exist. 
             // This will create the counter with an initial value of 1 regardless of delta specified
-            var counter = await _bucket.IncrementAsync(key, 10);
-            Console.WriteLine("Initial value = N/A, Increment = 10, Counter value: " + counter.Value);
+            var counter = await binaryCollection.IncrementAsync(key, options => options.Initial(10)).ConfigureAwait(false);
+            Console.WriteLine("Initial value = N/A, Increment = 10, Counter value: " + counter.Content);
 
             // Remove the counter so we can try again
-            await _bucket.RemoveAsync(key);
+            await Bucket.DefaultCollection().RemoveAsync(key).ConfigureAwait(false);
             Console.WriteLine("Trying again.");
 
             // Create a counter with an initial value of 13. Again, delta is ignored in this case.
-            var counter2 = await _bucket.IncrementAsync(key, 10, 13);
-            Console.WriteLine("Initial value = 13, Increment = 10, Counter value: " + counter2.Value);
+            var counter2 = await binaryCollection.IncrementAsync(key, options => options.Initial(13).Delta(10)).ConfigureAwait(false);
+            Console.WriteLine("Initial value = 13, Increment = 10, Counter value: " + counter2.Content);
 
             // Increment the counter by 10. If the counter exists, the inital value is ignored.
-            var counter3 = await _bucket.IncrementAsync(key, 10, 13);
-            Console.WriteLine("Initial value = 13, Increment = 10, Counter value: " + counter3.Value);
+            var counter3 = await binaryCollection.IncrementAsync(key, options => options.Initial(13).Delta(10)).ConfigureAwait(false);
+            Console.WriteLine("Initial value = 13, Increment = 10, Counter value: " + counter3.Content);
 
             // Decrement the counter by 20.
-            var counter4 = await _bucket.DecrementAsync(key, 20, 13);
-            Console.WriteLine("Initial value = 13, Decrement = 20, Counter value: " + counter4.Value);
+            var counter4 = await binaryCollection.DecrementAsync(key, options => options.Initial(13).Delta(20)).ConfigureAwait(false);
+            Console.WriteLine("Initial value = 13, Decrement = 20, Counter value: " + counter4.Content);
         }
 
         static void Main(string[] args)

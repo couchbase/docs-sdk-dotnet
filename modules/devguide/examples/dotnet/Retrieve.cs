@@ -1,16 +1,17 @@
-﻿using Couchbase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
+using Couchbase.Core.Exceptions.KeyValue;
 
-namespace DevGuide
+namespace Couchbase.Net.DevGuide
 {
     public class Retrieve : ConnectionBase
     {
         public override async Task ExecuteAsync()
         {
+            //Connect to Couchbase
+            await ConnectAsync().ConfigureAwait(false);
+
+            var collection = Bucket.DefaultCollection();
             var key = "dotnetDevguideExampleRetrieve-" + DateTime.Now.Ticks;
             var data = new Data
             {
@@ -19,34 +20,36 @@ namespace DevGuide
                 Date = DateTime.UtcNow
             };
 
-            // Get non-existent document. 
-            // Note that it's enough to check the Status property,
-            // We're only checking all three to show they exist.
-            var notFound = await _bucket.GetAsync<dynamic>(key);
-            if (!notFound.Success &&
-                notFound.Status == Couchbase.IO.ResponseStatus.KeyNotFound &&
-                notFound.Value == null)
-                Console.WriteLine("Document doesn't exist!");
-
+            try
+            {
+                // Get non-existent document. 
+                // Note that it's enough to check the Status property,
+                // We're only checking all three to show they exist.
+                await collection.GetAsync(key).ConfigureAwait(false);
+            }
+            catch (DocumentNotFoundException)
+            {
+                Console.WriteLine("As expected, the document doesn't exist!");
+            }
 
             // Prepare a string value
-            await _bucket.UpsertAsync(key, "Hello Couchbase!");
+            await collection.UpsertAsync(key, "Hello Couchbase!").ConfigureAwait(false);
 
             // Get a string value
-            var nonDocResult = await _bucket.GetAsync<string>(key);
-            Console.WriteLine("Found: " + nonDocResult.Value);
+            var nonDocResult = await collection.GetAsync(key).ConfigureAwait(false);
+            Console.WriteLine("Found: " + nonDocResult.ContentAs<string>());
 
             // Prepare a JSON document value
-            await _bucket.UpsertAsync(key, data);
+            await collection.UpsertAsync(key, data).ConfigureAwait(false);
 
             // Get a JSON document string value
-            var docResult = await _bucket.GetAsync<Data>(key);
-            Console.WriteLine("Found: " + docResult.Value);
+            var docResult = await collection.GetAsync(key).ConfigureAwait(false);
+            Console.WriteLine("Found: " + docResult.ContentAs<Data>());
         }
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            new Retrieve().ExecuteAsync().Wait();
+            await new Retrieve().ExecuteAsync().ConfigureAwait(false);
         }
     }
 }
