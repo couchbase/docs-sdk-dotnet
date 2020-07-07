@@ -1,64 +1,64 @@
-﻿using Couchbase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
+using Couchbase.KeyValue;
 
-namespace DevGuide
+namespace Couchbase.Net.DevGuide
 {
     public class Expiration : ConnectionBase
     {
         public override async Task ExecuteAsync()
         {
+            //Connect to Couchbase
+            await ConnectAsync().ConfigureAwait(false);
+
             var key = "dotnetDevguideExampleExpiration-" + DateTime.Now.Ticks;
+            var collection = Bucket.DefaultCollection();
 
             // Creating a document with an time-to-live (expiration) of 2 seconds
-            await _bucket.UpsertAsync(key, "Hello world!", TimeSpan.FromSeconds(2));
+            await collection.UpsertAsync(key, "Hello world!", options => options.Timeout(TimeSpan.FromSeconds(2))).ConfigureAwait(false);
 
             // Retrieving immediately
-            var result = await _bucket.GetAsync<string>(key);
-            Console.WriteLine("[{0:HH:mm:ss.fff}] Got: '{1}', Status: {2}", DateTime.Now, result.Value, result.Status);
+            var result = await collection.GetAsync(key).ConfigureAwait(false);
+            Console.WriteLine("[{0:HH:mm:ss.fff}] Got: '{1}'!", DateTime.Now, result.ContentAs<string>());
 
             // Waiting 4 seconds
-            await Task.Delay(4000);
-
+            await Task.Delay(4000).ConfigureAwait(false);
+            
             // Retrieving after a 4 second delay
-            var result2 = await _bucket.GetAsync<string>(key);
-            Console.WriteLine("[{0:HH:mm:ss.fff}] Got: '{1}', Status: {2}", DateTime.Now, result2.Value, result2.Status);
-
+            var result2 = await collection.GetAsync(key).ConfigureAwait(false);
+            Console.WriteLine("[{0:HH:mm:ss.fff}] Got: '{1}'!", DateTime.Now, result2.ContentAs<string>());
 
             // Creating an item with 1 second TTL
-            await _bucket.UpsertAsync(key, "Hello world!", TimeSpan.FromSeconds(1));
+            await collection.UpsertAsync(key, "Hello world!", options=>options.Timeout(TimeSpan.FromSeconds(1))).ConfigureAwait(false);
 
             // Retrieving the item and extending the TTL to 2 seconds with getAndTouch
-            var result3 = await _bucket.GetAndTouchAsync<string>(key, TimeSpan.FromSeconds(2));
-            Console.WriteLine("[{0:HH:mm:ss.fff}] Got: '{1}', Status: {2}", DateTime.Now, result3.Value, result3.Status);
+            var result3 = await collection.GetAndTouchAsync(key, TimeSpan.FromSeconds(2)).ConfigureAwait(false);
+            Console.WriteLine("[{0:HH:mm:ss.fff}] Got: '{1}'!", DateTime.Now, result3.ContentAs<string>());
 
             // Waiting 4 seconds again
-            await Task.Delay(4000);
+            await Task.Delay(4000).ConfigureAwait(false);
 
-            var result4 = await _bucket.GetAsync<string>(key);
-            Console.WriteLine("[{0:HH:mm:ss.fff}] Got: '{1}', Status: {2}", DateTime.Now, result4.Value, result4.Status);
+            var result4 = await collection.GetAsync(key).ConfigureAwait(false);
+            Console.WriteLine("[{0:HH:mm:ss.fff}] Got: '{1}'!", DateTime.Now, result4.ContentAs<string>());
 
 
             // Creating an item without expiration
-            await _bucket.UpsertAsync(key, "Hello world!");
+            await collection.UpsertAsync(key, "Hello world!").ConfigureAwait(false);
 
             // Updating the TTL with Touch
-            var result5 = await _bucket.TouchAsync(key, TimeSpan.FromSeconds(2));
-            Console.WriteLine("[{0:HH:mm:ss.fff}] Got: '{1}', Status: {2}", DateTime.Now, "N/A", result5.Status);
+            await collection.TouchAsync(key, TimeSpan.FromSeconds(2)).ConfigureAwait(false);
+            Console.WriteLine("Touched key for {0}", TimeSpan.FromSeconds(2));
 
             // Waiting 4 seconds yet again
-            await Task.Delay(4000);
+            await Task.Delay(4000).ConfigureAwait(false);
 
-            var result6 = await _bucket.GetAsync<string>(key);
-            Console.WriteLine("[{0:HH:mm:ss.fff}] Got: '{1}', Status: {2}", DateTime.Now, result6.Value, result6.Status);
+            var result6 = await collection.GetAsync(key).ConfigureAwait(false);
+            Console.WriteLine("[{0:HH:mm:ss.fff}] Got: '{1}'!", DateTime.Now, result6.ContentAs<string>());   
         }
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            new Expiration().ExecuteAsync().Wait();
+           await new Expiration().ExecuteAsync().ConfigureAwait(false);
         }
     }
 }

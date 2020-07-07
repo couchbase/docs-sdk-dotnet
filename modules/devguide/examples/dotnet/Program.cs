@@ -1,29 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace DevGuide
+namespace Couchbase.Net.DevGuide
 {
     public class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            Task.Run(() => AllExamples());
+            await new Cas().ExecuteAsync().ConfigureAwait(false);
+            //await new AsyncExample().ExecuteAsync().ConfigureAwait(false);
+            //await new AsyncBatch().ExecuteAsync().ConfigureAwait(false);
+            //await new ConnectionBase().ExecuteAsync().ConfigureAwait(false);
+            //await new ConnectionConfig().ExecuteAsync().ConfigureAwait(false);
+            // await new Retrieve().ExecuteAsync().ConfigureAwait(false);
+            //await new Update().ExecuteAsync().ConfigureAwait(false);
+            //await new BulkInsert().ExecuteAsync().ConfigureAwait(false);
 
             Console.ReadLine();
-        }
-
-        private static async void AllExamples()
-        {
-            await new ConnectionBase().ExecuteAsync();
-            await new ConnectionConfig().ExecuteAsync();
-            await new Retrieve().ExecuteAsync();
-            await new Update().ExecuteAsync();
-            await new BulkInsert().ExecuteAsync();
-            await new BulkGet().ExecuteAsync();
-            await new FieldEncryptionAes().ExecuteAsync();
         }
     }
 }

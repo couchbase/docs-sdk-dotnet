@@ -2,16 +2,16 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DevGuide
+namespace Couchbase.Net.DevGuide
 {
     public class AsyncExample : ConnectionBase
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             Console.WriteLine("Before calling PrintDocumentAsync on thread {0}.",
                Thread.CurrentThread.ManagedThreadId);
 
-            new AsyncExample().ExecuteAsync().Wait();
+            await new AsyncExample().ExecuteAsync().ConfigureAwait(false);
 
             Console.WriteLine("After calling PrintDocumentAsync on thread {0}.",
              Thread.CurrentThread.ManagedThreadId);
@@ -19,21 +19,22 @@ namespace DevGuide
 
         public override async Task ExecuteAsync()
         {
-            //call it asynchronously with await
-            await PrintDocumentAsync("somekey");
-        }
+            //Connect to Couchbase
+            await ConnectAsync().ConfigureAwait(false);
+            var id = "somekey";
 
-        public async Task PrintDocumentAsync(string id)
-        {
             Console.WriteLine("Before awaiting GetDocumentAsync on thread {0}.",
                 Thread.CurrentThread.ManagedThreadId);
 
-            var doc = await _bucket.GetDocumentAsync<string>(id);
+            //add a document
+            await Bucket.DefaultCollection().UpsertAsync(id, new { Name ="doc"}).ConfigureAwait(false);
+
+            var doc = await Bucket.DefaultCollection().GetAsync(id).ConfigureAwait(false);
 
             Console.WriteLine("After awaiting GetDocumentAsync on thread {0}.",
                 Thread.CurrentThread.ManagedThreadId);
 
-            Console.WriteLine(doc.Content);
+            Console.WriteLine(doc.ContentAs<dynamic>());
         }
     }
 }
@@ -43,7 +44,7 @@ namespace DevGuide
 /* ************************************************************
  *
  *    @author Couchbase <info@couchbase.com>
- *    @copyright 2015 Couchbase, Inc.
+ *    @copyright 2020 Couchbase, Inc.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
