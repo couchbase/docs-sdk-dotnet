@@ -14,7 +14,7 @@ include::6.5@sdk:shared:partial$n1ql-queries.adoc[tag=intro]
 include::6.5@sdk:shared:partial$n1ql-queries.adoc[tag=prepared]
 
 For the .NET SDK, the `adhoc` parameter is `AdHoc`, and should be set to `false` for a plan to be prepared, or a prepared plan to be reused.
-Do not turn off the `AdHoc` flag for _every_ query since only a finite number of query plans (currently 5000) can be stored in the SDK.
+Do not turn off the `AdHoc` flag for _every_ query to Server 6.0 and earlier, since only a finite number of query plans (currently 5000) can be stored in the SDK.
 
 [source,csharp]
 ----
