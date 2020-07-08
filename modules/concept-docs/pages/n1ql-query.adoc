@@ -7,32 +7,11 @@
 Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
 
 
-
-The N1QL Query Language provides a familiar, SQL-like experience for querying documents stored in Couchbase.
-You can xref:6.5@server:n1ql:n1ql-language-reference/index.adoc[read up on the language in our reference guide], 
-but you probably just want to xref:howtos:n1ql-queries-with-sdk.adoc[dive into a practical example].
-
-Below, we fill in some of the gaps between reference and rolling-up-your-sleeves practicality,
-with discussion of a few areas of the Query service where more background knowledge will help you to better program your application.
+include::6.5@sdk:shared:partial$n1ql-queries.adoc[tag=intro]
 
 
-== Prepared Statements for Query Optimization
-
-When a N1QL query string is sent to the server, the server will inspect the string and parse it, planning which indexes to query.
-Once this is done, it generates a _query plan_ (see the xref:server:n1ql:n1ql-language-reference/prepare.adoc[N1QL reference], which gives more information on how to optimize queries using prepared statements).
-The computation for the plan adds some additional processing time and overhead for the query.
-
-Often-used queries can be _prepared_ so that its _plan_ is generated only once.
-Subsequent queries using the same query string will use the pre-generated plan instead, saving on the overhead and processing of the plan each time. 
-This is done for queries from the SDK by setting the `adhoc` query option to `false`. 
-
-For Couchbase Server 6.0 and earlier, the plan is cached by the SDK (up to a limit of 5000), as well as the Query service. 
-On Couchbase Server 6.5 and newer, the plan is stored by the Query service -- up to an adjustable limit of 16 384 plans per Query node. 
-
-For Couchbase Server 6.0 and earlier, the generated plan is not influenced by placeholders. 
-Thus parameterized queries are considered the same query for caching and planning purposes, even if the supplied parameters are different.
-With Couchbase Server 6.5 and newer, if a statement has placeholders, _and_ a placeholder is supplied, the Query service will generate specially optimized plans.
-Therefore, if you are supplying the placeholder each time, `adhoc = true` will actually return a better-optimized plan (at the price of generating a fresh plan for each query).
+// Prepared Statements for Query Optimization
+include::6.5@sdk:shared:partial$n1ql-queries.adoc[tag=prepared]
 
 For the .NET SDK, the `adhoc` parameter is `AdHoc`, and should be set to `false` for a plan to be prepared, or a prepared plan to be reused.
 Do not turn off the `AdHoc` flag for _every_ query since only a finite number of query plans (currently 5000) can be stored in the SDK.
@@ -131,21 +110,8 @@ await bucketManager.WatchN1qlIndexes(new List<string> { "ix_name", "ix_email", "
 ----
 
 
-== Index Consistency
-
-Because indexes are by design outside the data service, they are _eventually consistent_ with respect to changes to documents 
-and, depending on how you issue the query, may at times not contain the most up-to-date information.
-This may especially be the case when deployed in a write-heavy environment: changes may take some time to propagate over to the index nodes.
-
-The asynchronous updating nature of xref:6.5@server:learn:services-and-indexes/indexes/global-secondary-indexes.adoc[Global Secondary Indexes (GSIs)] means that they can be very quick to query and do not require the additional overhead of index recaclculations at the time documents are modified.
-N1QL queries are forwarded to the relevant indexes, and the queries are done based on indexed information, rather than the documents as they exist in the data service.
-
-With default query options, the query service will rely on the current index state: 
-the most up-to-date document versions are not retrieved, and only the indexed versions are queried.
-This provides the best performance.
-Only updates occurring with a small time frame may not yet have been indexed.
-For cases where consistency is more important than performance, the `scan_consistency` property of a query may be set to `REQUEST_PLUS`.
-ensuring that indexes are synchronized with the data service before querying.
+// Index Consistency
+include::6.5@sdk:shared:partial$n1ql-queries.adoc[tag=index-consistency]
 
 The following options are available:
 
