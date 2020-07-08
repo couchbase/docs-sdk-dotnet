@@ -26,10 +26,10 @@ Often-used queries can be _prepared_ so that its _plan_ is generated only once.
 Subsequent queries using the same query string will use the pre-generated plan instead, saving on the overhead and processing of the plan each time. 
 This is done for queries from the SDK by setting the `adhoc` query option to `false`. 
 
-For Couchbase Server 6.0 and earlier, the plan is cached by the SDK (up to a limit of 5000). 
-On Couchbase Server 6.5 and newer, the plan is stored by the Query service -- up to a limit of 16 000 plans per Query node. 
+For Couchbase Server 6.0 and earlier, the plan is cached by the SDK (up to a limit of 5000), as well as the Query service. 
+On Couchbase Server 6.5 and newer, the plan is stored by the Query service -- up to an adjustable limit of 16 384 plans per Query node. 
 
-For Couchbase Server 6.0 and earlier, the N1QL optimizer is completely rule-based, and it will mostly ignore placeholders and constants. 
+For Couchbase Server 6.0 and earlier, the generated plan is not influenced by placeholders. 
 Thus parameterized queries are considered the same query for caching and planning purposes, even if the supplied parameters are different.
 With Couchbase Server 6.5 and newer, if a statement has placeholders, _and_ a placeholder is supplied, the Query service will generate specially optimized plans.
 Therefore, if you are supplying the placeholder each time, `adhoc = true` will actually return a better-optimized plan (at the price of generating a fresh plan for each query).
