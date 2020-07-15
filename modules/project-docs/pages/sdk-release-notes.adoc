@@ -96,6 +96,40 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+= Version 3.0.3 (14 July 2020)
+https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.3.zip[Download] |  
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.3[API Reference] | 
+https://www.nuget.org/packages/CouchbaseNetClient/3.0.3[Nuget]
+
+=== Known Issues
+* https://issues.couchbase.com/browse/NCBC-2187[NCBC-2187]: CollectionManager -- 400: Not allowed on this version of cluster.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2588[NCBC-2588]: LookupIn should re-order subdoc requests so that XATTRs come first.
+* https://issues.couchbase.com/browse/NCBC-2450[NCBC-2450]: KV failure after removing entry point node for pre-MH server
+* https://issues.couchbase.com/browse/NCBC-2501[NCBC-2501]: latency detected in FoEptRb-SubDoc after rebound never recovers
+* https://issues.couchbase.com/browse/NCBC-2502[NCBC-2502]: latency detected in FoEptEject-SUBDOC after rebound never recovers
+* https://issues.couchbase.com/browse/NCBC-2503[NCBC-2503]: Latency detected for FoRbAnalytics-CBAS after rebound never recovers
+* https://issues.couchbase.com/browse/NCBC-2545[NCBC-2545]: Hello World example in the docs repo doesn&#39;t build.
+* https://issues.couchbase.com/browse/NCBC-2553[NCBC-2553]: Remove authzid from Sasl Negotiation
+* https://issues.couchbase.com/browse/NCBC-2563[NCBC-2563]: StreamingQueryResult fails to populate errors on InternalServerError
+* https://issues.couchbase.com/browse/NCBC-2587[NCBC-2587]: LookupInSpecBuilder allows only a single XATTR per request.
+* https://issues.couchbase.com/browse/NCBC-2592[NCBC-2592]: Fix custom circuit breaker not being injected
+* https://issues.couchbase.com/browse/NCBC-1836[NCBC-1836]: CAS samples
+
+=== New Features and Behavioral Changes.
+
+* https://issues.couchbase.com/browse/NCBC-2542[NCBC-2542]: OpenTelemetry tracing extension
+* https://issues.couchbase.com/browse/NCBC-2593[NCBC-2593]: Update install and start docs to reflect .NET Standard/Core support
+* https://issues.couchbase.com/browse/NCBC-2594[NCBC-2594]: Update version number on release notes
+* https://issues.couchbase.com/browse/NCBC-2595[NCBC-2595]: Indent code on error handling page so that it is readable.
+* https://issues.couchbase.com/browse/NCBC-2227[NCBC-2227]: Author Managing Connections documentation
+* https://issues.couchbase.com/browse/NCBC-2170[NCBC-2170]: Implement tracing using OpenTelemetry for Query
+* https://issues.couchbase.com/browse/NCBC-2519[NCBC-2519]: Review docs for update items, identify/file issues
+* https://issues.couchbase.com/browse/NCBC-2598[NCBC-2598]: Misc SDK improvements for Transactions
+* https://issues.couchbase.com/browse/NCBC-2591[NCBC-2591]: Allow registration of custom services
+
 = Version 3.0.2 (20 June 2020)
 https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.2.zip[Download] |  
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.2[API Reference] | 
