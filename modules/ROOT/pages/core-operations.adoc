@@ -391,6 +391,12 @@ For Couchbase SDKs which accept simple integer expiry values (as opposed to a pr
 If the absolute value of the expiry is less than 30 days (such as `60 * 60 * 24 * 30`), it is considered an _offset_.
 If the value is greater, it is considered an _absolute time stamp_.
 
+NOTE: Couchbase Server deals with expiry in seconds but the .NET SDK takes expiry values in ms. 
+Values are converted to seconds before being sent to the server. 
+A time of zero will set the document to never expire
+(a negative number will set expiry to immediate -- creating a xref:6.0@server:learn:buckets-memory-and-storage/storage.adoc#tombstones[tombstone]). 
+Values above 0ms but below 1000ms are rounded up to one second before being sent to the server.
+
 It might be preferable for applications to normalize the expiration value, such as by always converting it to an absolute time stamp.
 The conversion is performed to avoid issues when the intended offset is larger than 30 days, in which case it is taken to mean a Unix time stamp and, as a result,  the document will expire automatically as soon as it is stored.
 
