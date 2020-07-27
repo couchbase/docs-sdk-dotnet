@@ -59,7 +59,7 @@ Once you have generated the `.pem` file, for windows you'll need to use it to cr
 
 [source,bash]
 ----
-openssl pkcs12 -export -in cert.cer -inkey key.pem -out certificate.pfx -certfile CA.cer
+openssl pkcs12 -export -in cert.cer -inkey key.key -out certificate.pfx -certfile CA.cer
 ----
 
 The .pfx is then stored in the Windows certificate store of the application server by copying it to that server and then right clicking on the file and selecting "Install Certificate" and following the steps (there are a couple of ways to do this, but this is the simplest).
