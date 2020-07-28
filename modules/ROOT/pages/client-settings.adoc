@@ -143,7 +143,7 @@ NOTE: JSON configuration is only supported for versions of the SDK 2.3.0 and gre
 }
 ----
 
-Here is an example of opening a cluster using the JSON configuration above:
+Here is an example of opening a cluster using the JSON configuration above -- you will need to import `Microsoft.Extensions.Configuration.Json` to use `.AddJsonFile()`:
 
 [source,csharp]
 ----
