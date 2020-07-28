@@ -69,10 +69,10 @@ var result = await collection.ReplaceAsync("document-key", document,
 );
 ----
 
-Expiration sets an explicit time to live (TTL) for a document, for which you can also xref:sdk-xattr-example.adoc[see a more detailed example of TTL discovery] later in the docs.
+Expiration sets an explicit time to live (TTL) for a document.
 We'll discuss modifying `Expiration` in more details xref:#net-modifying-expiration[below].
 For a discussion of item (Document) _vs_ Bucket expiration, see the
-xref:6.0@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-bucket-versus-item[Expiration Overview page].
+xref:6.0@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-ttl[Expiration Overview page].
 
 [source,csharp]
 ----
@@ -272,8 +272,8 @@ NOTE: Increment & Decrement are considered part of the ‘binary’ API and as s
 Working on just a specific path within a JSON document will reduce network bandwidth requirements - see the xref:subdocument-operations.adoc[Sub-Document] pages.
 For working with metadata on a document, reference our xref:sdk-xattr-example.adoc[Extended Attributes] pages.
 
-// Another way of increasing network performance is to _pipeline_ operations with xref:batching-operations.adoc[Batching Operations].
+// Another way of increasing network performance is to _pipeline_ operations with xref:concurrent-async-apis.adoc#batching[Batching Operations].
 
-// As well as various xref:concept-docs:data-model.adoc[Formats] of JSON, Couchbase can work directly with xref:non-json.adoc[arbitary bytes, or binary format].
+As well as various xref:concept-docs:data-model.adoc[Formats] of JSON, Couchbase can work directly with xref:concept-docs:non-json.adoc[arbitary bytes, or binary format].
 
 Our xref:n1ql-queries-with-sdk.adoc[Query Engine] enables retrieval of information using the SQL-like syntax of N1QL.
