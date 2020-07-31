@@ -43,12 +43,18 @@ From the Package Manager Console within your project:
 . In the console, enter the package installation command:
  ** To install the latest version:
 
+[source,console]
+----
  Install-Package CouchbaseNetClient
+----
 
  ** To install a specific version, include the version parameter.
 For example:
 
+[source,console]
+----
  Install-Package CouchbaseNetClient -Version 2.7.0
+----
 
 === Downloading and referencing the binaries
 
@@ -84,11 +90,18 @@ To build the .NET SDK from source:
 https://github.com/couchbase/couchbase-net-client/fork
 . Using a Git console, enter the command to clone the repository:
 
- git clone https://github.com/couchbase/couchbase-net-client.git
+
+[source,console]
+----
+git clone https://github.com/couchbase/couchbase-net-client.git
+----
 
 . Enter the command to retrieve the latest code from GitHub:
 
- git pull origin master
+[source,console]
+----
+git pull origin master
+----
 
 . Navigate to the directory that the source was cloned to and open the solution.
 . Build the solution.
