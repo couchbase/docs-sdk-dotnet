@@ -82,6 +82,69 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 2.7.20 (6 August 2020)
+
+https://packages.couchbase.com/clients/net/2.7/Couchbase-Net-Client-2.7.20.zip[Download] | 
+// http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.20[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/2.7.20[Nuget]
+
+=== Known Issues
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2624[NCBC-2624]: Not connected to any bucket/NO_BUCKET
+
+== Version 2.7.19 (6th August 2020) - delisted in NuGet - use 2.7.20 instead
+https://packages.couchbase.com/clients/net/2.7/Couchbase-Net-Client-2.7.19.zip[Download] | 
+// http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.19[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/2.7.19[Nuget]
+
+=== Known Issues
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2554[NCBC-2554]: Remove authzid in 2.7.x branch
+* https://issues.couchbase.com/browse/NCBC-2607[NCBC-2607]: VBucketServerMap.EnsureIPEndPointsAreLoaded Not Thread Safe
+* https://issues.couchbase.com/browse/NCBC-2613[NCBC-2613]: Ensure exception thrown by config thread is handled
+* https://issues.couchbase.com/browse/NCBC-2615[NCBC-2615]: Potential unexpected response code on timeout
+
+== Version 2.7.18 (9th June 2020)
+
+https://packages.couchbase.com/clients/net/2.7/Couchbase-Net-Client-2.7.18.zip[Download] | 
+// http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.18[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/2.7.18[Nuget]
+
+=== Known Issues
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-1502[NCBC-1502]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2527[NCBC-2527]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+* https://issues.couchbase.com/browse/NCBC-2423[NCBC-2423]:
+Certain Prepared statements could produce _Fatal error: unexpected end of JSON input_.
+
 == Version 2.7.17 (5th May 2020)
 
 https://packages.couchbase.com/clients/net/2.7/Couchbase-Net-Client-2.7.17.zip[Download] | 
