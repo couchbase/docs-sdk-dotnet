@@ -17,7 +17,7 @@ namespace CouchbaseDI
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        // #tag::configureservices[]
+        // tag::configureservices[]
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
@@ -25,7 +25,7 @@ namespace CouchbaseDI
             services.AddCouchbase(Configuration.GetSection("Couchbase"));
             services.AddCouchbaseBucket<IMyBucketProvider>("my-bucket");
         }
-          // #end::configureservices[]
+        // end::configureservices[]
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

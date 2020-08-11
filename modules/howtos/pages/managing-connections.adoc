@@ -119,7 +119,7 @@ You can then configure your bucket interfaces during IServiceCollection setup.
 
 [source,c#]
 ----
-include::WebStartupDI-IMyBucketProvider.cs[tag=configureservices,indent=0]
+include::example$WebStartupDI-IMyBucketProvider.cs[tag=configureservices,indent=0]
 ----
 
 The interface you created can now be injected into controllers or business logic, and the `GetBucketAsync` method will return the specified bucket. 
@@ -127,7 +127,7 @@ You are no longer required to know the name of the bucket in the controller, imp
 
 [source,c#]
 ----
-include::example$HomeControllerDI.cs[tag=mybucketprovider,indent=0]
+include::example$HomeControllerDI.cs[tag=IMybucketprovider,indent=0]
 ----
 
 === Shutdown

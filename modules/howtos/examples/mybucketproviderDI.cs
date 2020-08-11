@@ -3,4 +3,4 @@
 public interface IMyBucketProvider : INamedBucketProvider
 {
 }
-// #endtag::mybucketprovider[]
+// #end::mybucketprovider[]

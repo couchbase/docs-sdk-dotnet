@@ -25,7 +25,7 @@ namespace sdk_docs_dotnet_web_examples.Controllers
             return View();
         }
     }
-    // #endtag::namedbucketprovider[]
+    // #end::namedbucketprovider[]
     }
     {
         // #tag::IMybucketprovider[]
@@ -48,6 +48,6 @@ namespace sdk_docs_dotnet_web_examples.Controllers
             return View();
         }
     }
-    // #endtag::IMybucketprovider[]
+        // #end::IMybucketprovider[]
     }
 }
