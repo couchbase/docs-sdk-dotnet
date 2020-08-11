@@ -141,12 +141,8 @@ For Asp.Net Core, you can call this service from the `ApplicationStopped` cancel
 include::example$WebStartupDI.cs[tag=configure,indent=0]
 ----
 
+// Connecting to Couchbase cloud requires that `ClusterOptions.EnableTls` be set to true along with the `"couchbases://"` connection string pre-fix. Additionally, in certain situations `ClusterOptions.IgnoreRemoteCertificateNameMismatch` may also need to be true. Additionally, in certain situations `ClusterOptions.IgnoreRemoteCertificateNameMismatch` may also need to be true. 
 
-// Connecting to Couchbase cloud requires that `ClusterOptions.EnableTls` be set to true along with the `"couchbases://"` connection string pre-fix. Additionally, in certain situations `ClusterOptions.IgnoreRemoteCertificateNameMismatch` may also need to be true. 
-
-// waitUntilReady
-
-////
 == Waiting for Bootstrap Completion
 
 Depending on the environment and network latency, bootstrapping the SDK fully might take a little longer than the default key-value timeout of 2.5 seconds, so you may see timeouts during bootstrap. 
@@ -154,36 +150,28 @@ To prevent those early timeouts from happening, you can use the `waitUntilReady`
 
 If you are working at the _Cluster_ level, then add to the `cluster()` in the xref:#connecting-to-a-cluster[earlier example]:
 
-[source,java]
+[source,c#]
 ----
-Cluster cluster = Cluster.connect("127.0.0.1", "username", "password");
-cluster.waitUntilReady(Duration.ofSeconds(10));
-Bucket bucket = cluster.bucket("travel-sample");
-Collection collection = bucket.defaultCollection();
+include::example$ManagingConnections.cs[tag=waitUntilReady,indent=0]
 ----
 
 Or more fully:
 
-[source,java]
+[source,c#]
 ----
-public class ClusterExample {
-  public static void main(String... args) throws Exception {
-    Cluster cluster = Cluster.connect("127.0.0.1", "username", "password");
-    cluster.waitUntilReady(Duration.ofSeconds(10));
-    Bucket bucket = cluster.bucket("travel-sample");
-    Collection collection = bucket.defaultCollection();
-  }
-}
+include::example$ClusterExample.cs[tag=waitUntilReady,indent=0]
 ----
 
-If you are working at the _Bucket_ level, then the https://docs.couchbase.com/sdk-api/couchbase-java-client/com/couchbase/client/java/Bucket.html#waitUntilReady-java.time.Duration-[Bucket-level `waitUntilReady`] does the same as the Cluster-level version,
+If you are working at the _Bucket_ level, then the https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.3/html/M_Couchbase_IBucket_WaitUntilReadyAsync.htm-[Bucket-level `waitUntilReady`] does the same as the Cluster-level version,
 _plus_ it waits for the K-V (data) sockets to be ready.
+
+[source,c#]
+----
+include::example$ClusterExample.cs[tag=waitUntilReadyBucket,indent=0]
+----
 
 Other timeout issues may occur when using the SDK located geographically separately from the Couchbase Server cluster -- this is xref:project-docs:compatibility#network-requirements[not recommended].
 See the xref:#working-in-the-cloud[Cloud section] below for some suggestions of settings adjustments.
-////
 
 // ******** cloud ********
 include::6.5@sdk:shared:partial$managing-connections.adoc[tag=cloud]
-
-Additionally, in certain situations `ClusterOptions.IgnoreRemoteCertificateNameMismatch` may also need to be true. 

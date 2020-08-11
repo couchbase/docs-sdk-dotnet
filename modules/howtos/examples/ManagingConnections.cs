@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Couchbase;
 
@@ -32,6 +31,15 @@ namespace sdk_docs_dotnet_examples
                 // #tag::multinodeconnect[]
                 var cluster = await Cluster.ConnectAsync("192.168.56.101,192.168.56.102", "username", "password");
                 // #end::multinodeconnect[]
+            }
+
+            {
+                //#tag::waitUntilReady
+                var cluster = await Cluster.ConnectAsync("couchbase://127.0.0.1", "username", "password");
+                await cluster.WaitUntilReadyAsync(TimeSpan.FromSeconds(10));
+                var bucket = await cluster.BucketAsync("default");
+                var collection = bucket.DefaultCollection();
+                //#end::waitUntilReady
             }
         }
     }
