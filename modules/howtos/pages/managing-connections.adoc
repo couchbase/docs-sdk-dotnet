@@ -76,7 +76,59 @@ For newer applictions we suggest using Dependency Injection and Startup.cs file.
 
 [#connection-di]
 == Dependency Injection
-There is a special https://www.nuget.org/packages/Couchbase.Extensions.DependencyInjection/[NuGet package^] to help you get started with Dependency Injection (DI). 
+There is a special .NET Core style Dependency Injection (DI) framework for Cluster and Buckets. It simplifies cluster configuration, lifetime management, and bucket injection. You can find it on NuGet.org: https://www.nuget.org/packages/Couchbase.Extensions.DependencyInjection/[NuGet package^]. Or using the NuGet Package Manager, add the dependency directly to your project:
+
+NOTE: Install-Package Couchbase.Extensions.DependencyInjection -Version 3.0.0
+
+=== Adding Couchbase To The Services Collection
+
+The easiest way to get started in a Web application is to use the ConfigureService method in the Services.cs:
+
+[source,c#]
+----
+include::example$WebStartupDI.cs[tag=configureservices,indent=0]
+----
+
+=== Injecting Couchbase Buckets
+
+To get a couchbase bucket, simply inject `IBucketNamedProvider` and call `GetBucketAsync`. Be sure that you don't dispose the IBucket, it's a singleton that will be reused through the application.
+
+[source,c#]
+----
+include::example$HomeControllerDI.cs[tag=namedbucketprovider,indent=0]
+----
+
+=== Simplifying Injecting Bucket Names
+
+[source,c#]
+----
+include::example$mybucketproviderDI.cs[tag=mybucketprovider,indent=0]
+----
+
+To further simplify dependency injection, you can setup to inject specific buckets. First, create an interface for each bucket that inherits from `INamedBucketProvider`. This interface must be public and left empty.
+
+You can then configure your bucket interfaces during IServiceCollection setup.
+
+[source,c#]
+----
+include::WebStartupDI-IMyBucketProvider.cs[tag=configureservices,indent=0]
+----
+
+The interface you created can now be injected into controllers or business logic, and the `GetBucketAsync` method will return the specified bucket. You are no longer required to know the name of the bucket in the controller, improving separation of concerns in your application.
+
+[source,c#]
+----
+include::example$HomeControllerDI.cs[tag=mybucketprovider,indent=0]
+----
+
+=== Shutdown
+
+During application shutdown it's best to close the Couchbase connections gracefully. You can do this using the `ICouchbaseLifetimeService`.` For Asp.Net Core, you can call this service from the `ApplicationStopped` cancellation token of `IHostApplicationLifetime`.
+
+[source,c#]
+----
+include::example$WebStartupDI.cs[tag=configure,indent=0]
+----
 
 // Connecting to Couchbase cloud requires that `ClusterOptions.EnableTls` be set to true along with the `"couchbases://"` connection string pre-fix. Additionally, in certain situations `ClusterOptions.IgnoreRemoteCertificateNameMismatch` may also need to be true. 
 
