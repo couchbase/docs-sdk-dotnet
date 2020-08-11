@@ -141,6 +141,7 @@ For Asp.Net Core, you can call this service from the `ApplicationStopped` cancel
 include::example$WebStartupDI.cs[tag=configure,indent=0]
 ----
 
+
 // Connecting to Couchbase cloud requires that `ClusterOptions.EnableTls` be set to true along with the `"couchbases://"` connection string pre-fix. Additionally, in certain situations `ClusterOptions.IgnoreRemoteCertificateNameMismatch` may also need to be true. 
 
 // waitUntilReady
