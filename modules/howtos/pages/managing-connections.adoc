@@ -141,6 +141,95 @@ For Asp.Net Core, you can call this service from the `ApplicationStopped` cancel
 include::example$WebStartupDI.cs[tag=configure,indent=0]
 ----
 
+== Secure Connections
+
+Couchbase Server Enterprise Edition supports full encryption of client-side traffic using Transport Layer Security (TLS). That includes key-value type operations, queries, and configuration communication. Make sure you have the Enterprise Edition of Couchbase Server before proceeding with configuring encryption on the client side.
+
+To configure encryption for the .NET SDK:
+
+    Get the CA certificate from the cluster and save it in a text file.
+
+    Enable encryption on the client side and point it to the file containing the certificate.
+
+It is important to make sure you are transferring the certificate in an encrypted manner from the server to the client side, so either copy it through SSH or through a similar secure mechanism.
+
+If you are running on localhost and just want to enable TLS for a development machine, just copying and pasting it suffices. Navigate in the admin UI to menu:Settings[Cluster] and copy the input box of the TLS certificate into a file on your machine (which we will refer to as cluster.cert). It looks similar to this:
+
+-----BEGIN CERTIFICATE-----
+MIICmDCCAYKgAwIBAgIIE4FSjsc3nyIwCwYJKoZIhvcNAQEFMAwxCjAIBgNVBAMT
+ASowHhcNMTMwMTAxMDAwMDAwWhcNNDkxMjMxMjM1OTU5WjAMMQowCAYDVQQDEwEq
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzz2I3Gi1XcOCNRVYwY5R
+................................................................
+mgDnQI8nw2arBRoseLpF6WNw22CawxHVOlMceQaGOW9gqKNBN948EvJJ55Dhl7qG
+BQp8sR0J6BsSc86jItQtK9eQWRg62+/XsgVCmDjrB5owHPz+vZPYhsMWixVhLjPJ
+mkzeUUj/kschgQ0BWT+N+pyKAFFafjwFYtD0e5NwFUUBfsOyQtYV9xu3fw+T2N8S
+itfGtmmlEfaplVGzGPaG0Eyr53g5g2BgQbi5l5Tt2awqhd22WOVbCalABd9t2IoI
+F4+FjEqAEIr1mQepDaNM0gEfVcgd2SzGhC3yhYFBAH//8W4DUot5ciEhoBs=
+-----END CERTIFICATE-----
+
+The next step is to enable encryption and import the certificate.
+
+[source,c#]
+----
+include::example$ManagingConnections.cs[tag=configure,indent=0]
+----
+
+=== Importing the Certificate into Windows
+
+For development the following do the following steps to install the certificate.
+
+    Open Notepad or your favorite text editor using "Run as administrator".
+
+    Copy the contents of the certificate into the editor.
+
+    Save as type "All files" and specify the ".crt" file extension.
+
+    Right click on the file after saving it and click "Install Certificate".
+
+    Select "Current User" or "Local Machine" depending upon who you want to access the certificate.
+
+    Select "Next" and then store it as "Trusted Root Certificate Authority".
+
+
+=== Importing the Certificate into MacOS
+
+    Copy the certificate into a text file with the extension ".crt".
+
+    Double click on the file and add it to "system" and approve with your password or fingerprint.
+
+    Double click on the file and expand the "trust" area, mark it as trusted instead of system default.
+
+    Exit and approve.
+
+If you want to verify it’s actually working, you can use a tool like tcpdump. For example, an unencrypted upsert request looks like this (using sudo tcpdump -i lo0 -A -s 0 port 11210):
+
+E..e..@.@.............+......q{...#..Y.....
+.E...Ey........9........................id{"key":"value"}
+
+After enabling encryption, you cannot inspect the traffic in cleartext (same upsert request, but watched on port 11207 which is the default encrypted port):
+
+E.....@.@.............+....Z.'yZ..#........
+..... ...xuG.O=.#.........?.Q)8..D...S.W.4.-#....@7...^.Gk.4.t..C+......6..)}......N..m..o.3...d.,.	...W.....U..
+.%v.....4....m*...A.2I.1.&.*,6+..#..#.5
+
+6.0@sdk:shared:partial$dnssrv-pars.adoc
+
+== DNS SRV Bootstrapping
+
+DNS SRV bootstrapping is available in the .NET SDK from version 2.1.0. In order to make the SDK actually use the SRV records, you just need to pass in the host name from your records (here example.com):
+
+source,c#]
+----
+include::example$ManagingConnections.cs[tag=dnssrv,indent=0]
+----
+
+If the DNS SRV records could not be loaded properly you’ll get the exception logged and the given host name will be used as a A record lookup.
+
+    [INF] Error trying to retrieve DNS SRV entries. (addddf06)
+    DnsClient.DnsResponseException: Query 63320 => _couchbase._tcp.10.143.200.101 IN SRV on 2001:4860:4860::8888:53 failed with an error.
+
+Also, if you pass in more than one node, DNS SRV bootstrap will not be initiated and regular bootstrapping will occur.
+
 // Connecting to Couchbase cloud requires that `ClusterOptions.EnableTls` be set to true along with the `"couchbases://"` connection string pre-fix. Additionally, in certain situations `ClusterOptions.IgnoreRemoteCertificateNameMismatch` may also need to be true. Additionally, in certain situations `ClusterOptions.IgnoreRemoteCertificateNameMismatch` may also need to be true. 
 
 == Waiting for Bootstrap Completion
@@ -162,7 +251,7 @@ Or more fully:
 include::example$ClusterExample.cs[tag=waitUntilReady,indent=0]
 ----
 
-If you are working at the _Bucket_ level, then the https://docs.couchbase.com/sdk-api/couchbase-net-client/html/M_Couchbase_IBucket_WaitUntilReadyAsync.htm-[Bucket-level `waitUntilReady`] does the same as the Cluster-level version,
+If you are working at the _Bucket_ level, then the https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.3/html/M_Couchbase_IBucket_WaitUntilReadyAsync.htm-[Bucket-level `waitUntilReady`] does the same as the Cluster-level version,
 _plus_ it waits for the K-V (data) sockets to be ready.
 
 [source,c#]
