@@ -4,7 +4,7 @@ using Couchbase;
 
 namespace sdk_docs_dotnet_examples
 {
-    // tag::waitUntilReady
+    // tag::waitUntilReady[]
     public class ClusterExample
     {
         public async Task Main(string[] args)
@@ -16,9 +16,9 @@ namespace sdk_docs_dotnet_examples
             //..
         }
     }
-    // end::waitUntilReady
+    // end::waitUntilReady[]
 
-    // tag::waitUntilReadyBucket
+    // tag::waitUntilReadyBucket[]
     public class ClusterExample2
     {
         public async Task Main(string[] args)
@@ -30,5 +30,5 @@ namespace sdk_docs_dotnet_examples
             //..
         }
     }
-    // end::waitUntilReadyBucket
+    // end::waitUntilReadyBucket[]
 }
