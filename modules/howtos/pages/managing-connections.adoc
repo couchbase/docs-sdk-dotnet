@@ -175,7 +175,7 @@ The next step is to enable encryption and import the certificate.
 
 [source,c#]
 ----
-include::example$ManagingConnections.cs[tag=configure,indent=0]
+include::example$ManagingConnections.cs[tag=enableTls,indent=0]
 ----
 
 === Importing the Certificate into Windows
@@ -263,7 +263,7 @@ Or more fully:
 include::example$ClusterExample.cs[tag=waitUntilReady,indent=0]
 ----
 
-If you are working at the _Bucket_ level, then the https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.3/html/M_Couchbase_IBucket_WaitUntilReadyAsync.htm-[Bucket-level `waitUntilReady`] does the same as the Cluster-level version,
+If you are working at the _Bucket_ level, then the https://docs.couchbase.com/sdk-api/couchbase-net-client/html/M_Couchbase_IBucket_WaitUntilReadyAsync.htm[Bucket-level `waitUntilReady`] does the same as the Cluster-level version,
 _plus_ it waits for the K-V (data) sockets to be ready.
 
 [source,c#]

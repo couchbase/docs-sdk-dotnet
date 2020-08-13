@@ -43,25 +43,25 @@ namespace sdk_docs_dotnet_examples
             }
             
             {
-                // tag::enableTls
+                // tag::enableTls[]
                 var cluster = await Cluster.ConnectAsync(new ClusterOptions
                     {
                         EnableTls = true
                     }
                     .WithConnectionString("couchbase://127.0.0.1")
                     .WithCredentials("username", "password"));
-                // end::enableTls
+                // end::enableTls[]
             }
 
             {
-                // tag::dnssrv
+                // tag::dnssrv[]
                 var cluster = await Cluster.ConnectAsync(new ClusterOptions
                     {
                         EnableTls = true
                     }
                     .WithConnectionString("couchbases://[YOUR DNS CONNECTION STRING]")
                     .WithCredentials("username", "password"));
-                // end::dnssrv
+                // end::dnssrv[]
             }
         }
     }
