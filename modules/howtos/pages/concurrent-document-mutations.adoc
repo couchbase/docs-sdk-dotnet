@@ -46,7 +46,15 @@ include::6.5@sdk:shared:partial$cas.adoc[tag=locking]
 
 [source,java]
 ----
-include::example$Cas.java[tag=locking,indent=0]
+      GetResult getAndLockResult = collection.getAndLock("key", Duration.ofSeconds(2));
+
+      long lockedCas = getAndLockResult.cas();
+
+      /* an example of simply unlocking the document:
+      collection.unlock("key", lockedCas);
+       */
+
+      collection.replace("key", "new value", replaceOptions().cas(lockedCas));
 ----
 
 (For the .NET equivalent, refer to the https://docs.couchbase.com/sdk-api/couchbase-net-client/html/T_Couchbase_KeyValue_GetAndLockOptions.htm[API documentation].)
