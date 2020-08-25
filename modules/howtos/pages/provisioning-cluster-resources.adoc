@@ -9,7 +9,7 @@ Common use cases are outlined here, more recherché use cases are covered in the
 include::6.5@sdk:shared:partial$flush-info-pars.adoc[tag=management-intro]
 
 The .NET SDK also comes with some convenience functionality for common Couchbase management requests.
-
+////
 Management operations in the SDK may be performed through several interfaces depending on the object:
 
 * BucketManager -- `	IBucketManager`
@@ -19,7 +19,7 @@ Management operations in the SDK may be performed through several interfaces dep
 * SearchIndexManager -- `ISearchIndexManager`
 * CollectionManager -- `ICouchbaseCollectionManager`
 * ViewIndexManager -- `IViewIndexManager`.
-
+////
 NOTE: When using a Couchbase version earlier than 6.5, you must create a valid Bucket connection using `cluster.Bucket(name)` before you can use cluster level managers.
 
 
@@ -84,7 +84,7 @@ include::devguide:example$go/provisioning-resources-buckets.go[tag=removeBucket]
 
 include::6.5@sdk:shared:partial$flush-info-pars.adoc[tag=flush-intro]
 
-// You can flush a bucket in the SDK by using the `Flush` method:
+You can flush a bucket in the SDK by using `FlushBucketAsync()`.
 
 ////
 [source,golang,indent=0]
