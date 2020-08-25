@@ -16,14 +16,9 @@ Our xref:hello-world:start-using-sdk.adoc[Getting Started] guide introduced basi
 
 [source,c#]
 ----
-var cluster = await Cluster.ConnectAsync("couchbase://localhost", "username", "passord");
+include::example$Auth.cs[tag=basic,indent=0]
 ----
-////
-[source,scala]
-----
-include::example$Auth.scala[tag=basic,indent=0]
-----
-////
+
 
 include::6.5@sdk:shared:partial$auth-overview.adoc[tag=rbac]
 
@@ -36,11 +31,9 @@ For sample procedures whereby certificates can be generated and deployed, see xr
 The rest of this document assumes that the processes there, or something similar, have been followed.
 That is, a cluster certificate has been created and installed on the server, a client certificate has been created, and it is stored in a JVM keystore along with the cluster's certificate.
 
-////
-[source,scala]
+[source,c#]
 ----
-include::example$Auth.scala[tag=auth,indent=0]
+include::example$Auth.cs[tag=auth,indent=0]
 ----
-////
 
 include::6.5@sdk:shared:partial$auth-overview.adoc[tag=ldap]
