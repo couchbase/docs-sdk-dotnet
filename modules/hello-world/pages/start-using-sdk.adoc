@@ -90,6 +90,11 @@ You can learn more about N1QL queries on the xref:howtos:n1ql-queries-with-sdk.a
 
 If you want to copy and paste to run the full example, here it is:
 
+[{tabs}] 
+==== 
+Local Couchbase Server::
++ 
+-- 
 [source,csharp]
 ----
 using System;
@@ -118,6 +123,29 @@ namespace examples
     }
 }
 ----
+--
+
+Couchbase Cloud Sample::
++
+--
+If you are connecting to https://docs.couchbase.com/cloud/index.html[Couchbase Cloud], be sure to get the correct endpoint as well as user, password, and `couchbasecloudbucket` -- and see the <<cloud-connections, Cloud section>>, below.
+
+[source,java]
+----
+include::devguide:example$dotnet/Cloud.cs[]
+----
+--
+====
+
+
+== Cloud Connections
+
+For developing on Couchbase Cloud, if you are not working from the same _Availability Zone_, refer to the follorwing:
+
+* Notes on xref:ref:client-settings.adoc#constrained-network-environments[Constrained Network Environments], 
+* xref:project-docs:compatibility.adoc#network-requirements[Network Requirements], 
+* If you have a consumer-grade router which has problems with DNS-SRV records review our xref:howtos:troubleshooting-cloud-connections.adoc#troubleshooting-host-not-found[Troubleshooting Guide].
+
 
 
 == Additional Resources
