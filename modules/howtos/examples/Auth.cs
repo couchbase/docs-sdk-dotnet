@@ -11,7 +11,7 @@ namespace sdk_docs_dotnet_examples
         public async Task Main(string[] args)
         {
             {
-                //#tag::basic[]
+                // tag::basic[]
                 try
                 {
                     var cluster = await Cluster.ConnectAsync("couchbase://localhost", "username", "password");
@@ -22,10 +22,10 @@ namespace sdk_docs_dotnet_examples
                     Console.WriteLine($"Failed to open cluster: {e}");
                 }
 
-                //#end::basic]
+                // end::basic]
             }
             {
-                //#tag:auth[]
+                // tag:auth[]
                 var options = new ClusterOptions().
                     WithX509CertificateFactory(CertificateFactory.GetCertificatesFromStore(
                         new CertificateStoreSearchCriteria
@@ -37,7 +37,7 @@ namespace sdk_docs_dotnet_examples
                         }));
 
                 var cluster = await Cluster.ConnectAsync(options);
-                //#end:auth[]
+                // end:auth[]
             }
         }
     }
