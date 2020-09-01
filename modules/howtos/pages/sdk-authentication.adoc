@@ -19,6 +19,8 @@ Our xref:hello-world:start-using-sdk.adoc[Getting Started] guide introduced basi
 var cluster = await Cluster.ConnectAsync("couchbase://localhost", "username", "password");
 ----
 
+[source,c#]
+----
 include::example$Auth.cs[tag=basic,indent=0]
 ----
 
