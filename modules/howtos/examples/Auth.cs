@@ -25,7 +25,7 @@ namespace sdk_docs_dotnet_examples
                 // end::basic]
             }
             {
-                // tag:auth[]
+                // tag::auth[]
                 var options = new ClusterOptions().
                     WithX509CertificateFactory(CertificateFactory.GetCertificatesFromStore(
                         new CertificateStoreSearchCriteria
@@ -37,7 +37,7 @@ namespace sdk_docs_dotnet_examples
                         }));
 
                 var cluster = await Cluster.ConnectAsync(options);
-                // end:auth[]
+                // end::auth[]
             }
         }
     }
