@@ -130,7 +130,7 @@ NOTE: JSON configuration is only supported for versions of the SDK 2.3.0 and gre
   "basic": {
     "username": "username",
     "password": "mypassword",
-    "enableConfigHeartbeat": false,
+    "configPollEnabled": false,
     "servers": [
       "http://server1.somedomain.com:8091/", "http://server2.somedomain.com:8091/"
     ],
@@ -638,7 +638,7 @@ An example of setting the configuration file to use PooledIOService would look l
       </sectionGroup>
    </configSections>
    <couchbaseClients>
-      <couchbase enableConfigHeartBeat="false">
+      <couchbase configPollEnabled="false">
          <servers>
             <add uri="http://127.0.0.1:8091" />
          </servers>
