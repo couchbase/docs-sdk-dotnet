@@ -109,6 +109,28 @@ git pull origin master
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+= Version 3.0.5 (1 September 2020)
+https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.5.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.5[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.0.5[Nuget]
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2504[NCBC-2504]: Intermittent ViewQuery failures after rebound Rb2OutEpt-HYBRID
+* https://issues.couchbase.com/browse/NCBC-2559[NCBC-2559]: Test_BootStrap_Error_Propagates_To_View_Operations fails w/BucketNotFoundException
+* https://issues.couchbase.com/browse/NCBC-2561[NCBC-2561]: CreateAndDropIndex and Test_QueryManager conflict
+* https://issues.couchbase.com/browse/NCBC-2625[NCBC-2625]: Ensure new NodeAdapter is assigned to ClusterNode on change
+* https://issues.couchbase.com/browse/NCBC-2634[NCBC-2634]: Expiry returned with entire document when ContentAs invoked
+* https://issues.couchbase.com/browse/NCBC-2405[NCBC-2405]: SDK3 DOC on User Auth options
+* https://issues.couchbase.com/browse/NCBC-2541[NCBC-2541]: WaitUntilReady() doc code sample
+* https://issues.couchbase.com/browse/NCBC-2603[NCBC-2603]: Missing snippets & sections in Managing Connections doc
+* https://issues.couchbase.com/browse/NCBC-2623[NCBC-2623]: Implement Threshold Logging features of RTO
+* https://issues.couchbase.com/browse/NCBC-2636[NCBC-2636]: Test max limitations of collections and scopes
+* https://issues.couchbase.com/browse/NCBC-2637[NCBC-2637]: Split Couchbase.IntegrationTests into seperate projects for Management and main API
+* https://issues.couchbase.com/browse/NCBC-2427[NCBC-2427]: Verify that out-of-order K/V request/responses are supported
+* https://issues.couchbase.com/browse/NCBC-2584[NCBC-2584]: Add N1QL Support for Collections
+* https://issues.couchbase.com/browse/NCBC-2630[NCBC-2630]: Enhance User Management for Collections/RBAC
+
 = Version 3.0.4 (5 August 2020)
 https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.4.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.4[API Reference] |
