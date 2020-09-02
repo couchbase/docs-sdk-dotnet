@@ -114,8 +114,6 @@ https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.5.zip[Do
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.5[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.0.5[Nuget]
 
-=== Known Issues
-
 === Fixed Issues
 
 * https://issues.couchbase.com/browse/NCBC-2504[NCBC-2504]: Intermittent ViewQuery failures after rebound Rb2OutEpt-HYBRID
