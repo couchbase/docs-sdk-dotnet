@@ -100,7 +100,7 @@ Certain Prepared statements could produce _Fatal error: unexpected end of JSON i
 === Fixed Issues
 
 * https://issues.couchbase.com/browse/NCBC-2616[NCBC-2616]: 
-FixeS a bug where the stream writer is causing the recyclable memory stream to be disposed prior to the `ToArray` call being made.
+Fixed a bug where the stream writer is causing the recyclable memory stream to be disposed prior to the `ToArray` call being made.
 * https://issues.couchbase.com/browse/NCBC-2629[NCBC-2629]: 
 Added Raw parameter to SearchParams.
 
