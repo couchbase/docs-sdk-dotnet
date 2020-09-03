@@ -16,7 +16,7 @@ namespace sdk_docs_dotnet_examples
             var bucket = await cluster.BucketAsync("travel-sample");
             var collection = bucket.DefaultCollection();
 
-            // tag::retry
+            // tag::retry[]
             var attempts = MaxRetries; // eg 5
             while (attempts-- > 0)
             {
@@ -47,7 +47,7 @@ namespace sdk_docs_dotnet_examples
                 // wait 100 milliseconds before trying again
                 Task.Delay(100);
             }
-            // end::retry
+            // end::retry[]
 		}
 
         public class User
