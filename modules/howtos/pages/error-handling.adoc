@@ -51,37 +51,7 @@ Transient errors -- such as those caused by resource starvation -- are best tack
 
 [source,csharp]
 ----
-
-async Task changeEmail()
-{
-		var attempts = MaxRetries; // eg 5
-		while (attempts-- > 0)
-		{
-			  // will throw KeyNotfoundException if key doesn't exist
-	  		var document = await collection.GetAsync("doc_id");
-				var user = document.ContentAs<User>();
-				user.Email = "john.smith@couchbase.com";
-
-				try
-				{
-						await collection.ReplaceAsync("doc_id", user);
-
-						// replace succeeded, break from loop
-						break;
-				}
-				catch (CouchbaseException exception)
-				{
-						if (!exception.IsRetryable())
-						{
-								// unrecoverable error (network failure, etc)
-								throw;
-						}
-				}
-
-				// wait 100 milliseconds before trying again
-				Task.Delay(100);
-		}
-}
+include::example$ErrorHandling.cs[tag=retry,indent=0]
 ----
 
 
