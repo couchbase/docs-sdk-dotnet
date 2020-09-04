@@ -2564,4 +2564,9 @@ Regression - MutationToken are not set when UseEnhancedDurabity is
 true
 * https://issues.couchbase.com/browse/NCBC-769[NCBC-769] -
 Ensure support for "Consistency Parameters" is implemented correctly
+
+
+== Older Releases
+
+Although https://www.couchbase.com/support-policy/enterprise-software[no longer supported], documentation for older releases continues to be available in our https://docs-archive.couchbase.com/home/index.html[docs archive].
 // end::latest[]
