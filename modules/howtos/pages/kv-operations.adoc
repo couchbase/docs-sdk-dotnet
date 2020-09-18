@@ -28,8 +28,7 @@ Here is the _Insert_ operation at its simplest:
 .Insert
 [source,csharp]
 ----
-var document = new {foo = "bar", bar = "foo"};
-var result = await collection.Insert("document-key", document);
+include::example$KvOperations.cs[tag=insert,indent=0]
 ----
 
 Options may be added to operations:
@@ -37,14 +36,7 @@ Options may be added to operations:
 .Insert (with options)
 [source,csharp]
 ----
-var document = new {foo = "bar", bar = "foo"};
-var result = await collection.InsertAsync("document-key", document,
-    options =>
-    {
-        options.WithCas(12345);
-        options.WithTimeout(TimeSpan.FromSeconds(5));
-    }
-);
+include::example$KvOperations.cs[tag=insertwithoptions,indent=0]
 ----
 
 Setting a Compare and Swap (CAS) value is a form of optimistic locking - dealt with in depth in the xref:concurrent-document-mutations.adoc[CAS page].
@@ -58,15 +50,7 @@ We will add to these options for the _Replace_ example:
 
 [source,csharp]
 ----
-var document = new {foo = "bar", bar = "foo"};
-var result = await collection.ReplaceAsync("document-key", document,
-    options =>
-    {
-        options.WithCas(12345);
-        options.WithExpiration(TimeSpan.FromMinutes(1));
-        options.WithTimeout(TimeSpan.FromSeconds(5));
-    }
-);
+include::example$KvOperations.cs[tag=replacewithcas,indent=0]
 ----
 
 Expiration sets an explicit time to live (TTL) for a document.
@@ -76,16 +60,7 @@ xref:6.0@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-ttl[
 
 [source,csharp]
 ----
-var document = new {foo = "bar", bar = "foo"};
-var result = await collection.UpsertAsync("document-key", document,
-    options =>
-    {
-        options.WithCas(12345);
-        options.WithExpiration(TimeSpan.FromMinutes(1));
-        options.WithDurability(PersistTo.One, ReplicateTo.One);
-        options.WithTimeout(TimeSpan.FromSeconds(5));
-    }
-);
+include::example$KvOperations.cs[tag=upsertwithtimeout,indent=0]
 ----
 
 Here, we have add _Durability_ options, namely `PersistTo` and `ReplicateTo`.
@@ -109,16 +84,7 @@ The following example demonstrates using the newer durability features available
 
 [source,csharp]
 ----
-var document = new {foo = "bar", bar = "foo"};
-var result = await collection.UpsertAsync("document-key", document,
-    options =>
-    {
-        options.WithCas(12345);
-        options.WithExpiration(TimeSpan.FromMinutes(1));
-        options.WithDurability(DurabilityLevel.Majority);
-        options.WithTimeout(TimeSpan.FromSeconds(5));
-    }
-);
+include::example$KvOperations.cs[tag=upsertwithdurability,indent=0]
 ----
 
 In a version of Couchbase Server lower than 6.5 is being used then the application can fall-back to 'client verified' durability. 
@@ -150,8 +116,7 @@ Using the `Get()` method with the document key can be done in a similar fashion 
 
 [source,csharp]
 ----
-var result = await collection.GetAsync("document-key");
-var content = result.ContentAs<string>();
+include::example$KvOperations.cs[tag=get,indent=0]
 ----
 
 Timeout can also be set - as in the earlier `Insert` example:
@@ -159,15 +124,8 @@ Timeout can also be set - as in the earlier `Insert` example:
 .Get (with options)
 [source,csharp]
 ----
-var result = await collection.GetAsync("document-key",
-    options =>
-    {
-        options.WithTimeout(TimeSpan.FromSeconds(5));
-    }
-);
-var content = result.ContentAs<string>();
+include::example$KvOperations.cs[tag=getwithtimeout,indent=0]
 ----
-
 
 == Removing
 
@@ -176,15 +134,8 @@ When removing a document, you will have the same concern for durability as with 
 .Remove (with options)
 [source,csharp]
 ----
-var result = await collection.RemoveAsync("document-key",
-    options =>
-    {
-        options.WithCas(12345);
-        options.WithTimeout(TimeSpan.FromSeconds(5));
-    }
-);
+include::example$KvOperations.cs[tag=remove,indent=0]
 ----
-
 
 == Expiration / TTL
 
@@ -193,19 +144,14 @@ Using `Touch()`, you can set expiration values on documents to handle transient 
 
 [source,csharp]
 ----
-var result = await collection.TouchAsync("document-key", TimeSpan.FromSeconds(10));
+include::example$KvOperations.cs[tag=touch,indent=0]
 ----
 
 A network timeout can be set with the optional `TouchOptions()`, in the same fashion as earlier examples on this page:
 
 [source,csharp]
 ----
-var result = await collection.TouchAsync("document-key", TimeSpan.FromSeconds(30),
-    options =>
-    {
-        options.WithTimeout(TimeSpan.FromSeconds(5));
-    }
-);
+include::example$KvOperations.cs[tag=touchwithtimeout,indent=0]
 ----
 
 include::6.5@sdk:shared:partial$documents.adoc[tag=exp-note]
@@ -224,45 +170,25 @@ The value of a document can be increased or decreased atomically using `Binary.I
 .Increment
 [source,csharp]
 ----
-// increment binary value by 1, if document doesn’t exist, seed it at 1
-await collection.Binary.IncrementAsync("document-key");
+include::example$KvOperations.cs[tag=binaryincrement,indent=0]
 ----
 
 .Increment (with options)
 [source,csharp]
 ----
-await collection.Binary.IncrementAsync("document-key",
-    options =>
-    {
-        options.WithDelta(1);
-        options.WithInitial(1000);
-        options.WithCas(12345);
-        options.WithExpiration(TimeSpan.FromDays(1));
-        options.WithTimeout(TimeSpan.FromSeconds(5));
-    }
-);
+include::example$KvOperations.cs[tag=binaryincrementwithoptions,indent=0]
 ----
 
 .Decrement
 [source,csharp]
 ----
-// decrement binary value by 1, if document doesn’t exist, seed it at 1
-await collection.Binary.DecrementAsync("document-key");
+include::example$KvOperations.cs[tag=binarydecrement,indent=0]
 ----
 
 .Decrement (with options)
 [source,csharp]
 ----
-await collection.Binary.DecrementAsync("document-key",
-    options =>
-    {
-        options.WithDelta(1);
-        options.WithInitial(1000);
-        options.WithCas(12345);
-        options.WithExpiration(TimeSpan.FromDays(1));
-        options.WithTimeout(TimeSpan.FromSeconds(5));
-    }
-);
+include::example$KvOperations.cs[tag=binarydecrementwithoptions,indent=0]
 ----
 
 NOTE: Increment & Decrement are considered part of the ‘binary’ API and as such may still be subject to change
