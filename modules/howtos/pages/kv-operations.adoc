@@ -87,7 +87,7 @@ The following example demonstrates using the newer durability features available
 include::example$KvOperations.cs[tag=upsertwithdurability,indent=0]
 ----
 
-In a version of Couchbase Server lower than 6.5 is being used then the application can fall-back to 'client verified' durability. 
+If a version of Couchbase Server lower than 6.5 is being used then the application can fall-back to xref:concept-docs:durability-replication-failure-considerations.adoc#older-server-versions['client verified' durability]. 
 Here the SDK will do a simple poll of the replicas and only return once the requested durability level is achieved. 
 
 ////
