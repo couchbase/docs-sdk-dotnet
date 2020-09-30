@@ -24,7 +24,7 @@ The library is distributed in a number of ways:
 == Hello Couchbase
 
 Start a new console project (in Visual Studio or VS Code, etc). 
-Install the latest 3.0 CouchbaseNetClient NuGet package.
+Install the latest 3.0 https://www.nuget.org/packages/CouchbaseNetClient/[CouchbaseNetClient^] NuGet package.
 
 The following code samples assume:
 
