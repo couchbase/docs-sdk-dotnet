@@ -26,7 +26,7 @@ These unrecoverable errors are left to the application developer to handle -- th
 The approach will depend upon the type of error thrown.
 Is it transient?
 Is it even recoverable?
-Below we examine error handling strategies in relation to the Couchbase SDKs, then take a practical walk through some common error scenarios you are likely to have to handle when working with a Couchbase cluster.
+Below we examine error handling strategies in relation to the https://docs.couchbase.com/server/6.6/sdk/overview.html/[Couchbase SDKs^] , then take a practical walk through some common error scenarios you are likely to have to handle when working with a Couchbase cluster.
 
 
 === Logging
