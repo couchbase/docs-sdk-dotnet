@@ -15,7 +15,7 @@ In order to use logging within the SDK, you need to reference the packages for t
 There are adapters available for all the major logging implementations.
 More information and a list of available adapters is available on the project website http://net-commons.github.io/common-logging/[here^].
 
-The recommended dependencies for Couchbase .NET SDK v2.6.0 greater are:
+The recommended dependencies for https://docs.couchbase.com/dotnet-sdk/current/hello-world/start-using-sdk.html[Couchbase .NET SDK v2.6.0^] greater are:
 
 * Log4Net v2.07
 * Common.Logging 3.4.1
