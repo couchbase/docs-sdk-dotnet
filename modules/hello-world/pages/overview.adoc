@@ -4,7 +4,7 @@
 :page-role: tiles
 :!sectids:
 
-
+////
 ++++
 <div class="card-row">
 ++++
@@ -101,3 +101,4 @@ xref:3.0@java-sdk:hello-world:start-using-sdk.adoc[Java SDK 3.0]
 </div>
 ++++
 
+////
