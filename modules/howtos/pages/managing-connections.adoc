@@ -202,7 +202,7 @@ It is important to make sure you are transferring the certificate in an encrypte
 If you are running on `localhost` and just want to enable TLS for a development machine, just copying and pasting it suffices
 -- _so long as you use `127.0.0.1` rather than `localhost` in the connection string_.
 This is because the certificate will not match the name _localhost_.
-Setting `TLSSkipVerify` is a workaround if you need to use ` couchbases://localhost`.
+Setting `TLSSkipVerify` is a workaround if you need to use `couchbases://localhost`.
 
 Navigate in the admin UI to menu:Settings[Cluster] and copy the input box of the TLS certificate into a file on your machine (which we will refer to as cluster.cert). 
 It looks similar to this:
@@ -255,7 +255,63 @@ For development, do the following steps to install the certificate:
 
  . Exit and approve.
 
-If you want to verify it’s actually working, you can use a tool like tcpdump. 
+
+
+=== Importing the Certificate into GNU/Linux
+
+Although different distributions differ slightly in the details of their certificate handling, they will be similar to one of the two patterns below.
+Refer to your distribution's documentation for precise instructions.
+
+[{tabs}] 
+==== 
+Debian and Ubuntu::
++
+--
+[source,console]
+----
+$ cd /usr/local/share/ca-certificates/
+----
+
+[source,console]
+----
+$ mkdir couchbase-cert
+----
+
+[source,console]
+----
+$ cp /path/to/my-certificate.crt couchbase-cert/
+----
+
+[source,console]
+----
+$ chmod 755 couchbase-cert ; chmod 644 couchbase-cert/my-certificate.crt
+----
+
+[source,console]
+----
+$ sudo update-ca-certificates
+----
+--
+
+RHEL and CentOS::
++
+--
+[source,console]
+----
+$ sudo cp my-certificate.crt /etc/pki/ca-trust/source/anchors/
+----
+
+[source,console]
+----
+$ sudo update-ca-trust extract
+----
+--
+====
+
+
+=== Certificate Verification
+
+If you want to verify it’s actually working, you can use a tool like *tcpdump*. 
 For example, an unencrypted upsert request looks like this (using `sudo tcpdump -i lo0 -A -s 0 port 11210`):
 
 ----
@@ -268,6 +324,8 @@ E.....@.@.............+....Z.'yZ..#........
 ..... ...xuG.O=.#.........?.Q)8..D...S.W.4.-#....@7...^.Gk.4.t..C+......6..)}......N..m..o.3...d.,.	...W.....U..
 .%v.....4....m*...A.2I.1.&.*,6+..#..#.5
 ----
+
+
 
 include::6.5@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
 
