@@ -272,6 +272,8 @@ Debian and Ubuntu::
 $ cd /usr/local/share/ca-certificates/
 ----
 
+Name a sub-directory to hold the Couchbase certificate:
+
 [source,console]
 ----
 $ mkdir couchbase-cert
@@ -282,11 +284,19 @@ $ mkdir couchbase-cert
 $ cp /path/to/my-certificate.crt couchbase-cert/
 ----
 
+.Ensure that the permissions are correct
 [source,console]
 ----
 $ chmod 755 couchbase-cert ; chmod 644 couchbase-cert/my-certificate.crt
 ----
 
+.Update ca-certificates configuration to include the newly imported certificate
+[source,console]
+----
+sudo dpkg-reconfigure ca-certificates
+----
+
+.Commit the changes
 [source,console]
 ----
 $ sudo update-ca-certificates
