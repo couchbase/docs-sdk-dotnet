@@ -290,6 +290,7 @@ $ cp /path/to/my-certificate.crt couchbase-cert/
 $ chmod 755 couchbase-cert ; chmod 644 couchbase-cert/my-certificate.crt
 ----
 
+
 .Update ca-certificates configuration to include the newly imported certificate
 [source,console]
 ----
