@@ -210,7 +210,7 @@ NOTE: This setting only propagates to the OS on Linux when the epoll transport i
 On all other platforms, the OS-configured time is used (and you need to tune it there if you want to override the default interval).
 
 Name: *Key/Value Endpoints per Node*::
-Cluster Option: `NumKvConnections(int)`
+Cluster Option: https://docs.couchbase.com/sdk-api/couchbase-net-client/html/P_Couchbase_ClusterOptions_NumKvConnections.htm[`NumKvConnections(int)`]
 +
 Default:  `1`
 +
@@ -222,7 +222,7 @@ If you suspect based on profiling and benchmarking that the socket is saturated 
 This might be especially helpful if you need to push large documents through it.
 The recommendation is keeping it at 1 unless there is other evidence.
 +
-NOTE: xref:concept-docs:durability-replication-failure-considerations.adoc#synchronous-writes[Durable Write] operations with Couchbase Server 6.5 and above require up to 16 KV Endpoints per node, for most efficient operation, unless the environment dictates something a little lower.
+NOTE: xref:concept-docs:durability-replication-failure-considerations.adoc#synchronous-writes[Durable Write] operations with Couchbase Server 6.5 and above require up to 16 kvEndpoints per node, for most efficient operation, unless the environment dictates something a little lower.
 
 Name: *Max HTTP Endpoints per Service per Node*::
 Cluster Option: `MaxHttpConnections(int)`
