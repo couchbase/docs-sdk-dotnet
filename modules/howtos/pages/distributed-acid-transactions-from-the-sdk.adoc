@@ -50,7 +50,7 @@ A complete simple gradle project is available on our https://github.com/couchbas
 
 Here are all imports used by the following examples:
 
-[source,java]
+[source,csharp]
 ----
 using System;
 using System.Linq;
@@ -67,7 +67,7 @@ using Newtonsoft.Json.Linq;
 The starting point is the `Transactions` object.  
 It is very important that the application ensures that only one of these is created, as it performs automated background processes that should not be duplicated.
 
-[source,java]
+[source,csharp]
 ----
 public Program(ICluster cluster, IBucket bucket, ICouchbaseCollection collection, Transactions transactions)
 {
@@ -83,7 +83,7 @@ public Program(ICluster cluster, IBucket bucket, ICouchbaseCollection collection
 
 Transactions can optionally be configured at the point of creating the `Transactions` object:
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=config,indent=0]
 ----
@@ -93,7 +93,7 @@ include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=config]
 
 include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=creating]
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=create,indent=0]
 ----
@@ -114,7 +114,7 @@ so many methods including flatMap will not work as expected.
 A code example is worth a thousand words, so here is a quick summary of the main transaction operations.
 They are described in more detail below. 
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=examples,indent=0]
 ----
@@ -131,7 +131,7 @@ Replacing a document requires a `ctx.get()` call first.
 This is necessary to ensure that the document is not involved in another transaction.
 (If it is, then the transaction will handle this, generally by rolling back what has been done so far, and retrying the lambda.)
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=replace,indent=0]
 ----
@@ -140,14 +140,14 @@ include::example$TransactionsExample.cs[tag=replace,indent=0]
 
 As with replaces, removing a document requires a `ctx.get()` call first.
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=remove,indent=0]
 ----
 
 === Inserting
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=insert,indent=0]
 ----
@@ -157,7 +157,7 @@ include::example$TransactionsExample.cs[tag=insert,indent=0]
 
 There are two ways to get a document, `get` and `getOptional`:
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=get,indent=0]
 ----
@@ -167,7 +167,7 @@ It is provided as a convenience method so the developer does not have to check t
 
 Gets will 'read your own writes', e.g. this will succeed:
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=getReadOwnWrites,indent=0]
 ----
@@ -176,7 +176,7 @@ include::example$TransactionsExample.cs[tag=getReadOwnWrites,indent=0]
 
 Committing is automatic: if there is no explicit call to `ctx.commit()` at the end of the transaction logic callback, and no exception is thrown, it will be committed.
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=commit,indent=0]
 ----
@@ -194,7 +194,7 @@ include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=example]
 
 // A complete version of this example is available on our https://github.com/couchbaselabs/couchbase-transactions-java-examples[GitHub transactions examples page].
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=full,indent=0]
 ----
@@ -203,7 +203,7 @@ include::example$TransactionsExample.cs[tag=full,indent=0]
 // concurrency
 include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=concurrency]
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=concurrencyOps,indent=0]
 ----
@@ -222,14 +222,14 @@ If the transaction is not retried then it will throw a `TransactionFailed` excep
 
 The application can use this to signal why it triggered a rollback, as so:
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=rollback-cause,indent=0]
 ----
 
 The transaction can also be explicitly rolled back:
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=rollback,indent=0]
 ----
@@ -247,7 +247,7 @@ include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=error]
 //  txnfailed
 include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed]
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=config-expiration,indent=0]
 ----
@@ -259,7 +259,7 @@ include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed1]
 
 Pulling all of the above together, this is the suggested best practice for error handling:
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=full-error-handling,indent=0]
 ----
@@ -272,7 +272,7 @@ include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=cleanup]
 
 If the application wishes to monitor cleanup it may subscribe to these events:
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=cleanup-events,indent=0]
 ----
@@ -293,7 +293,7 @@ If there is not a good reason for the cleanup to be failed (such as a downed nod
 
 To aid troubleshooting, each transaction maintains a list of log entries, which can be logged on failure like this:
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=logging,indent=0]
 ----
@@ -303,7 +303,7 @@ A failed transaction can involve dozens, even hundreds, of lines of logging, so 
 ////
 For convenience there is also a config option that will automatically write this programmatic log to the standard Couchbase Java logging configuration inherited from the SDK if a transaction fails.
 This will log all lines of any failed transactions, to `WARN` level:
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.java[tag=config_warn,indent=0]
 ----
@@ -316,7 +316,7 @@ Please see the xref:howtos:collecting-information-and-logging.adoc[.NET SDK logg
 Most applications will have their own preferred logging solution in-place already.
 For those starting from scratch here is a complete example:
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=full-logging,indent=0]
 ----
@@ -334,7 +334,7 @@ This means the application must 'swallow' the error, but record that an error oc
 
 These rules are demonstrated here:
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.java[tag=concurrentOps,indent=0]
 ----
@@ -354,21 +354,21 @@ The intention behind this feature is to allow multiple transactions, potentially
 
 Here's an example of deferring the initial commit and serializing the transaction:
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.java[tag=defer1,indent=0]
 ----
 
 And then committing the transaction later:
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.java[tag=defer2,indent=0]
 ----
 
 Alternatively the transaction can be rolled back:
 
-[source,java]
+[source,csharp]
 ----
 include::example$TransactionsExample.java[tag=defer3,indent=0]
 ----
