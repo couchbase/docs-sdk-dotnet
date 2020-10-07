@@ -29,8 +29,9 @@ include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=requirements]
 
 Couchbase transactions require no additional components or services to be configured. 
 Simply add the transactions library into your project.
-The latest version, as of August 2020, is 1.1.0.
+The latest version, as of October 2020, is 1.0.0-beta.
 
+////
 With Gradle this can be accomplished by modifying these sections of your build.gradle file like so:
 
 [source,gradle]
@@ -43,7 +44,7 @@ dependencies {
 Use the same group, artifact, and version in your Maven-compatible tool of choice.
 
 A complete simple gradle project is available on our https://github.com/couchbaselabs/couchbase-transactions-java-examples[transactions examples repository].
-
+////
 
 == Initializing Transactions
 
@@ -51,7 +52,16 @@ Here are all imports used by the following examples:
 
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=imports,indent=0]
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Couchbase.KeyValue;
+using Couchbase.Query;
+using Couchbase.Transactions.Config;
+using Couchbase.Transactions.Error;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 ----
 
 The starting point is the `Transactions` object.  
@@ -59,7 +69,13 @@ It is very important that the application ensures that only one of these is crea
 
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=init,indent=0]
+public Program(ICluster cluster, IBucket bucket, ICouchbaseCollection collection, Transactions transactions)
+{
+    _cluster = cluster;
+    _bucket = bucket;
+    _collection = collection;
+    _transactions = transactions;
+}
 ----
 
 
@@ -69,7 +85,7 @@ Transactions can optionally be configured at the point of creating the `Transact
 
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=config,indent=0]
+include::example$TransactionsExample.cs[tag=config,indent=0]
 ----
 
 include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=config]
@@ -77,20 +93,12 @@ include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=config]
 
 include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=creating]
 
-As with the Couchbase Java Client, you can use the library in either synchronous mode (the exceptions will be explained later in <<Error Handling>>):
-
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=create,indent=0]
+include::example$TransactionsExample.cs[tag=create,indent=0]
 ----
 
-or asynchronous modes, using the Project Reactor reactive library:
-
-[source,java]
-----
-include::example$TransactionsExample.java[tag=createReactive,indent=0]
-----
-
+////
 The synchronous mode is the easiest to write and understand.
 The asynchronous API allows you to build your application in a reactive style, without large thread pools, which can help you scale with excellent efficiency.
 Those new to reactive programming may want to check out https://projectreactor.io/[the Project Reactor site] for more details on this powerful paradigm.
@@ -99,24 +107,16 @@ NOTE: Some `AttemptContextReactive` methods, notably `remove`, return `Mono<Void
 Be careful to use `then` rather than `flatMap` or similar on these, 
 as `Mono<Void>` will only trigger a completion event, and not the next event, 
 so many methods including flatMap will not work as expected.
-
+////
 
 == Examples
 
 A code example is worth a thousand words, so here is a quick summary of the main transaction operations.
 They are described in more detail below. 
 
-.With the synchronous API
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=examples,indent=0]
-----
-
-
-.With the asynchronous API
-[source,java]
-----
-include::example$TransactionsExample.java[tag=examplesReactive,indent=0]
+include::example$TransactionsExample.cs[tag=examples,indent=0]
 ----
 
 
@@ -131,46 +131,27 @@ Replacing a document requires a `ctx.get()` call first.
 This is necessary to ensure that the document is not involved in another transaction.
 (If it is, then the transaction will handle this, generally by rolling back what has been done so far, and retrying the lambda.)
 
-.With the synchronous API:
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=replace,indent=0]
-----
-
-.Asynchronous API:
-[source,java]
-----
-include::example$TransactionsExample.java[tag=replaceReactive,indent=0]
+include::example$TransactionsExample.cs[tag=replace,indent=0]
 ----
 
 === Removing
 
 As with replaces, removing a document requires a `ctx.get()` call first.
 
-.With the asynchronous API:
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=removeReactive,indent=0]
-----
-
-.Synchronous API:
-[source,java]
-----
-include::example$TransactionsExample.java[tag=remove,indent=0]
+include::example$TransactionsExample.cs[tag=remove,indent=0]
 ----
 
 === Inserting
 
-.With the asynchronous API:
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=insert,indent=0]
+include::example$TransactionsExample.cs[tag=insert,indent=0]
 ----
 
-.With the synchronous API:
-----
-include::example$TransactionsExample.java[tag=insertReactive,indent=0]
-----
 
 == Getting Documents
 
@@ -178,7 +159,7 @@ There are two ways to get a document, `get` and `getOptional`:
 
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=get,indent=0]
+include::example$TransactionsExample.cs[tag=get,indent=0]
 ----
 
 `get` will cause the transaction to fail with `TransactionFailed` (after rolling back any changes, of course).
@@ -188,18 +169,16 @@ Gets will 'read your own writes', e.g. this will succeed:
 
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=getReadOwnWrites,indent=0]
+include::example$TransactionsExample.cs[tag=getReadOwnWrites,indent=0]
 ----
 
 == Committing
 
 Committing is automatic: if there is no explicit call to `ctx.commit()` at the end of the transaction logic callback, and no exception is thrown, it will be committed.
 
-With the asynchronous API, if you leave off the explicit call to `commit` then you may need to call `.then()` on the result of the chain to convert it to the required `Mono<Void>` return type:
-
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=commit,indent=0]
+include::example$TransactionsExample.cs[tag=commit,indent=0]
 ----
 
 As described above, as soon as the transaction is committed, all its changes will be atomically visible to reads from other transactions.
@@ -207,17 +186,17 @@ The changes will also be committed (or "unstaged") so they are visible to non-tr
 
 Commit is final: after the transaction is committed, it cannot be rolled back, and no further operations are allowed on it.
 
-An asynchronous cleanup process ensures that once the transaction reaches the commit point, it will be fully committed - even if the application crashes.
+An asynchronous cleanup process ensures that once the transaction reaches the commit point, it will be fully committed -- even if the application crashes.
 
 
 // == A Full Transaction Example
 include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=example]
 
-A complete version of this example is available on our https://github.com/couchbaselabs/couchbase-transactions-java-examples[GitHub transactions examples page].
+// A complete version of this example is available on our https://github.com/couchbaselabs/couchbase-transactions-java-examples[GitHub transactions examples page].
 
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=full,indent=0]
+include::example$TransactionsExample.cs[tag=full,indent=0]
 ----
 
 
@@ -226,7 +205,7 @@ include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=concurrency]
 
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=concurrency,indent=0]
+include::example$TransactionsExample.cs[tag=concurrencyOps,indent=0]
 ----
 
 These events will be raised in the event of a non-transactional write being detected and overridden.
@@ -245,14 +224,14 @@ The application can use this to signal why it triggered a rollback, as so:
 
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=rollback-cause,indent=0]
+include::example$TransactionsExample.cs[tag=rollback-cause,indent=0]
 ----
 
 The transaction can also be explicitly rolled back:
 
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=rollback,indent=0]
+include::example$TransactionsExample.cs[tag=rollback,indent=0]
 ----
 
 In this case, if `ctx.rollback()` is reached, then the transaction will be regarded as successfully rolled back and no TransactionFailed will be thrown.
@@ -270,7 +249,7 @@ include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed]
 
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=config-expiration,indent=0]
+include::example$TransactionsExample.cs[tag=config-expiration,indent=0]
 ----
 
 include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed1]
@@ -282,19 +261,20 @@ Pulling all of the above together, this is the suggested best practice for error
 
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=full-error-handling,indent=0]
+include::example$TransactionsExample.cs[tag=full-error-handling,indent=0]
 ----
 
 
 include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=cleanup]
 
+////
 === Monitoring Cleanup
 
 If the application wishes to monitor cleanup it may subscribe to these events:
 
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=cleanup-events,indent=0]
+include::example$TransactionsExample.cs[tag=cleanup-events,indent=0]
 ----
 
 `TransactionCleanupEndRunEvent` is raised whenever a current 'run' is finished, and contains statistics from the run.
@@ -306,6 +286,8 @@ It contains whether that attempt was successful, along with any logs relevant to
 In addition, if cleanup fails to cleanup a transaction that is more than two hours past expiry, it will raise the `TransactionCleanupAttempt` event at WARN level (rather than the default DEBUG).
 With most default configurations of the event-bus (see <<Logging>> below), this will cause that event to be logged somewhere visible to the application.
 If there is not a good reason for the cleanup to be failed (such as a downed node that has not yet been failed-over), then the user is encouraged to report the issue.
+////
+
 
 == Logging
 
@@ -313,18 +295,12 @@ To aid troubleshooting, each transaction maintains a list of log entries, which 
 
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=logging,indent=0]
-----
-
-or for the asynchronous API:
-
-[source,java]
-----
-include::example$TransactionsExample.java[tag=async_logging,indent=0]
+include::example$TransactionsExample.cs[tag=logging,indent=0]
 ----
 
 A failed transaction can involve dozens, even hundreds, of lines of logging, so the application may prefer to write failed transactions into a separate file.
 
+////
 For convenience there is also a config option that will automatically write this programmatic log to the standard Couchbase Java logging configuration inherited from the SDK if a transaction fails.
 This will log all lines of any failed transactions, to `WARN` level:
 [source,java]
@@ -332,20 +308,20 @@ This will log all lines of any failed transactions, to `WARN` level:
 include::example$TransactionsExample.java[tag=config_warn,indent=0]
 ----
 
-
 By default the Couchbase Java logging event-bus is setup to look for and use SLF4J/logback, log4j1, and log4j2 on the classpath, and to fallback to java.util.Logging.  
+////
 
-Please see the xref:howtos:collecting-information-and-logging.adoc[Java SDK logging documentation] for details.
+Please see the xref:howtos:collecting-information-and-logging.adoc[.NET SDK logging documentation] for details.
 
-Most applications will have their own preferred Java logging solution in-place already.
-For those starting from scratch here is a complete example using the basic `java.util.Logging`:
+Most applications will have their own preferred logging solution in-place already.
+For those starting from scratch here is a complete example:
 
 [source,java]
 ----
-include::example$TransactionsExample.java[tag=full-logging,indent=0]
+include::example$TransactionsExample.cs[tag=full-logging,indent=0]
 ----
 
-
+////
 == Concurrent Operations with the Async API
 
 The async API allows operations to be performed concurrently inside a transaction, which can assist performance.
@@ -362,8 +338,10 @@ These rules are demonstrated here:
 ----
 include::example$TransactionsExample.java[tag=concurrentOps,indent=0]
 ----
+////
 
 
+////
 == Deferred Commits
 
 NOTE: The deferred commit feature is currently in alpha, and the API may change.
@@ -397,6 +375,6 @@ include::example$TransactionsExample.java[tag=defer3,indent=0]
 
 The transaction expiry timer (which is configurable) will begin ticking once the transaction starts, and is not paused while the transaction is in a deferred state.
 
-
+////
 
 include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=further]
