@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Couchbase.KeyValue;
 using Couchbase.Query;
 using Couchbase.Transactions.Config;
+using Couchbase.Transactions.Deferred;
 using Couchbase.Transactions.Error;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -29,12 +30,17 @@ namespace Couchbase.Transactions.Examples
 
         static async Task Main(string[] args)
         {
+            // #tag::init[]
+            // Initialize the Couchbase cluster
             var options = new ClusterOptions().WithCredentials("Administrator", "password");
             var cluster = await Cluster.ConnectAsync("couchbase://localhost", options).ConfigureAwait(false);
             var bucket = await cluster.BucketAsync("default").ConfigureAwait(false);
             var collection = bucket.DefaultCollection();
 
+            // Create the single Transactions object
             var transactions = Transactions.Create(cluster, TransactionConfigBuilder.Create());
+            // #end::init[]
+
             using var program = new Program(cluster, bucket, collection, transactions);
 
 
@@ -71,6 +77,64 @@ namespace Couchbase.Transactions.Examples
             // #end::config-cleanup[]
         }
 
+        /*
+        async Task DeferredCommit1()
+        {
+
+            // #tag::defer1[]
+            try
+            {
+                var result = await _transactions.RunAsync(async (ctx)=>
+                {
+                    var initial = new {val = 1};
+                    await ctx.InsertAsync(_collection, "a-doc-id", initial).ConfigureAwait(false);
+
+                    // Defer means don't do a commit right now.  `serialized` in the result will be present.
+                    await ctx.DeferAsync().ConfigureAwait(false);
+                }).ConfigureAwait(false);
+
+                // Available because ctx.defer() was called
+                TransactionSerializedContext serialized = result.Serialized;
+
+                // This is going to store a serialized form of the transaction to pass around
+                var encoded = serialized.EncodeAsBytes();
+
+            }
+            catch (TransactionFailedException e)
+            {
+                // System.err is used for example, log failures to your own logging system
+                Console.Error.WriteLine("Transaction did not reach commit point");
+                Console.Error.WriteLine(e);
+            }
+            // #end::defer1[]
+        }
+
+        async Task DeferredCommit2(byte[] encoded)
+        {
+            // #tag::defer2[]
+            var serialized = TransactionSerializedContext.CreateFrom(encoded);
+
+            try
+            {
+                var result = await _transactions.RunAsync(async (ctx) =>
+                {
+                    await ctx.CommitAsync().ConfigureAwait(false);
+                });
+
+            }
+            catch (TransactionFailedException e)
+            {
+                // System.err is used for example, log failures to your own logging system
+                System.err.println("Transaction did not reach commit point");
+
+                for (LogDefer err : e.result().log().logs())
+                {
+                    System.err.println(err.toString());
+                }
+            }
+            // #end::defer2[]
+        }
+
         async Task ConcurrentOpsAsync()
         {
             // #tag::concurrentOps[]
@@ -87,8 +151,7 @@ namespace Couchbase.Transactions.Examples
             }).ConfigureAwait(false);
             // #end::concurrentOps[]
         }
-
-
+        */
 
         async Task CreateAsync()
         {
