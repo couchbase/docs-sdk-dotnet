@@ -61,8 +61,23 @@ Here are all imports used by the following examples:
 
 [source,c#]
 ----
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Couchbase.KeyValue;
+using Couchbase.Query;
+using Couchbase.Transactions.Config;
+using Couchbase.Transactions.Deferred;
+using Couchbase.Transactions.Error;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
+----
+////
+----
 include::example$TransactionsExample.cs[tag=imports,indent=0]
 ----
+////
 
 The starting point is the `Transactions` object.  
 It is very important that the application ensures that only one of these is created, as it performs automated background processes that should not be duplicated.
