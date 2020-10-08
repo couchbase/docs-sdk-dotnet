@@ -54,6 +54,7 @@ Or by using PackageReference in your .csproj file:
 
 A complete simple NuGet example is available on our https://github.com/couchbaselabs/couchbase-transactions-dotnet-examples[transactions examples repository].
 
+
 == Initializing Transactions
 
 Here are all imports used by the following examples:
@@ -288,7 +289,7 @@ Here is an example of configuring a Microsoft.Extensions.Logging.ILoggingFactory
 include::example$TransactionsExample.cs[tag=full-logging,indent=0]
 ----
 
-////
+
 == Deferred Commits
 
 NOTE: The deferred commit feature is currently in alpha, and the API may change.
@@ -313,6 +314,7 @@ And then committing the transaction later:
 include::example$TransactionsExample.java[tag=defer2,indent=0]
 ----
 
+////
 Alternatively the transaction can be rolled back:
 
 [source,csharp]
