@@ -61,8 +61,23 @@ Here are all imports used by the following examples:
 
 [source,c#]
 ----
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Couchbase.KeyValue;
+using Couchbase.Query;
+using Couchbase.Transactions.Config;
+using Couchbase.Transactions.Deferred;
+using Couchbase.Transactions.Error;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
+----
+////
+----
 include::example$TransactionsExample.cs[tag=imports,indent=0]
 ----
+////
 
 The starting point is the `Transactions` object.  
 It is very important that the application ensures that only one of these is created, as it performs automated background clean-up processes that should not be duplicated.
@@ -304,14 +319,14 @@ Here's an example of deferring the initial commit and serializing the transactio
 
 [source,csharp]
 ----
-include::example$TransactionsExample.java[tag=defer1,indent=0]
+include::example$TransactionsExample.cs[tag=defer1,indent=0]
 ----
 
 And then committing the transaction later:
 
 [source,csharp]
 ----
-include::example$TransactionsExample.java[tag=defer2,indent=0]
+include::example$TransactionsExample.cs[tag=defer2,indent=0]
 ----
 
 ////
@@ -319,11 +334,15 @@ Alternatively the transaction can be rolled back:
 
 [source,csharp]
 ----
-include::example$TransactionsExample.java[tag=defer3,indent=0]
+include::example$TransactionsExample.cs[tag=defer3,indent=0]
 ----
 
 The transaction expiry timer (which is configurable) will begin ticking once the transaction starts, and is not paused while the transaction is in a deferred state.
 
 ////
 
-include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=further]
+
+== Further Reading
+
+* There’s plenty of explanation about how Transactions work in Couchbase in our xref:6.6@server:learn:data/transactions.adoc[Transactions documentation].
+* You can find further code examples on our https://github.com/couchbaselabs/couchbase-transactions-dotnet-examples[transactions examples repository].
