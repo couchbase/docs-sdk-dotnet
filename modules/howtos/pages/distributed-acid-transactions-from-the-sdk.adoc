@@ -341,8 +341,8 @@ The transaction expiry timer (which is configurable) will begin ticking once the
 
 ////
 
-include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=further]
 
-// change to .NET example
-// You can find further code examples on our transactions examples repository.
-// https://github.com/couchbaselabs/couchbase-transactions-dotnet-examples
+== Further Reading
+
+* There’s plenty of explanation about how Transactions work in Couchbase in our xref:6.6@server:learn:data/transactions.adoc[Transactions documentation].
+* You can find further code examples on our https://github.com/couchbaselabs/couchbase-transactions-dotnet-examples[transactions examples repository].
