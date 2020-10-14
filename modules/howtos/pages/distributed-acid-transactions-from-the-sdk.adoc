@@ -15,7 +15,7 @@ Below we show you how to create Transactions, step-by-step.
 You may also want to start with our https://github.com/couchbaselabs/couchbase-transactions-dotnet-examples[transactions examples repository],
 which features useful downloadable examples of using Distributed Transactions.
 
-API Docs are available https://docs.couchbase.com/sdk-api/couchbase-transactions-dotnet-1.0.0/[online].
+API Docs are available https://docs.couchbase.com/sdk-api/couchbase-transactions-dotnet-1.0.0-alpha.1/[online].
 
 
 == Requirements
@@ -35,21 +35,21 @@ With NuGut this can be accomplished by using the NuGet Package Manager in your I
 
 [source]
 ----
-PM > Install-Package CouchbaseNetClient -Version 3.0.5
+PM > Install-Package Couchbase.Transactions -Version 1.0.0-alpha.1
 ----
 
 Or via the CLI
 
 [source]
 ----
-dotnet add package CouchbaseNetClient --version 3.0.5
+dotnet add package Couchbase.Transactions --version 1.0.0-alpha.1
 ----
 
 Or by using PackageReference in your .csproj file:
 
 [source]
 ----
-<PackageReference Include="CouchbaseNetClient" Version="3.0.5" />
+<PackageReference Include="Couchbase.Transactions" Version="1.0.0-alpha.1" />
 ----
 
 A complete simple NuGet example is available on our https://github.com/couchbaselabs/couchbase-transactions-dotnet-examples[transactions examples repository].
