@@ -109,6 +109,35 @@ git pull origin master
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+= Version 3.0.6 (13 October 2020)
+https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.6.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.6[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.0.6[Nuget]
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2187[NCBC-2187]: CollectionManager  - 400: Not allowed on this version of cluster (verify)
+* https://issues.couchbase.com/browse/NCBC-2604[NCBC-2604]: exception.IsRetryable() in docs
+* https://issues.couchbase.com/browse/NCBC-2619[NCBC-2619]: Update KV samples
+* https://issues.couchbase.com/browse/NCBC-2638[NCBC-2638]: Intermittent InvalidOperationException in Dependency Injection
+* https://issues.couchbase.com/browse/NCBC-2639[NCBC-2639]: Upsert-and-remove doesn't work
+* https://issues.couchbase.com/browse/NCBC-2652[NCBC-2652]: Operations gets stuck in retry loop until timeout
+* https://issues.couchbase.com/browse/NCBC-2657[NCBC-2657]: Exceptions Aren't Thrown For N1QL Errors After Results
+* https://issues.couchbase.com/browse/NCBC-2659[NCBC-2659]: Fix strong naming for Couchbase.Extensions.DependencyInjection
+* https://issues.couchbase.com/browse/NCBC-2662[NCBC-2662]: Correct DI security for named buckets on .NET Core
+* https://issues.couchbase.com/browse/NCBC-2671[NCBC-2671]: KV Throughput drop after failover-rebalance
+
+=== New Features and Behavioral Changes.
+
+* https://issues.couchbase.com/browse/NCBC-2033[NCBC-2033]: 3.0 API Query snippets in concept doc
+* https://issues.couchbase.com/browse/NCBC-2321[NCBC-2321]: Update documents to SDK 3.0 Beta interface
+* https://issues.couchbase.com/browse/NCBC-2472[NCBC-2472]: Ensure connection string supports options table defined in RFC
+* https://issues.couchbase.com/browse/NCBC-2298[NCBC-2298]: CancellationToken and CancellationTokenSource management needed
+* https://issues.couchbase.com/browse/NCBC-2557[NCBC-2557]: Improve cancellation and timeouts
+* https://issues.couchbase.com/browse/NCBC-2573[NCBC-2573]: Add support for CreateAsDeleted
+* https://issues.couchbase.com/browse/NCBC-2576[NCBC-2576]: Geopolygon search support
+* https://issues.couchbase.com/browse/NCBC-2577[NCBC-2577]: Add Options To Use FTS Hints (Flex Index)
+
 = Version 3.0.5 (1 September 2020)
 https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.5.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.5[API Reference] |
