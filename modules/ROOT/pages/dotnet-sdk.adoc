@@ -48,8 +48,7 @@ LINQ 2 is in development.
 
 // row3, 1 square
 == In the Community
-Read the Blog posts:
-* [here]
+* https://blog.couchbase.com/category/net/[Read the Blog posts]
 
 
 
