@@ -42,6 +42,7 @@ https://www.nuget.org/packages/Couchbase.Transactions/1.0.0-alpha.1[Nuget]
 * https://issues.couchbase.com/browse/TXNN-34[TXNN-34]:Make Couchbase.FitPerformer a friend assembly
 * https://issues.couchbase.com/browse/TXNN-10[TXNN-10]:Update transactions-fit-performer to latest couchbase-transactions-dotnet
 * https://issues.couchbase.com/browse/TXNN-25[TXNN-25]:Rename any awaitable methods that return Task to XxxAsync
-* https://issues.couchbase.com/browse/TXNN-35[TXNN-35]: Various refactorings to remove compiler warnings in FitPerformer
+* https://issues.couchbase.com/browse/TXNN-35[TXNN-35]:Various refactorings to remove compiler warnings in FitPerformer
+* https://issues.couchbase.com/browse/TXNN-17[TXNN-17]:Finish implementing CheckWriteWrite
+* https://issues.couchbase.com/browse/TXNN-37[TXNN-37]:Add ILoggerFactory to TransactionsConfig
 
-                                                    
