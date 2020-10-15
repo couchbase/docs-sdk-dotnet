@@ -18,7 +18,7 @@
 .Advanced Data Operations
 * xref:howtos:concurrent-async-apis.adoc[Async & React APIs]
 * xref:howtos:concurrent-document-mutations.adoc[Concurrent Document Mutations]
-// * xref:howtos:durability.adoc[Durability]
+* xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distributed ACID Transactions]
 
 .Managing Couchbase
 * xref:howtos:managing-connections.adoc[Managing Connections]
@@ -58,12 +58,14 @@
 
 .References
 * https://docs.couchbase.com/sdk-api/couchbase-net-client[.NET API Reference]
+* https://docs.couchbase.com/sdk-api/couchbase-transactions-dotnet/[Txns API Reference]
 * xref:ref:client-settings.adoc[Client Settings]
 * xref:ref:error-codes.adoc[Error Messages]
 * xref:ref:travel-app-data-model.adoc[Travel Sample Data Model]
 
 .Project Docs
 * xref:project-docs:sdk-release-notes.adoc[Release Notes]
+* xref:project-docs:distributed-transactions-dotnet-release-notes.adoc[Transactions Release Notes]
 * xref:project-docs:compatibility.adoc[Compatibility]
  ** xref:project-docs:migrating-sdk-code-to-3.n.adoc[Migrating to SDK 3 API]
 * xref:project-docs:sdk-licenses.adoc[Licenses]
