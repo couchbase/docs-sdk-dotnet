@@ -91,6 +91,7 @@ The Couchbase .NET SDK 3.0 is a complete rewrite of the API, reducing the number
 In following Microsoft recommendations on .NET, the API has also been changed to surface many of the APIs as async using Tasks.
 // Dependency Injection
 // LINQ2
+
 * xref:concept-docs:collections.adoc[Works with our Collections Developer Preview]
 * xref:concept-docs:durability-replication-failure-considerations.adoc[New Synchronous Write Durability]
 
