@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Couchbase.Net.DevGuide
 {
@@ -15,11 +17,21 @@ namespace Couchbase.Net.DevGuide
 
         protected async Task ConnectAsync()
         {
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.AddLogging(builder => builder
+                .AddFilter(level => level >= LogLevel.Debug)
+            );
+            var loggerFactory = serviceCollection.BuildServiceProvider().GetService<ILoggerFactory>();
+            loggerFactory.AddFile("Logs/myapp-{Date}.txt", LogLevel.Debug);
+
+            Logger = loggerFactory.CreateLogger("examples");
+
             var options = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build()
                 .GetSection("couchbase")
-                .Get<ClusterOptions>();
+                .Get<ClusterOptions>()
+                .WithLogging(loggerFactory);
 
             Cluster = await Couchbase.Cluster.ConnectAsync(options).ConfigureAwait(false);
             Bucket = await Cluster.BucketAsync("default").ConfigureAwait(false);
@@ -42,5 +54,7 @@ namespace Couchbase.Net.DevGuide
             await Bucket.DisposeAsync().ConfigureAwait(false);
             await Cluster.DisposeAsync().ConfigureAwait(false);
         }
+
+        public ILogger Logger { get; set; }
     }
 }

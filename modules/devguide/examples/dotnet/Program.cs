@@ -7,7 +7,7 @@ namespace Couchbase.Net.DevGuide
     {
         static async Task Main(string[] args)
         {
-            await new Cas().ExecuteAsync().ConfigureAwait(false);
+           // await new Cas().ExecuteAsync().ConfigureAwait(false);
             //await new AsyncExample().ExecuteAsync().ConfigureAwait(false);
             //await new AsyncBatch().ExecuteAsync().ConfigureAwait(false);
             //await new ConnectionBase().ExecuteAsync().ConfigureAwait(false);
@@ -15,6 +15,10 @@ namespace Couchbase.Net.DevGuide
             // await new Retrieve().ExecuteAsync().ConfigureAwait(false);
             //await new Update().ExecuteAsync().ConfigureAwait(false);
             //await new BulkInsert().ExecuteAsync().ConfigureAwait(false);
+            //await new QueryConsistency().ExecuteAsync().ConfigureAwait(false);
+           // await new QueryCriteria().ExecuteAsync().ConfigureAwait(false);
+            await new QueryPlaceHolders().ExecuteAsync().ConfigureAwait(false);
+            //await new QueryPrepared().ExecuteAsync().ConfigureAwait(false);
 
             Console.ReadLine();
         }
