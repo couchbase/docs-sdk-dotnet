@@ -19,8 +19,8 @@ namespace Couchbase.Net.DevGuide
                 Text = "Life, the Universe, and Everything",
                 Date = DateTime.UtcNow
             };
-            
-            // The ReplicateTo parameter must be less than or equal to the number of replicas 
+
+            // The ReplicateTo parameter must be less than or equal to the number of replicas
             // you have configured. Assuming that 3 replicas are configured, the following call
             // waits for replication to 3 replicas and persistence to 4 nodes in total.
 
@@ -48,7 +48,7 @@ namespace Couchbase.Net.DevGuide
             {
                 Console.WriteLine($"An error has occured: {e}");
             }
-            
+
             // Wait for the write to be persisted to disk on one (normally the master) node.
             var result2 = await Bucket.DefaultCollection().UpsertAsync(key, data, options => options.Durability(PersistTo.Four, ReplicateTo.Three)).ConfigureAwait(false);
             Console.WriteLine("Doc persisted to disk!");
