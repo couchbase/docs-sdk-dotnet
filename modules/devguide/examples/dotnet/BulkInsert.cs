@@ -22,7 +22,7 @@ namespace Couchbase.Net.DevGuide
 
         static async Task Main(string[] args)
         {
-            await new BulkInsert().ExecuteAsync().ConfigureAwait(false); 
+            await new BulkInsert().ExecuteAsync().ConfigureAwait(false);
         }
     }
 }

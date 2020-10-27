@@ -10,7 +10,7 @@ using Couchbase.Management.Query;
 
 namespace net3
 {
-    class Program
+    public class Program2
     {
         static async Task Main(string[] args)
         {
