@@ -109,7 +109,35 @@ git pull origin master
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+= Version 3.0.7 (3 November 2020)
+
+https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.7.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.7[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.0.7[Nuget]
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2641[NCBC-2641]:ConfigHandler has already been started
+* https://issues.couchbase.com/browse/NCBC-2651[NCBC-2651]:IncrementOptions and DecrementOptions are missing Expiry
+* https://issues.couchbase.com/browse/NCBC-2655[NCBC-2655]:Bucket WaitUntilReadyAsync running into NullReferenceException
+* https://issues.couchbase.com/browse/NCBC-2656[NCBC-2656]:Serialization/Transcoding Errors Are Unhandled
+* https://issues.couchbase.com/browse/NCBC-2660[NCBC-2660]:Operations are not retried if they hit an open circuit breaker
+* https://issues.couchbase.com/browse/NCBC-2669[NCBC-2669]:Upsert/Insert null with MutateIn fails with Invalid arguments (0x0004)
+* https://issues.couchbase.com/browse/NCBC-2685[NCBC-2685]:AccessDeleted not supported properly on MutateIn
+
+=== New Features and Behavioral Changes.
+
+* https://issues.couchbase.com/browse/NCBC-2670[NCBC-2670]:Collections - RBAC Collections - .net tests
+* https://issues.couchbase.com/browse/NCBC-2569[NCBC-2569]:.NET Logging page
+* https://issues.couchbase.com/browse/NCBC-2580[NCBC-2580]:Add Ephemeral Bucket Management Support
+* https://issues.couchbase.com/browse/NCBC-2664[NCBC-2664]:Operations are silently ignored if the send queue is full
+* https://issues.couchbase.com/browse/NCBC-2668[NCBC-2668]:Add RawBinaryTranscoder
+* https://issues.couchbase.com/browse/NCBC-2675[NCBC-2675]:Optimize VBucketKeyMapper.GetIndex
+* https://issues.couchbase.com/browse/NCBC-2680[NCBC-2680]:Share ServerFeatures on IConnection
+* https://issues.couchbase.com/browse/NCBC-2688[NCBC-2688]:Make synchronous Analytics query methods obsolete
+
 = Version 3.0.6 (13 October 2020)
+
 https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.6.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.6[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.0.6[Nuget]
