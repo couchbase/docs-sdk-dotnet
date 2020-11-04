@@ -35,7 +35,7 @@ Transactions leave out transaction metadata on the documents.
 * https://issues.couchbase.com/browse/TXNN-40[TXNN-40]:
 Transaction Insert and rollback leaves behind an empty document.
 * https://issues.couchbase.com/browse/TXNN-41[TXNN-41]:
-Transaction cannot perform two replace's on same document.
+Transaction cannot perform two replaces on same document.
 * https://issues.couchbase.com/browse/TXNN-42[TXNN-42]:
 MultiThreaded transaction does not delete a document if another thread updates it.
 * https://issues.couchbase.com/browse/TXNN-48[TXNN-48]: 
