@@ -6,43 +6,109 @@
 Couchbase Distributed ACID Transactions is distributed as a separate library for the .NET SDK.
 This page features the release notes for that library -- for release notes, download links, and installation methods for the latest 3.x .NET SDK releases, see xref:sdk-release-notes.adoc[the current Release Notes page].
 
+
 == Using Distributed Transactions
 
 See the xref:6.6@server:learn:data/transactions.adoc[Distributed ACID Transactions concept doc] in the server documentation for details of how Couchbase implements transactions.
 The xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distributed Transactions HOWTO doc] walks you through all aspects of working with Distributed Transactions.
 
-= Version 1.0.0.alpha.1 (13 October 2020)
+
+== Version 1.0.0.beta.1 (3 November 2020)
+
+https://packages.couchbase.com/clients/net/3.0/Couchbase.Transactions-1.0.0-beta.1.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-transactions-dotnet-1.0.0-beta.1[API Reference] |
+https://www.nuget.org/packages/Couchbase.Transactions/1.0.0-beta.1[Nuget]
+
+=== Known Issues
+
+* Early beta has not been profiled for memory/cpu usage or other performance issues.
+* Logging is minimal and tracing is not implemented.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/TXNN-51[TXNN-51]:
+Fixup CheckWriteWriteConflict implementation.
+* https://issues.couchbase.com/browse/TXNN-33[TXNN-33]:
+preExistingStagedInsertFoundOneFailureTryingToGet Failure.
+* https://issues.couchbase.com/browse/TXNN-38[TXNN-38]:
+Transactions leave out transaction metadata on the documents.
+* https://issues.couchbase.com/browse/TXNN-40[TXNN-40]:
+Transaction Insert and rollback leaves behind an empty document.
+* https://issues.couchbase.com/browse/TXNN-41[TXNN-41]:
+Transaction cannot perform two replaces on same document.
+* https://issues.couchbase.com/browse/TXNN-42[TXNN-42]:
+MultiThreaded transaction does not delete a document if another thread updates it.
+* https://issues.couchbase.com/browse/TXNN-48[TXNN-48]: 
+StandardTest.insertStagesBackupMetadata fails because FitPerformer thinks it doesn't support AccessDeleted.
+* https://issues.couchbase.com/browse/TXNN-52[TXNN-52]: 
+Cleanup leaves sentinel for ATR entry, rather than removing entry.
+* https://issues.couchbase.com/browse/TXNN-47[TXNN-47]: 
+TXNN Fit Performer needs to implement Cleanup hooks.
+
+=== New Features and Behavioral Changes.
+
+* https://issues.couchbase.com/browse/TXNN-26[TXNN-26]: 
+Get and GetOptional do the same thing and have the same return type.
+* https://issues.couchbase.com/browse/TXNN-43[TXNN-43]:
+Transaction get throws Nullreference exception instead of DocumentNotFound.
+
+
+== Version 1.0.0.alpha.1 (13 October 2020)
+
 https://packages.couchbase.com/clients/net/3.0/Couchbase.Transactions-1.0.0-alpha.1.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-transactions-dotnet-1.0.0-alpha.1[API Reference] |
 https://www.nuget.org/packages/Couchbase.Transactions/1.0.0-alpha.1[Nuget]
 
 === Fixed Issues
 
-* https://issues.couchbase.com/browse/TXNN-15[TXNN-15]:Implement transaction Cleanup
-* https://issues.couchbase.com/browse/TXNN-16[TXNN-16]:Error Raising / Handling per spec
-* https://issues.couchbase.com/browse/TXNN-18[TXNN-18]:Using outdated ATR Ids
-* https://issues.couchbase.com/browse/TXNN-20[TXNN-20]:Should throw TransactionOperationFailed on individual op failure
-* https://issues.couchbase.com/browse/TXNN-28[TXNN-28]:Rename any awaitable methods that return Task to XxxAsync part 2
-* https://issues.couchbase.com/browse/TXNN-29[TXNN-29]:TransactionResult has a MutationToken but not a MutationState
-* https://issues.couchbase.com/browse/TXNN-30[TXNN-30]:Add UnstagingComplete to TransactionResult
+* https://issues.couchbase.com/browse/TXNN-15[TXNN-15]:
+Implement transaction Cleanup.
+* https://issues.couchbase.com/browse/TXNN-16[TXNN-16]:
+Error Raising / Handling per spec.
+* https://issues.couchbase.com/browse/TXNN-18[TXNN-18]:
+Using outdated ATR Ids.
+* https://issues.couchbase.com/browse/TXNN-20[TXNN-20]:
+Should throw TransactionOperationFailed on individual op failure.
+* https://issues.couchbase.com/browse/TXNN-28[TXNN-28]:
+Rename any awaitable methods that return Task to XxxAsync part 2.
+* https://issues.couchbase.com/browse/TXNN-29[TXNN-29]:
+TransactionResult has a MutationToken but not a MutationState.
+* https://issues.couchbase.com/browse/TXNN-30[TXNN-30]:
+Add UnstagingComplete to TransactionResult.
 
-=== New Features and Behavioral Changes.
+=== New Features and Behavioral Changes
 
-* https://issues.couchbase.com/browse/TXNN-3[TXNN-3]:API stub for transactions.
-* https://issues.couchbase.com/browse/TXNN-36[TXNN-36]:Rename to XXXAsync, part 3
-* https://issues.couchbase.com/browse/TXNN-1[TXNN-1]:Test Performer Bringup
-* https://issues.couchbase.com/browse/TXNN-2[TXNN-2]:Transactions API Implementation
-* https://issues.couchbase.com/browse/TXNN-4[TXNN-4]:Implement txn API: Get/Replace/Remove
-* https://issues.couchbase.com/browse/TXNN-5[TXNN-5]:Implement txn API: Core Loop
-* https://issues.couchbase.com/browse/TXNN-6[TXNN-6]:Implement txn API: Implement Rollback
-* https://issues.couchbase.com/browse/TXNN-11[TXNN-11]:Create Demo App in C#/.NET
-* https://issues.couchbase.com/browse/TXNN-13[TXNN-13]:Author C#/.NET documentation for Txns
-* https://issues.couchbase.com/browse/TXNN-22[TXNN-22]:Implement cleanup post transaction
-* https://issues.couchbase.com/browse/TXNN-7[TXNN-7]:Implement ExpirationOvertimeMode
-* https://issues.couchbase.com/browse/TXNN-34[TXNN-34]:Make Couchbase.FitPerformer a friend assembly
-* https://issues.couchbase.com/browse/TXNN-10[TXNN-10]:Update transactions-fit-performer to latest couchbase-transactions-dotnet
-* https://issues.couchbase.com/browse/TXNN-25[TXNN-25]:Rename any awaitable methods that return Task to XxxAsync
-* https://issues.couchbase.com/browse/TXNN-35[TXNN-35]:Various refactorings to remove compiler warnings in FitPerformer
-* https://issues.couchbase.com/browse/TXNN-17[TXNN-17]:Finish implementing CheckWriteWrite
-* https://issues.couchbase.com/browse/TXNN-37[TXNN-37]:Add ILoggerFactory to TransactionsConfig
-
+* https://issues.couchbase.com/browse/TXNN-3[TXNN-3]:
+API stub for transactions.
+* https://issues.couchbase.com/browse/TXNN-36[TXNN-36]:
+Rename to XXXAsync, part 3.
+* https://issues.couchbase.com/browse/TXNN-1[TXNN-1]:
+Test Performer Bringup.
+* https://issues.couchbase.com/browse/TXNN-2[TXNN-2]:
+Transactions API Implementation.
+* https://issues.couchbase.com/browse/TXNN-4[TXNN-4]:
+Implement txn API: Get/Replace/Remove.
+* https://issues.couchbase.com/browse/TXNN-5[TXNN-5]:
+Implement txn API: Core Loop.
+* https://issues.couchbase.com/browse/TXNN-6[TXNN-6]:
+Implement txn API: Implement Rollback.
+* https://issues.couchbase.com/browse/TXNN-11[TXNN-11]:
+Create Demo App in C#/.NET.
+* https://issues.couchbase.com/browse/TXNN-13[TXNN-13]:
+Author C#/.NET documentation for Txns.
+* https://issues.couchbase.com/browse/TXNN-22[TXNN-22]:
+Implement cleanup post transaction.
+* https://issues.couchbase.com/browse/TXNN-7[TXNN-7]:
+Implement ExpirationOvertimeMode.
+* https://issues.couchbase.com/browse/TXNN-34[TXNN-34]:
+Make Couchbase.FitPerformer a friend assembly.
+* https://issues.couchbase.com/browse/TXNN-10[TXNN-10]:
+Update transactions-fit-performer to latest couchbase-transactions-dotnet.
+* https://issues.couchbase.com/browse/TXNN-25[TXNN-25]:
+Rename any awaitable methods that return Task to XxxAsync.
+* https://issues.couchbase.com/browse/TXNN-35[TXNN-35]:
+Various refactorings to remove compiler warnings in FitPerformer.
+* https://issues.couchbase.com/browse/TXNN-17[TXNN-17]:
+Finish implementing CheckWriteWrite.
+* https://issues.couchbase.com/browse/TXNN-37[TXNN-37]:
+Add ILoggerFactory to TransactionsConfig.
