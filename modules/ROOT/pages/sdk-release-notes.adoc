@@ -82,7 +82,7 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
-== Version 2.7.22 (10 November 2020)
+== Version 2.7.22 (10th November 2020)
 
 https://packages.couchbase.com/clients/net/2.7/Couchbase-Net-Client-2.7.22.zip[Download] |
 http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.22[API Reference] |
@@ -97,14 +97,14 @@ This release has the following known issues:
 
 === Fixed Issues
 
-* https://issues.couchbase.com/browse/NCBC-2272[NCBC-2272]:
-Creating a list with ListAppend fails
+* https://issues.couchbase.com/browse/NCBC-2272[NCBC-2272], 
 * https://issues.couchbase.com/browse/NCBC-2287[NCBC-2287]:
-ListAppend, MapAdd, QueuePush create short TTL documents
+Fixed a bug where the timeout was used as the expiration thus the doc would expire quickly.
 * https://issues.couchbase.com/browse/NCBC-2691[NCBC-2691]:
-NullConfigException: NodeLocator is not defined
+`NullConfigException: NodeLocator is not defined` error against Server 6.5 and up fixed -- caused by SELECT_BUCKET being called before enabling authentication.
 * https://issues.couchbase.com/browse/NCBC-2703[NCBC-2703]:
-Key too long kills connection
+Key too long no longer kills connection.
+If the key exceeds the max size of 250 bytes it will fast-fail on the client via an `ArgumentInvalidException`.
 
 == Version 2.7.21 (1st September 2020)
 
