@@ -98,10 +98,10 @@ This release has the following known issues:
 === Fixed Issues
 
 * https://issues.couchbase.com/browse/NCBC-2272[NCBC-2272], 
-* https://issues.couchbase.com/browse/NCBC-2287[NCBC-2287]:
+https://issues.couchbase.com/browse/NCBC-2287[NCBC-2287]:
 Fixed a bug where the timeout was used as the expiration thus the doc would expire quickly.
 * https://issues.couchbase.com/browse/NCBC-2691[NCBC-2691]:
-`NullConfigException: NodeLocator is not defined` error against Server 6.5 and up fixed -- caused by SELECT_BUCKET being called before enabling authentication.
+`NullConfigException: NodeLocator is not defined` error against Server 6.5 and up fixed -- was caused by SELECT_BUCKET being called before enabling authentication.
 * https://issues.couchbase.com/browse/NCBC-2703[NCBC-2703]:
 Key too long no longer kills connection.
 If the key exceeds the max size of 250 bytes it will fast-fail on the client via an `ArgumentInvalidException`.
