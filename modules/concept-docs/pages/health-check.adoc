@@ -13,108 +13,143 @@ include::6.5@sdk:pages:partial$health-check.adoc[tag="users"]
 
 include::6.5@sdk:pages:partial$health-check.adoc[tag="ping"]
 
-[source,javascript]
+A `ping` can be performed either at the `Cluster` or at the `Bucket` level. They are very similar, although at the `Bucket` level also the Key/Value and View connections for the specific bucket are taken into account.
+
+The report can either be analyzed in code or can be turned into JSON and printed:
+
+[source,C#,indent=0]
 ----
-let services = [couchbase.ServiceType.KeyValue, couchbase.ServiceType.Query]
-bucket.ping(services, (err, res) => {
-    console.log(res)
-})
-/*
+IPingReport report = await bucket.PingAsync(options =>
 {
-    "config_rev":1822,
-    "id":"0x102f09dc0",
-    "sdk":"libcouchbase/2.9.5-njs couchnode/2.6.9 (node/10.16.0; v8/6.8.275.32-node.52; ssl/1.1.1b)",
-    "services":{
-        "kv":[
-            {
-                "id":"0x104802900",
-                "latency_us":1542,
-                "local":"10.112.195.1:51707",
-                "remote":"10.112.195.101:11210",
-                "scope":"travel-sample",
-                "status":"ok"
-            },
-            {
-                "id":"0x1029253d0",
-                "latency_us":6639,
-                "local":"10.112.195.1:51714",
-                "remote":"10.112.195.103:11210",
-                "scope":"travel-sample",
-                "status":"ok"
-            },
-            {
-                "id":"0x102924bc0",
-                "latency_us":1240660,
-                "local":"10.112.195.1:51713",
-                "remote":"10.112.195.102:11210",
-                "scope":"travel-sample",
-                "status":"timeout"
-            }
-        ],
-        "n1ql":[
-            {
-                "id":"0x10291d980",
-                "latency_us":3787,
-                "local":"10.112.195.1:51710",
-                "remote":"10.112.195.101:8093",
-                "status":"ok"
-            },
-            {
-                "id":"0x1029240f0",
-                "latency_us":9321,
-                "local":"10.112.195.1:51712",
-                "remote":"10.112.195.103:8093",
-                "status":"ok"
-            },
-            {
-                "id":"0x102923350",
-                "latency_us":7003363,
-                "local":"10.112.195.1:51711",
-                "remote":"10.112.195.102:8093",
-                "status":"timeout"
-            }
-        ]
-    },
-    "version":1
-}
-*/
+    options.ServiceTypes(new ServiceType[] {ServiceType.KeyValue, ServiceType.Query});
+});
+
+Console.WriteLine(report);
+
+// alternatively, format the output with indenting:
+//Console.WriteLine(JsonConvert.SerializeObject(report, Formatting.Indented));
 ----
+
+You will see an output similar to this:
+
+[source,JavaScript,indent=0]
+----
+{
+  "id": "174ad024-43d4-410c-9d80-61788b4f3bf4",
+  "version": 1,
+  "config_rev": 572,
+  "sdk": "couchbase-net-sdk/3.0.7.0 (clr/.NET Core 3.1.9) (os/Microsoft Windows 10.0.18363)",
+  "services": {
+    "n1ql": [
+      {
+        "state": "ok",
+        "remote": "[::1]:11210",
+        "last_activity_us": 0,
+        "latency_us": 135751,
+        "scope": "Cluster"
+      }
+    ],
+    "kv": [
+      {
+        "id": "2",
+        "state": "ok",
+        "local": "[::1]:53183",
+        "remote": "[::1]:11210",
+        "last_activity_us": 81526,
+        "latency_us": 2330,
+        "scope": "travel-sample"
+      },
+      {
+        "id": "1",
+        "state": "ok",
+        "local": "[::1]:53184",
+        "remote": "[::1]:11210",
+        "last_activity_us": 94655,
+        "latency_us": 312,
+        "scope": "travel-sample"
+      }
+    ]
+  }
+}
+----
+
+Notice the `scope` of each service. 
+Bucket level services like key/value will have a bucket name as scope, while cluster level services will have "Cluster" as their scope.
 
 include::6.5@sdk:pages:partial$health-check.adoc[tag="diag"]
 
 
 [source,javascript]
 ----
-bucket.diagnostics((err, res) => {
-    console.log(res)
-})
-/*
-{
-    "id":"0x10290d100","kv":[
-        {
-            "id":"0000000072b21d66",
-            "last_activity_us":2363294,
-            "local":"10.112.195.1:51473",
-            "remote":"10.112.195.101:11210",
-            "status":"connected"
-        },
-        {
-            "id":"000000000ba84e5e",
-            "last_activity_us":7369021,
-            "local":"10.112.195.1:51486",
-            "remote":"10.112.195.102:11210",
-            "status":"connected"
-        },
-        {
-            "id":"0000000077689398",
-            "last_activity_us":4855640,
-            "local":"10.112.195.1:51409",
-            "remote":"10.112.195.103:11210",
-            "status":"connected"
-        }
-    ],
-    "sdk":"libcouchbase/2.9.5-njs couchnode/2.6.9 (node/10.16.0; v8/6.8.275.32-node.52; ssl/1.1.1b)",
-    "version":1
-}
-*/
+IDiagnosticsReport diagnosticsReport = await cluster.DiagnosticsAsync();
+
+Console.WriteLine(diagnosticsReport);
+
+// alternatively, format the output with indenting:
+// Console.WriteLine(JsonConvert.SerializeObject(diagnosticsReport, Formatting.Indented));
 ----
+
+You will see an output similar to this:
+
+[source,JavaScript,indent=0]
+----
+{
+  "id": "b084360a-82b1-4602-b983-281d3cc11b3b",
+  "version": 1,
+  "sdk": "couchbase-net-sdk/3.0.7.0 (clr/.NET Core 3.1.9) (os/Microsoft Windows 10.0.18363)",
+  "services": {
+    "kv": [
+      {
+        "id": "2",
+        "state": "authenticating",
+        "local": "[::1]:53491",
+        "remote": "[::1]:11210",
+        "last_activity_us": 61153,
+        "scope": "travel-sample"
+      },
+      {
+        "id": "1",
+        "state": "authenticating",
+        "local": "[::1]:53492",
+        "remote": "[::1]:11210",
+        "last_activity_us": 66101,
+        "scope": "travel-sample"
+      }
+    ],
+    "view": [
+      {
+        "state": "new",
+        "remote": "[::1]:11210",
+        "last_activity_us": 0,
+        "scope": "travel-sample"
+      }
+    ],
+    "n1ql": [
+      {
+        "state": "new",
+        "remote": "[::1]:11210",
+        "last_activity_us": 0,
+        "scope": "Cluster"
+      }
+    ],
+    "cbas": [
+      {
+        "state": "new",
+        "remote": "[::1]:11210",
+        "last_activity_us": 0,
+        "scope": "Cluster"
+      }
+    ],
+    "fts": [
+      {
+        "state": "new",
+        "remote": "[::1]:11210",
+        "last_activity_us": 0,
+        "scope": "Cluster"
+      }
+    ]
+  }
+}
+----
+
+Like with Ping, notice the `scope` of each service.
