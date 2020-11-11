@@ -9,26 +9,6 @@ Couchbase supports CRUD operations, various data structures, and binary document
 
 Although query and path-based (Sub-Document) services are available, the simplicity of the document-based kv interface is the fastest way to perform operations involving single documents.
 
-
-// use the simplicity of https://developer.couchbase.com/documentation/server/3.x/developer/dev-guide-3.0/read-write.html possibly?
-// don't forget https://docs-staging.couchbase.com/dotnet-sdk/2.7/datastructures.html - and Java equiv?
-
-////
-== Documents
-
-== Input and Output Types
-
-== Counters
-
-== Data Structures
-
-== Raw Byte Concatenation
-////
-
-
-
-
-
 include::6.5@sdk:shared:partial$documents.adoc[tag=document]
 
 == Primitive Key-Value Operations
@@ -50,9 +30,13 @@ include::6.5@sdk:shared:partial$documents.adoc[tag=store-update]
 ====
 If you wish to only modify certain parts of a document, you can use xref:subdocument-operations.adoc[sub-document] operations which operate on specific subsets of documents:
 
-[source,python]
+[source,C#,indent=0]
 ----
-collection.mutate_in("customer123", [SD.upsert("fax", "311-555-0151")])
+await collection.MutateInAsync("customer123", new List<MutateInSpec>
+{
+    MutateInSpec.Upsert("fax", "311-555-0151"),
+    MutateInSpec.Upsert("cell", "311-555-5101")
+});
 ----
 
 or xref:6.0@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
@@ -79,37 +63,50 @@ SELECT * FROM default WHERE META(default).id = "docid";
 
 You can also retrieve _parts_ of documents using xref:subdocument-operations.adoc[sub-document operations], by specifying one or more sections of the document to be retrieved
 
-[source,python]
+[source,C#,indent=0]
 ----
-name, email = cb.retrieve_in('user:kingarthur', 'contact.name', 'contact.email')
+var r = await collection.LookupInAsync("user:kingarthur", new List<LookupInSpec>
+{
+    LookupInSpec.Get("contact.name"),
+    LookupInSpec.Get("contact.email")
+});
+
+string name = r.ContentAs<string>(0);
+string email = r.ContentAs<string>(1);
 ----
 
 // Counters
 
 include::6.5@sdk:shared:partial$documents.adoc[tag=counters1]
 
-[source,java]
+[source,C#,indent=0]
 ----
-//  java example:
-String counterDocId = "counter-doc";
+var counterDocId = "counter-doc";
 // Increment by 1, creating doc if needed
-collection.binary().increment(counterDocId);
+await collection.Binary.IncrementAsync(counterDocId);
 // Decrement by 1
-collection.binary().decrement(counterDocId);
+await collection.Binary.DecrementAsync(counterDocId);
 // Decrement by 5
-collection.binary().decrement(counterDocId,
-DecrementOptions.decrementOptions().delta(5));
+await collection.Binary.DecrementAsync(counterDocId, options =>
+{
+    options.Delta(5);
+});
 ----
 
 include::6.5@sdk:shared:partial$documents.adoc[tag=counters2]
 
-[source,python]
+[source,C#,indent=0]
 ----
-# Python example:
-rv = cb.get('counter_id')
-value, cas = rv.value, rv.cas
-if should_increment_value(value):
-  cb.upsert('counter_id', value + increment_amount, cas=cas)
+var rv = await collection.GetAsync("counter_id");
+var value = rv.ContentAs<int>();
+var cas = rv.Cas;
+if (ShouldIncrementValue(value))
+{
+    await collection.ReplaceAsync("counter_id", value + incrementAmount, options =>
+    {
+        options.Cas(cas);
+    });
+}
 ----
 
 include::6.5@sdk:shared:partial$documents.adoc[tag=counters3]

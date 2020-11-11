@@ -8,22 +8,25 @@ The Couchbase .NET SDK provides an API for managing a Couchbase cluster programm
 
 include::6.5@sdk:shared:partial$clusters-buckets.adoc[tag=management]
 
-////
 Management operations in the .NET SDK may be performed through several interfaces depending on the object:
 
 == Creating and Removing Buckets
 
-To create or delete a bucket, call the bucket manager with the `buckets()` call on the cluster:
+To create or delete a bucket, first get an `IBucketManager` instance from the `Buckets` property on the cluster:
 
-[source,java]
+[source,C#,indent=0]
 ----
-Cluster cluster = Cluster.connect("127.0.0.1", "Administrator", "123456");
-BucketManager manager = cluster.buckets();
-manager.createBucket(bucketSettings);
+IBucketManager manager = cluster.Buckets;
+
+// create a bucket
+var bucketSettings = new BucketSettings();
+bucketSettings.Name = "mynewbucket";
+bucketSettings.BucketType = BucketType.Couchbase;
+bucketSettings.RamQuotaMB = 100;
+await manager.CreateBucketAsync(bucketSettings);
+
+// delete a bucket
+await manager.DropBucketAsync("mynewbucket");
 ----
 
-// The `BucketSettings` can be created via a builder, [.api]`DefaultBucketSettings.builder()`.
-This class is also used to expose information about an existing bucket (`manager.getBucket(string)`) or to update an existing bucket (`manager.updateBucket(bucketSettings)`). 
-
-The default Collection & Default Scope will be used automatically.
-////
+`IBucketManager` is also used to expose information about an existing bucket (`manager.GetBucketAsync(string)`) or to update an existing bucket (`manager.UpdateBucketAsync(BucketSettings)`).
