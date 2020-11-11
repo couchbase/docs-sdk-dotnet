@@ -73,7 +73,8 @@ You will see an output similar to this:
 }
 ----
 
-Notice the `scope` of each service. Bucket level services like key/value will have a bucket name as scope, while cluster level services will have "Cluster" as their scope.
+Notice the `scope` of each service. 
+Bucket level services like key/value will have a bucket name as scope, while cluster level services will have "Cluster" as their scope.
 
 include::6.5@sdk:pages:partial$health-check.adoc[tag="diag"]
 
