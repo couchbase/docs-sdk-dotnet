@@ -14,7 +14,7 @@ namespace ScopeLevelQuery
             // tag::scope[]
             var myscope = bucket.Scope("us");
 
-            var queryResult = await myscope.QueryAsync<dynamic>("select * from airline");
+            var queryResult = await myscope.QueryAsync<dynamic>("select * from airline LIMIT 10", new Couchbase.Query.QueryOptions());
             await foreach (var row in queryResult)
             {
                 Console.WriteLine(row);
