@@ -176,6 +176,27 @@ By default the .NET SDK will stream the result set from the server, where the cl
 
 This decreases pressure on CLR Garbage Collection and helps to prevent an `OutOfMemoryException` being thrown.
 
+////
+== Querying at Scope level
+
+From version 3.0.5 of the .NET SDK, it is possible to query off the xref:7.0@server:learn:data/scopes-and-collections.adoc[`Scope` level] _with the beta version of the next Couchbase Server release, 7.0β_,
+using the `QueryOptions() {QueryContext = "namespace:bucket:scope:collection"}` method.
+
+CAUTION: This feature is marked xref:project-docs:compatibility.adoc#interface-stability[_Uncommitted_].
+Expect a promotion to _Committed_ API in the next minor release (3.1).
+
+The code snippet below shows how to run a simple query to fetch 10 random rows from travel-sample and print the results, 
+the assumption is that the `airline` collection exists within a scope `us`.
+
+[source,csharp]
+----
+include::example$/n1ql-queries-sdk/scope-queries-sdk/Query.cs[tag=scope]
+----
+
+A complete list of `QueryOptions` can be found in the https://docs.couchbase.com/sdk-api/couchbase-net-client/html/T_Couchbase_Query_QueryOptions.htm[API docs].
+////
+
+
 == Additional Resources
 
 NOTE: N1QL is not the only query option in Couchbase.
