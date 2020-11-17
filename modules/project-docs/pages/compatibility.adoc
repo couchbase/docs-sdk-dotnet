@@ -66,6 +66,10 @@ See the notes there for Support details.
 | DP in 5.5 with 2.6
 3+| Since 2.7
 
+| Distributed ACID Transactions
+2+| Not Supported
+2+| Since 3.0.5 & Server 6.6footnote:[Using separate .NET Transactions Library]
+
 | Collections
 2+| Not Supported
 | SDK 3.0 for Developer Preview in Server 6.5 & 6.6
