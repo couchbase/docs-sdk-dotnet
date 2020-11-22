@@ -88,6 +88,7 @@ https://docs.couchbase.com/sdk-api/couchbase-net-client[API Docs^]
 
 [.content]
 The Couchbase .NET SDK 3.0 is a complete rewrite of the API, reducing the number of overloads to present a simplified surface area.
+With better performance and memory management, this is a 100% .NET Core implementation.
 In following Microsoft recommendations on .NET, the API has also been changed to surface many of the APIs as async using Tasks.
 // Dependency Injection
 // LINQ2
