@@ -1,7 +1,7 @@
 = Managing Connections using the .NET SDK with Couchbase Server
 :navtitle: Managing Connections
 :page-topic-type: howto
-:page-aliases: ROOT:managing-connections,howtos:multi-network,ROOT:connecting,ROOT:connection-advanced,ROOT:cluster-helper,server:sdks:dotnet-2.2/cluster-helper
+:page-aliases: ROOT:managing-connections,howtos:multi-network,ROOT:connecting,ROOT:connection-advanced,ROOT:cluster-helper
 
 [abstract]
 This section describes how to connect the .NET SDK to a Couchbase cluster.
