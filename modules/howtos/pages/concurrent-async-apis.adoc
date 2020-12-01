@@ -157,6 +157,6 @@ await Task.WhenAll(tasks);
 // can iterate task list to get results
 foreach (var task in tasks)
 {
-    var result = tasks.Result;
+    var result = task.Result;
 }
 ----
