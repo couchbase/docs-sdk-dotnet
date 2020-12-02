@@ -24,12 +24,12 @@ The library is distributed in a number of ways:
 == Hello Couchbase
 
 Start a new console project (in Visual Studio or VS Code, etc). 
-Install the latest 3.0 https://www.nuget.org/packages/CouchbaseNetClient/[CouchbaseNetClient^] NuGet package.
+Install the latest 3.1 https://www.nuget.org/packages/CouchbaseNetClient/[CouchbaseNetClient^] NuGet package.
 
 The following code samples assume:
 
 * Couchbase Server is installed and accessible locally (xref:server:getting-started:do-a-quick-install.adoc[Do a Quick Install] if you don't already have Couchbase Server installed).
-* You have create a bucket (perhaps using the xref:6.5@server:manage:manage-settings/install-sample-buckets.adoc[travel-sample dataset], or by creating a new bucket).
+* You have create a bucket (perhaps using the xref:6.6@server:manage:manage-settings/install-sample-buckets.adoc[travel-sample dataset], or by creating a new bucket).
 * You have created a Couchbase user named "username" with permissions to access the cluster (at least Application Access permissions).
 
 Firstly, you will need to have a few `using` statements at the top of *Program.cs* in your console program:
@@ -56,9 +56,9 @@ include::example$StartUsing.cs[tag=bucket,indent=0]
 
 Substitute whatever bucket name you want for _bucket-name_ in the above example.
 
-The 3.0 SDK is ready for the introduction of xref:concept-docs:collections.adoc[Collections] in an upcoming release of the Couchbase Data Platform.
-The latest release, Couchbase Server 6.5, brings a limited _Developer Preview_ of Collections, allowing Documents to be grouped by purpose or theme, according to specified _Scope_.
-Here we will use the `DefaultCollection`, which covers the whole Bucket and _must be used when connecting to a 6.5 cluster or earlier_.
+The 3.1 SDK is ready for the introduction of xref:concept-docs:collections.adoc[Collections] in the xref:7.0@server:introduction:whats-new.adoc#whats-new-server-700[next release] of the Couchbase Data Platform.
+The latest release, Couchbase Server 6.6, brings a limited _Developer Preview_ of Collections, allowing Documents to be grouped by purpose or theme, according to specified _Scope_.
+Here we will use the `DefaultCollection`, which covers the whole Bucket and _must be used when connecting to a 6.6 cluster or earlier_.
 
 [source,csharp]
 ----
