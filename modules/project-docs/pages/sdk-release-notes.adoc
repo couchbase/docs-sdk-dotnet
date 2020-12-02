@@ -119,16 +119,15 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.1.0[Nuget]
 === Fixed Issues
 
 * https://issues.couchbase.com/browse/NCBC-2643[NCBC-2643]: 
-`DataFlowConnectionPool` was creating unbounded in connections in certain situations, such as pinging for a buckets which
-hasn't been created yet.
-This fix resolves the issue, although the number of connections will go up still, but then trend back down as they are in a `TIME_WAIT` state and it takes a little time for them to be reclaimed.
+`DataFlowConnectionPool` was creating unbounded connections in certain situations, such as pinging for a buckets which had not yet been created.
+This fix resolves the issue, although the number of connections will go up still but then trend back down, as they are in a `TIME_WAIT` state and it takes a little time for them to be reclaimed.
 * https://issues.couchbase.com/browse/NCBC-2660[NCBC-2660]: 
 Operations were not retried if they hit an open circuit breaker (`CircuitBreakerException`); 
 the retry orchestrator will now retry these failures.
 * https://issues.couchbase.com/browse/NCBC-2686[NCBC-2686]: 
 Facet result missing fields added to Search.
 * https://issues.couchbase.com/browse/NCBC-2705[NCBC-2705]: 
-RawBinaryTranscoder was using invalid DataFormat.
+`RawBinaryTranscoder` was using invalid DataFormat.
 It will now simply pass the body of the packet back to the consumer as it should.
 * https://issues.couchbase.com/browse/NCBC-2706[NCBC-2706]: 
 A JSON string stored in Couchbase was generating an error when read as a string via `result.ContentAs<string>()`.
@@ -156,7 +155,7 @@ FTS _Score_ parameter added to allow avoidance of scoring from Server 6.6.
 * https://issues.couchbase.com/browse/NCBC-2679[NCBC-2679]: 
 A better opcode is used for basic Get scenarios, which will allow the server to return compressed documents once compression support is added to the .NET SDK.
 * https://issues.couchbase.com/browse/NCBC-2709[NCBC-2709]: 
-A minor optimization in all key/value operations following improved performance of bootstrap test.
+A minor optimization in all key-value operations following improved performance of bootstrap test.
 * https://issues.couchbase.com/browse/NCBC-2715[NCBC-2715]: 
 Added `InterfaceStabilityAttribute` for API interface stability.
 
