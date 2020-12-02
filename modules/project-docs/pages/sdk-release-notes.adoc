@@ -2,12 +2,9 @@
 :navtitle: Release Notes
 :page-topic-type: project-doc
 :page-aliases: relnotes-dotnet-sdk
-= Couchbase Java SDK Release Notes and Archives
-:navtitle: Release Notes
-:page-topic-type: project-doc
 :page-partial:
-:page-aliases: relnotes-java-sdk,ROOT:sdk-release-notes,ROOT:relnotes-java-sdk,ROOT:release-notes
 
+// tag::all[]
 [abstract]
 Release notes, installation instructions, and download archive for the Couchbase .NET Client.
 
@@ -109,6 +106,37 @@ git pull origin master
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 3.1.0 (2 December 2020)
+
+This is the first GA release of the 3.1 series, bringing enhancements and bugfixes over the 3.0 releases.
+
+https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.1.0.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.1.0[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.1.0[Nuget]
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2643[NCBC-2643]: DataFlowConnectionPool creates connections unbounded in certain situations
+* https://issues.couchbase.com/browse/NCBC-2660[NCBC-2660]: Operations are not retried if they hit an open circuit breaker
+* https://issues.couchbase.com/browse/NCBC-2686[NCBC-2686]: FTS - Facet result missing fields
+* https://issues.couchbase.com/browse/NCBC-2705[NCBC-2705]: RawBinaryTranscoder uses invalid DataFormat
+* https://issues.couchbase.com/browse/NCBC-2706[NCBC-2706]: Unexpected character encountered while parsing value
+* https://issues.couchbase.com/browse/NCBC-2708[NCBC-2708]: Sub-Document API Transcoder InvalidOperationExceptions
+
+
+=== New Features and Behavioral Changes.
+
+* https://issues.couchbase.com/browse/NCBC-2386[NCBC-2386]: Non-JSON, transcoders doc for SDK3
+* https://issues.couchbase.com/browse/NCBC-2418[NCBC-2418]: CreateCollection CollectionSpec must include MaxTTL
+* https://issues.couchbase.com/browse/NCBC-2572[NCBC-2572]: Add Bucket Durability Creation Support
+* https://issues.couchbase.com/browse/NCBC-2589[NCBC-2589]: Refactor Document Expiry Duration
+* https://issues.couchbase.com/browse/NCBC-2622[NCBC-2622]: Deprecate GetResult.expiry()
+* https://issues.couchbase.com/browse/NCBC-2627[NCBC-2627]: Need a new parameter for FTS parameter (score).
+* https://issues.couchbase.com/browse/NCBC-2631[NCBC-2631]: Add support to pass Score as FTS parameter
+* https://issues.couchbase.com/browse/NCBC-2679[NCBC-2679]: Use 0x00 Get operation when getting the whole document
+* https://issues.couchbase.com/browse/NCBC-2709[NCBC-2709]: Improve performance of bootstrap test on every K/V operation
+* https://issues.couchbase.com/browse/NCBC-2710[NCBC-2710]: Make JsonTranscoder visibility public
+* https://issues.couchbase.com/browse/NCBC-2715[NCBC-2715]: Add InterfaceStabilityAttribute for API interface stability
 
 == Version 3.0.7 (3 November 2020)
 
@@ -353,6 +381,8 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.0.1[Nuget]
 
 = Version 3.0.0 (31 March 2020)
 
+This is the first GA release of the third generation .NET SDK.
+
 https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.0.0.zip[Download] |  
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.0.0[API Reference] | 
 https://www.nuget.org/packages/CouchbaseNetClient/3.0.0[Nuget]
@@ -518,3 +548,4 @@ Numerous _Alpha_ and _Beta_ releases were made in the run-up to the 3.0 release,
 == Older Releases
 
 Although https://www.couchbase.com/support-policy/enterprise-software[no longer supported], documentation for older releases continues to be available in our https://docs-archive.couchbase.com/home/index.html[docs archive].
+// end::all[]
