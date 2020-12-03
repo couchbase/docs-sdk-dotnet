@@ -4,4 +4,4 @@
 :page-aliases: relnotes-dotnet-sdk
 :page-partial:
 
-include::3.1@dotnet-sdk::page$sdk-release-notes.adoc[tag=all]
+include::3.1@dotnet-sdk:project-docs:page$sdk-release-notes.adoc[tag=all]
