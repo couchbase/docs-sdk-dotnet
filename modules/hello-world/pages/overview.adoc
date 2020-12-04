@@ -1,4 +1,4 @@
-= Couchbase .NET SDK 3.0
+= Couchbase .NET SDK 3.1
 :page-type: landing-page
 :page-layout: landing-page-top-level-sdk
 :page-role: tiles
@@ -44,7 +44,7 @@ try
 [.column]
 ====== {empty}
 
-== Couchbase .NET SDK 3.0
+== Couchbase .NET SDK 3.1
 
 ++++
 <div class="card-row three-column-row">
