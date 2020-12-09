@@ -21,18 +21,16 @@ The SDK is written in C#, and some of its idiomatic patterns reflect that choice
 [.content]
 [source,c#]
 ----
-try
-{
-    var result = await _transactions.RunAsync(async (ctx) =>
+  await collection
+    .InsertAsync(key, Encoding.UTF8.GetBytes("hello"), options =>
     {
-        var docB = await ctx.GetAsync(_collection, "doc-b").ConfigureAwait(false);
-        var content = docB.ContentAs<dynamic>();
-        content.put("transactions", "are awesome");
-        await ctx.ReplaceAsync(docB, content);
+        options.Expiry(TimeSpan.FromSeconds(30));
+        options.Timeout(TimeSpan.FromMinutes(5));
+    })
+    .ConfigureAwait(false);
 
-        await ctx.CommitAsync().ConfigureAwait(false);
-    }).ConfigureAwait(false);
-}
+using var result = await collection.GetAsync(key, options => options.Transcoder(new LegacyTranscoder()))
+    .ConfigureAwait(false);
 ----
 
 ++++
@@ -60,11 +58,22 @@ Dive right in with a xref:start-using-sdk.adoc[quick install and Hello World].
 // Try out our xref:sample-application.adoc[Travel Sample Application].
 // And take a look at the xref:howtos:working-with-collections.adoc[developer preview of Collections].
 []
-.Program.cs
+Install using the NuGet Package Manager:
 [source,csharp]
 ----
-using System.Threading.Tasks;
-using Couchbase;
+> Install-Package CouchbaseNetClient -Version 3.1.0
+----
+
+Or using the CLI:
+[source,csharp]
+----
+> dotnet add package CouchbaseNetClient --version 3.1.0
+----
+
+Or using Package Reference
+[source,csharp]
+----
+<PackageReference Include="CouchbaseNetClient" Version="3.1.0" />
 ----
 
 [.column]
