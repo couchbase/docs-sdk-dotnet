@@ -32,6 +32,7 @@
 * xref:howtos:error-handling.adoc[Handling Errors]
 * xref:howtos:collecting-information-and-logging.adoc[Logging]
 // * xref:howtos:health-check.adoc[Health Check]
+* xref:howtos:slow-operations-logging.adoc[Slow Operations Logging]
 
 .Learn
 * xref:concept-docs:concepts.adoc[Overview]
