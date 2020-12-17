@@ -29,14 +29,14 @@ you can also build the `Cluster Options` in a fluent way for example
 [source,csharp]
 ----
 var options = new ClusterOptions()
-                .WithConnectionString("couchbase://localhost")
-                .WithCredentials(username: "user", password: "password")
-                .WithBuckets("travel-sample")
-                .WithLogging(LoggerFactory.Create(builder =>
-                {
-                    builder.AddFilter("Couchbase", LogLevel.Debug)
-                    .AddEventLog();
-                }));
+  .WithConnectionString("couchbase://localhost")
+  .WithCredentials(username: "user", password: "password")
+  .WithBuckets("travel-sample")
+  .WithLogging(LoggerFactory.Create(builder =>
+  {
+      builder.AddFilter("Couchbase", LogLevel.Debug)
+      .AddEventLog();
+  }));
 ----
 
 The cluster options are passed into the `Cluster` object via a constructor:
@@ -417,17 +417,37 @@ When writing documents it sets the appropriate flags to indicate the document co
 +
 The transcoder configured here is just the default; it can be overridden on a per-operation basis.
 
-Name: *Tracer*::
-Cluster Option: `Tracer(Tracer)`
+Name: *Threshold Tracer*::
+Cluster Option: `WithThresholdTracing(ThresholdOptions)`
 +
 Default:  `ThresholdLoggingTracer`
 +
 The default tracer logs the slowest requests per service.
 +
-Various `Tracer` implementations exist, both as part of the core library and as external modules that can be attached (i.e. for OpenTracing and OpenTelemetry).
-It is recommended to use those modules and not write your own tracer unless absolutely needed.
+[source, csharp]
+----
+var clusterOptions = new ClusterOptions();
+  clusterOptions.WithThresholdTracing(thresholdOptions =>
+  {
+      thresholdOptions.WithInterval(TimeSpan.FromSeconds(10));
+      thresholdOptions.WithSampleSize(10);
+      thresholdOptions.WithKvThreshold(TimeSpan.FromMilliseconds(500));
+      thresholdOptions.WithQueryThreshold(TimeSpan.FromSeconds(1));
+      thresholdOptions.WithSearchThreshold(TimeSpan.FromSeconds(1));
+      thresholdOptions.WithViewThreshold(TimeSpan.FromSeconds(1));
+      thresholdOptions.WithAnalyticsThreshold(TimeSpan.FromSeconds(1));
+  });
+----
 +
-NOTE: When using a non-default tracer, you are responsible for starting and stopping it.
+
+Name: *Orphaned Response Logger*
+Cluster Option: `EnableOrphanedResponseLogging(bool)`
++
+Default:  `false`
++
+Enables the default Orphaned Response Logger.
++
+If false, the Orphaned Response Logger will not log orphaned responses if a request fails to complete for some reason. 
 
 // section on wide area network support
 
