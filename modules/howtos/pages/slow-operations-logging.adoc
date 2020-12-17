@@ -27,13 +27,12 @@ Metrics fall into the following categories:
 * System Metrics (such as cpu usage, garbage collection performance).
 
 
-
+////
 == Configuring Metrics Logging
 
 The information logged can be configured, although configurability does vary slightly between SDKs.
 
-// Please add (here, and further down) the settings info that users need here for your SDK  :)
- 
+
 Advanced users can build their own implementations of the interface:
 
 [source,java]
@@ -56,6 +55,8 @@ interface ValueRecorder {
 
 At each emit/log interval, the AggregatingMeter outputs a JSON structure that is very similar to the `ThresholdRequestTracer` or the `OrphanResponseReporter`.
 The default value for the `emitInterval` is 600 seconds (10 minutes).
+////
+
 
 ==== JSON Output Format & Logging
 
