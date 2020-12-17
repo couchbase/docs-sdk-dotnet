@@ -1,4 +1,4 @@
-  = Slow Operations Logging
+= Slow Operations Logging
 :page-topic-type: howto
 // :page-aliases: ROOT:
 
