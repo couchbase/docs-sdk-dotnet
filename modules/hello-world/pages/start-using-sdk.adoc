@@ -23,7 +23,9 @@ The library is distributed in a number of ways:
 
 == Hello Couchbase
 
-Start a new console project (in Visual Studio or VS Code, etc). 
+Start a new console project (in Visual Studio or VS Code, etc). +
+Go to our xref:platform-help.adoc[Platform Introduction] if you don't already have an editor or IDE setup for working in .NET -- e.g. you are evaluating the .NET SDK, but .NET is not your normal platform.
+
 Install the latest 3.1 https://www.nuget.org/packages/CouchbaseNetClient/[CouchbaseNetClient^] NuGet package.
 
 The following code samples assume:
