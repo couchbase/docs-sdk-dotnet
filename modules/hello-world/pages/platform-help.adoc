@@ -5,7 +5,20 @@
 [abstract]
 Discover how to get up and running developing applications with the Couchbase .NET SDK 3.0+ using `Visual Studio 2019` or `Visual Studio Code`. 
 
+
+A simple .NET orientation intro for _non-_.NET folk who are evaluating the Couchbase .NET SDK.
+
+[IMPORTANT]
+.Is This Page for You?
+====
+This page is to help evaluate the Couchbase .NET SDK, if .NET is not where you spend the majority of your working day. 
+It is aimed at Software Architects, QE folk, managers, and anyone else who needs to run through using the .NET SDK without necessarily being comfortable with C# and the .NET environment.
+If this is not you, head back to the xref:overview.adoc[rest of the Couchbase .NET SDK documentation].
+====
+
+
 == Using an IDE (Visual Studio 2019 Community)
+
 * Download Visual Studio 2019 for Windows; note that the Community edition is free! https://visualstudio.microsoft.com/vs/
 
 * Click on the Visual Studio Installer and select the following work flows
@@ -20,8 +33,10 @@ Discover how to get up and running developing applications with the Couchbase .N
  - MacOS: https://visualstudio.microsoft.com/vs/mac/activation/
  - Linux: Currently there is no support for Visual Studio 2019 on Linux. Please see the <<#vscode, VSCode>> section.
 
+
 [#vscode]
 == Using a Code Editor (Visual Studio Code) 
+
 Visual Studio Code is a free code editor which runs on Windows, Linux and MacOS and can be downloaded link:https://code.visualstudio.com/[here]. Once downloaded, follow the installation details for the relevant platform:
 
 * MacOS: https://code.visualstudio.com/docs/setup/mac
@@ -29,6 +44,7 @@ Visual Studio Code is a free code editor which runs on Windows, Linux and MacOS 
 * Linux: https://code.visualstudio.com/docs/setup/linux
 
 === Adding C# Development Support
+
 VSCode is an editor, so in order to have support for various languages like C#, GO, Python, etc. you will need to install a 3rd party extension which supports development in said programming language. For .NET, we suggest using `ms-dotnettools.csharp` which allows for development in link:https://code.visualstudio.com/docs/languages/csharp[C#], the most commonly used .NET language.
 
 * Navigate to https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp
@@ -40,12 +56,15 @@ VSCode is an editor, so in order to have support for various languages like C#, 
     - Type ms-dotnettools.csharp into the `Search Extensions Marketplace` textbox and hit enter
     - Select and install the language extension into the editor.
 
+
 == Installing SDK Core
+
 NOTE: This doesn’t need to be done if you're using Visual Studio 2019; however, it is required if you are using VSCode because it is not installed by default.
 
 * For Windows use the installer: https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-3.0.100-windows-x64-installer
 * For linux select the distro you want to develop on: https://dotnet.microsoft.com/download/linux-package-manager/rhel/sdk-current
 * For MacOs use the installer: https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-3.0.100-macos-x64-installer
+
 
 == Getting started developing with the SDK
 
@@ -92,6 +111,7 @@ Open Visual Studio and click File=>New=>Solution:
 ====
 
 === Using VSCode
+
 If you are using VSCode it is often easier to use both the editor and the Command Line Interface (CLI):
 
 * Open a terminal and make a directory for your project: `mkdir CouchbaseExample`
@@ -110,4 +130,4 @@ Now you can launch VSCode and open the `CouchbaseExample` directory to start edi
 
 More details can be found here: https://dotnet.microsoft.com/learn/dotnet/hello-world-tutorial/intro.
 
-That's it! You are now ready to start developing your Couchbase application..
+That's it! You are now ready to xref:start-using-sdk.adoc[start developing your Couchbase application].
