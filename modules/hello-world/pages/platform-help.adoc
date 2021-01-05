@@ -1,0 +1,113 @@
+= Setting Up Couchbase .NET SDK with Visual Studio 2019 or VSCode
+:page-aliases: ROOT:platform-introduction,ROOT:platform-help,
+:navtitle: Setting Up the .NET SDK
+
+[abstract]
+Discover how to get up and running developing applications with the Couchbase .NET SDK 3.0+ using `Visual Studio 2019` or `Visual Studio Code`. 
+
+== Using an IDE (Visual Studio 2019 Community)
+* Download Visual Studio 2019 for Windows; note that the Community edition is free! https://visualstudio.microsoft.com/vs/
+
+* Click on the Visual Studio Installer and select the following work flows
+    - .NET desktop development (required for demos)
+    - ASP.NET and web development (optional)
+
+* Click `Install` and let the installation continue; we suggest leaving the defaults in place.
+
+* Once installation has been completed, you can create a new application by including a dependency on the .NET SDK via NuGet or by downloading an example application that already has the dependencies defined.
+
+* Details for installing Visual Studio on other operating systems can be found here:
+ - MacOS: https://visualstudio.microsoft.com/vs/mac/activation/
+ - Linux: Currently there is no support for Visual Studio 2019 on Linux. Please see the <<#vscode, VSCode>> section.
+
+[#vscode]
+== Using a Code Editor (Visual Studio Code) 
+Visual Studio Code is a free code editor which runs on Windows, Linux and MacOS and can be downloaded link:https://code.visualstudio.com/[here]. Once downloaded, follow the installation details for the relevant platform:
+
+* MacOS: https://code.visualstudio.com/docs/setup/mac
+* Windows: https://code.visualstudio.com/docs/setup/windows
+* Linux: https://code.visualstudio.com/docs/setup/linux
+
+=== Adding C# Development Support
+VSCode is an editor, so in order to have support for various languages like C#, GO, Python, etc. you will need to install a 3rd party extension which supports development in said programming language. For .NET, we suggest using `ms-dotnettools.csharp` which allows for development in link:https://code.visualstudio.com/docs/languages/csharp[C#], the most commonly used .NET language.
+
+* Navigate to https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp
+* Click on `Install` at the top, left hand side.
+* Select `Open Visual Studio Code` which will install `ms-dotnettools.csharp` into the VSCode editor
+* Alternatively, install from VSCode directly:
+    - Open VSCode
+    - Select the `Extensions` button on the left hand side
+    - Type ms-dotnettools.csharp into the `Search Extensions Marketplace` textbox and hit enter
+    - Select and install the language extension into the editor.
+
+== Installing SDK Core
+NOTE: This doesn’t need to be done if you're using Visual Studio 2019; however, it is required if you are using VSCode because it is not installed by default.
+
+* For Windows use the installer: https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-3.0.100-windows-x64-installer
+* For linux select the distro you want to develop on: https://dotnet.microsoft.com/download/linux-package-manager/rhel/sdk-current
+* For MacOs use the installer: https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-3.0.100-macos-x64-installer
+
+== Getting started developing with the SDK
+
+=== Using Visual Studio Community
+[{tabs}]
+==== 
+Windows::
++
+--
+Open Visual Studio from the start menu and click File=>New=>Project:
+
+* In the New Project dialogue, Installed=>Visual C# from the top Menu 
+    - Select `Console App (.NET Core)`
+    - Type `CouchbaseExample` in the `Name` textbox
+    - Leave the `Location` textbox to its default
+    - Leave the `Solution Name` to its default
+    - Click `Ok` - a solution and project will be created
+* Add the NuGet dependency on `CouchbaseNetClient` to the project:
+    - Right Click on the `CouchbaseExample` project in the `Solution Explorer` pane of Visual Studio
+    - In the Context Menu select `Manage NuGet Packages…`
+    - Click `Browse` in the NuGet Package Manager
+    - Type `CouchbaseNetClient` into the search text box making sure `Include Pre-Release` checkbox is selected if you wish to see pre-GA releases
+    - Select the version to install from the dropdown and click `Install`
+--
+MacOS::
++
+--
+Open Visual Studio and click File=>New=>Solution:
+
+* In the New Project dialogue, Web and Console=>App from the Menu on the Left:
+    - Select `Console Application and C#` from the small dropdown (already selected by default)
+    - Leave the `Target Framework` to its default
+    - Type `CouchbaseExample` in the `Project Name` textbox
+    - Leave the `Solution Name` to its default
+    - Leave the `Location` textbox to its default
+    - Click `Ok` - a solution and project will be created
+* Add the NuGet dependency on `CouchbaseNetClient` to the project:
+    - Right Click on the `CouchbaseExample` project in the `Solution Explorer` pane of Visual Studio
+    - In the Context Menu select `Manage NuGet Packages…`
+    - Select `Browse` in the NuGet Package Manager
+    - Type `CouchbaseNetClient` into the search text box making sure `Include Pre-Release` checkbox is selected if you wish to see pre-GA releases
+    - Select the version to install from the dropdown and click `Add Package`
+--
+====
+
+=== Using VSCode
+If you are using VSCode it is often easier to use both the editor and the Command Line Interface (CLI):
+
+* Open a terminal and make a directory for your project: `mkdir CouchbaseExample`
+
+* Go into the directory: `cd CouchbaseExample`
+
+* Create the console project: `dotnet new console`
+
+* Install the CouchbaseNetClient package: `dotnet add package CouchbaseNetClient`           
+
+* Run the application: `dotnet run`
+
+You should see a `Hello World` message printed in your terminal, which means the application has run successfully. 
+
+Now you can launch VSCode and open the `CouchbaseExample` directory to start editing the `Program.cs` file.
+
+More details can be found here: https://dotnet.microsoft.com/learn/dotnet/hello-world-tutorial/intro.
+
+That's it! You are now ready to start developing your Couchbase application..
