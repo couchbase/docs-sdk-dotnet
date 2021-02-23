@@ -16,12 +16,15 @@ namespace Couchbase.Net.DevGuide
         {
             const string statement = "SELECT \"hello\" as greeting;";
 
-            var result = await Cluster.AnalyticsQueryAsync<TestRequest>(statement).ConfigureAwait(false);
+            await ConnectAsync("travel-sample").ConfigureAwait(false);
+
+            var result = await Cluster.AnalyticsQueryAsync<TestRequest>(statement);
 
             await foreach (var row in result)
             {
-                Console.WriteLine(row);
+                Console.WriteLine("Result: " + row.Greeting);
             }
+
         }
 
         static async Task Main(string[] args)
