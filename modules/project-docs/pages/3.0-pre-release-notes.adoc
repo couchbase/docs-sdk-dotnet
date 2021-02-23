@@ -13,7 +13,7 @@ Please note that none of the pre-releases listed below are supported; all _suppo
 
 WARNING: These are the pre-release α & β Release Notes maintained purely for archive and information purposes.
 These releases are unsupported.
-Supported (GA) releases can be found xref:sdk-release-notes.adoc[on the general 3.0 Release Notes page].
+Supported (GA) releases can be found xref:sdk-release-notes.adoc[on the general 3.x Release Notes page].
 
 
 
