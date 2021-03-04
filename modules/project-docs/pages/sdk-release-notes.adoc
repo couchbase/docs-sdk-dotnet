@@ -107,6 +107,65 @@ After you have successfully built the source, it's then just a matter of referen
 _Note that you can checkout a specific tag for each release as well._
 
 
+== Version 3.1.2 (4 February 2021)
+
+Version 3.1.2 is the third release of the 3.1 series, bringing enhancements and bugfixes over the last stable release.
+
+https://packages.couchbase.com/clients/net/3.1/Couchbase-Net-Client-3.1.2.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.1.2[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.1.2[Nuget]
+
+=== Fixed Issues
+
+// There is no writer bandwidth available this week to make these issue comments more meaningful to the reader...
+// Perhaps engineering could help?
+// Look at any other SDK release note set for examples.  ;) 
+
+* https://issues.couchbase.com/browse/NCBC-2763[NCBC-2763]: 
+MutationToken throwing ArgumentNullException on static initialization.
+* https://issues.couchbase.com/browse/NCBC-2766[NCBC-2766]: 
+CreateScopeAsync not creating collections in ScopeSpec.
+* https://issues.couchbase.com/browse/NCBC-2767[NCBC-2767]: 
+ScopeNotFoundException when trying to get Scope after creating it.
+* https://issues.couchbase.com/browse/NCBC-2784[NCBC-2784]: 
+Getting a collection right after creating it throws CollectionNotFoundException.
+* https://issues.couchbase.com/browse/NCBC-2794[NCBC-2794]: 
+PackageIconUrl is still being used and blocks package creation.
+* https://issues.couchbase.com/browse/NCBC-2797[NCBC-2797]: 
+Hot upgrade failure from 6.6.0 to 6.6.1 using SDK v3.1.2.
+* https://issues.couchbase.com/browse/NCBC-2798[NCBC-2798]: 
+ThrowIfBootstrapFailed called twice in GetAsync.
+* https://issues.couchbase.com/browse/NCBC-2804[NCBC-2804]: 
+Non-JSON transcoders cannot be mixed with requests for document expiry.
+* https://issues.couchbase.com/browse/NCBC-2810[NCBC-2810]: 
+On pre-7.0 clusters default scopes/collections may not load.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-2791[NCBC-2791]: 
+GetResult uses AddMilliseconds instead of AddSeconds for expiry.
+* https://issues.couchbase.com/browse/NCBC-2796[NCBC-2796]: 
+SUBDOC_MULTI_PATH_FAILURE_DELETED throwing PathInvalid.
+* https://issues.couchbase.com/browse/NCBC-2770[NCBC-2770]: 
+Add experimental connection pool based on System.Threading.Channels.
+* https://issues.couchbase.com/browse/NCBC-2772[NCBC-2772]: 
+Cleanup key/value cancellation token and timeout handling.
+* https://issues.couchbase.com/browse/NCBC-2776[NCBC-2776]: 
+Change SlicedMemoryOwner to a structure.
+* https://issues.couchbase.com/browse/NCBC-2789[NCBC-2789]: 
+Unable to override the remote name mismatch error with custom validation.
+* https://issues.couchbase.com/browse/NCBC-2793[NCBC-2793]: 
+Address misc compiler warnings.
+* https://issues.couchbase.com/browse/NCBC-2802[NCBC-2802]: 
+Port sub-doc lambda extensions from SDK 2.x.
+* https://issues.couchbase.com/browse/NCBC-2805[NCBC-2805]: 
+Optimize in-flight operation cleanup method.
+* https://issues.couchbase.com/browse/NCBC-2808[NCBC-2808]: 
+Use ValueTask and IValueTaskSource for OperationBase.Completed.
+* https://issues.couchbase.com/browse/NCBC-2809[NCBC-2809]: 
+Use ValueTask for new ScopeAsync/CollectionAsync methods.
+
+
 == Version 3.1.1 (13 January 2021)
 
 Version 3.1.1 is the second release of the 3.1 series, bringing enhancements and bugfixes over the last stable release.
