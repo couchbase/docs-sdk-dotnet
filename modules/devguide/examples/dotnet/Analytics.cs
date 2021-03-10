@@ -31,7 +31,7 @@ namespace Couchbase.Net.DevGuide
                 Console.WriteLine("\nHandle Collection");
                 // tag::handle-collection[]
                 var result = await cluster.AnalyticsQueryAsync<dynamic>(
-                    "SELECT airportname, country FROM `airports` WHERE country='France' LIMIT 3");
+                    "SELECT airportname, country FROM `travel-sample`.inventory.airport WHERE country='France' LIMIT 3");
 
                 await foreach (var row in result)
                 {
@@ -40,13 +40,14 @@ namespace Couchbase.Net.DevGuide
                 // end::handle-collection[]
             }
 
+            /*
             {
                 Console.WriteLine("\nHandle Scope");
                 // tag::handle-scope[]
                 IBucket bucket = await cluster.BucketAsync("travel-sample").ConfigureAwait(false);
-                var scope = bucket.Scope("inventory");
+                var scope = await bucket.ScopeAsync("inventory");
                 var result = await scope.AnalyticsQueryAsync<dynamic>(
-                    "SELECT airportname, country FROM `airports-collection` WHERE country='France' LIMIT 2");
+                    "SELECT airportname, country FROM airport WHERE country='France' LIMIT 2");
                 // end::handle-scope[]
 
                 await foreach (var row in result)
@@ -54,6 +55,7 @@ namespace Couchbase.Net.DevGuide
                     Console.WriteLine("Result: " + row);
                 }
             }
+            */
         }
 
         static async Task Main(string[] args)
