@@ -190,6 +190,21 @@ namespace Couchbase.Examples
                 );
                 // end::remove[]
             }
+
+                {
+                    Console.WriteLine("\nExample: [named-collection-upsert]");
+
+                    // tag::named-collection-upsert[]
+                    var agentScope = await bucket.ScopeAsync("tenant_agent_00");
+                    var usersCollection = await agentScope.CollectionAsync("users");
+
+                    var content = new { name = "John Doe", preferred_email = "johndoe111@test123.test" };
+
+                    var result = await usersCollection.UpsertAsync("user-key", content);
+                    // end::named-collection-upsert[]
+
+                    Console.WriteLine("cas value: " + result.Cas);
+                }
         }
     }
 }
