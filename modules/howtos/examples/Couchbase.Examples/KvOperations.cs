@@ -2,53 +2,71 @@
 using System.Threading.Tasks;
 using Couchbase;
 using Couchbase.KeyValue;
+using Couchbase.Core.Exceptions.KeyValue;
 
-namespace sdk_docs_dotnet_examples
+namespace Couchbase.Examples
 {
     public class KvOperations
     {
-        public static async Task Main2(string[] args)
+        public async Task ExecuteAsync()
         {
-            var cluster = await Cluster.ConnectAsync("couchbase://localhost", "username", "password");
+            Console.WriteLine("Running KvOperations samples");
+
+            var cluster = await Cluster.ConnectAsync("couchbase://localhost", "Administrator", "password");
             var bucket = await cluster.BucketAsync("travel-sample");
             var collection = bucket.DefaultCollection();
 
             {
-                // #tag::insert[]
+                // tag::insert[]
                 var document = new {foo = "bar", bar = "foo"};
-                var result = await collection.InsertAsync("document-key", document);
-                // #end::insert[]
+                try {
+                    var result = await collection.InsertAsync("document-key", document);
+                }
+                catch (DocumentExistsException) {
+                    Console.WriteLine("Document already exists");
+                }
+                // end::insert[]
             }
 
             {
-                // #tag::insertwithoptions[]
-                var document = new {foo = "bar", bar = "foo"};
-                var result = await collection.InsertAsync("document-key", document,
-                    options =>
-                    {
-                        options.Expiry(TimeSpan.FromDays(1));
-                        options.Timeout(TimeSpan.FromSeconds(5));
-                    }
-                );
-                // #end::insertwithoptions[]
+                // tag::insertwithoptions[]
+                try {
+                    var document = new {foo = "bar", bar = "foo"};
+
+                    var result = await collection.InsertAsync("document-key", document,
+                        options =>
+                        {
+                            options.Expiry(TimeSpan.FromDays(1));
+                            options.Timeout(TimeSpan.FromSeconds(5));
+                        }
+                    );
+                }
+                catch (DocumentExistsException) {
+                    // handle exception
+                }
+                // end::insertwithoptions[]
             }
 
             {
-                // #tag::replacewithcas[]
+                // tag::replacewithcas[]
+                var previousResult = await collection.GetAsync("document-key");
+                var cas = previousResult.Cas;
+
                 var document = new {foo = "bar", bar = "foo"};
+
                 var result = await collection.ReplaceAsync("document-key", document,
                     options =>
                     {
-                        options.Cas(12345);
+                        options.Cas(cas);
                         options.Expiry(TimeSpan.FromMinutes(1));
                         options.Timeout(TimeSpan.FromSeconds(5));
                     }
                 );
-                // #end::replacewithcas[]
+                // end::replacewithcas[]
             }
 
             {
-                // #tag::upsertwithtimeout[]
+                // tag::upsertwithtimeout[]
                 var document = new { foo = "bar", bar = "foo" };
                 var result = await collection.UpsertAsync("document-key", document,
                     options =>
@@ -58,101 +76,97 @@ namespace sdk_docs_dotnet_examples
                         options.Timeout(TimeSpan.FromSeconds(5));
                     }
                 );
-                // #end::upsertwithtimeout[]
+                // end::upsertwithtimeout[]
             }
 
             {
-                // #tag::upsertwithdurability[]
-                var document = new { foo = "bar", bar = "foo" };
-                var result = await collection.UpsertAsync("document-key", document,
+                try {
+                    // tag::upsertwithdurability[]
+                    var document = new { foo = "bar", bar = "foo" };
+                    var result = await collection.UpsertAsync("document-key", document,
+                        options =>
+                        {
+                            options.Expiry(TimeSpan.FromMinutes(1));
+                            options.Durability(DurabilityLevel.Majority);
+                            options.Timeout(TimeSpan.FromSeconds(5));
+                        }
+                    );
+                    // end::upsertwithdurability[]
+                }
+                catch (Exception)
+                {
+                    // handle exception. This may be caused in testing by lack of replicas to provide Durability guarantees required.
+                }
+            }
+
+            {
+                // tag::get[]
+                var previousResult = await collection.UpsertAsync("string-key", "string value");
+
+                var result = await collection.GetAsync("string-key");
+                var content = result.ContentAs<String>();
+                // end::get[]
+            }
+
+            {
+                // tag::getwithtimeout[]
+                var result = await collection.GetAsync("string-key",
                     options =>
                     {
-                        options.Expiry(TimeSpan.FromMinutes(1));
-                        options.Durability(DurabilityLevel.Majority);
                         options.Timeout(TimeSpan.FromSeconds(5));
                     }
                 );
-                // #end::upsertwithdurability[]
-            }
-
-            {
-                // #tag::get[]
-                var result = await collection.GetAsync("document-key");
                 var content = result.ContentAs<string>();
-                // #end::get[]
+                // end::getwithtimeout[]
             }
 
             {
-                // #tag::getwithtimeout[]
-                var result = await collection.GetAsync("document-key",
-                    options =>
-                    {
-                        options.Timeout(TimeSpan.FromSeconds(5));
-                    }
-                );
-                var content = result.ContentAs<string>();
-                // #end::getwithtimeout[]
-            }
-
-            {
-                // #tag::remove[]
-                await collection.RemoveAsync("document-key",
-                    options =>
-                    {
-                        options.Cas(12345);
-                        options.Timeout(TimeSpan.FromSeconds(5));
-                    }
-                );
-                // #end::remove[]
-            }
-
-            {
-                // #tag::touch[]
+                // tag::touch[]
                 await collection.TouchAsync("document-key", TimeSpan.FromSeconds(10));
-                // #end::touch[]
+                // end::touch[]
             }
 
             {
-                // #tag::touchwithtimeout[]
+                // tag::touchwithtimeout[]
                 await collection.TouchAsync("document-key", TimeSpan.FromSeconds(30),
                     options =>
                     {
                         options.Timeout(TimeSpan.FromSeconds(5));
                     }
                 );
-                // #end::touchwithtimeout[]
+                // end::touchwithtimeout[]
             }
 
             {
-                // #tag::binaryincrement[]
+                // tag::binaryincrement[]
                 // increment binary value by 1, if document doesn’t exist, seed it at 1
-                await collection.Binary.IncrementAsync("document-key");
-                // #end::binaryincrement[]
+                await collection.Binary.IncrementAsync("binary-key");
+                // end::binaryincrement[]
             }
 
             {
-                // #tag::binaryincrementwithoptions[]
-                await collection.Binary.IncrementAsync("document-key",
+                // tag::binaryincrementwithoptions[]
+                await collection.Binary.IncrementAsync("binary-key",
                 options =>
                     {
                         options.Delta(1);
                         options.Initial(1000);
                         options.Timeout(TimeSpan.FromSeconds(5));
                     }
-                    );
-                // #end::binaryincrementwithoptions[]
+                );
+                // end::binaryincrementwithoptions[]
             }
 
             {
-                // #tag::binarydecrement[]
+                // tag::binarydecrement[]
                 // decrement binary value by 1, if document doesn’t exist, seed it at 1
-                await collection.Binary.DecrementAsync("document-key");
-                // #end::binarydecrement[]
+                await collection.Binary.DecrementAsync("binary-key");
+                // end::binarydecrement[]
             }
 
             {
-                // #tag::binarydecrementwithoptions[]
-                await collection.Binary.DecrementAsync("document-key",
+                // tag::binarydecrementwithoptions[]
+                await collection.Binary.DecrementAsync("binary-key",
                     options =>
                     {
                         options.Delta(1);
@@ -160,7 +174,21 @@ namespace sdk_docs_dotnet_examples
                         options.Timeout(TimeSpan.FromSeconds(5));
                     }
                 );
-                // #end::binarydecrementwithoptions[]
+                // end::binarydecrementwithoptions[]
+            }
+
+            {
+                // tag::remove[]
+                var previousResult = await collection.GetAsync("document-key");
+
+                await collection.RemoveAsync("document-key",
+                    options =>
+                    {
+                        options.Cas(previousResult.Cas);
+                        options.Timeout(TimeSpan.FromSeconds(5));
+                    }
+                );
+                // end::remove[]
             }
         }
     }

@@ -28,7 +28,7 @@ Here is the _Insert_ operation at its simplest:
 .Insert
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=insert,indent=0]
+include::example$Couchbase.Examples/KvOperations.cs[tag=insert,indent=0]
 ----
 
 Options may be added to operations:
@@ -36,7 +36,7 @@ Options may be added to operations:
 .Insert (with options)
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=insertwithoptions,indent=0]
+include::example$Couchbase.Examples/KvOperations.cs[tag=insertwithoptions,indent=0]
 ----
 
 Setting a Compare and Swap (CAS) value is a form of optimistic locking - dealt with in depth in the xref:concurrent-document-mutations.adoc[CAS page].
@@ -50,7 +50,7 @@ We will add to these options for the _Replace_ example:
 
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=replacewithcas,indent=0]
+include::example$Couchbase.Examples/KvOperations.cs[tag=replacewithcas,indent=0]
 ----
 
 Expiration sets an explicit time to live (TTL) for a document.
@@ -60,7 +60,7 @@ xref:6.0@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-ttl[
 
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=upsertwithtimeout,indent=0]
+include::example$Couchbase.Examples/KvOperations.cs[tag=upsertwithtimeout,indent=0]
 ----
 
 Here, we have add _Durability_ options, namely `PersistTo` and `ReplicateTo`.
@@ -68,15 +68,15 @@ Here, we have add _Durability_ options, namely `PersistTo` and `ReplicateTo`.
 == Durability
 
 In Couchbase Server releases before 6.5, Durability was set with these two options -- see the xref:https://docs.couchbase.com/dotnet-sdk/2.7/durability.html[6.0 Durability documentation] -- covering  how many replicas the operation must be propagated to and how many persisted copies of the modified record must exist.
-If 6.5 or above is being used, you can take advantage of the xref:concept-docs:durability-replication-failure-considerations.adoc#durable-writes[Durable Write] feature, 
-in which Couchbase Server will only return success to the SDK after the requested replication level has been achieved. 
+If 6.5 or above is being used, you can take advantage of the xref:concept-docs:durability-replication-failure-considerations.adoc#durable-writes[Durable Write] feature,
+in which Couchbase Server will only return success to the SDK after the requested replication level has been achieved.
 The three replication levels are:
 
  * `Majority` - The server will ensure that the change is available in memory on the majority of configured replicas.
  * `MajorityAndPersistToActive` - Majority level, plus persisted to disk on the active node.
  * `PersistToMajority` - Majority level, plus persisted to disk on the majority of configured replicas.
 
-The options are in increasing levels of safety. 
+The options are in increasing levels of safety.
 Note that nothing comes for free - for a given node, waiting for writes to storage is considerably slower than waiting for it to be available in-memory.
 These trade offs, as well as which settings may be tuned, are discussed in the xref:concept-docs:durability-replication-failure-considerations.adoc#durable-writes[durability page].
 
@@ -84,11 +84,11 @@ The following example demonstrates using the newer durability features available
 
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=upsertwithdurability,indent=0]
+include::example$Couchbase.Examples/KvOperations.cs[tag=upsertwithdurability,indent=0]
 ----
 
-If a version of Couchbase Server earlier than 6.5 is being used then the application can fall-back to xref:concept-docs:durability-replication-failure-considerations.adoc#older-server-versions['client verified' durability]. 
-Here the SDK will do a simple poll of the replicas and only return once the requested durability level is achieved. 
+If a version of Couchbase Server earlier than 6.5 is being used then the application can fall-back to xref:concept-docs:durability-replication-failure-considerations.adoc#older-server-versions['client verified' durability].
+Here the SDK will do a simple poll of the replicas and only return once the requested durability level is achieved.
 
 ////
 This can be achieved like this:
@@ -99,7 +99,7 @@ This can be achieved like this:
 ----
 ////
 
-To stress, durability is a useful feature but should not be the default for most applications, as there is a performance consideration, 
+To stress, durability is a useful feature but should not be the default for most applications, as there is a performance consideration,
 and the default level of safety provided by Couchbase will be reasonable for the majority of situations.
 
 
@@ -116,7 +116,7 @@ Using the `Get()` method with the document key can be done in a similar fashion 
 
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=get,indent=0]
+include::example$Couchbase.Examples/KvOperations.cs[tag=get,indent=0]
 ----
 
 Timeout can also be set - as in the earlier `Insert` example:
@@ -124,7 +124,7 @@ Timeout can also be set - as in the earlier `Insert` example:
 .Get (with options)
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=getwithtimeout,indent=0]
+include::example$Couchbase.Examples/KvOperations.cs[tag=getwithtimeout,indent=0]
 ----
 
 == Removing
@@ -134,7 +134,7 @@ When removing a document, you will have the same concern for durability as with 
 .Remove (with options)
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=remove,indent=0]
+include::example$Couchbase.Examples/KvOperations.cs[tag=remove,indent=0]
 ----
 
 == Expiration / TTL
@@ -144,22 +144,22 @@ Using `Touch()`, you can set expiration values on documents to handle transient 
 
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=touch,indent=0]
+include::example$Couchbase.Examples/KvOperations.cs[tag=touch,indent=0]
 ----
 
 A network timeout can be set with the optional `TouchOptions()`, in the same fashion as earlier examples on this page:
 
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=touchwithtimeout,indent=0]
+include::example$Couchbase.Examples/KvOperations.cs[tag=touchwithtimeout,indent=0]
 ----
 
 include::6.6@sdk:shared:partial$documents.adoc[tag=exp-note]
- 
-IMPORTANT: If you are using the overloads that take `IDocument`, note that the `IDocument.Expiry` property assumes ms (milli-seconds), and is converted to seconds before being sent to the server. 
+
+IMPORTANT: If you are using the overloads that take `IDocument`, note that the `IDocument.Expiry` property assumes ms (milli-seconds), and is converted to seconds before being sent to the server.
 All other overloads take a `TimeSpan` or an `uint`, and assume an expiry in seconds
 A time of zero will set the document to never expire
-(a negative number will set expiry to immediate -- creating a xref:6.6@server:learn:buckets-memory-and-storage/storage.adoc#tombstones[tombstone]). 
+(a negative number will set expiry to immediate -- creating a xref:6.6@server:learn:buckets-memory-and-storage/storage.adoc#tombstones[tombstone]).
 Values above 0ms but below 1000ms are rounded up to one second before being sent to the server -- _if you are using .NET SDK 3.0.4 or later_.
 
 
@@ -170,25 +170,25 @@ The value of a document can be increased or decreased atomically using `Binary.I
 .Increment
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=binaryincrement,indent=0]
+include::example$Couchbase.Examples/KvOperations.cs[tag=binaryincrement,indent=0]
 ----
 
 .Increment (with options)
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=binaryincrementwithoptions,indent=0]
+include::example$Couchbase.Examples/KvOperations.cs[tag=binaryincrementwithoptions,indent=0]
 ----
 
 .Decrement
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=binarydecrement,indent=0]
+include::example$Couchbase.Examples/KvOperations.cs[tag=binarydecrement,indent=0]
 ----
 
 .Decrement (with options)
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=binarydecrementwithoptions,indent=0]
+include::example$Couchbase.Examples/KvOperations.cs[tag=binarydecrementwithoptions,indent=0]
 ----
 
 NOTE: Increment & Decrement are considered part of the ‘binary’ API and as such may still be subject to change
