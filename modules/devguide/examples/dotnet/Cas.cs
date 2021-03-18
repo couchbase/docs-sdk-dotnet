@@ -49,11 +49,11 @@ namespace Couchbase.Net.DevGuide
             {
                 // Get the document
                 var result = await Bucket.DefaultCollection().GetAsync(key).ConfigureAwait(false);
-               
+
                 // Update the document
                 var doc = result.ContentAs<Data>();
                 doc.Number++;
-                
+
                 // Store the document back without CAS
                 await Bucket.DefaultCollection().ReplaceAsync(key, doc).ConfigureAwait(false);
             }
@@ -86,7 +86,7 @@ namespace Couchbase.Net.DevGuide
             }
         }
 
-        static async Task Main(string[] args)
+        private new static async Task Main(string[] args)
         {
             await new Cas().ExecuteAsync().ConfigureAwait(false);
         }

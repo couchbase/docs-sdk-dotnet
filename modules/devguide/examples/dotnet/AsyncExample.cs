@@ -6,7 +6,7 @@ namespace Couchbase.Net.DevGuide
 {
     public class AsyncExample : ConnectionBase
     {
-        static async Task Main(string[] args)
+        private new static async Task Main(string[] args)
         {
             Console.WriteLine("Before calling PrintDocumentAsync on thread {0}.",
                Thread.CurrentThread.ManagedThreadId);

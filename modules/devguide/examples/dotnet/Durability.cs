@@ -54,7 +54,7 @@ namespace Couchbase.Net.DevGuide
             Console.WriteLine("Doc persisted to disk!");
         }
 
-        static async Task Main(string[] args)
+        private new static async Task Main(string[] args)
         {
            await new Durability().ExecuteAsync().ConfigureAwait(false);
         }

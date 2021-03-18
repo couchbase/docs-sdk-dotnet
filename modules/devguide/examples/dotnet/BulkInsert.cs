@@ -20,7 +20,7 @@ namespace Couchbase.Net.DevGuide
             Console.WriteLine($"Wrote {results.Length} docs to Couchbase.");
         }
 
-        static async Task Main(string[] args)
+        private new static async Task Main(string[] args)
         {
             await new BulkInsert().ExecuteAsync().ConfigureAwait(false);
         }

@@ -7,7 +7,7 @@ namespace Couchbase.Net.DevGuide
     public class Update : ConnectionBase
     {
         public override async Task ExecuteAsync()
-        {  
+        {
             //Connect to Couchbase
             await ConnectAsync().ConfigureAwait(false);
 
@@ -50,7 +50,7 @@ namespace Couchbase.Net.DevGuide
             Console.WriteLine("Got: " + newDocument.ContentAs<Data>());
         }
 
-        static async Task Main(string[] args)
+        private new static async Task Main(string[] args)
         {
             await new Update().ExecuteAsync().ConfigureAwait(false);
         }
