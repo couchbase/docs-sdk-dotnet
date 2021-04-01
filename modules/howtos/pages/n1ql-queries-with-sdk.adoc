@@ -103,7 +103,7 @@ The query service provides an array of options to customize your query. The foll
 | `Parameter(object)` | Allows to set positional arguments for a parameterized query.
 | `Parameter(string, object)` | Allows to set named arguments for a parameterized query.
 | `Raw(string, object)` | Escape hatch to add arguments that are not covered by these options.
-| `Readonly(bool)` | Tells the client and server that this query is readonly. See "Readonly" section for more detail. 
+| `Readonly(bool)` | Tells the client and server that this query is readonly. See "Readonly" section for more detail.
 | `Adhoc(bool)` | If set to false will prepare the query and later execute the prepared statement.
 | `ConsistentWith(MutationState)` | Allows to be consistent with previously written mutations (AtPlus / "read your own writes").
 | `MaxServerParallelism(int)` | Tunes the maximum parallelism on the server.
@@ -185,7 +185,7 @@ using the `QueryOptions() {QueryContext = "namespace:bucket:scope:collection"}` 
 CAUTION: This feature is marked xref:project-docs:compatibility.adoc#interface-stability[_Uncommitted_].
 Expect a promotion to _Committed_ API in a future minor release.
 
-The code snippet below shows how to run a simple query to fetch 10 random rows from travel-sample and print the results, 
+The code snippet below shows how to run a simple query to fetch 10 random rows from travel-sample and print the results,
 the assumption is that the `airline` collection exists within a scope `us`.
 
 [source,csharp]
