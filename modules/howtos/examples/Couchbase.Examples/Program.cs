@@ -8,6 +8,7 @@ namespace Couchbase.Examples
         static async Task Main(string[] args)
         {
             await new KvOperations().ExecuteAsync();
+            await new CollectionManager().ExecuteAsync();
         }
     }
 }
