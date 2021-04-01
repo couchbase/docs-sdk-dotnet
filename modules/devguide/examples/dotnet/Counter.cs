@@ -14,7 +14,7 @@ namespace Couchbase.Net.DevGuide
             var key = "dotnetDevguideExampleCounter-" + DateTime.Now.Ticks;
             var binaryCollection = Bucket.DefaultCollection().Binary;
 
-            // Try to increment a counter that doesn't exist. 
+            // Try to increment a counter that doesn't exist.
             // This will create the counter with an initial value of 1 regardless of delta specified
             var counter = await binaryCollection.IncrementAsync(key, options => options.Initial(10)).ConfigureAwait(false);
             Console.WriteLine("Initial value = N/A, Increment = 10, Counter value: " + counter.Content);
@@ -36,7 +36,7 @@ namespace Couchbase.Net.DevGuide
             Console.WriteLine("Initial value = 13, Decrement = 20, Counter value: " + counter4.Content);
         }
 
-        static void Main(string[] args)
+        private new static void Main(string[] args)
         {
             new Counter().ExecuteAsync().Wait();
         }

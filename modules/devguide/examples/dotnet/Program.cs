@@ -22,8 +22,6 @@ namespace Couchbase.Net.DevGuide
             // await new QueryPlaceHolders().ExecuteAsync().ConfigureAwait(false);
             // await new QueryPrepared().ExecuteAsync().ConfigureAwait(false);
             await new Analytics().ExecuteAsync().ConfigureAwait(false);
-
-            // Console.ReadLine();
         }
     }
 }

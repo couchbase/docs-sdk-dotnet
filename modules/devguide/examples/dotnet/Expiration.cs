@@ -23,7 +23,7 @@ namespace Couchbase.Net.DevGuide
 
             // Waiting 4 seconds
             await Task.Delay(4000).ConfigureAwait(false);
-            
+
             // Retrieving after a 4 second delay
             var result2 = await collection.GetAsync(key).ConfigureAwait(false);
             Console.WriteLine("[{0:HH:mm:ss.fff}] Got: '{1}'!", DateTime.Now, result2.ContentAs<string>());
@@ -53,10 +53,10 @@ namespace Couchbase.Net.DevGuide
             await Task.Delay(4000).ConfigureAwait(false);
 
             var result6 = await collection.GetAsync(key).ConfigureAwait(false);
-            Console.WriteLine("[{0:HH:mm:ss.fff}] Got: '{1}'!", DateTime.Now, result6.ContentAs<string>());   
+            Console.WriteLine("[{0:HH:mm:ss.fff}] Got: '{1}'!", DateTime.Now, result6.ContentAs<string>());
         }
 
-        static async Task Main(string[] args)
+        private new static async Task Main(string[] args)
         {
            await new Expiration().ExecuteAsync().ConfigureAwait(false);
         }

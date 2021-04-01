@@ -11,6 +11,8 @@ namespace Couchbase.Net.DevGuide
 
         public override async Task ExecuteAsync()
         {
+            Console.WriteLine("Starting Search example");
+            Console.WriteLine(Cluster);
             var results = await Cluster.SearchQueryAsync(IndexName,
                 new MatchQuery("inn"),
                 new SearchOptions().Facets(
@@ -24,9 +26,11 @@ namespace Couchbase.Net.DevGuide
             {
                 Console.WriteLine(row);
             }
+            Console.WriteLine("Ended Search example");
+
         }
 
-        static async Task Main(string[] args)
+        private new static async Task Main(string[] args)
         {
             await new Search().ExecuteAsync().ConfigureAwait(false);
         }
