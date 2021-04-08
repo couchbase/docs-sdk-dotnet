@@ -106,6 +106,33 @@ git pull origin master
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 3.1.4 (8 April 2021)
+
+This is the first GA release of the 3.1 series, bringing enhancements and bugfixes over the 3.0 releases, 
+and adding features to support Couchbase Server 6.6.
+
+https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.1.4.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.1.4[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.1.4[Nuget]
+
+=== Known Issues
+
+* https://issues.couchbase.com/browse/NCBC-2851: TimeoutExceptions continue after rebound in Failover/Eject tests
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2720[NCBC-2720]: Change QueryMetrics  Property from ElaspedTime to ElapsedTime 
+* https://issues.couchbase.com/browse/NCBC-2831[NCBC-2831]: MutateIn is not throwing and classifying sub-doc errors correctly.
+
+=== New Features and Behavioral Changes.
+
+* https://issues.couchbase.com/browse/NCBC-2828[NCBC-2828]: Cleanup sub-doc operation public API surface
+* https://issues.couchbase.com/browse/NCBC-2842[NCBC-2842]: Add Couchbase.Core.Exceptions.TimeoutException
+* https://issues.couchbase.com/browse/NCBC-2843[NCBC-2843]: K/V CancellationToken expiration does not include IErrorContext
+* https://issues.couchbase.com/browse/NCBC-2844[NCBC-2844]: Make Query.ReadOnly obsolete and replace w/QueryOptions.Readonly
+* https://issues.couchbase.com/browse/NCBC-2845[NCBC-2845]: Allow default IRetryStrategy to be overridden
+
+
 
 == Version 3.1.3 (3 March 2021)
 
