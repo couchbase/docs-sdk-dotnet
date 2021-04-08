@@ -50,7 +50,7 @@ For example:
 
 [source,console]
 ----
- Install-Package CouchbaseNetClient -Version 2.7.0
+ Install-Package CouchbaseNetClient -Version 3.1.3
 ----
 
 === Downloading and referencing the binaries
@@ -105,6 +105,237 @@ git pull origin master
 
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
+
+
+== Version 3.1.3 (3 March 2021)
+
+Version 3.1.3 is the fourth release of the 3.1 series, bringing enhancements and bugfixes over the last stable release.
+
+https://packages.couchbase.com/clients/net/3.1/Couchbase-Net-Client-3.1.3.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.1.3[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.1.3[Nuget]
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2801[NCBC-2801]:
+`NodeAdapter` incorrectly shows N1QL service is not available.
+* https://issues.couchbase.com/browse/NCBC-2817[NCBC-2817]:
+`LookupInAsync` and `MutateInAsync` builder extensions should accept null options.
+* https://issues.couchbase.com/browse/NCBC-2823[NCBC-2823]:
+Make `ClusterOptions.NetworkResolution` read/write.
+* https://issues.couchbase.com/browse/NCBC-2826[NCBC-2826]:
+Collection Id outdated exception on K-V ops.
+* https://issues.couchbase.com/browse/NCBC-2827[NCBC-2827]:
+`GET_CID` and `GET_SID` do not correctly retry if Scope/Collection not found.
+* https://issues.couchbase.com/browse/NCBC-2811[NCBC-2811]:
+Cache default scope/collection allocation.
+* https://issues.couchbase.com/browse/NCBC-2812[NCBC-2812]:
+Throw `UnsupportedException` if non-default scopes/cols are used in pre-7.0 clusters.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-2813[NCBC-2813]:
+Cleanup `IOperation` and `OperationBase` code.
+* https://issues.couchbase.com/browse/NCBC-2815[NCBC-2815]:
+Replace `AsyncMutex` with `SemaphoreSlim`.
+* https://issues.couchbase.com/browse/NCBC-2818[NCBC-2818]:
+Queue operation completions on the global queue.
+* https://issues.couchbase.com/browse/NCBC-2819[NCBC-2819]:
+Enable `NetworkResolution` via the connection string.
+* https://issues.couchbase.com/browse/NCBC-2833[NCBC-2833]:
+Remove Type parameter from `UnlockAsync`.
+
+
+== Version 3.1.2 (4 February 2021)
+
+Version 3.1.2 is the third release of the 3.1 series, bringing enhancements and bugfixes over the last stable release.
+
+https://packages.couchbase.com/clients/net/3.1/Couchbase-Net-Client-3.1.2.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.1.2[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.1.2[Nuget]
+
+=== Fixed Issues
+
+// There is no writer bandwidth available this week to make these issue comments more meaningful to the reader...
+// Perhaps engineering could help?
+// Look at any other SDK release note set for examples.  ;) 
+
+* https://issues.couchbase.com/browse/NCBC-2763[NCBC-2763]: 
+MutationToken throwing ArgumentNullException on static initialization.
+* https://issues.couchbase.com/browse/NCBC-2766[NCBC-2766]: 
+CreateScopeAsync not creating collections in ScopeSpec.
+* https://issues.couchbase.com/browse/NCBC-2767[NCBC-2767]: 
+ScopeNotFoundException when trying to get Scope after creating it.
+* https://issues.couchbase.com/browse/NCBC-2784[NCBC-2784]: 
+Getting a collection right after creating it throws CollectionNotFoundException.
+* https://issues.couchbase.com/browse/NCBC-2794[NCBC-2794]: 
+PackageIconUrl is still being used and blocks package creation.
+* https://issues.couchbase.com/browse/NCBC-2797[NCBC-2797]: 
+Hot upgrade failure from 6.6.0 to 6.6.1 using SDK v3.1.2.
+* https://issues.couchbase.com/browse/NCBC-2798[NCBC-2798]: 
+ThrowIfBootstrapFailed called twice in GetAsync.
+* https://issues.couchbase.com/browse/NCBC-2804[NCBC-2804]: 
+Non-JSON transcoders cannot be mixed with requests for document expiry.
+* https://issues.couchbase.com/browse/NCBC-2810[NCBC-2810]: 
+On pre-7.0 clusters default scopes/collections may not load.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-2791[NCBC-2791]: 
+GetResult uses AddMilliseconds instead of AddSeconds for expiry.
+* https://issues.couchbase.com/browse/NCBC-2796[NCBC-2796]: 
+SUBDOC_MULTI_PATH_FAILURE_DELETED throwing PathInvalid.
+* https://issues.couchbase.com/browse/NCBC-2770[NCBC-2770]: 
+Add experimental connection pool based on System.Threading.Channels.
+* https://issues.couchbase.com/browse/NCBC-2772[NCBC-2772]: 
+Cleanup key/value cancellation token and timeout handling.
+* https://issues.couchbase.com/browse/NCBC-2776[NCBC-2776]: 
+Change SlicedMemoryOwner to a structure.
+* https://issues.couchbase.com/browse/NCBC-2789[NCBC-2789]: 
+Unable to override the remote name mismatch error with custom validation.
+* https://issues.couchbase.com/browse/NCBC-2793[NCBC-2793]: 
+Address misc compiler warnings.
+* https://issues.couchbase.com/browse/NCBC-2802[NCBC-2802]: 
+Port sub-doc lambda extensions from SDK 2.x.
+* https://issues.couchbase.com/browse/NCBC-2805[NCBC-2805]: 
+Optimize in-flight operation cleanup method.
+* https://issues.couchbase.com/browse/NCBC-2808[NCBC-2808]: 
+Use ValueTask and IValueTaskSource for OperationBase.Completed.
+* https://issues.couchbase.com/browse/NCBC-2809[NCBC-2809]: 
+Use ValueTask for new ScopeAsync/CollectionAsync methods.
+
+
+== Version 3.1.1 (13 January 2021)
+
+Version 3.1.1 is the second release of the 3.1 series, bringing enhancements and bugfixes over the last stable release.
+
+https://packages.couchbase.com/clients/net/3.1/Couchbase-Net-Client-3.1.1.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.1.1[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.1.1[Nuget]
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2565[NCBC-2565]:
+WaitUntilReady failure for 6.5.
+* https://issues.couchbase.com/browse/NCBC-2660[NCBC-2660]:
+Operations are not retried if they hit an open circuit breaker.
+* https://issues.couchbase.com/browse/NCBC-2693[NCBC-2693]:
+MutationToken.GetHashCode() implementation looks suspect.
+* https://issues.couchbase.com/browse/NCBC-2694[NCBC-2694]:
+Removed unnecessary linked CancellationToken.
+* https://issues.couchbase.com/browse/NCBC-2726[NCBC-2726]:
+Cannot read empty response bodies.
+* https://issues.couchbase.com/browse/NCBC-2741[NCBC-2741]:
+If the send queue is full when requeuing after connection cleanup, the operation is dropped.
+* https://issues.couchbase.com/browse/NCBC-2746[NCBC-2746]:
+using mutate in to update an existing value to null causes an IllegalArgumentException.
+* https://issues.couchbase.com/browse/NCBC-2751[NCBC-2751]:
+Use ConfigureAwait(false) on awaited task  in DnsClientDnsResolver.
+* https://issues.couchbase.com/browse/NCBC-2756[NCBC-2756]:
+Do not allow empty hosts in ConnectionString.
+* https://issues.couchbase.com/browse/NCBC-2760[NCBC-2760]:
+MultiMutation duplicates specs on Retry, causing SUBDOC_INVALID_COMBO.
+* https://issues.couchbase.com/browse/NCBC-2761[NCBC-2761]:
+MutateIn is not setting Cas, ignoring MutateInOptions.CasValue, resulting in a default of 0 which always overwrites.
+* https://issues.couchbase.com/browse/NCBC-2762[NCBC-2762]:
+Threshold trace logging leaks memory.
+* https://issues.couchbase.com/browse/NCBC-2764[NCBC-2764]:
+Expiration of TimeSpan.Zero is being sent to server as 1 second expiration.
+* https://issues.couchbase.com/browse/NCBC-2778[NCBC-2778]:
+Throw CasMismatchException when CAS mismatch occurs.
+* https://issues.couchbase.com/browse/NCBC-2780[NCBC-2780]:
+Fix unit tests relying on obsolete Expiry method.
+* https://issues.couchbase.com/browse/NCBC-2781[NCBC-2781]:
+Make replica commands use CancellationToken.
+* https://issues.couchbase.com/browse/NCBC-2782[NCBC-2782]:
+Replica methods randomly completed with NotMyVBucket.
+
+=== New Features and Behavioral Changes.
+
+* https://issues.couchbase.com/browse/NCBC-2716[NCBC-2716]:
+Collections Analytics Test Changes.
+* https://issues.couchbase.com/browse/NCBC-2747[NCBC-2747]:
+Add KvSendQueueCapacity to ClusterOptions for tuning.
+* https://issues.couchbase.com/browse/NCBC-2748[NCBC-2748]:
+netcore3.0 target id deprecated and cannot be used with `dotnet pack`.
+* https://issues.couchbase.com/browse/NCBC-2785[NCBC-2785]:
+ArgumentOutOfRangeException if GetResult.Expiry called on GET operation.
+* https://issues.couchbase.com/browse/NCBC-2788[NCBC-2788]:
+`UserManagerTests.Test_UserInheritsCollectionAwareRoles` fails in combi tests.
+* https://issues.couchbase.com/browse/NCBC-2653[NCBC-2653]:
+Unnecessary allocation in classes implementing IOperation.
+* https://issues.couchbase.com/browse/NCBC-2661[NCBC-2661]:
+CouchbaseBucket is doing ad hoc retrying if CollectionOutdatedException.
+* https://issues.couchbase.com/browse/NCBC-2677[NCBC-2677]:
+Docs: Threshold Logging and Orphan Response Logging.
+* https://issues.couchbase.com/browse/NCBC-2722[NCBC-2722]:
+Improve performance of `WriteKey` using `stackalloc`.
+* https://issues.couchbase.com/browse/NCBC-2723[NCBC-2723]:
+Reduce async/await around circuit breakers on K/V ops.
+* https://issues.couchbase.com/browse/NCBC-2724[NCBC-2724]:
+Reduce task continuations related to K/V timeouts.
+* https://issues.couchbase.com/browse/NCBC-2725[NCBC-2725]:
+Improve logic around ITypeTranscoder instantiations.
+* https://issues.couchbase.com/browse/NCBC-2727[NCBC-2727]:
+Improve log redaction performance.
+* https://issues.couchbase.com/browse/NCBC-2728[NCBC-2728]:
+Improve LEB128 encoding performance.
+* https://issues.couchbase.com/browse/NCBC-2729[NCBC-2729]:
+Reduce task continuations on k/v GET operations.
+* https://issues.couchbase.com/browse/NCBC-2731[NCBC-2731]:
+Reduce JSON serialization heap allocations.
+* https://issues.couchbase.com/browse/NCBC-2732[NCBC-2732]:
+ConfigHandler processing is blocking a thread from the thread pool.
+* https://issues.couchbase.com/browse/NCBC-2733[NCBC-2733]:
+Improve efficiency of ErrorCode lookup in ErrorMap.
+* https://issues.couchbase.com/browse/NCBC-2734[NCBC-2734]:
+Improve CancellationTokenSource handling in RetryOrchestrator.
+* https://issues.couchbase.com/browse/NCBC-2735[NCBC-2735]:
+Optimize OperationBuilder performance.
+* https://issues.couchbase.com/browse/NCBC-2736[NCBC-2736]:
+Optimize key/value operation flag handling.
+* https://issues.couchbase.com/browse/NCBC-2737[NCBC-2737]:
+Use a static client description for spans.
+* https://issues.couchbase.com/browse/NCBC-2738[NCBC-2738]:
+Improve performance building connection tags for K/V operation spans.
+* https://issues.couchbase.com/browse/NCBC-2740[NCBC-2740]:
+Optimize performance when request tracing is disabled.
+* https://issues.couchbase.com/browse/NCBC-2742[NCBC-2742]:
+Reduce debug logging heap allocations on critical K/V path.
+* https://issues.couchbase.com/browse/NCBC-2743[NCBC-2743]:
+Reduce Task ContingentProperties heap allocations.
+* https://issues.couchbase.com/browse/NCBC-2744[NCBC-2744]:
+Enable reporting of test results in Jenkins.
+* https://issues.couchbase.com/browse/NCBC-2745[NCBC-2745]:
+Reduce lambda-related heap allocations for K/V operation completions.
+* https://issues.couchbase.com/browse/NCBC-2749[NCBC-2749]:
+Use Stopwatch to track connection idle time.
+* https://issues.couchbase.com/browse/NCBC-2750[NCBC-2750]:
+Use spans in MultiplexingConnection.ParseReceivedData.
+* https://issues.couchbase.com/browse/NCBC-2752[NCBC-2752]:
+Improve ToTtl performance.
+* https://issues.couchbase.com/browse/NCBC-2753[NCBC-2753]:
+Allow BucketBase.RetryAsync to be inlined.
+* https://issues.couchbase.com/browse/NCBC-2754[NCBC-2754]:
+Use Span&lt;byte&gt; for VBucketKeyMapper.GetIndex
+* https://issues.couchbase.com/browse/NCBC-2755[NCBC-2755]:
+Use ThrowHelper to improve inlining.
+* https://issues.couchbase.com/browse/NCBC-2757[NCBC-2757]:
+SkipLocalsInit when writing document keys to operations.
+* https://issues.couchbase.com/browse/NCBC-2758[NCBC-2758]:
+Use .NET provided encoding of strings to spans when available.
+* https://issues.couchbase.com/browse/NCBC-2765[NCBC-2765]:
+Improve buffer handling in MultiplexingConnection receive.
+* https://issues.couchbase.com/browse/NCBC-2768[NCBC-2768]:
+Improve precision of UnixMillisecondsConverter.
+* https://issues.couchbase.com/browse/NCBC-2769[NCBC-2769]:
+Avoid heap allocations for default K/V operations.
+* https://issues.couchbase.com/browse/NCBC-2773[NCBC-2773]:
+Simplify AsyncState handling of Opaque.
+* https://issues.couchbase.com/browse/NCBC-2774[NCBC-2774]:
+Make OperationBuilderPool tunable.
+* https://issues.couchbase.com/browse/NCBC-2775[NCBC-2775]:
+Improve array handling performance throughout the SDK.
 
 
 == Version 3.1.0 (2 December 2020)

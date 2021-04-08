@@ -3,6 +3,7 @@
 
 .Getting Started
 * xref:hello-world:start-using-sdk.adoc[Start Using the .NET SDK]
+// ** xref:hello-world:platform-help.adoc[Platform Introduction]
 // * xref:hello-world:sample-application.adoc[Sample Application]
 
 .Working with Data
@@ -32,6 +33,7 @@
 * xref:howtos:error-handling.adoc[Handling Errors]
 * xref:howtos:collecting-information-and-logging.adoc[Logging]
 // * xref:howtos:health-check.adoc[Health Check]
+* xref:howtos:slow-operations-logging.adoc[Slow Operations Logging]
 
 .Learn
 * xref:concept-docs:concepts.adoc[Overview]

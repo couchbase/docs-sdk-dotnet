@@ -125,7 +125,7 @@ namespace DevGuide
             }
         }
 
-        static void Main(string[] args)
+        private new static void Main(string[] args)
         {
             new FieldEncryptionRsa().ExecuteAsync().Wait();
         }

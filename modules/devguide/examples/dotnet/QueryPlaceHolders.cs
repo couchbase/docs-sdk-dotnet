@@ -20,7 +20,7 @@ namespace Couchbase.Net.DevGuide
             //the placeholder values can be provided as a JSON array (if using $1 syntax)
             // or map-like JSON object (if using $name syntax)
             var result = await Cluster.QueryAsync<dynamic>(
-                "SELECT airportname FROM `default` WHERE city=$1 AND type=\"airport\"",
+                PlaceholderStatement,
                 new QueryOptions().Parameter(city)).ConfigureAwait(false);
 
             return result;
@@ -90,7 +90,7 @@ namespace Couchbase.Net.DevGuide
             }
         }
 
-        static async Task Main(string[] args)
+        private new static async Task Main(string[] args)
         {
             await new QueryPlaceHolders().ExecuteAsync().ConfigureAwait(false);
         }

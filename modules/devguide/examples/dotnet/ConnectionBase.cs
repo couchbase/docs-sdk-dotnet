@@ -17,6 +17,11 @@ namespace Couchbase.Net.DevGuide
 
         protected async Task ConnectAsync()
         {
+            await ConnectAsync("default");
+        }
+
+        protected async Task ConnectAsync(String bucketName)
+        {
             IServiceCollection serviceCollection = new ServiceCollection();
             serviceCollection.AddLogging(builder => builder
                 .AddFilter(level => level >= LogLevel.Debug)
@@ -34,7 +39,7 @@ namespace Couchbase.Net.DevGuide
                 .WithLogging(loggerFactory);
 
             Cluster = await Couchbase.Cluster.ConnectAsync(options).ConfigureAwait(false);
-            Bucket = await Cluster.BucketAsync("default").ConfigureAwait(false);
+            Bucket = await Cluster.BucketAsync(bucketName).ConfigureAwait(false);
         }
 
         public virtual async Task ExecuteAsync()

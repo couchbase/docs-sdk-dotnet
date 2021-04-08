@@ -22,7 +22,7 @@ namespace Couchbase.Net.DevGuide
 
             try
             {
-                // Get non-existent document. 
+                // Get non-existent document.
                 // Note that it's enough to check the Status property,
                 // We're only checking all three to show they exist.
                 await collection.GetAsync(key).ConfigureAwait(false);
@@ -47,7 +47,7 @@ namespace Couchbase.Net.DevGuide
             Console.WriteLine("Found: " + docResult.ContentAs<Data>());
         }
 
-        static async Task Main(string[] args)
+        private new static async Task Main(string[] args)
         {
             await new Retrieve().ExecuteAsync().ConfigureAwait(false);
         }

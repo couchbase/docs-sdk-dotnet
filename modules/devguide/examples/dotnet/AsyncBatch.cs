@@ -8,7 +8,7 @@ namespace Couchbase.Net.DevGuide
 {
     class AsyncBatch : ConnectionBase
     {
-        static async Task Main(string[] args)
+        private new static async Task Main(string[] args)
         {
             await new AsyncBatch().ExecuteAsync().ConfigureAwait(false);
             Console.Read();
@@ -23,7 +23,7 @@ namespace Couchbase.Net.DevGuide
 
             // ReSharper disable once IdentifierTypo
             var upserts = new List<Task<IMutationResult>>();
-            ids.ForEach(x => upserts.Add(Bucket.DefaultCollection().UpsertAsync(x, x))); 
+            ids.ForEach(x => upserts.Add(Bucket.DefaultCollection().UpsertAsync(x, x)));
             await Task.WhenAll(upserts).ConfigureAwait(false);
 
             var gets = new List<Task<IGetResult>>();
