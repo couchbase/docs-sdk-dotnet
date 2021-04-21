@@ -23,6 +23,7 @@ namespace Couchbase.Examples
             await new KvOperations().ExecuteAsync();
             Console.WriteLine("Hit Enter to continue.");
             Console.Read();
+            await new CollectionManager().ExecuteAsync();
         }
     }
 }

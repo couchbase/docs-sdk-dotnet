@@ -14,7 +14,7 @@ namespace Couchbase.Examples
 
             var cluster = await Cluster.ConnectAsync("couchbase://localhost", "Administrator", "password");
             var bucket = await cluster.BucketAsync("travel-sample");
-            var collection = bucket.DefaultCollection();
+            var collection = await bucket.DefaultCollectionAsync();
 
             {
                 // tag::insert[]
