@@ -3,48 +3,69 @@
 :page-aliases: ROOT:event-bus-metrics,ROOT:logging,ROOT:collecting-information-and-logging
 
 [abstract]
-Couchbase .NET SDK3 relies on the Microsoft.Extensions.Logging API and specifically on the Microsoft.Extensions.Logging.ILoggerFactory interface to support a wide variety of compatible 3rd party logging implementations such as Serilog, NLog and others. Further details can be found in the Microsoft documentation for https://docs.microsoft.com/en-us/dotnet/core/extensions/logging[Logging] and https://docs.microsoft.com/en-us/dotnet/core/extensions/logging-providers[Logging Providers]
+Couchbase .NET SDK3 relies on the Microsoft.Extensions.Logging API and specifically on the `Microsoft.Extensions.Logging.ILoggerFactory` interface to support a wide variety of compatible 3rd party logging implementations such as Serilog, NLog, and others. 
+Further details can be found in the Microsoft documentation for https://docs.microsoft.com/en-us/dotnet/core/extensions/logging[Logging^] and https://docs.microsoft.com/en-us/dotnet/core/extensions/logging-providers[Logging Providers^].
+
 
 == Couchbase .NET SDK Logging Basics
 
-The Couchbase .NET SDK allows for any logging provider to be plugged in as long as it implements the Microsoft.Extensions.Logging.ILoggerFactory interface. It does this via Method injection in the ClusterOptions class which is passed to the Cluster object when Cluster.ConnectAsync is called. 
+The Couchbase .NET SDK allows for any logging provider to be plugged in as long as it implements the `Microsoft.Extensions.Logging.ILoggerFactory` interface. 
+It does this via Method injection in the `ClusterOptions` class which is passed to the Cluster object when `Cluster.ConnectAsync` is called. 
 
-Note: in most of the examples below the default .NET logging providers are used, otherwise, we are using the https://github.com/serilog/serilog-extensions-logging-file[Serilog one-liner] logging https://www.nuget.org/packages/Serilog.Extensions.Logging.File/[package]:
+Note: In most of the examples below, the default .NET logging providers are used,  -- otherwise, we are using the https://github.com/serilog/serilog-extensions-logging-file[Serilog one-liner^] logging https://www.nuget.org/packages/Serilog.Extensions.Logging.File/[package^]:
 
+[source]
+----
 Install-Package Serilog.Extensions.Logging.File -Version 2.0.0
+----
 
+[source]
+----
 <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
+----
 
-== Logging in a .NET Core non-host application
 
-If you are not using a `Host` and not using Dependency Injection, you can still configure a `ILoggerFactory` using the SDK. In this example we have a dependency on Serilog single file logging:
+== Logging in a .NET Core Non-Host Application
 
+If you are not using a `Host`, and not using Dependency Injection, you can still configure a `ILoggerFactory` using the SDK. 
+In this example we have a dependency on Serilog single file logging:
+
+[source]
+----
 Install-Package Serilog.Extensions.Logging.File -Version 2.0.0
+----
 
-We are using a .NET Core Console Application and simply instantiate the `ILoggingProvider`:
+We are using a .NET Core Console Application, and simply instantiate the `ILoggingProvider`:
 
 [source,csharp]
 ----
 include::example$Couchbase.Examples.Logging.NonHost/Program.cs[tag=non-host,indent=0]
 ----
 
-We then call `ClusterOptions.WithLogging` and pass in the `ILoggerProvider` that we instatiated and connect to the `Cluster` as usual.
+We then call `ClusterOptions.WithLogging` and pass in the `ILoggerProvider` that we instatiated, and connect to the `Cluster` as usual.
+
 
 == Logging in applications targeting the .NET Core Generic Host
-For .NET Core 3.0 and greater applications, the Generic https://docs.microsoft.com/en-us/dotnet/core/extensions/generic-host[Host] is used to configure logging.
+
+For .NET Core 3.0 and greater applications, the Generic https://docs.microsoft.com/en-us/dotnet/core/extensions/generic-host[Host^] is used to configure logging.
 
 [source,csharp]
 ----
 include::example$Couchbase.Examples.Logging.GenericHost/Program.cs[tag=generic-host,indent=0]
 ----
 
-In the example above, `Host.ConfigureLogging` is called in the `CreateHostBuilder` method where we clear any previously registered logging providers (.NET registers a couple by default). Then `AddConsole` is called to configure logging to the console which will be visible when you run the application.
+In the example above, `Host.ConfigureLogging` is called in the `CreateHostBuilder` method where we clear any previously registered logging providers (.NET registers a couple by default). 
+Then `AddConsole` is called to configure logging to the console which will be visible when you run the application.
 
-Note that because we are using https://www.nuget.org/packages/Couchbase.Extensions.DependencyInjection/[Couchbase Dependency Injection], we do not have to explicitly call `ClusterOptions.WithLogging(ILoggerFactory factory)` and pass in the `ILoggerFactory`; this will be handled by https://www.nuget.org/packages/Couchbase.Extensions.DependencyInjection/[Couchbase Dependency Injection] internally.
+Note that because we are using https://www.nuget.org/packages/Couchbase.Extensions.DependencyInjection/[Couchbase Dependency Injection^], we do not have to explicitly call `ClusterOptions.WithLogging(ILoggerFactory factory)` and pass in the `ILoggerFactory`; 
+this will be handled by https://www.nuget.org/packages/Couchbase.Extensions.DependencyInjection/[Couchbase Dependency Injection^] internally.
+
 
 == Logging in applications targeting the .NET Full Framework
 
-Targeting logging in .NET Full applications is a bit more challenging in that there is no DI container, thus the standard way of injecting the logging dependencies won't work. Furthermore, since there is no support for the `Microsoft.Extensions.Logging` interfaces, we'll need to create our own wrappers. One for a Log4Net `ILogger` implementation:
+Targeting logging in .NET Full applications is a bit more challenging in that there is no DI container, thus the standard way of injecting the logging dependencies won't work. 
+Furthermore, since there is no support for the `Microsoft.Extensions.Logging` interfaces, we'll need to create our own wrappers. 
+One for a Log4Net `ILogger` implementation:
 
 [source,csharp]
 ----
@@ -72,7 +93,7 @@ Finally, we put it all together:
 include::example$Couchbase.Examples.Logging.FullFramework/Program.cs[tag=full-full-framework,indent=0]
 ----
 
-Note that we suggest .NET Core or .NET 5.0 over using SDK3 in .NET Full Framework apps as the integration is much more difficult.
+Note that we suggest .NET Core or .NET 5.0 over using SDK3 in .NET Full Framework apps, as the integration is much more difficult.
 
 //== Logging in a ASP.NET Full Framework application
 
