@@ -1,9 +1,10 @@
 = Synchronous Replication
+:description: Durability
 :navtitle: Synchronous Replication
 :page-topic-type: howto
 
 [abstract]
-Durability 
+{description}
 
 From Couchbase Data Platform 6.5, 
 

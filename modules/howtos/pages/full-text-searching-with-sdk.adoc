@@ -1,10 +1,11 @@
 = Full Text Search (FTS) Using the .NET SDK with Couchbase Server
+:description: You can use the Full Text Search service (FTS) to create queryable full-text indexes in Couchbase Server.
 :navtitle: Searching from the SDK
 :page-topic-type: howto
 
 
 [abstract]
-You can use the Full Text Search service (FTS) to create queryable full-text indexes in Couchbase Server.
+{description}
 
 
 

@@ -1,9 +1,10 @@
 = Collecting Information and Logging in the .NET SDK with Couchbase Server
+:description: The logging infrastructure in the .NET SDK depends on which .NET runtime you're targerting.
 :navtitle: Collecting Information
 :page-aliases: ROOT:event-bus-metrics,ROOT:logging,ROOT:collecting-information-and-logging
 
 [abstract]
-The logging infrastructure in the .NET SDK depends on which .NET runtime you're targerting.
+{description}
 For applications that are targeting .NET Framework 4.5.2+ the SDK uses the Apache Common Infrastructure Libraries and applications that are targeting .NET Core the SDK uses Microsoft.Extensions.Logging.
 
 == Logging in applications targeting .NET Framework 4.5.2+

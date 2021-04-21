@@ -1,10 +1,11 @@
 
 = Durability
+:description: Durability must be traded off against performance.
 :navtitle: Durability
 :page-topic-type: landing-page
 
 [abstract]
-Durability must be traded off against performance.
+{description}
 
 
 

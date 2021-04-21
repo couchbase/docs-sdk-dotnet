@@ -1,9 +1,10 @@
 = Install and Start Using the .NET SDK with Couchbase Server
+:description: The Couchbase .NET SDK enables you to interact with a Couchbase Server cluster from .NET using C# and other .NET languages.
 :page-aliases: ROOT:getting-started,ROOT:start-using,ROOT:hello-couchbase,ROOT:start-using-sdk
 :navtitle: Start Using the SDK
 
 [abstract]
-The Couchbase .NET SDK enables you to interact with a Couchbase Server cluster from .NET using C# and other .NET languages.
+{description}
 It offers an asynchronous API based on the _Task-based Asynchronous Pattern (TAP)_.
 
 The Couchbase .NET client allows applications to connect to Couchbase Server using any Common Language Runtime (CLR) language, including C#, F#, and VB.NET. 

@@ -1,7 +1,8 @@
 = Caching Example Use Case
+:description: A walk-through of the basics of Key-Value operations with Couchbase, through the lens of a REST api caching layer.
 
 [abstract]
-A walk-through of the basics of Key-Value operations with Couchbase, through the lens of a REST api caching layer.
+{description}
 
 == Prerequisites
 This example uses https://github.com/aspnet/AspNetCore[ASP.NET Core] as a web-framework for a C# REST API, and version 3 of the Couchbase SDK (available on Nuget).

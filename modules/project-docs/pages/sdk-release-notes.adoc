@@ -1,4 +1,5 @@
 = Couchbase .NET SDK Release Notes and Archives
+:description: Release notes, installation instructions, and download archive for the Couchbase .NET Client.
 :navtitle: Release Notes
 :page-topic-type: project-doc
 :page-aliases: relnotes-dotnet-sdk
@@ -6,7 +7,7 @@
 
 // tag::all[]
 [abstract]
-Release notes, installation instructions, and download archive for the Couchbase .NET Client.
+{description}
 
 include::hello-world:partial$supported.adoc[]
 
