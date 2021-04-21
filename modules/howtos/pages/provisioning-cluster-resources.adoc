@@ -61,7 +61,7 @@ The following example creates a "hello" bucket:
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/provisioning-resources-buckets.go[tag=createBucket]	
+include::devguide:example$go/provisioning-resources-buckets.go[tag=createBucket]
 ----
 
 We can now get this bucket and update it to enable Flush:
@@ -97,7 +97,52 @@ The `Flush` operation may fail if the bucket does not have flush enabled, in tha
 
 == Collection Management
 
-This is a xref:6.5@server:developer-preview:collections/collections-overview.adoc[Developer Preview feature], see the https://docs.couchbase.com/sdk-api/couchbase-net-client/html/N_Couchbase_Management_Collections.htm[API doc].
+[.status]#Developer Preview#
+
+The CollectionManager interface may be used to create and delete scopes and collections from the Couchbase cluster.
+It is instantiated through the `Bucket.collections()` method.
+Refer to the https://docs.couchbase.com/sdk-api/couchbase-net-client/html/N_Couchbase_Management_Collections.htm[`CollectionManager` API documentation]
+for further details.
+
+[source,csharp]
+----
+include::example$Couchbase.Examples/CollectionManager.cs[tag=create-collection-manager,indent=0]
+----
+
+You can create a scope:
+
+[source,csharp]
+----
+include::example$Couchbase.Examples/CollectionManager.cs[tag=create-scope,indent=0]
+----
+
+You can then create a collection within that scope:
+
+[source,csharp]
+----
+include::example$Couchbase.Examples/CollectionManager.cs[tag=create-collection,indent=0]
+----
+
+Finally, you can drop unneeded collections and scopes:
+
+[source,csharp]
+----
+include::example$Couchbase.Examples/CollectionManager.cs[tag=drop-collection,indent=0]
+
+include::example$Couchbase.Examples/CollectionManager.cs[tag=drop-scope,indent=0]
+----
+
+Note that you require at least the https://docs.couchbase.com/server/7.0/learn/security/roles.html#bucket-admin[Bucket Admin] privilege to create or drop a Scope.
+The same role also lets you manage Collections, though a more minimal set of privileges is https://docs.couchbase.com/server/7.0/learn/security/roles.html#manage-collections-in-scope[Manage Collections in Scope] along with https://docs.couchbase.com/server/7.0/learn/security/roles.html#data-reader[Data Reader].
+
+You can create users with the appropriate RBAC programmatically:
+
+[source,csharp]
+----
+include::example$Couchbase.Examples/CollectionManager.cs[tag=bucketAdmin, indent=0]
+
+include::example$Couchbase.Examples/CollectionManager.cs[tag=scopeAdmin, indent=0]
+----
 
 ////
 == Index Management
