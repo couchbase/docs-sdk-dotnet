@@ -1,4 +1,5 @@
 = Distributed Transactions from the .NET SDK
+:description: A practical guide to using Couchbase’s distributed ACID transactions, via the .NET API.
 :navtitle: ACID Transactions
 :page-topic-type: howto
 :page-aliases: acid-transactions.adoc
@@ -7,7 +8,7 @@
 
 
 [abstract]
-A practical guide to using Couchbase’s distributed ACID transactions, via the .NET API.
+{description}
 
 
 include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=intro]

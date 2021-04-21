@@ -1,8 +1,9 @@
 = Sample Application
+:description: Our Travel Sample Application gives you a quick introduction to using the SDK with Couchbase Server, in particular the powerful N1QL language of our Query service.
 
 
 
-Our Travel Sample Application gives you a quick introduction to using the SDK with Couchbase Server, in particular the powerful N1QL language of our Query service.
+{description}
 
 
 == Requirements

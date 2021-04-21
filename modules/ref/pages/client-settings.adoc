@@ -1,10 +1,11 @@
 = Client Settings for the .NET SDK
+:description: pass:q[The `ClusterOptions` class enables you to configure .NET SDK options for bootstrapping, timeouts, reliability, and performance.]
 :nav-title: Client Settings
 :page-topic-type: reference
 :page-aliases: ROOT:client-settings, ROOT:env-config, ROOT:configuring-the-client
 
 [abstract]
-The `ClusterOptions` class enables you to configure .NET SDK options for bootstrapping, timeouts, reliability, and performance. You can configure the client programmatically using JSON config files, Environmental variables settings,  XML based configuration such has app.config or web.config files.
+{description} You can configure the client programmatically using JSON config files, Environmental variables settings,  XML based configuration such has app.config or web.config files.
 
 == Configuration Basics
 

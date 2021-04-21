@@ -1,6 +1,7 @@
 = Using Couchbase .NET SDK with Visual Studio 2019 or VSCode
+:description: The following document explains how to get up in running developing applications with the new Couchbase .NET SDK 3.0.
 
-The following document explains how to get up in running developing applications with the new Couchbase .NET SDK 3.0.
+{description}
 The SDK is based off of the .NET Standard 2.0 and supports development targeting various platforms: Windows, Linux and MacOS.
 
 

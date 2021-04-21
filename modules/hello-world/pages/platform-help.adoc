@@ -1,9 +1,10 @@
 = Setting Up Couchbase .NET SDK with Visual Studio 2019 or VSCode
+:description: pass:q[Discover how to get up and running developing applications with the Couchbase .NET SDK 3.0+ using `Visual Studio 2019` or `Visual Studio Code`.]
 :page-aliases: ROOT:platform-introduction,ROOT:platform-help,
 :navtitle: Setting Up the .NET SDK
 
 [abstract]
-Discover how to get up and running developing applications with the Couchbase .NET SDK 3.0+ using `Visual Studio 2019` or `Visual Studio Code`. 
+{description}
 
 
 A simple .NET orientation intro for _non-_.NET folk who are evaluating the Couchbase .NET SDK.

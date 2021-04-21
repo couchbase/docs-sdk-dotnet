@@ -1,11 +1,12 @@
 = Sub-Document Operations with the .NET SDK
+:description: Sub-Document operations can be used to efficiently access and change parts of documents.
 :navtitle: Sub-Doc Operations
 :page-topic-type: howto
 :lang: csharp
 :page-aliases: ROOT:sdk-xattr-example.adoc
 
 [abstract]
-Sub-Document operations can be used to efficiently access and change parts of documents.
+{description}
 
 
 

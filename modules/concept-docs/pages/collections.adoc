@@ -1,7 +1,8 @@
 = Collections
+:description: pass:q[Available as a _Developer Preview_ in Couchbase Server 6.5.]
 
 [abstract]
-Available as a _Developer Preview_ in Couchbase Server 6.5.
+{description}
 
 
 
