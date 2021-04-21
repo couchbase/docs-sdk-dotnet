@@ -6,7 +6,7 @@
 [abstract]
 A practical guide for getting started with Field-Level Encryption, showing how to encrypt and decrypt JSON fields using the .NET SDK.
 
-For a high-level overview of this feature, see xref:concept-docs:encryption.adoc[].
+For a high-level overview of this feature, see the xref:concept-docs:encryption.adoc[Field-Level Encryption discussion doc].
 
 [#package]
 == Packaging
@@ -14,12 +14,13 @@ For a high-level overview of this feature, see xref:concept-docs:encryption.adoc
 The Couchbase .NET SDK works together with the https://github.com/couchbase/dotnet-couchbase-encryption[.NET Couchbase Encryption^] library to provide support for encryption and decryption of JSON fields.
 This library includes cryptographic algorithms and keyrings you can use out of the box, and provides a framework for implementing your own crypto components.
 
-NOTE: The encryption code is packaged as an optional library because it is released under a https://github.com/couchbase/dotnet-couchbase-encryption/blob/master/LICENSE.md[different license^] than the Couchbase .NET SDK.
+NOTE: The encryption code is packaged as an optional library because it is released under a https://github.com/couchbase/dotnet-couchbase-encryption/blob/master/LICENSE.md[different license^] from the Couchbase .NET SDK.
 To use the encryption library, you have to explicitly include this dependency in your project configuration.
 Refer to the xref:#maven-coordinates[dependencies section].
 
 [#requirements]
 == Requirements
+
 * Couchbase .NET SDK version `3.1.3` or later.
 * .NET Couchbase Encryption version `3.0.0` or later.
 
@@ -32,6 +33,7 @@ Refer to the xref:#maven-coordinates[dependencies section].
 ----
 
 See the https://www.nuget.org/packages/Couchbase.Extensions.Encryption/[NuGet Package Page^] for the latest version.
+
 
 == Configuration
 
@@ -47,7 +49,7 @@ include::example$EncryptingUsingSDK.cs[tag=configuration.cs,indent=0]
 
 Two modes of operation are available:
 
-* Transparent encryption/decryption using `EncryptedFieldAttribute` on POCO's on deserialization/serialization.
+* Transparent encryption/decryption using `EncryptedFieldAttribute` on POCOs on deserialization/serialization.
 * Manual field editing using `JObjectExtensions` and the `CryptoManager` itself.
 
 === Data Binding Example
