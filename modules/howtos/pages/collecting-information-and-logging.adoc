@@ -3,194 +3,100 @@
 :page-aliases: ROOT:event-bus-metrics,ROOT:logging,ROOT:collecting-information-and-logging
 
 [abstract]
-The logging infrastructure in the .NET SDK depends on which .NET runtime you're targerting.
-For applications that are targeting .NET Framework 4.5.2+ the SDK uses the Apache Common Infrastructure Libraries and applications that are targeting .NET Core the SDK uses Microsoft.Extensions.Logging.
+Couchbase .NET SDK3 relies on the Microsoft.Extensions.Logging API and specifically on the `Microsoft.Extensions.Logging.ILoggerFactory` interface to support a wide variety of compatible 3rd party logging implementations such as Serilog, NLog, and others. 
+Further details can be found in the Microsoft documentation for https://docs.microsoft.com/en-us/dotnet/core/extensions/logging[Logging^] and https://docs.microsoft.com/en-us/dotnet/core/extensions/logging-providers[Logging Providers^].
 
-== Logging in applications targeting .NET Framework 4.5.2+
 
-The Apache Common infrastructure libraries provides a common interface for logging adapters.
-The SDK currently uses version 3.4.1 of Common.Logging for versions Couchbase .NET SDK v2.6.0 and greater.
+== Couchbase .NET SDK Logging Basics
 
-In order to use logging within the SDK, you need to reference the packages for the adapter you want to use.
-There are adapters available for all the major logging implementations.
-More information and a list of available adapters is available on the project website http://net-commons.github.io/common-logging/[here^].
+The Couchbase .NET SDK allows for any logging provider to be plugged in as long as it implements the `Microsoft.Extensions.Logging.ILoggerFactory` interface. 
+It does this via Method injection in the `ClusterOptions` class which is passed to the Cluster object when `Cluster.ConnectAsync` is called. 
 
-The recommended dependencies for Couchbase .NET SDK v2.6.0 greater are:
+Note: In most of the examples below, the default .NET logging providers are used,  -- otherwise, we are using the https://github.com/serilog/serilog-extensions-logging-file[Serilog one-liner^] logging https://www.nuget.org/packages/Serilog.Extensions.Logging.File/[package^]:
 
-* Log4Net v2.07
-* Common.Logging 3.4.1
-* Common.Logging.Core 3.4.1
-* Common.Logging.Log4Net207 v3.4.1
-
-The following steps describe the process for using the Log4Net Adapter with the SDK:
-
-[#steps]
-. Using the NuGet Package Manager in Visual Studio, include the following package in your project: Common.Logging.Log4Net207 image:common-logging-log4net207.png[]
-. In your [.path]_App.Config_ or [.path]_Web.Config_, add the following elements between the `<configuration> and </configuration>` tags so that your configuration looks like this:
-+
-[source,xml]
+[source]
 ----
-<?xml version="1.0" encoding="utf-8" ?>
-<configuration>
-  <configSections>
-    <sectionGroup name="common">
-      <section name="logging" type="Common.Logging.ConfigurationSectionHandler, Common.Logging" />
-    </sectionGroup>
-    <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" />
-  </configSections>
-
-  <common>
-    <logging>
-      <factoryAdapter type="Common.Logging.Log4Net.Log4NetLoggerFactoryAdapter, Common.Logging.Log4Net207">
-        <arg key="configType" value="INLINE" />
-      </factoryAdapter>
-    </logging>
-  </common>
-
-  <log4net>
-    <appender name="FileAppender" type="log4net.Appender.FileAppender">
-      <param name="File" value="C:\temp\log.txt" />
-        <layout type="log4net.Layout.PatternLayout">
-          <conversionPattern value="%date [%thread] %level %logger - %message%newline" />
-        </layout>
-    </appender>
-    <root>
-      <level value="DEBUG" />
-        <appender-ref ref="FileAppender" />
-    </root>
-  </log4net>
-
-  <startup>
-    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5.1" />
-  </startup>
-</configuration>
-----
-+
-NOTE: This example creates a FileAppender.
-There's a wide variety of possible appenders and configuration options you can customize to your liking.
-For more information regarding customizing your configuration, check out the http://logging.apache.org/log4net/release/manual/configuration.html[Log4Net documentation^].
-
-== Logging in applications targeting .NET Core
-
-As part of the new .NET Core runtime, Microsoft have added a new abstraction interface.
-This is conceptually very similar to the Common.Logging, however it also has additional support built in for ASP.NET 5 and other Microsoft libraries.
-
-To get logging to work within the .NET SDK, you need will need to add a package for the adapter to connect with.
-There are a number of logging implementations based on Microsoft.Extensions.Logging that can be viewed https://github.com/aspnet/Logging[here^].
-There are also some basic Microsoft provided adapters such as Debug, Console and EventLog.
-
-*Using NLog in a Console Application*
-
-The following instructions show you how to get up and running with NLog in a Console Application with the Couchbase .NET SDK.
-
-Dependencies:
-
-* CouchbaseNetClient v3.0.0.
-* NLog.Extensions.Logging 1.6.2
-
-1.
-Add the dependencies above using the NuGet Package Manager: image:logging-nlog-package-reference.png[]
-
-2.
-Copy the following nlog.config file into your project and set "Copy to output directory" to "Copy always" in Visual Studio:
-
-[source,xml]
-----
-<?xml version="1.0" encoding="utf-8" ?>
-    <!-- XSD manual extracted from package NLog.Schema: https://www.nuget.org/packages/NLog.Schema-->
-    <nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd" xsi:schemaLocation="NLog NLog.xsd"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        autoReload="true"
-        internalLogFile="c:\temp\console-example-internal.log"
-        internalLogLevel="Info" >
-
-        <!-- the targets to write to -->
-        <targets>
-        <!-- write logs to file -->
-        <target xsi:type="File" name="target1" fileName="c:\temp\console-example.log"
-            layout="${date}|${level:uppercase=true}|${message} ${exception}|${logger}|${all-event-properties}" />
-        <target xsi:type="Console" name="target2"
-            layout="${date}|${level:uppercase=true}|${message} ${exception}|${logger}|${all-event-properties}" />
-
-        </targets>
-
-        <!-- rules to map from logger name to target -->
-        <rules>
-        <logger name="*" minlevel="Trace" writeTo="target1,target2" />
-
-        </rules>
-    </nlog>
-...
-</xml>
+Install-Package Serilog.Extensions.Logging.File -Version 2.0.0
 ----
 
-Add the following code to the class that contains your entrypoint into the application:
+[source]
+----
+<PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
+----
+
+
+== Logging in a .NET Core Non-Host Application
+
+If you are not using a `Host`, and not using Dependency Injection, you can still configure a `ILoggerFactory` using the SDK. 
+In this example we have a dependency on Serilog single file logging:
+
+[source]
+----
+Install-Package Serilog.Extensions.Logging.File -Version 2.0.0
+----
+
+We are using a .NET Core Console Application, and simply instantiate the `ILoggingProvider`:
 
 [source,csharp]
 ----
-include::example$Logging.cs[tag=log,indent=0]
+include::example$Couchbase.Examples.Logging.NonHost/Program.cs[tag=non-host,indent=0]
 ----
 
-*Using NLog in a Web Application*
+We then call `ClusterOptions.WithLogging` and pass in the `ILoggerProvider` that we instatiated, and connect to the `Cluster` as usual.
 
-The following instructions show how to get up and running with the NLog adapter with the SDK in an ASP.NET 5 web application using the newer Visual Studio 2017 format:
 
-. Add the following two nuget dependencies: _CouchbaseNetClient 3.0.0_ and _NLog.Web.AspNetCore 4.9.1_.
-+
-image:logging-nuget-nlog-web-aspnet.png[]
+== Logging in applications targeting the .NET Core Generic Host
 
-. Create a _nlog.config_ in the root of your project and  set "Copy to output directory" to "Copy always" in Visual Studio.
-An example config could look like this:
-+
-[source,xml]
-----
-<?xml version="1.0" encoding="utf-8" ?>
-<nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    autoReload="true"
-    internalLogLevel="info"
-    internalLogFile="c:\temp\internal-nlog.txt">
+For .NET Core 3.0 and greater applications, the Generic https://docs.microsoft.com/en-us/dotnet/core/extensions/generic-host[Host^] is used to configure logging.
 
-    <!-- enable asp.net core layout renderers -->
-    <extensions>
-        <add assembly="NLog.Web.AspNetCore"/>
-    </extensions>
-
-    <!-- the targets to write to -->
-    <targets>
-    <!-- write logs to file  -->
-    <target xsi:type="File" name="allfile" fileName="c:\temp\nlog-all-${shortdate}.log"
-        layout="${longdate}|${event-properties:item=EventId_Id}|${uppercase:${level}}|${logger}|${message} ${exception:format=tostring}" />
-
-    <!-- another file log, only own logs. Uses some ASP.NET core renderers -->
-    <target xsi:type="File" name="ownFile-web" fileName="c:\temp\nlog-own-${shortdate}.log"
-        layout="${longdate}|${event-properties:item=EventId_Id}|${uppercase:${level}}|${logger}|${message} ${exception:format=tostring}|url: ${aspnet-request-url}|action: ${aspnet-mvc-action}" />
-    </targets>
-
-    <!-- rules to map from logger name to target -->
-    <rules>
-    <!--All logs, including from Microsoft-->
-    <logger name="*" minlevel="Trace" writeTo="allfile" />
-
-    <!--Skip non-critical Microsoft logs and so log only own logs-->
-    <logger name="Microsoft.*" maxLevel="Info" final="true" /> <!-- BlackHole without writeTo -->
-    <logger name="*" minlevel="Trace" writeTo="ownFile-web" />
-    </rules>
-</nlog>
-----
-
-. In Program.cs add the following code to the Main() method:
-+
 [source,csharp]
 ----
-include::example$WebLogging.cs[tag=main,indent=0]
+include::example$Couchbase.Examples.Logging.GenericHost/Program.cs[tag=generic-host,indent=0]
 ----
 
-. In startup.cs update the _ConfigureServices_ method to look like the following:
-+
+In the example above, `Host.ConfigureLogging` is called in the `CreateHostBuilder` method where we clear any previously registered logging providers (.NET registers a couple by default). 
+Then `AddConsole` is called to configure logging to the console which will be visible when you run the application.
+
+Note that because we are using https://www.nuget.org/packages/Couchbase.Extensions.DependencyInjection/[Couchbase Dependency Injection^], we do not have to explicitly call `ClusterOptions.WithLogging(ILoggerFactory factory)` and pass in the `ILoggerFactory`; 
+this will be handled by https://www.nuget.org/packages/Couchbase.Extensions.DependencyInjection/[Couchbase Dependency Injection^] internally.
+
+
+== Logging in applications targeting the .NET Full Framework
+
+Targeting logging in .NET Full applications is a bit more challenging in that there is no DI container, thus the standard way of injecting the logging dependencies won't work. 
+Furthermore, since there is no support for the `Microsoft.Extensions.Logging` interfaces, we'll need to create our own wrappers. 
+One for a Log4Net `ILogger` implementation:
+
 [source,csharp]
 ----
-include::example$WebStartup.cs[tag=configureservices,indent=0]
+include::example$Couchbase.Examples.Logging.FullFramework/Log4NetLogger.cs[tag=full-log4netlogger,indent=0]
 ----
 
-More details on configuring NLog with Microsoft.Extensions.Logging can be found https://github.com/NLog/NLog.Extensions.Logging[here^].
+Then a `Microsoft.Extensions.Logging.ILoggingProvider` implementation:
+
+[source,csharp]
+----
+include::example$Couchbase.Examples.Logging.FullFramework/Log4NetProvider.cs[tag=full-log4netprovider,indent=0]
+----
+
+And some extensions to make it easier to use:
+
+[source,csharp]
+----
+include::example$Couchbase.Examples.Logging.FullFramework/Log4NetExtensions.cs[tag=full-log4netextensions,indent=0]
+----
+
+Finally, we put it all together:
+
+[source,csharp]
+----
+include::example$Couchbase.Examples.Logging.FullFramework/Program.cs[tag=full-full-framework,indent=0]
+----
+
+Note that we suggest .NET Core or .NET 5.0 over using SDK3 in .NET Full Framework apps, as the integration is much more difficult.
+
+//== Logging in a ASP.NET Full Framework application
+
+//== Logging in an ASP.NET Core application
+
+//== Logging with Serilog one-liner logging
