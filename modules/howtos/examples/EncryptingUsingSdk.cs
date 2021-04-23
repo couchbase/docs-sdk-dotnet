@@ -15,7 +15,7 @@ namespace Couchbase.Examples
     {
         public async Task ExampleAsync()
         {
-            // #tag::encrypting_using_sdk_1[]
+            // tag::encrypting_using_sdk_1[]
             var provider =
                 new AeadAes256CbcHmacSha512Provider(
                     new AeadAes256CbcHmacSha512Cipher(), new Keyring(new IKey[]
@@ -36,7 +36,7 @@ namespace Couchbase.Examples
 
             var cluster = await Cluster.ConnectAsync(clusterOptions);
             var bucket = await cluster.BucketAsync("default");
-            // #tag::encrypting_using_sdk_1[]
+            // end::encrypting_using_sdk_1[]
 
             var id = Guid.NewGuid().ToString();
 
@@ -45,12 +45,12 @@ namespace Couchbase.Examples
                 IsReplicant = true
             };
 
-            // #tag::encrypting_using_sdk_3
+            // tag::encrypting_using_sdk_3[]
             var collection = await bucket.DefaultCollectionAsync();
 
             await collection.UpsertAsync(id, employee, options => { options.Expiry(TimeSpan.FromSeconds(10)); })
                 .ConfigureAwait(false); //encrypts the IsReplicant field
-            // #end::encrypting_using_sdk_3
+            // end::encrypting_using_sdk_3[]
 
             await collection.UpsertAsync(id, employee, options =>
                 {
@@ -59,26 +59,26 @@ namespace Couchbase.Examples
                 })
                 .ConfigureAwait(false);
 
-            // #tag::encrypting_using_sdk_4
+            // tag::encrypting_using_sdk_4[]
             var getResult1 = await collection.GetAsync(id, options => options.Transcoder(encryptedTranscoder))
                 .ConfigureAwait(false);
 
             var encrypted = getResult1.ContentAs<JObject>();
             Console.WriteLine(encrypted);
-            // #end::encrypting_using_sdk_4
+            // end::encrypting_using_sdk_4[]
 
-            // #tag::encrypting_using_sdk_5
+            // tag::encrypting_using_sdk_5[]
             var getResult2 = await collection.GetAsync(id, options => options.Transcoder(encryptedTranscoder))
                 .ConfigureAwait(false);
 
             var readItBack = getResult2.ContentAs<Employee>();
             Console.WriteLine(readItBack.IsReplicant);
-            // #end::encrypting_using_sdk_5
+            // end::encrypting_using_sdk_5[]
         }
 
         public void KeyStore()
         {
-            // #tag::encrypting_using_sdk_8
+            // tag::encrypting_using_sdk_8[]
             var keyBytes = new Span<byte>(new byte[64]);
             RandomNumberGenerator.Fill(keyBytes);
 
@@ -86,9 +86,9 @@ namespace Couchbase.Examples
             {
                 new Key("my-key", keyBytes.ToArray())
             });
-            // #end::encrypting_using_sdk_8
+            // end::encrypting_using_sdk_8[]
 
-            // #tag::encrypting_using_sdk_9
+            // tag::encrypting_using_sdk_9[]
             var provider =
                 new AeadAes256CbcHmacSha512Provider(
                     new AeadAes256CbcHmacSha512Cipher(), new Keyring(new IKey[]
@@ -100,18 +100,18 @@ namespace Couchbase.Examples
                 .Decrypter(provider.Decrypter())
                 .DefaultEncrypter(provider.Encrypter("test-key"))
                 .Build();
-            // #end::encrypting_using_sdk_9
+            // end::encrypting_using_sdk_9[]
         }
 
         public void Migrating()
         {
             {
-                // #tag::legacy_field_name_prefix
+                // tag::legacy_field_name_prefix[]
                 var cryptoManager = DefaultCryptoManager.Builder()
                     .EncryptedFieldNamePrefix("__crypt_")
                     //other config
                     .Build();
-                // #end::legacy_field_name_prefix
+                // end::legacy_field_name_prefix[]
             }
 
             {
@@ -124,23 +124,23 @@ namespace Couchbase.Examples
 
                 var provider = new AeadAes256CbcHmacSha512Provider(new AeadAes256CbcHmacSha512Cipher(), keyring);
 
-                // #tag::legacy_decrypters
+                // tag::legacy_decrypters[]
                 var cryptoManager = DefaultCryptoManager.Builder()
                     .LegacyAesDecrypters(keyring, "hmacKey")
                     .DefaultEncrypter(provider.Encrypter("upgrade-key"))
                     .Decrypter(provider.Decrypter())
                     .Build();
-                // #end::legacy_decrypters
+                // end::legacy_decrypters[]
             }
         }
 
-        // #tag::encrypting_using_sdk_6
+        // tag::encrypting_using_sdk_2[]
         public class Employee
         {
             [EncryptedField(KeyName = "test-key")]
             public bool IsReplicant { get; set; }
         }
-        // #end::encrypting_using_sdk_2
+        // end::encrypting_using_sdk_2[]
 
         public static byte[] GetFakeKey(int len)
         {
