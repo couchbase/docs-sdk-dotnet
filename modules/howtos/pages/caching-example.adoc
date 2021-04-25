@@ -35,7 +35,7 @@ public async Task Post(int id, [FromBody] string value)
 
 This is about as simple of an API as we can make, and allows us to set and get arbitrary JSON from any key we specify. We also include the `WithExpiry` option, which will automatically delete the document (ie invalidate the cache) after the set amount of time.
 
-But there's many ways this could be improved. For example, what happens in the case of a cache miss? With this code, our view throws an error and Flask returns us a HTTP 500 page. We can fix this by handling the `DocumentNotFoundException` thrown by the get call. Then we can either respond with a HTTP 404, or add a function to get a value from our persistent storage medium.
+But there's many ways this could be improved. For example, what happens in the case of a cache miss? With this code, our view throws an error and Dotnet returns us a HTTP 500 page. We can fix this by handling the `DocumentNotFoundException` thrown by the get call. Then we can either respond with a HTTP 404, or add a function to get a value from our persistent storage medium.
 // TODO: convert to include statements, and actually show returning error codes from http
 [source,csharp]
 ----
