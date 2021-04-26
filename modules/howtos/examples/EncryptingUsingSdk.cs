@@ -1,16 +1,22 @@
-﻿using System;
+﻿#r "nuget: Couchbase.Extensions.Encryption, 2.0.0-dp.1"
+
+using System;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using Couchbase;
 using Couchbase.Encryption;
 using Couchbase.Encryption.Attributes;
 using Couchbase.Encryption.Internal;
 using Couchbase.KeyValue;
 using Newtonsoft.Json.Linq;
 
-namespace Couchbase.Examples
-{
+await new EncryptingUsingSdk().ExampleAsync();
+
+// // Removing namespace as we're running this as a Script
+// namespace Couchbase.Examples
+// {
     public class EncryptingUsingSdk
     {
         public async Task ExampleAsync()
@@ -32,10 +38,11 @@ namespace Couchbase.Examples
 
             var clusterOptions = new ClusterOptions()
                 .WithTranscoder(encryptedTranscoder)
+                .WithConnectionString("couchbase://localhost")
                 .WithCredentials("Administrator", "password");
 
             var cluster = await Cluster.ConnectAsync(clusterOptions);
-            var bucket = await cluster.BucketAsync("default");
+            var bucket = await cluster.BucketAsync("travel-sample");
             // end::encrypting_using_sdk_1[]
 
             var id = Guid.NewGuid().ToString();
@@ -152,4 +159,4 @@ namespace Couchbase.Examples
             return result;
         }
     }
-}
+// }
