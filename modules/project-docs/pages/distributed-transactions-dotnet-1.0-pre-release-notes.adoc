@@ -1,6 +1,8 @@
 = Couchbase Distributed ACID Transactions for .NET SDK Pre-release Archive Release Notes
 :navtitle: Transactions Pre-Release Notes Archive
 :page-topic-type: project-doc
+:description: Historic release notes archive for the 1.0 pre-GA (Alpha & Beta) Couchbase .NET Distributed ACID Transactions Releases.
+
 
 [abstract] 
 Release notes archive for the 1.0 Alpha & Beta Couchbase .NET Distributed ACID Transactions Releases.
