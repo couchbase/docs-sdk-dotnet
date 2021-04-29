@@ -21,8 +21,9 @@ API Docs are available https://docs.couchbase.com/sdk-api/couchbase-transactions
 == Requirements
 
 * Couchbase Server 6.6.1 or above.
-* Couchbase .NET client 3.1.4 or above.  It is recommended you use the package on NuGet.
-include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=requirements]
+* Couchbase .NET client 3.1.4 or above.  
+It is recommended you use the package on NuGet.
+include::6.6@sdk:shared:partial$acid-transactions.adoc[tag=requirements]
 
 
 == Getting Started
@@ -30,7 +31,7 @@ include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=requirements]
 Couchbase transactions require no additional components or services to be configured. 
 Simply add the transactions library into your project.
 Version 1.0.0 was release April 29th, 2021.
-See xref:project-docs:distributed-transactions-dotnet-release-notes.adoc[Release Notes] for the latest version.
+See the xref:project-docs:distributed-transactions-dotnet-release-notes.adoc[Release Notes] for the latest version.
 
 With NuGut this can be accomplished by using the NuGet Package Manager in your IDE:
 
@@ -89,6 +90,7 @@ In dependency injection context, this instance should be injected as a singleton
 include::example$TransactionsExample.cs[tag=init,indent=0]
 ----
 
+
 == Configuration
 
 Transactions can optionally be configured at the point of creating the `Transactions` object:
@@ -110,7 +112,9 @@ As with the Couchbase .NET Client, you should use the library asynchronusly usin
 include::example$TransactionsExample.cs[tag=create,indent=0]
 ----
 
-The asynchronous API allows you to use the thread pool, which can help you scale with excellent efficiency. However, operations inside an individual transaction should be kept in-order and executed using `await` immediately. Do not use fire-and-forget tasks under any circumstances.
+The asynchronous API allows you to use the thread pool, which can help you scale with excellent efficiency. 
+However, operations inside an individual transaction should be kept in-order and executed using `await` immediately. 
+Do not use fire-and-forget tasks under any circumstances.
 
 
 == Examples
@@ -124,6 +128,7 @@ include::example$TransactionsExample.cs[tag=examples,indent=0]
 ----
 
 include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=mechanics]
+
 
 == Getting Documents
 
@@ -144,6 +149,7 @@ Gets will 'read your own writes', e.g. this will succeed:
 include::example$TransactionsExample.cs[tag=getReadOwnWrites,indent=0]
 ----
 
+
 == Mutating Documents
 
 === Inserting
@@ -152,7 +158,6 @@ include::example$TransactionsExample.cs[tag=getReadOwnWrites,indent=0]
 ----
 include::example$TransactionsExample.cs[tag=insert,indent=0]
 ----
-
 
 === Replacing
 
@@ -174,6 +179,7 @@ As with replaces, removing a document requires awaiting a `TransactionGetResult`
 include::example$TransactionsExample.cs[tag=remove,indent=0]
 ----
 
+
 == Committing
 
 Committing is automatic: if there is no explicit call to `ctx.CommitAsync()` at the end of the transaction logic callback, and no exception is thrown, it will be committed.
@@ -192,7 +198,7 @@ An asynchronous cleanup process ensures that once the transaction reaches the co
 
 
 // == A Full Transaction Example
-include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=example]
+include::6.6@sdk:shared:partial$acid-transactions.adoc[tag=example]
 
 A complete version of this example is available on our https://github.com/couchbaselabs/couchbase-transactions-dotnet-examples[GitHub transactions examples page].
 
@@ -200,6 +206,7 @@ A complete version of this example is available on our https://github.com/couchb
 ----
 include::example$TransactionsExample.cs[tag=full,indent=0]
 ----
+
 
 == Rollback
 
@@ -227,6 +234,8 @@ In this case, if `ctx.RollbackAsync()` is reached, then the transaction will be 
 
 After a transaction is rolled back, it cannot be committed, no further operations are allowed on it, and the library will not try to automatically commit it at the end of the code block.
 
+
+
 //  Error Handling
 // tag::error[]
 == Error Handling
@@ -249,12 +258,12 @@ Once a failure has occurred, all other operations tried in this attempt (includi
 Transactions, as they are multi-stage and multi-document, also have a concept of partial success/failure.
 This is signalled to the application through the `TransactionResult.UnstagingComplete` property, described later.
 
-There are three exceptions that the transactions library can raise to the application: `TransactionFailed`, `TransactionExpired` and `TransactionCommitAmbiguous`.
+There are three exceptions that the transactions library can raise to the application: `TransactionFailed`, `TransactionExpired`, and `TransactionCommitAmbiguous`.
 All exceptions derive from `TransactionFailed` for backwards-compatibility purposes.
 // end::error[]
 
 //  txnfailed
-include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed]
+include::6.6@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed]
 
 [source,c#]
 ----
@@ -286,7 +295,8 @@ With default settings this will usually be within a minute, but whatever underly
 If the transaction had not in fact reached the commit point, then the asynchronous cleanup process will instead attempt to roll it back at some point in the future.
 If unable to, any staged metadata from the transaction will not be visible, and will not cause problems (e.g. there are safety mechanisms to ensure it will not block writes to these documents for long).
 
-*Handling:* This error can be challenging for an application to handle.
+==== Handling
+This error can be challenging for an application to handle.
 As with `TransactionFailed` it is recommended that it at least writes any logs from the transaction, for future debugging.
 It may wish to retry the transaction at a later point, or globally extend transactional expiration times to give the protocol additional time to resolve the ambiguity.
 
@@ -310,7 +320,7 @@ Error handling differs depending on whether a transaction is before or after the
 // end::txnfailed1[]
 
 
-=== Full Error Handling Example
+== Full Error Handling Example
 
 Pulling all of the above together, this is the suggested best practice for error handling:
 
@@ -320,7 +330,8 @@ include::example$TransactionsExample.cs[tag=full-error-handling,indent=0]
 ----
 
 
-include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=cleanup]
+// == Asynchronous Cleanup
+include::6.6@sdk:shared:partial$acid-transactions.adoc[tag=cleanup]
 
 ////
 === Monitoring Cleanup
@@ -365,7 +376,7 @@ include::example$TransactionsExample.cs[tag=config_warn,indent=0]
 
 Please see the xref:howtos:collecting-information-and-logging.adoc[.NET SDK logging documentation] for details.
 
-Here is an example of configuring a Microsoft.Extensions.Logging.ILoggingFactory:
+Here is an example of configuring a `Microsoft.Extensions.Logging.ILoggingFactory`:
 
 [source,c#]
 ----
