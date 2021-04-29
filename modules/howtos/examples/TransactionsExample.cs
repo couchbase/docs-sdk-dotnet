@@ -77,82 +77,6 @@ namespace Couchbase.Transactions.Examples
             // #end::config-cleanup[]
         }
 
-        /*
-        async Task DeferredCommit1()
-        {
-
-            // #tag::defer1[]
-            try
-            {
-                var result = await _transactions.RunAsync(async (ctx)=>
-                {
-                    var initial = new {val = 1};
-                    await ctx.InsertAsync(_collection, "a-doc-id", initial).ConfigureAwait(false);
-
-                    // Defer means don't do a commit right now.  `serialized` in the result will be present.
-                    await ctx.DeferAsync().ConfigureAwait(false);
-                }).ConfigureAwait(false);
-
-                // Available because ctx.defer() was called
-                TransactionSerializedContext serialized = result.Serialized;
-
-                // This is going to store a serialized form of the transaction to pass around
-                var encoded = serialized.EncodeAsBytes();
-
-            }
-            catch (TransactionFailedException e)
-            {
-                // System.err is used for example, log failures to your own logging system
-                Console.Error.WriteLine("Transaction did not reach commit point");
-                Console.Error.WriteLine(e);
-            }
-            // #end::defer1[]
-        }
-
-        async Task DeferredCommit2(byte[] encoded)
-        {
-            // #tag::defer2[]
-            var serialized = TransactionSerializedContext.CreateFrom(encoded);
-
-            try
-            {
-                var result = await _transactions.RunAsync(async (ctx) =>
-                {
-                    await ctx.CommitAsync().ConfigureAwait(false);
-                });
-
-            }
-            catch (TransactionFailedException e)
-            {
-                // System.err is used for example, log failures to your own logging system
-                System.err.println("Transaction did not reach commit point");
-
-                for (LogDefer err : e.result().log().logs())
-                {
-                    System.err.println(err.toString());
-                }
-            }
-            // #end::defer2[]
-        }
-
-        async Task ConcurrentOpsAsync()
-        {
-            // #tag::concurrentOps[]
-
-            await _transactions.RunAsync(async (ctx) =>
-            {
-                var docIds = new[] { "doc1", "doc2", "doc3", "doc4", "doc5" };
-                var ops = docIds.Select(docId => ctx.GetAsync(_collection, docId)).ToList();
-
-                await Task.WhenAll(ops).ConfigureAwait(false);
-
-                await ctx.CommitAsync().ConfigureAwait(false);
-
-            }).ConfigureAwait(false);
-            // #end::concurrentOps[]
-        }
-        */
-
         async Task CreateAsync()
         {
             // #tag::create[]
@@ -170,7 +94,6 @@ namespace Couchbase.Transactions.Examples
                     // will be committed anyway.
                     await ctx.CommitAsync().ConfigureAwait(false);
                 }).ConfigureAwait(false);
-                // #tag::logging[]
             }
             catch (TransactionCommitAmbiguousException e)
             {
@@ -184,7 +107,6 @@ namespace Couchbase.Transactions.Examples
                 Console.Error.WriteLine("Transaction did not reach commit point");
                 Console.Error.WriteLine(e);
             }
-            // #tag::logging[]
             // #end::create[]
         }
 
@@ -196,7 +118,7 @@ namespace Couchbase.Transactions.Examples
                 var result = await _transactions.RunAsync(async (ctx) =>
                 {
                     // Inserting a doc:
-                    await ctx.InsertAsync(_collection, "doc-a", new {}).ConfigureAwait(false);
+                    var insertedDoc = await ctx.InsertAsync(_collection, "doc-a", new {}).ConfigureAwait(false);
 
                     // Getting documents:
                     // Use ctx.GetAsync if the document should exist, and the transaction
@@ -207,7 +129,7 @@ namespace Couchbase.Transactions.Examples
                     var docB = await ctx.GetAsync(_collection, "doc-b").ConfigureAwait(false);
                     var content = docB.ContentAs<dynamic>();
                     content.put("transactions", "are awesome");
-                    await ctx.ReplaceAsync(docB, content);
+                    var replacedDoc = await ctx.ReplaceAsync(docB, content);
 
                     // Removing a doc:
                     var docC = await ctx.GetAsync(_collection, "doc-c").ConfigureAwait(false);
@@ -234,7 +156,7 @@ namespace Couchbase.Transactions.Examples
             // #tag::insert[]
             await _transactions.RunAsync(async ctx =>
             {
-                await ctx.InsertAsync(_collection, "docId", new { }).ConfigureAwait(false);
+                var insertedDoc = await ctx.InsertAsync(_collection, "docId", new { }).ConfigureAwait(false);
             }).ConfigureAwait(false);
 
             // #end::insert[]
@@ -257,7 +179,7 @@ namespace Couchbase.Transactions.Examples
             await _transactions.RunAsync(async ctx =>
             {
                 var docId = "docId";
-                await ctx.InsertAsync(_collection, docId, new { }).ConfigureAwait(false);
+                _ = await ctx.InsertAsync(_collection, docId, new { }).ConfigureAwait(false);
                 var doc = await ctx.GetAsync(_collection, docId).ConfigureAwait(false);
                 Console.WriteLine((object) doc.ContentAs<dynamic>());
             }).ConfigureAwait(false);
@@ -272,7 +194,7 @@ namespace Couchbase.Transactions.Examples
                 var anotherDoc = await ctx.GetAsync(_collection, "anotherDoc").ConfigureAwait(false);
                 var content = anotherDoc.ContentAs<dynamic>();
                 content.put("transactions", "are awesome");
-                await ctx.ReplaceAsync(anotherDoc, content);
+                _ = await ctx.ReplaceAsync(anotherDoc, content);
             }).ConfigureAwait(false);
             // #end::replace[]
         }
@@ -477,7 +399,7 @@ namespace Couchbase.Transactions.Examples
                         " may have succeeded, logs:");
 
                 // Of course, the application will want to use its own logging rather
-                // than System.err
+                // than Console.Error
                 Console.Error.WriteLine(err);
             }
             catch (TransactionFailedException err)
@@ -489,6 +411,26 @@ namespace Couchbase.Transactions.Examples
             // #end::full-error-handling[]
         }
 
+        async Task LogOnFailure()
+        {
+            // #tag::logging[]
+            try
+            {
+                var result = await transactions.RunAsync(async ctx => {
+                    // ... transactional code here ...
+                });
+            }
+            catch (TransactionFailedException err)
+            {
+                // ... log the error as you normally would
+                // then include the logs
+                foreach (var logLine in err.Result.Logs)
+                {
+                    Console.Error.WriteLine(logLine);
+                }
+            }
+            // #end::logging[]
+        }
 
         async Task CompleteLogging()
         {
