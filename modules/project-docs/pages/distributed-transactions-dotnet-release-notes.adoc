@@ -13,7 +13,7 @@ See the xref:6.6@server:learn:data/transactions.adoc[Distributed ACID Transactio
 The xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distributed Transactions HOWTO doc] walks you through all aspects of working with Distributed Transactions.
 
 
-== Version 1.0.0 (29 Apr 2021)
+== Version 1.0.0 (30 Apr 2021)
 
 This is the first General Availability (GA) release of .NET Distributed ACID Transactions 1.0.0 for Couchbase Server 6.6.
 
