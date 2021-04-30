@@ -30,7 +30,7 @@ include::6.6@sdk:shared:partial$acid-transactions.adoc[tag=requirements]
 
 Couchbase transactions require no additional components or services to be configured. 
 Simply add the transactions library into your project.
-Version 1.0.0 was release April 29th, 2021.
+Version 1.0.0 was release April 30th, 2021.
 See the xref:project-docs:distributed-transactions-dotnet-release-notes.adoc[Release Notes] for the latest version.
 
 With NuGut this can be accomplished by using the NuGet Package Manager in your IDE:
