@@ -2,8 +2,6 @@
 :navtitle: ACID Transactions
 :page-topic-type: howto
 :page-aliases: acid-transactions.adoc
-:page-status: Developer Preview
-
 
 
 [abstract]
@@ -17,41 +15,43 @@ Below we show you how to create Transactions, step-by-step.
 You may also want to start with our https://github.com/couchbaselabs/couchbase-transactions-dotnet-examples[transactions examples repository],
 which features useful downloadable examples of using Distributed Transactions.
 
-API Docs are available https://docs.couchbase.com/sdk-api/couchbase-transactions-dotnet-1.0.0-beta.1/[online].
+API Docs are available https://docs.couchbase.com/sdk-api/couchbase-transactions-dotnet-1.0.0/[online].
 
 
 == Requirements
 
-* Couchbase Server 6.6 or above.
-* Couchbase .NET client 3.0.5 or above.  It is recommended you use the package on NuGet.
-include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=requirements]
+* Couchbase Server 6.6.1 or above.
+* Couchbase .NET client 3.1.4 or above.  
+It is recommended you use the package on NuGet.
+include::6.6@sdk:shared:partial$acid-transactions.adoc[tag=requirements]
 
 
 == Getting Started
 
 Couchbase transactions require no additional components or services to be configured. 
 Simply add the transactions library into your project.
-The latest version, as of November 2020, is 1.0.0-beta.1.
+Version 1.0.0 was release April 30th, 2021.
+See the xref:project-docs:distributed-transactions-dotnet-release-notes.adoc[Release Notes] for the latest version.
 
 With NuGut this can be accomplished by using the NuGet Package Manager in your IDE:
 
 [source]
 ----
-PM > Install-Package Couchbase.Transactions -Version 1.0.0-beta.1
+PM > Install-Package Couchbase.Transactions -Version 1.0.0
 ----
 
 Or via the CLI
 
 [source]
 ----
-dotnet add package Couchbase.Transactions --version 1.0.0-beta.1
+dotnet add package Couchbase.Transactions --version 1.0.0
 ----
 
 Or by using PackageReference in your .csproj file:
 
 [source]
 ----
-<PackageReference Include="Couchbase.Transactions" Version="1.0.0-beta.1" />
+<PackageReference Include="Couchbase.Transactions" Version="1.0.0" />
 ----
 
 A complete simple NuGet example is available on our https://github.com/couchbaselabs/couchbase-transactions-dotnet-examples[transactions examples repository].
@@ -82,12 +82,14 @@ include::example$TransactionsExample.cs[tag=imports,indent=0]
 ////
 
 The starting point is the `Transactions` object.  
-It is very important that the application ensures that only one of these is created, as it performs automated background clean-up processes that should not be duplicated.
+It is very important that the application ensures that only one of these is created per cluster, as it performs automated background clean-up processes that should not be duplicated.
+In dependency injection context, this instance should be injected as a singleton.
 
 [source,c#]
 ----
 include::example$TransactionsExample.cs[tag=init,indent=0]
 ----
+
 
 == Configuration
 
@@ -110,8 +112,9 @@ As with the Couchbase .NET Client, you should use the library asynchronusly usin
 include::example$TransactionsExample.cs[tag=create,indent=0]
 ----
 
-The asynchronous API allows you to use the thread pool, which can help you scale with excellent efficiency.
-Those new to the TAP API (Task Asynchronous Programming) may want to check out https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/task-asynchronous-programming-model[Task asynchronous programming model] for more details on this powerful paradigm.
+The asynchronous API allows you to use the thread pool, which can help you scale with excellent efficiency. 
+However, operations inside an individual transaction should be kept in-order and executed using `await` immediately. 
+Do not use fire-and-forget tasks under any circumstances.
 
 
 == Examples
@@ -127,38 +130,9 @@ include::example$TransactionsExample.cs[tag=examples,indent=0]
 include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=mechanics]
 
 
-== Mutating Documents
-
-=== Replacing
-
-Replacing a document requires awaiting a `ctx.GetAsync()` call first.
-This is necessary to ensure that the document is not involved in another transaction.
-(If it is, then the transaction will handle this, generally by rolling back what has been done so far, and retrying the lambda.)
-
-[source,c#]
-----
-include::example$TransactionsExample.cs[tag=replace,indent=0]
-----
-
-=== Removing
-
-As with replaces, removing a document requires awaiting a `ctx.GetAsync()` call first.
-
-[source,c#]
-----
-include::example$TransactionsExample.cs[tag=remove,indent=0]
-----
-
-=== Inserting
-
-[source,c#]
-----
-include::example$TransactionsExample.cs[tag=insert,indent=0]
-----
-
 == Getting Documents
 
-There are two ways to get a document, `get` and `getOptional`:
+There are two ways to get a document, `GetAsync` and `GetOptionalAsync`:
 
 [source,c#]
 ----
@@ -174,6 +148,37 @@ Gets will 'read your own writes', e.g. this will succeed:
 ----
 include::example$TransactionsExample.cs[tag=getReadOwnWrites,indent=0]
 ----
+
+
+== Mutating Documents
+
+=== Inserting
+
+[source,c#]
+----
+include::example$TransactionsExample.cs[tag=insert,indent=0]
+----
+
+=== Replacing
+
+Replacing a document requires awaiting a `TransactionGetResult` returned from `ctx.GetAsync()`, `ctx.InsertAsync()`, or another `ctx.ReplaceAsync()` call first.
+This is necessary to ensure that the document is not involved in another transaction.
+(If it is, then the transaction will handle this, generally by rolling back what has been done so far, and retrying the lambda.)
+
+[source,c#]
+----
+include::example$TransactionsExample.cs[tag=replace,indent=0]
+----
+
+=== Removing
+
+As with replaces, removing a document requires awaiting a `TransactionGetResult` from a previous transaction operation first.
+
+[source,c#]
+----
+include::example$TransactionsExample.cs[tag=remove,indent=0]
+----
+
 
 == Committing
 
@@ -193,7 +198,7 @@ An asynchronous cleanup process ensures that once the transaction reaches the co
 
 
 // == A Full Transaction Example
-include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=example]
+include::6.6@sdk:shared:partial$acid-transactions.adoc[tag=example]
 
 A complete version of this example is available on our https://github.com/couchbaselabs/couchbase-transactions-dotnet-examples[GitHub transactions examples page].
 
@@ -202,13 +207,14 @@ A complete version of this example is available on our https://github.com/couchb
 include::example$TransactionsExample.cs[tag=full,indent=0]
 ----
 
+
 == Rollback
 
 If an exception is thrown, either by the application from the lambda, or by the transactions library, then that attempt is rolled back.
 The transaction logic may or may not be retried, depending on the exception.
 //- see link:#error-handling[Error handling and logging].
 
-If the transaction is not retried then it will throw a `TransactionFailedException` exception, and its `getCause` method can be used for more details on the failure.
+If the transaction is not retried then it will throw a `TransactionFailedException` exception, and its `Cause` property can be used for more details on the failure.
 
 The application can use this to signal why it triggered a rollback, as so:
 
@@ -224,28 +230,97 @@ The transaction can also be explicitly rolled back:
 include::example$TransactionsExample.cs[tag=rollback,indent=0]
 ----
 
-In this case, if `ctx.rollback()` is reached, then the transaction will be regarded as successfully rolled back and no TransactionFailed will be thrown.
+In this case, if `ctx.RollbackAsync()` is reached, then the transaction will be regarded as successfully rolled back and no TransactionFailed will be thrown.
 
 After a transaction is rolled back, it cannot be committed, no further operations are allowed on it, and the library will not try to automatically commit it at the end of the code block.
 
 
+
 //  Error Handling
-include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=error]
+// tag::error[]
+== Error Handling
 
+As discussed previously, the transactions library will attempt to resolve many errors itself, through a combination of retrying individual operations and the application's lambda.
+This includes some transient server errors, and conflicts with other transactions.
 
+But there are situations that cannot be resolved, and total failure is indicated to the application via exceptions.
+These errors include:
+
+* Any exception thrown by your transaction lambda, either deliberately or through an application logic bug.
+* Attempting to insert a document that already exists.
+* Attempting to remove or replace a document that does not exist.
+* Calling `ctx.GetAsync()` on a document key that does not exist.
+
+IMPORTANT: Once one of these errors occurs, the current attempt is irrevocably failed (though the transaction may retry the lambda).
+It is not possible for the application to catch the failure and continue.
+Once a failure has occurred, all other operations tried in this attempt (including commit) will instantly fail.
+
+Transactions, as they are multi-stage and multi-document, also have a concept of partial success/failure.
+This is signalled to the application through the `TransactionResult.UnstagingComplete` property, described later.
+
+There are three exceptions that the transactions library can raise to the application: `TransactionFailed`, `TransactionExpired`, and `TransactionCommitAmbiguous`.
+All exceptions derive from `TransactionFailed` for backwards-compatibility purposes.
+// end::error[]
 
 //  txnfailed
-include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed]
+include::6.6@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed]
 
 [source,c#]
 ----
 include::example$TransactionsExample.cs[tag=config-expiration,indent=0]
 ----
 
-include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed1]
+// tag::txnfailed1[]
+This will allow the protocol more time to get past any transient failures (for example, those caused by a cluster rebalance).
+The tradeoff to consider with longer expiration times, is that documents that have been staged by a transaction are effectively locked from modification from other transactions, until the expiration time has exceeded.
+
+Note that expiration is not guaranteed to be followed precisely.
+For example, if the application were to do a long blocking operation inside the lambda (which should be avoided), then expiration can only trigger after this finishes.
+Similarly, if the transaction attempts a key-value operation close to the expiration time, and that key-value operation times out, then the expiration time may be exceeded.
+
+=== TransactionCommitAmbiguous
+
+As discussed <<mechanics,previously>>, each transaction has a 'single point of truth' that is updated atomically to reflect whether it is committed.
+
+However, it is not always possible for the protocol to become 100% certain that the operation was successful, before the transaction expires.
+That is, the operation may have successfully completed on the cluster, or may succeed soon, but the protocol is unable to determine this (whether due to transient network failure or other reason).
+This is important as the transaction may or may not have reached the commit point, e.g. succeeded or failed.
+
+The library raises `TransactionCommitAmbiguous` to indicate this state.
+It should be rare to receive this exception.
+
+If the transaction had in fact successfully reached the commit point, then the transaction will be fully completed ("unstaged") by the asynchronous cleanup process at some point in the future.
+With default settings this will usually be within a minute, but whatever underlying fault has caused the TransactionCommitAmbiguous may lead to it taking longer.
+
+If the transaction had not in fact reached the commit point, then the asynchronous cleanup process will instead attempt to roll it back at some point in the future.
+If unable to, any staged metadata from the transaction will not be visible, and will not cause problems (e.g. there are safety mechanisms to ensure it will not block writes to these documents for long).
+
+==== Handling
+This error can be challenging for an application to handle.
+As with `TransactionFailed` it is recommended that it at least writes any logs from the transaction, for future debugging.
+It may wish to retry the transaction at a later point, or globally extend transactional expiration times to give the protocol additional time to resolve the ambiguity.
+
+=== TransactionResult.UnstagingComplete
+
+As above, there is a 'single point of truth' for a transaction.
+After this atomic commit point is reached, the documents themselves will still be individually committed (we also call this "unstaging").
+However, transactionally-aware actors will now be returning the post-transaction versions of the documents, and the transaction is effectively fully committed to those actors.
+
+So if the application is solely working with transaction-aware actors, then the unstaging process is optional.
+And failures during the unstaging process are not particularly important, in this case.
+(Note the asynchronous cleanup process will still complete the unstaging process at a later point.)
+
+Hence, many errors during unstaging will cause the transaction to immediately return success.
+That is, successful return simply means that the commit point was reached.
+
+The property `TransactionResult.UnstagingComplete` indicates whether the unstaging process completed successfully or not.
+This should be used any time that the application needs all results of the transaction to be immediately available to non-transactional actors (which currently includes N1QL and non-transactional Key-Value reads).
+
+Error handling differs depending on whether a transaction is before or after the point of commit (or rollback).
+// end::txnfailed1[]
 
 
-=== Full Error Handling Example
+== Full Error Handling Example
 
 Pulling all of the above together, this is the suggested best practice for error handling:
 
@@ -255,7 +330,8 @@ include::example$TransactionsExample.cs[tag=full-error-handling,indent=0]
 ----
 
 
-include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=cleanup]
+// == Asynchronous Cleanup
+include::6.6@sdk:shared:partial$acid-transactions.adoc[tag=cleanup]
 
 ////
 === Monitoring Cleanup
@@ -290,59 +366,22 @@ include::example$TransactionsExample.cs[tag=logging,indent=0]
 
 A failed transaction can involve dozens, even hundreds, of lines of logging, so the application may prefer to write failed transactions into a separate file.
 
-For convenience there is also a config option that will automatically write this programmatic log to the standard Couchbase Java logging configuration inherited from the SDK if a transaction fails.
+////
 This will log all lines of any failed transactions, to `WARN` level:
 [source,c#]
 ----
 include::example$TransactionsExample.cs[tag=config_warn,indent=0]
 ----
+////
 
 Please see the xref:howtos:collecting-information-and-logging.adoc[.NET SDK logging documentation] for details.
 
-Here is an example of configuring a Microsoft.Extensions.Logging.ILoggingFactory:
+Here is an example of configuring a `Microsoft.Extensions.Logging.ILoggingFactory`:
 
 [source,c#]
 ----
 include::example$TransactionsExample.cs[tag=full-logging,indent=0]
 ----
-
-
-== Deferred Commits
-
-NOTE: The deferred commit feature is currently in alpha, and the API may change.
-
-Deferred commits allow a transaction to be paused just before the commit point.
-Optionally, everything required to finish the transaction can then be bundled up into a context that may be serialized into a String or byte array, and deserialized elsewhere (for example, in another process).
-The transaction can then be committed, or rolled back.
-
-The intention behind this feature is to allow multiple transactions, potentially spanning multiple databases, to be brought to just before the commit point, and then all committed together.
-
-Here's an example of deferring the initial commit and serializing the transaction:
-
-[source,csharp]
-----
-include::example$TransactionsExample.cs[tag=defer1,indent=0]
-----
-
-And then committing the transaction later:
-
-[source,csharp]
-----
-include::example$TransactionsExample.cs[tag=defer2,indent=0]
-----
-
-////
-Alternatively the transaction can be rolled back:
-
-[source,csharp]
-----
-include::example$TransactionsExample.cs[tag=defer3,indent=0]
-----
-
-The transaction expiry timer (which is configurable) will begin ticking once the transaction starts, and is not paused while the transaction is in a deferred state.
-
-////
-
 
 == Further Reading
 
