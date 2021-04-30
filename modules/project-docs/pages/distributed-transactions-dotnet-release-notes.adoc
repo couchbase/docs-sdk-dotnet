@@ -26,7 +26,7 @@ https://www.nuget.org/packages/Couchbase.Transactions/1.0.0[Nuget]
 
 === Known Issues
 
-* Initial release has not been extensively profiled for memory/cpu usage or other performance issues.
+* Initial release has not been extensively profiled for memory/CPU usage or other performance issues.
 
 // === Fixed Issues
 
