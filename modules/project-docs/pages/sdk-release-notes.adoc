@@ -106,6 +106,35 @@ git pull origin master
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 3.1.5 (13 May 2021)
+
+Version 3.1.5 is the sixth release of the 3.1 series, bringing enhancements and bugfixes over the last stable release.
+
+https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.1.5.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.1.5[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.1.5[Nuget]
+
+=== Known Issues
+
+* https://issues.couchbase.com/browse/NCBC-2851[NCBC-2851]: TimeoutExceptions continue after rebound in Failover/Eject tests
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2551[NCBC-2551]:GetAllBucketsAsync always throws ArgumentNullException
+* https://issues.couchbase.com/browse/NCBC-2860[NCBC-2860]:Configuration revisions should be parsed and compared with 64-bit precision.
+* https://issues.couchbase.com/browse/NCBC-2864[NCBC-2864]:Unknown default collection regression
+* https://issues.couchbase.com/browse/NCBC-2867[NCBC-2867]:ConfigHandler dead locks in K8 when delete pod is used
+* https://issues.couchbase.com/browse/NCBC-2871[NCBC-2871]:NRE in BucketManager and UserManager part 2
+* https://issues.couchbase.com/browse/NCBC-2876[NCBC-2876]:Upserting to &lt;7.0 clusters does not upsert the content
+* https://issues.couchbase.com/browse/NCBC-2877[NCBC-2877]:Collection GIT_CID Eaccess error fix
+
+=== New Features and Behavioral Changes.
+
+* https://issues.couchbase.com/browse/NCBC-2862[NCBC-2862]:Log message on timeout appears to lack instance
+* https://issues.couchbase.com/browse/NCBC-2866[NCBC-2866]:Exception: Non-default Scopes and Collections not supported on this server version.
+* https://issues.couchbase.com/browse/NCBC-2839[NCBC-2839]:SDK API changes due to protocol level changes to get_collection_id
+* https://issues.couchbase.com/browse/NCBC-2858[NCBC-2858]:Move collection id fetch into the operation call on the collection
+
 
 == Version 3.1.4 (8 April 2021)
 
