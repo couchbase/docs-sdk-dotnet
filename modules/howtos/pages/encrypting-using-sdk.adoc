@@ -22,14 +22,14 @@ Refer to the xref:#maven-coordinates[dependencies section].
 == Requirements
 
 * Couchbase .NET SDK version `3.1.3` or later.
-* .NET Couchbase Encryption version `3.0.0` or later.
+* .NET Couchbase Encryption version `2.0.0-dp.1` or later.
 
 [#nuget-package]
 == NuGet Package
 
 [source,xml]
 ----
-<PackageReference Include="Couchbase.Extensions.Encryption" Version="2.0.0" />
+<PackageReference Include="Couchbase.Extensions.Encryption" Version="2.0.0-dp.1" />
 ----
 
 See the https://www.nuget.org/packages/Couchbase.Extensions.Encryption/[NuGet Package Page^] for the latest version.
