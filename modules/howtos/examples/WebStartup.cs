@@ -22,7 +22,7 @@ namespace LoggingWebExample
         // #tag::configureservices[]
         public void ConfigureServices(IServiceCollection services)
         {
-  
+
             // Get logger factory to pass it along to the couchbase cluster.
 
             ILoggerFactory loggerFactory = services.BuildServiceProvider()
@@ -40,10 +40,10 @@ namespace LoggingWebExample
             var cluster = Cluster.ConnectAsync(options)
                             .GetAwaiter()
                             .GetResult();
-                                
-            services.AddSingleton(typeof(ICluster), cluster);            
 
-     
+            services.AddSingleton(typeof(ICluster), cluster);
+
+
             services.AddControllers().AddNewtonsoftJson(options => options.UseMemberCasing());
             services.AddMvc().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
