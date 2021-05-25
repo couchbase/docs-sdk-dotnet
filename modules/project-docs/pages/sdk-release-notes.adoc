@@ -106,6 +106,7 @@ git pull origin master
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+
 == Version 3.1.6 (24 May 2021)
 
 Version 3.1.6 is the seveneth release of the 3.1 series, bringing enhancements and bugfixes over the last stable release.
@@ -116,14 +117,15 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.1.6[Nuget]
 
 === Known Issues
 
-* https://issues.couchbase.com/browse/NCBC-2851[NCBC-2851]: TimeoutExceptions continue after rebound in Failover/Eject tests
+* https://issues.couchbase.com/browse/NCBC-2851[NCBC-2851]: 
+TimeoutExceptions continue after rebound in Failover/Eject tests.
 
 === Fixed Issues
-* https://issues.couchbase.com/browse/NCBC-2881[NCBC-2881]: Use Hello to determine if collections are available
+* https://issues.couchbase.com/browse/NCBC-2881[NCBC-2881]: 
+The SDK now uses Hello to determine if collections are available, giving improved accuracy over the heuristic method.
 * https://issues.couchbase.com/browse/NCBC-2877[NCBC-2877]:
-Collection GIT_CID Eaccess error fix
+Collection GIT_CID Eaccess error fix.
 
-=== New Features and Behavioral Changes.
 
 == Version 3.1.5 (13 May 2021)
 
