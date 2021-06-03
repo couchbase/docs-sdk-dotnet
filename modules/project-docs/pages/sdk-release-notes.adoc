@@ -107,6 +107,37 @@ After you have successfully built the source, it's then just a matter of referen
 _Note that you can checkout a specific tag for each release as well._
 
 
+== Version 3.1.7 (02 June 2021)
+
+Version 3.1.7 is the eighth release of the 3.1 series, bringing enhancements and bugfixes over the last stable release.
+
+https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.1.7.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.1.7[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.1.7[Nuget]
+
+=== Known Issues
+
+* https://issues.couchbase.com/browse/NCBC-2851[NCBC-2851]: 
+TimeoutExceptions continue after rebound in Failover/Eject tests.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2879[NCBC-2879]: 
+Combi test failure fixed by only running tests with `CollectionTests.CollectionIdChanged_RetriesAuto` on servers which support collections and the newer management URI structure.
+* https://issues.couchbase.com/browse/NCBC-2888[NCBC-2888]: 
+Converting null literal or possible null value to non-nullable type -- a rare compile time error for certain environments fixed by using `var` instead of `TValue`.
+
+=== New Features and Behavioral Changes.
+
+* https://issues.couchbase.com/browse/NCBC-2698[NCBC-2698]: 
+Added FTS Support for Collections.
+* https://issues.couchbase.com/browse/NCBC-2881[NCBC-2881]: 
+Use Hello to determine if collections are available now no longer leaves exception in DEBUG level log.
+* https://issues.couchbase.com/browse/NCBC-2887[NCBC-2887]: 
+Previously the CID value of 0 could be appended to the key if the default scope/collection was being used.
+Now, this is checked for, and we don't send the CID with the key in this case, as it is not required by the server.
+
+
 == Version 3.1.6 (24 May 2021)
 
 Version 3.1.6 is the seveneth release of the 3.1 series, bringing enhancements and bugfixes over the last stable release.
