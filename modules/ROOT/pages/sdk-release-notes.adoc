@@ -97,7 +97,7 @@ This release has the following known issues:
 
 === Fixed Issues
 
-* https://issues.couchbase.com/browse/NCBC-2872[NCBC-2872]: NullReference encountered on GetDocumentFromReplicaAsync and GetFromReplicaAsync when ssl is enabled
+* https://issues.couchbase.com/browse/NCBC-2872[NCBC-2872]: NullReference encountered on GetDocumentFromReplicaAsync and GetFromReplicaAsync when ssl is enabled.
 * https://issues.couchbase.com/browse/NCBC-2873[NCBC-2873]: SharedConnectionPool System.ArgumentOutOfRangeException: Index was out of range.
 
 == Version 2.7.25 (13th May 2021)
