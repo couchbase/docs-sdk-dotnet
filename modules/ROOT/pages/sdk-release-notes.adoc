@@ -34,7 +34,7 @@ From the Package Manager Console within your project:
  ** To install a specific version, include the version parameter.
 For example:
 
- Install-Package CouchbaseNetClient -Version 2.7.23
+ Install-Package CouchbaseNetClient -Version 2.7.26
 
 === Downloading and referencing the binaries
 
@@ -82,6 +82,23 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 2.7.26 (2nd June 2021)
+
+https://packages.couchbase.com/clients/net/2.7/Couchbase-Net-Client-2.7.26.zip[Download] |
+http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.26[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/2.7.26[Nuget]
+
+=== Known Issues
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2872[NCBC-2872]: NullReference encountered on GetDocumentFromReplicaAsync and GetFromReplicaAsync when ssl is enabled
+* https://issues.couchbase.com/browse/NCBC-2873[NCBC-2873]: SharedConnectionPool System.ArgumentOutOfRangeException: Index was out of range.
 
 == Version 2.7.25 (13th May 2021)
 
