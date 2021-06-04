@@ -74,7 +74,7 @@ Note that named and positional parameters are optional and you could chose to co
 == Building Statements with LINQ (Language Integrated Query)
 
 The N1QL LINQ provider is a powerful way to guide you in building your statements: you obtain Type safety and auto completion of relevant methods and N1QL clauses.
-It implements https://msdn.microsoft.com/en-us/library/mt693024.aspx[Microsoft's language integrated query extensions to the C# language^] and is similar to other LINQ providers like Linq2SQL, Entity Framework and NHibernate.
+It implements https://msdn.microsoft.com/en-us/library/mt693024.aspx[Microsoft's language integrated query extensions to the C# language^] and is similar to other LINQ providers like [Linq2SQL](https://www.tutlane.com/tutorial/linq/linq-to-sql-dbml-file), Entity Framework and NHibernate.
 The difference is that it emits N1QL in place of SQL.
 If you have used any other LINQ provider, you will find its familiarity and consistency make it an easy transition.
 
