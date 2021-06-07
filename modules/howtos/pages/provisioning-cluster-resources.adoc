@@ -133,9 +133,9 @@ include::example$Couchbase.Examples/CollectionManager.cs[tag=drop-scope,indent=0
 ----
 
 Note that the most minimal permissions to create and drop a Scope or Collections is
-https://docs.couchbase.com/server/7.0/learn/security/roles.html#manage-collections-in-scope[Scope Admin]
+xref:server:learn:security/roles.adoc#manage-scopes[Manage Scopes]
 along with
-https://docs.couchbase.com/server/7.0/learn/security/roles.html#data-reader[Data Reader].
+xref:server:learn:security/roles.adoc#data-reader[Data Reader]
 
 You can create users with the appropriate RBAC programmatically:
 

@@ -20,7 +20,7 @@ namespace Couchbase.Examples
 
                 var user = new User("scopeAdmin") {
                     Password = "password",
-                    DisplayName = "Scope Admin [travel-sample:*]",
+                    DisplayName = "Manage Scopes [travel-sample:*]",
                     Roles = new List<Role>() {
                         new Role("scope_admin", "travel-sample"),
                         new Role("data_reader", "travel-sample")}
