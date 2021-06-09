@@ -1,4 +1,4 @@
-= Document 
+= Document
 :nav-title: Documents & Doc Ops
 :page-topic-type: concept
 :page-aliases: ROOT:documents,ROOT:documents-basics,ROOT:documents-atomic
@@ -9,7 +9,7 @@ Couchbase supports CRUD operations, various data structures, and binary document
 
 Although query and path-based (Sub-Document) services are available, the simplicity of the document-based kv interface is the fastest way to perform operations involving single documents.
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=document]
+include::7.0@sdk:shared:partial$documents.adoc[tag=document]
 
 == Primitive Key-Value Operations
 
@@ -22,9 +22,9 @@ get(docid)
 remove(docid)
 ----
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=crud-overview]
+include::7.0@sdk:shared:partial$documents.adoc[tag=crud-overview]
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=store-update]
+include::7.0@sdk:shared:partial$documents.adoc[tag=store-update]
 
 [NOTE]
 ====
@@ -39,7 +39,7 @@ await collection.MutateInAsync("customer123", new List<MutateInSpec>
 });
 ----
 
-or xref:6.0@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
+or xref:7.0@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
 
 [source,sql]
 ----
@@ -47,7 +47,7 @@ update `default` SET sale_price = msrp * 0.75 WHERE msrp < 19.95;
 ----
 ====
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=get_generic]
+include::7.0@sdk:shared:partial$documents.adoc[tag=get_generic]
 
 [source,sql]
 ----
@@ -77,7 +77,7 @@ string email = r.ContentAs<string>(1);
 
 // Counters
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=counters1]
+include::7.0@sdk:shared:partial$documents.adoc[tag=counters1]
 
 [source,C#,indent=0]
 ----
@@ -93,7 +93,7 @@ await collection.Binary.DecrementAsync(counterDocId, options =>
 });
 ----
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=counters2]
+include::7.0@sdk:shared:partial$documents.adoc[tag=counters2]
 
 [source,C#,indent=0]
 ----
@@ -109,20 +109,20 @@ if (ShouldIncrementValue(value))
 }
 ----
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=counters3]
+include::7.0@sdk:shared:partial$documents.adoc[tag=counters3]
 
 
 === Use Cases
 
-The SDK provides a high-level abstraction over the simple `incr()`/`decr()` of Couchbase Server's memcached binary protocol, using `collections.binary()`. 
+The SDK provides a high-level abstraction over the simple `incr()`/`decr()` of Couchbase Server's memcached binary protocol, using `collections.binary()`.
 This enables you to work with counters using `get()` and `upsert()` operations -- allowing, _inter alia_, the use of durability options with the operations.
 You will find several ways of working with counters {link-with-underscores}[in the API docs].
 
 // Expiry
-include::6.5@sdk:shared:partial$documents.adoc[tag=expiration]
+include::7.0@sdk:shared:partial$documents.adoc[tag=expiration]
 
-IMPORTANT: If you are using the overloads that take `IDocument`, note that the `IDocument.Expiry` property assumes ms (milli-seconds), and is converted to seconds before being sent to the server. 
+IMPORTANT: If you are using the overloads that take `IDocument`, note that the `IDocument.Expiry` property assumes ms (milli-seconds), and is converted to seconds before being sent to the server.
 All other overloads take a `TimeSpan` or an `uint`, and assume an expiry in seconds
 A time of zero will set the document to never expire
-(a negative number will set expiry to immediate -- creating a xref:6.5@server:learn:buckets-memory-and-storage/storage.adoc#tombstones[tombstone]). 
+(a negative number will set expiry to immediate -- creating a xref:7.0@server:learn:buckets-memory-and-storage/storage.adoc#tombstones[tombstone]).
 Values above 0ms but below 1000ms are rounded up to one second before being sent to the server -- _if you are using .NET SDK 3.0.4 or later_.
