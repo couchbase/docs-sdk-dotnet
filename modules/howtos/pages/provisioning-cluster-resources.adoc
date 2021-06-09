@@ -132,7 +132,7 @@ include::example$Couchbase.Examples/CollectionManager.cs[tag=drop-collection,ind
 include::example$Couchbase.Examples/CollectionManager.cs[tag=drop-scope,indent=0]
 ----
 
-Note that the most minimal permissions to create and drop a Scope or Collections is
+Note that the most minimal permissions to create and drop a Scope or Collection is
 xref:server:learn:security/roles.adoc#manage-scopes[Manage Scopes]
 along with
 xref:server:learn:security/roles.adoc#data-reader[Data Reader]
