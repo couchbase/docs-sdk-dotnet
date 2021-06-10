@@ -8,7 +8,7 @@
 A practical guide to using Couchbase’s distributed ACID transactions, via the .NET API.
 
 
-include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=intro]
+include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=intro]
 
 
 Below we show you how to create Transactions, step-by-step.
@@ -21,14 +21,14 @@ API Docs are available https://docs.couchbase.com/sdk-api/couchbase-transactions
 == Requirements
 
 * Couchbase Server 6.6.1 or above.
-* Couchbase .NET client 3.1.4 or above.  
+* Couchbase .NET client 3.1.4 or above.
 It is recommended you use the package on NuGet.
-include::6.6@sdk:shared:partial$acid-transactions.adoc[tag=requirements]
+include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=requirements]
 
 
 == Getting Started
 
-Couchbase transactions require no additional components or services to be configured. 
+Couchbase transactions require no additional components or services to be configured.
 Simply add the transactions library into your project.
 Version 1.0.0 was release April 30th, 2021.
 See the xref:project-docs:distributed-transactions-dotnet-release-notes.adoc[Release Notes] for the latest version.
@@ -81,7 +81,7 @@ include::example$TransactionsExample.cs[tag=imports,indent=0]
 ----
 ////
 
-The starting point is the `Transactions` object.  
+The starting point is the `Transactions` object.
 It is very important that the application ensures that only one of these is created per cluster, as it performs automated background clean-up processes that should not be duplicated.
 In dependency injection context, this instance should be injected as a singleton.
 
@@ -100,10 +100,10 @@ Transactions can optionally be configured at the point of creating the `Transact
 include::example$TransactionsExample.cs[tag=config,indent=0]
 ----
 
-include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=config]
+include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=config]
 
 
-include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=creating]
+include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=creating]
 
 As with the Couchbase .NET Client, you should use the library asynchronusly using the async/await keywords (the exceptions will be explained later in <<Error Handling>>):
 
@@ -112,22 +112,22 @@ As with the Couchbase .NET Client, you should use the library asynchronusly usin
 include::example$TransactionsExample.cs[tag=create,indent=0]
 ----
 
-The asynchronous API allows you to use the thread pool, which can help you scale with excellent efficiency. 
-However, operations inside an individual transaction should be kept in-order and executed using `await` immediately. 
+The asynchronous API allows you to use the thread pool, which can help you scale with excellent efficiency.
+However, operations inside an individual transaction should be kept in-order and executed using `await` immediately.
 Do not use fire-and-forget tasks under any circumstances.
 
 
 == Examples
 
 A code example is worth a thousand words, so here is a quick summary of the main transaction operations.
-They are described in more detail below. 
+They are described in more detail below.
 
 [source,c#]
 ----
 include::example$TransactionsExample.cs[tag=examples,indent=0]
 ----
 
-include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=mechanics]
+include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=mechanics]
 
 
 == Getting Documents
@@ -198,7 +198,7 @@ An asynchronous cleanup process ensures that once the transaction reaches the co
 
 
 // == A Full Transaction Example
-include::6.6@sdk:shared:partial$acid-transactions.adoc[tag=example]
+include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=example]
 
 A complete version of this example is available on our https://github.com/couchbaselabs/couchbase-transactions-dotnet-examples[GitHub transactions examples page].
 
@@ -263,7 +263,7 @@ All exceptions derive from `TransactionFailed` for backwards-compatibility purpo
 // end::error[]
 
 //  txnfailed
-include::6.6@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed]
+include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed]
 
 [source,c#]
 ----
@@ -331,7 +331,7 @@ include::example$TransactionsExample.cs[tag=full-error-handling,indent=0]
 
 
 // == Asynchronous Cleanup
-include::6.6@sdk:shared:partial$acid-transactions.adoc[tag=cleanup]
+include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=cleanup]
 
 ////
 === Monitoring Cleanup
@@ -385,5 +385,5 @@ include::example$TransactionsExample.cs[tag=full-logging,indent=0]
 
 == Further Reading
 
-* There’s plenty of explanation about how Transactions work in Couchbase in our xref:6.6@server:learn:data/transactions.adoc[Transactions documentation].
+* There’s plenty of explanation about how Transactions work in Couchbase in our xref:7.0@server:learn:data/transactions.adoc[Transactions documentation].
 * You can find further code examples on our https://github.com/couchbaselabs/couchbase-transactions-dotnet-examples[transactions examples repository].

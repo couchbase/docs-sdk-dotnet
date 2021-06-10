@@ -33,7 +33,7 @@ var result = cluster.SearchQuery(
 ----
 
 All simple query types are created in the same manner, some have additional properties, which can be seen in common query type descriptions.
-Couchbase FTS's xref:6.6@server:fts:fts-query-types.adoc[range of query types] enable powerful searching using multiple options, to ensure results are just within the range wanted.
+Couchbase FTS's xref:7.0@server:fts:fts-query-types.adoc[range of query types] enable powerful searching using multiple options, to ensure results are just within the range wanted.
 Here is a date range query that looks for dates between 1st January 2019 and 31st January:
 
 [source,csharp]
@@ -63,10 +63,10 @@ var result = cluster.SearchQuery(
 
 == Working with Results
 
-The result of a search query has three components: hits, facets, and metdata. 
-Hits are the documents that match the query. 
-Facets allow the aggregation of information collected on a particular result set. 
-Metdata holds additional information not directly related to your query, 
+The result of a search query has three components: hits, facets, and metdata.
+Hits are the documents that match the query.
+Facets allow the aggregation of information collected on a particular result set.
+Metdata holds additional information not directly related to your query,
 such as success total hits and how long the query took to execute in the cluster.
 
 [source,csharp]
