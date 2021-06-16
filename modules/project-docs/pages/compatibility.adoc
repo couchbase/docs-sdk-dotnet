@@ -47,7 +47,7 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 | *✖*
 | *✖*
 | *◎*
-| *✔* _(see below)_
+| *◎* _(see below)_
 |===
 
 [IMPORTANT]
@@ -58,9 +58,6 @@ Dotnet SDK *3.1.6* is the latest version compatible with Server 7.0β.
 
 Later SDK 3.1.x releases will be limited to the Default Scope and Collection with the beta 7.0 server, and will only be fully compatible with the full release version.
 ====
-
-Note the https://www.couchbase.com/support-policy[End of Life dates^] for Couchbase Server and SDK versions.
-See the notes there for Support details.
 
 Note the https://www.couchbase.com/support-policy[End of Life dates^] for Couchbase Server and SDK versions.
 See the notes there for Support details.
