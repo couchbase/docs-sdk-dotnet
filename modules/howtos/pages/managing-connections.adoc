@@ -3,6 +3,8 @@
 :page-topic-type: howto
 :page-aliases: ROOT:managing-connections,howtos:multi-network,ROOT:connecting,ROOT:connection-advanced,ROOT:cluster-helper
 
+include::partial$attributes.adoc[]
+
 [abstract]
 This section describes how to connect the .NET SDK to a Couchbase cluster.
 It contains best practices as well as information on TLS/SSL and other advanced connection options.
@@ -55,7 +57,7 @@ nodeA.example.com,nodeB.example.com
 127.0.0.1?io.networkResolution=external&timeout.kvTimeout=10s
 ----
 
-Currently, as of .NET SDK Version 3.0.2 there is only partial mapping of query parameters to options properties. 
+Currently, as of .NET SDK Version 3.0.2 there is only partial mapping of query parameters to options properties.
 This will change in future versions and the entire list of mappings will be found in the client settings reference.
 
 A connection string may optionally be prefixed by either `"couchbase://"` or `"couchbases://"`. If `"couchbases://"` is used, the client will use secure connections (TLS/SSL) if a valid certificate is configured or you can use the `ClusterOptions.EnableTls` flag.
@@ -70,17 +72,17 @@ You will get the best performance if you share and reuse instances of `Cluster`,
 We recommend creating a single `Cluster` instance when your application starts up, and sharing this instance throughout your application.
 If you know at startup time which buckets, scopes, and collections your application will use, we recommend obtaining them from the `Cluster` at startup time and sharing those instances throughout your application as well.
 
-Before your application stops, gracefully shut down the client by calling the `Dispose` method of each `Cluster` you created. 
-In older applications this can be done in Application_Start and Application_End in your Global.asax file. 
+Before your application stops, gracefully shut down the client by calling the `Dispose` method of each `Cluster` you created.
+In older applications this can be done in Application_Start and Application_End in your Global.asax file.
 For newer applictions we suggest using Dependency Injection and Startup.cs file.
 
 
 [#connection-di]
 == Dependency Injection
 
-There is a special .NET Core style Dependency Injection (DI) framework for Cluster and Buckets. 
-It simplifies cluster configuration, lifetime management, and bucket injection. 
-You can find it on NuGet.org: https://www.nuget.org/packages/Couchbase.Extensions.DependencyInjection/[NuGet package^]. 
+There is a special .NET Core style Dependency Injection (DI) framework for Cluster and Buckets.
+It simplifies cluster configuration, lifetime management, and bucket injection.
+You can find it on NuGet.org: https://www.nuget.org/packages/Couchbase.Extensions.DependencyInjection/[NuGet package^].
 Or using the NuGet Package Manager, add the dependency directly to your project:
 
 NOTE: Install-Package Couchbase.Extensions.DependencyInjection -Version 3.0.0
@@ -96,7 +98,7 @@ include::example$WebStartupDI.cs[tag=configureservices,indent=0]
 
 === Injecting Couchbase Buckets
 
-To get a couchbase bucket, simply inject `IBucketNamedProvider` and call `GetBucketAsync`. 
+To get a couchbase bucket, simply inject `IBucketNamedProvider` and call `GetBucketAsync`.
 Be sure that you don't dispose the IBucket, it's a singleton that will be reused through the application.
 
 [source,c#]
@@ -111,8 +113,8 @@ include::example$HomeControllerDI.cs[tag=namedbucketprovider,indent=0]
 include::example$mybucketproviderDI.cs[tag=mybucketprovider,indent=0]
 ----
 
-To further simplify dependency injection, you can setup to inject specific buckets. 
-First, create an interface for each bucket that inherits from `INamedBucketProvider`. 
+To further simplify dependency injection, you can setup to inject specific buckets.
+First, create an interface for each bucket that inherits from `INamedBucketProvider`.
 This interface must be public and left empty.
 
 You can then configure your bucket interfaces during IServiceCollection setup.
@@ -122,7 +124,7 @@ You can then configure your bucket interfaces during IServiceCollection setup.
 include::example$WebStartupDI-IMyBucketProvider.cs[tag=configureservices,indent=0]
 ----
 
-The interface you created can now be injected into controllers or business logic, and the `GetBucketAsync` method will return the specified bucket. 
+The interface you created can now be injected into controllers or business logic, and the `GetBucketAsync` method will return the specified bucket.
 You are no longer required to know the name of the bucket in the controller, improving separation of concerns in your application.
 
 [source,c#]
@@ -132,8 +134,8 @@ include::example$HomeControllerDI.cs[tag=IMybucketprovider,indent=0]
 
 === Shutdown
 
-During application shutdown it's best to close the Couchbase connections gracefully. 
-You can do this using the `ICouchbaseLifetimeService`.` 
+During application shutdown it's best to close the Couchbase connections gracefully.
+You can do this using the `ICouchbaseLifetimeService`.`
 For Asp.Net Core, you can call this service from the `ApplicationStopped` cancellation token of `IHostApplicationLifetime`.
 
 [source,c#]
@@ -154,7 +156,7 @@ Both the client and server require special configuration in this case.
 On the server side, each server node must be configured to advertise its external address as well as any custom port mapping.
 This is done with the `setting-alternate-address` CLI command introduced in Couchbase Server 6.5.
 A node configured in this way will advertise two addresses: one for connecting from the same network, and another for connecting from an external network.
-// todo link to https://docs.couchbase.com/server/6.5/cli/cbcli/couchbase-cli-setting-alternate-address.html
+// todo link to https://docs.couchbase.com/server/{version-server}/cli/cbcli/couchbase-cli-setting-alternate-address.html
 
 On the client side, the externally visible ports must be used when connecting.
 If the external ports are not the default, you can specify custom ports using the overloaded `Cluster.connect()` method that takes a set of `SeedNode` objects instead of a connection string.
@@ -204,7 +206,7 @@ If you are running on `localhost` and just want to enable TLS for a development 
 This is because the certificate will not match the name _localhost_.
 Setting `TLSSkipVerify` is a workaround if you need to use `couchbases://localhost`.
 
-Navigate in the admin UI to menu:Settings[Cluster] and copy the input box of the TLS certificate into a file on your machine (which we will refer to as cluster.cert). 
+Navigate in the admin UI to menu:Settings[Cluster] and copy the input box of the TLS certificate into a file on your machine (which we will refer to as cluster.cert).
 It looks similar to this:
 
 ----
@@ -262,8 +264,8 @@ For development, do the following steps to install the certificate:
 Although different distributions differ slightly in the details of their certificate handling, they will be similar to one of the two patterns below.
 Refer to your distribution's documentation for precise instructions.
 
-[{tabs}] 
-==== 
+[{tabs}]
+====
 Debian and Ubuntu::
 +
 --
@@ -322,7 +324,7 @@ $ sudo update-ca-trust extract
 
 === Certificate Verification
 
-If you want to verify it’s actually working, you can use a tool like *tcpdump*. 
+If you want to verify it’s actually working, you can use a tool like *tcpdump*.
 For example, an unencrypted upsert request looks like this (using `sudo tcpdump -i lo0 -A -s 0 port 11210`):
 
 ----
@@ -338,12 +340,12 @@ E.....@.@.............+....Z.'yZ..#........
 
 
 
-include::6.5@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
+include::{version-server}@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
 
 
 == DNS SRV Bootstrapping
 
-DNS SRV bootstrapping is available in the .NET SDK from version 2.1.0. 
+DNS SRV bootstrapping is available in the .NET SDK from version 2.1.0.
 In order to make the SDK actually use the SRV records, you just need to pass in the host name from your records (here example.com):
 
 [source,c#]
@@ -360,12 +362,12 @@ If the DNS SRV records could not be loaded properly you’ll get the exception l
 
 Also, if you pass in more than one node, DNS SRV bootstrap will not be initiated and regular bootstrapping will occur.
 
-// Connecting to Couchbase cloud requires that `ClusterOptions.EnableTls` be set to true along with the `"couchbases://"` connection string pre-fix. Additionally, in certain situations `ClusterOptions.IgnoreRemoteCertificateNameMismatch` may also need to be true. Additionally, in certain situations `ClusterOptions.IgnoreRemoteCertificateNameMismatch` may also need to be true. 
+// Connecting to Couchbase cloud requires that `ClusterOptions.EnableTls` be set to true along with the `"couchbases://"` connection string pre-fix. Additionally, in certain situations `ClusterOptions.IgnoreRemoteCertificateNameMismatch` may also need to be true. Additionally, in certain situations `ClusterOptions.IgnoreRemoteCertificateNameMismatch` may also need to be true.
 
 
 == Waiting for Bootstrap Completion
 
-Depending on the environment and network latency, bootstrapping the SDK fully might take a little longer than the default key-value timeout of 2.5 seconds, so you may see timeouts during bootstrap. 
+Depending on the environment and network latency, bootstrapping the SDK fully might take a little longer than the default key-value timeout of 2.5 seconds, so you may see timeouts during bootstrap.
 To prevent those early timeouts from happening, you can use the `waitUntilReady` method.
 
 If you are working at the _Cluster_ level, then add to the `cluster()` in the xref:#connecting-to-a-cluster[earlier example]:
@@ -394,7 +396,7 @@ Other timeout issues may occur when using the SDK located geographically separat
 See the xref:#working-in-the-cloud[Cloud section] below for some suggestions of settings adjustments.
 
 // ******** cloud ********
-include::6.5@sdk:shared:partial$managing-connections.adoc[tag=cloud]
+include::{version-server}@sdk:shared:partial$managing-connections.adoc[tag=cloud]
 
 
 == Additional Resources
