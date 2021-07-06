@@ -1,2 +1,4 @@
-include::6.5@sdk:pages:partial$rbac.adoc[]
+include::partial$attributes.adoc[]
+
+include::{version-server}@sdk:pages:partial$rbac.adoc[]
 
