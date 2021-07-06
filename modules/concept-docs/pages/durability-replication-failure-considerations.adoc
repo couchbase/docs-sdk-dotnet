@@ -2,6 +2,7 @@
 :page-topic-type: concept
 // :page-aliases: ROOT:failure-considerations,ROOT:durability,ROOT:enhanced-durability
 
+include::partial$attributes.adoc[]
 
 [abstract]
 Data durability refers to the fault tolerance and persistence of data in the face of software or hardware failure.
@@ -11,17 +12,17 @@ It is the responsibility of the development team and the software architect to e
 
 include::partial$beta-warning.adoc[]
 
-include::6.5@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=intro]
+include::{version-server}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=intro]
 
-include::6.5@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=syncrep]
-include::6.5@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=syncrep2]
-include::6.5@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=syncrep3]
+include::{version-server}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=syncrep]
+include::{version-server}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=syncrep2]
+include::{version-server}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=syncrep3]
 
-include::6.5@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=older]
+include::{version-server}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=older]
 
-include::6.5@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=performance]
+include::{version-server}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=performance]
 
-// include::6.5@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=txns]
+// include::{version-server}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=txns]
 
-// include::6.5@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=failover]
+// include::{version-server}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=failover]
 

@@ -3,15 +3,17 @@
 :page-topic-type: concept
 :page-aliases: ROOT:n1ql-query,ROOT:prepared-statements,ROOT:querying
 
+include::partial$attributes.adoc[]
+
 [abstract]
 Parallel data management for complex queries over many records, using a familiar SQL-like syntax.
 
 
-include::7.0@sdk:shared:partial$n1ql-queries.adoc[tag=intro]
+include::{version-server}@sdk:shared:partial$n1ql-queries.adoc[tag=intro]
 
 
 // Prepared Statements for Query Optimization
-include::7.0@sdk:shared:partial$n1ql-queries.adoc[tag=prepared]
+include::{version-server}@sdk:shared:partial$n1ql-queries.adoc[tag=prepared]
 
 For the .NET SDK, the `adhoc` parameter is `AdHoc`, and should be set to `false` for a plan to be prepared, or a prepared plan to be reused.
 Do not turn off the `AdHoc` flag for _every_ query to Server 6.0 and earlier, since only a finite number of query plans (currently 5000) can be stored in the SDK.
@@ -25,15 +27,15 @@ var result = await cluster.QueryAsync<dynamic>(
 );
 ----
 
-CAUTION: *When running an application using Prepared Statements through the .NET SDK* -- if you plan to upgrade Couchbase Server from 6.0.x or earlier to 6.5.0 or later, and are running a version of the .NET SDK prior to xref:project-docs:sdk-release-notes.adoc#version-3-0-1-13-may-2020[3.0.1], you will need to xref:7.0@server:install:upgrade-strategy-for-features.adoc#prepared-statements[restart the app or otherwise work around] a change in the Server's behaviour.
+CAUTION: *When running an application using Prepared Statements through the .NET SDK* -- if you plan to upgrade Couchbase Server from 6.0.x or earlier to 6.5.0 or later, and are running a version of the .NET SDK prior to xref:project-docs:sdk-release-notes.adoc#version-3-0-1-13-may-2020[3.0.1], you will need to xref:{version-server}@server:install:upgrade-strategy-for-features.adoc#prepared-statements[restart the app or otherwise work around] a change in the Server's behaviour.
 
 
 == Indexes
 
-The Couchbase query service makes use of xref:7.0@server:learn:services-and-indexes/indexes/indexes.adoc[_indexes_] in order to do its work.
+The Couchbase query service makes use of xref:{version-server}@server:learn:services-and-indexes/indexes/indexes.adoc[_indexes_] in order to do its work.
 Indexes replicate subsets of documents from data nodes over to index nodes,
 allowing specific data (for example, specific document properties) to be retrieved quickly,
-and to distribute load away from data nodes in xref:7.0@server:learn:services-and-indexes/services/services.adoc[MDS] topologies.
+and to distribute load away from data nodes in xref:{version-server}@server:learn:services-and-indexes/services/services.adoc[MDS] topologies.
 
 [IMPORTANT]
 In order to make a bucket queryable, it must have at least one index defined.
@@ -66,7 +68,7 @@ Indexes help improve the performance of a query.
 When an index includes the actual values of all the fields specified in the query,
 the index _covers_ the query, and eliminates the need to fetch the actual values from the Data Service.
 An index, in this case, is called a _covering index_, and the query is called a _covered_ query.
-For more information, see xref:7.0@server:n1ql:n1ql-language-reference/covering-indexes.adoc[Covering Indexes].
+For more information, see xref:{version-server}@server:n1ql:n1ql-language-reference/covering-indexes.adoc[Covering Indexes].
 
 You can also create and define indexes in the SDK using:
 
@@ -111,11 +113,11 @@ await bucketManager.WatchN1qlIndexes(new List<string> { "ix_name", "ix_email", "
 
 
 // Index Consistency
-include::7.0@sdk:shared:partial$n1ql-queries.adoc[tag=index-consistency]
+include::{version-server}@sdk:shared:partial$n1ql-queries.adoc[tag=index-consistency]
 
 The following options are available:
 
-include::7.0@server:learn:page$services-and-indexes/indexes/index-replication.adoc[tag=scan_consistency]
+include::{version-server}@server:learn:page$services-and-indexes/indexes/index-replication.adoc[tag=scan_consistency]
 ////
 * `not_bounded`: Executes the query immediately, without requiring any consistency for the query.
 If index-maintenance is running behind, out-of-date results may be returned.
