@@ -1,3 +1,5 @@
+include::partial$attributes.adoc[]
+
 = Sample Application
 
 
@@ -7,7 +9,7 @@ Our Travel Sample Application gives you a quick introduction to using the SDK wi
 
 == Requirements
 
-* We assume that you have xref:7.0@server:[already installed Couchbase Server 7.0] -- locally, or on a virtual machine.
+* We assume that you have xref:{version-server}@server:[already installed Couchbase Server 7.0] -- locally, or on a virtual machine.
 * Install the SDK -- using the xref:start-using-sdk.adoc[Getting Started instructions].
 
 
