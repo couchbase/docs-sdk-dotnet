@@ -3,6 +3,8 @@
 :page-topic-type: howto
 :page-aliases: n1ql-query
 
+include::partial$attributes.adoc[]
+
 [abstract]
 You can query for documents in Couchbase using the N1QL query language, a language based on SQL, but designed for structured and flexible JSON documents.
 Querying can solve typical programming tasks such as finding a user profile by email address, facebook login, or user ID.
@@ -179,7 +181,7 @@ This decreases pressure on CLR Garbage Collection and helps to prevent an `OutOf
 
 == Querying at Scope Level
 
-From version 3.0.5 of the .NET SDK, it is possible to query off the xref:7.0@server:learn:data/scopes-and-collections.adoc[`Scope` level] _with the beta version of the next Couchbase Server release, 7.0β_,
+From version 3.0.5 of the .NET SDK, it is possible to query off the xref:{version-server}@server:learn:data/scopes-and-collections.adoc[`Scope` level] _with the beta version of the next Couchbase Server release, 7.0β_,
 using the `QueryOptions() {QueryContext = "namespace:bucket:scope:collection"}` method.
 
 CAUTION: This feature is marked xref:project-docs:compatibility.adoc#interface-stability[_Uncommitted_].
@@ -202,8 +204,8 @@ NOTE: N1QL is not the only query option in Couchbase.
 Be sure to check that xref:concept-docs:data-services.adoc[your use case fits your selection of query service].
 
 * For a deeper dive into N1QL from the SDK, refer to our xref:concept-docs:n1ql-query.adoc[N1QL SDK concept doc].
-* The xref:7.0@server:n1ql:n1ql-language-reference/index.adoc[Server doc N1QL intro] introduces a complete guide to the N1QL language, including all of the latest additions.
+* The xref:{version-server}@server:n1ql:n1ql-language-reference/index.adoc[Server doc N1QL intro] introduces a complete guide to the N1QL language, including all of the latest additions.
 * The http://query.pub.couchbase.com/tutorial/#1[N1QL interactive tutorial] is a good introduction to the basics of N1QL use.
-* For scaling up queries, be sure to xref:7.0@server:learn:services-and-indexes/indexes/index-replication.adoc[read up on Indexes].
+* For scaling up queries, be sure to xref:{version-server}@server:learn:services-and-indexes/indexes/index-replication.adoc[read up on Indexes].
 * N1QL is for operational queries; for analytical workloads, read more on xref:concept-docs:http-services.adoc#long-running-queries-big-data[when to choose Analytics], our implementation of SQL++ available in the Enterprise Edition.
 

@@ -2,6 +2,8 @@
 :page-topic-type: howto
 :page-edition: Enterprise Edition:
 
+include::partial$attributes.adoc[]
+
 [abstract]
 Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
 
@@ -14,7 +16,7 @@ The analytics service is available in Couchbase Data Platform 6.0 and later (dev
 
 == Getting Started
 
-After familiarizing yourself with our xref:7.0@server:analytics:primer-beer.adoc[introductory primer],
+After familiarizing yourself with our xref:{version-server}@server:analytics:primer-beer.adoc[introductory primer],
 in particular creating a dataset and linking it to a bucket to shadow the operational data,
 try Couchbase Analytics using the .NET SDK.
 Intentionally, the API for analytics is very similar to that of the query service.
@@ -96,7 +98,7 @@ var result = await cluster.AnalyticsQueryAsync<dynamic>("select airportname, cou
 After checking that `QueryStatus` is success, we iterate over the rows.
 These rows may contain various sorts of data and metadata,
 depending upon the nature of the query,
-as you will have seen when working through our xref:7.0@server:analytics:primer-beer.adoc[introductory primer].
+as you will have seen when working through our xref:{version-server}@server:analytics:primer-beer.adoc[introductory primer].
 
 [source,csharp]
 ----
