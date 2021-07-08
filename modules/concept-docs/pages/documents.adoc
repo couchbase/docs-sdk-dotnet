@@ -45,7 +45,7 @@ or xref:{version-server}@server:n1ql:n1ql-language-reference/update.adoc[N1QL UP
 
 [source,sql]
 ----
-update `default` SET sale_price = msrp * 0.75 WHERE msrp < 19.95;
+update `travel-sample`.inventory.airline SET sale_price = msrp * 0.75 WHERE msrp < 19.95;
 ----
 ====
 
@@ -53,14 +53,14 @@ include::{version-server}@sdk:shared:partial$documents.adoc[tag=get_generic]
 
 [source,sql]
 ----
-SELECT * FROM default USE KEYS ["docid"];
+SELECT * FROM  `travel-sample`.inventory.airport USE KEYS ["airport_1254"];
 ----
 
 or
 
 [source,sql]
 ----
-SELECT * FROM default WHERE META(default).id = "docid";
+SELECT * FROM `travel-sample`.inventory.airport WHERE META().id = "airport_1254";
 ----
 
 You can also retrieve _parts_ of documents using xref:subdocument-operations.adoc[sub-document operations], by specifying one or more sections of the document to be retrieved
@@ -116,9 +116,8 @@ include::{version-server}@sdk:shared:partial$documents.adoc[tag=counters3]
 
 === Use Cases
 
-The SDK provides a high-level abstraction over the simple `incr()`/`decr()` of Couchbase Server's memcached binary protocol, using `collections.binary()`.
-This enables you to work with counters using `get()` and `upsert()` operations -- allowing, _inter alia_, the use of durability options with the operations.
-You will find several ways of working with counters {link-with-underscores}[in the API docs].
+The SDK provides a high-level abstraction over the simple `incr()`/`decr()` of Couchbase Server's memcached binary protocol, using `collections.Binary()`.
+This enables you to work with counters using `GetAsync()` and `ReplaceAsync()` operations -- allowing, _inter alia_, the use of durability options with the operations.
 
 // Expiry
 include::{version-server}@sdk:shared:partial$documents.adoc[tag=expiration]
@@ -126,5 +125,5 @@ include::{version-server}@sdk:shared:partial$documents.adoc[tag=expiration]
 IMPORTANT: If you are using the overloads that take `IDocument`, note that the `IDocument.Expiry` property assumes ms (milli-seconds), and is converted to seconds before being sent to the server.
 All other overloads take a `TimeSpan` or an `uint`, and assume an expiry in seconds
 A time of zero will set the document to never expire
-(a negative number will set expiry to immediate -- creating a xref:7.0@server:learn:buckets-memory-and-storage/storage.adoc#tombstones[tombstone]).
+(a negative number will set expiry to immediate -- creating a xref:{version-server}@server:learn:buckets-memory-and-storage/storage.adoc#tombstones[tombstone]).
 Values above 0ms but below 1000ms are rounded up to one second before being sent to the server -- _if you are using .NET SDK 3.0.4 or later_.
