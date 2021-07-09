@@ -15,7 +15,7 @@ A connection to a Couchbase Server cluster is represented by a `Cluster` object.
 A `Cluster` provides access to Buckets, Scopes, and Collections, as well as various Couchbase services and management interfaces.
 The simplest way to create a `Cluster` object is to call `Cluster.ConnectAsync()` with a <<connection-strings, connection string>>, username, and password:
 
-[source,c#]
+[source,csharp]
 ----
 include::example$ManagingConnections.cs[tag=simpleconnect,indent=0]
 ----
@@ -26,7 +26,7 @@ You will in any case, with 6.0 and earlier, need to open a ``Bucket` instance be
 In a production environment, your connection string should include the addresses of multiple server nodes in case some are currently unavailable.
 Multiple addresses may be specified in a connection string by delimiting them with commas:
 
-[source,c#]
+[source,csharp]
 ----
 include::example$ManagingConnections.cs[tag=multinodeconnect,indent=0]
 ----
@@ -91,7 +91,7 @@ NOTE: Install-Package Couchbase.Extensions.DependencyInjection -Version 3.0.0
 
 The easiest way to get started in a Web application is to use the `ConfigureService` method in the Services.cs:
 
-[source,c#]
+[source,csharp]
 ----
 include::example$WebStartupDI.cs[tag=configureservices,indent=0]
 ----
@@ -101,14 +101,14 @@ include::example$WebStartupDI.cs[tag=configureservices,indent=0]
 To get a couchbase bucket, simply inject `IBucketNamedProvider` and call `GetBucketAsync`.
 Be sure that you don't dispose the IBucket, it's a singleton that will be reused through the application.
 
-[source,c#]
+[source,csharp]
 ----
 include::example$HomeControllerDI.cs[tag=namedbucketprovider,indent=0]
 ----
 
 === Simplifying Injecting Bucket Names
 
-[source,c#]
+[source,csharp]
 ----
 include::example$mybucketproviderDI.cs[tag=mybucketprovider,indent=0]
 ----
@@ -119,7 +119,7 @@ This interface must be public and left empty.
 
 You can then configure your bucket interfaces during IServiceCollection setup.
 
-[source,c#]
+[source,csharp]
 ----
 include::example$WebStartupDI-IMyBucketProvider.cs[tag=configureservices,indent=0]
 ----
@@ -127,7 +127,7 @@ include::example$WebStartupDI-IMyBucketProvider.cs[tag=configureservices,indent=
 The interface you created can now be injected into controllers or business logic, and the `GetBucketAsync` method will return the specified bucket.
 You are no longer required to know the name of the bucket in the controller, improving separation of concerns in your application.
 
-[source,c#]
+[source,csharp]
 ----
 include::example$HomeControllerDI.cs[tag=IMybucketprovider,indent=0]
 ----
@@ -138,7 +138,7 @@ During application shutdown it's best to close the Couchbase connections gracefu
 You can do this using the `ICouchbaseLifetimeService`.`
 For Asp.Net Core, you can call this service from the `ApplicationStopped` cancellation token of `IHostApplicationLifetime`.
 
-[source,c#]
+[source,csharp]
 ----
 include::example$WebStartupDI.cs[tag=configure,indent=0]
 ----
@@ -225,7 +225,7 @@ F4+FjEqAEIr1mQepDaNM0gEfVcgd2SzGhC3yhYFBAH//8W4DUot5ciEhoBs=
 
 The next step is to enable encryption and import the certificate.
 
-[source,c#]
+[source,csharp]
 ----
 include::example$ManagingConnections.cs[tag=enableTls,indent=0]
 ----
@@ -348,7 +348,7 @@ include::{version-server}@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
 DNS SRV bootstrapping is available in the .NET SDK from version 2.1.0.
 In order to make the SDK actually use the SRV records, you just need to pass in the host name from your records (here example.com):
 
-[source,c#]
+[source,csharp]
 ----
 include::example$ManagingConnections.cs[tag=dnssrv,indent=0]
 ----
@@ -372,14 +372,14 @@ To prevent those early timeouts from happening, you can use the `waitUntilReady`
 
 If you are working at the _Cluster_ level, then add to the `cluster()` in the xref:#connecting-to-a-cluster[earlier example]:
 
-[source,c#]
+[source,csharp]
 ----
 include::example$ManagingConnections.cs[tag=waitUntilReady,indent=0]
 ----
 
 Or more fully:
 
-[source,c#]
+[source,csharp]
 ----
 include::example$ClusterExample.cs[tag=waitUntilReady,indent=0]
 ----
@@ -387,7 +387,7 @@ include::example$ClusterExample.cs[tag=waitUntilReady,indent=0]
 If you are working at the _Bucket_ level, then the https://docs.couchbase.com/sdk-api/couchbase-net-client/html/M_Couchbase_IBucket_WaitUntilReadyAsync.htm[Bucket-level `waitUntilReady`] does the same as the Cluster-level version,
 _plus_ it waits for the K-V (data) sockets to be ready.
 
-[source,c#]
+[source,csharp]
 ----
 include::example$ClusterExample.cs[tag=waitUntilReadyBucket,indent=0]
 ----
