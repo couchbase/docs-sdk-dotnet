@@ -60,16 +60,17 @@ include::example$StartUsing.cs[tag=bucket,indent=0]
 
 Substitute whatever bucket name you want for _bucket-name_ in the above example.
 
-The 3.1 SDK is ready for the introduction of xref:concept-docs:collections.adoc[Collections] in the xref:{version-server}@server:introduction:whats-new.adoc#whats-new-server-700[next release] of the Couchbase Data Platform.
-The latest release, Couchbase Server 6.6, brings a limited _Developer Preview_ of Collections, allowing Documents to be grouped by purpose or theme, according to specified _Scope_.
-Here we will use the `DefaultCollection`, which covers the whole Bucket and _must be used when connecting to a 6.6 cluster or earlier_.
+The 3.2 SDK is ready for the introduction of xref:concept-docs:collections.adoc[Collections] in the xref:{version-server}@server:introduction:whats-new.adoc#whats-new-server-700[7.0 release] of the Couchbase Data Platform.
+The latest release, Couchbase Server 7.0, brings Collections, allowing Documents to be grouped by purpose or theme, according to specified _Scope_.
 
 [source,csharp]
 ----
 include::example$StartUsing.cs[tag=collection,indent=0]
 ----
 
-To get you started the following code creates a new document and then fetches it again, printing the result.
+NOTE: This feature was previously avaiable as a _developer preview_ from Couchbase Server 6.6. _When connecting to a 6.6 cluster or earlier_, we must use the `DefaultCollection`, which covers the whole Bucket.
+
+To get you started the following code creates a new document in a custom scope and collection and then fetches it again, printing the result.
 
 [source,csharp]
 ----
