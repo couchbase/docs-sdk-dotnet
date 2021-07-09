@@ -16,7 +16,7 @@ Our xref:hello-world:start-using-sdk.adoc[Getting Started] guide covered the bas
 
 Our xref:hello-world:start-using-sdk.adoc[Getting Started] guide introduced basic authentication against a Couchbase cluster:
 
-[source,c#]
+[source,csharp]
 ----
 include::example$Auth.cs[tag=basic,indent=0]
 ----
@@ -34,7 +34,7 @@ For sample procedures whereby certificates can be generated and deployed, see xr
 The rest of this document assumes that the processes there, or something similar, have been followed.
 That is, a cluster certificate has been created and installed on the server, a client certificate has been created, and it is stored in a keystore along with the cluster's certificate.
 
-[source,c#]
+[source,csharp]
 ----
 include::example$Auth.cs[tag=auth,indent=0]
 ----

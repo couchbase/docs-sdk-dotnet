@@ -62,7 +62,7 @@ A complete simple NuGet example is available on our https://github.com/couchbase
 
 Here are all imports used by the following examples:
 
-[source,c#]
+[source,csharp]
 ----
 using System;
 using System.Linq;
@@ -86,7 +86,7 @@ The starting point is the `Transactions` object.
 It is very important that the application ensures that only one of these is created per cluster, as it performs automated background clean-up processes that should not be duplicated.
 In dependency injection context, this instance should be injected as a singleton.
 
-[source,c#]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=init,indent=0]
 ----
@@ -96,7 +96,7 @@ include::example$TransactionsExample.cs[tag=init,indent=0]
 
 Transactions can optionally be configured at the point of creating the `Transactions` object:
 
-[source,c#]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=config,indent=0]
 ----
@@ -108,7 +108,7 @@ include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=creating
 
 As with the Couchbase .NET Client, you should use the library asynchronusly using the async/await keywords (the exceptions will be explained later in <<Error Handling>>):
 
-[source,c#]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=create,indent=0]
 ----
@@ -123,7 +123,7 @@ Do not use fire-and-forget tasks under any circumstances.
 A code example is worth a thousand words, so here is a quick summary of the main transaction operations.
 They are described in more detail below.
 
-[source,c#]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=examples,indent=0]
 ----
@@ -135,7 +135,7 @@ include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=mechanic
 
 There are two ways to get a document, `GetAsync` and `GetOptionalAsync`:
 
-[source,c#]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=get,indent=0]
 ----
@@ -145,7 +145,7 @@ It is provided as a convenience method so the developer does not have to check t
 
 Gets will 'read your own writes', e.g. this will succeed:
 
-[source,c#]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=getReadOwnWrites,indent=0]
 ----
@@ -155,7 +155,7 @@ include::example$TransactionsExample.cs[tag=getReadOwnWrites,indent=0]
 
 === Inserting
 
-[source,c#]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=insert,indent=0]
 ----
@@ -166,7 +166,7 @@ Replacing a document requires awaiting a `TransactionGetResult` returned from `c
 This is necessary to ensure that the document is not involved in another transaction.
 (If it is, then the transaction will handle this, generally by rolling back what has been done so far, and retrying the lambda.)
 
-[source,c#]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=replace,indent=0]
 ----
@@ -175,7 +175,7 @@ include::example$TransactionsExample.cs[tag=replace,indent=0]
 
 As with replaces, removing a document requires awaiting a `TransactionGetResult` from a previous transaction operation first.
 
-[source,c#]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=remove,indent=0]
 ----
@@ -185,7 +185,7 @@ include::example$TransactionsExample.cs[tag=remove,indent=0]
 
 Committing is automatic: if there is no explicit call to `ctx.CommitAsync()` at the end of the transaction logic callback, and no exception is thrown, it will be committed.
 
-[source,c#]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=commit,indent=0]
 ----
@@ -203,7 +203,7 @@ include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=example]
 
 A complete version of this example is available on our https://github.com/couchbaselabs/couchbase-transactions-dotnet-examples[GitHub transactions examples page].
 
-[source,c#]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=full,indent=0]
 ----
@@ -219,14 +219,14 @@ If the transaction is not retried then it will throw a `TransactionFailedExcepti
 
 The application can use this to signal why it triggered a rollback, as so:
 
-[source,c#]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=rollback-cause,indent=0]
 ----
 
 The transaction can also be explicitly rolled back:
 
-[source,c#]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=rollback,indent=0]
 ----
@@ -266,7 +266,7 @@ All exceptions derive from `TransactionFailed` for backwards-compatibility purpo
 //  txnfailed
 include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed]
 
-[source,c#]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=config-expiration,indent=0]
 ----
@@ -325,7 +325,7 @@ Error handling differs depending on whether a transaction is before or after the
 
 Pulling all of the above together, this is the suggested best practice for error handling:
 
-[source,c#]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=full-error-handling,indent=0]
 ----
@@ -339,7 +339,7 @@ include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=cleanup]
 
 If the application wishes to monitor cleanup it may subscribe to these events:
 
-[source,c#]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=cleanup-events,indent=0]
 ----
@@ -360,7 +360,7 @@ If there is not a good reason for the cleanup to be failed (such as a downed nod
 
 To aid troubleshooting, each transaction maintains a list of log entries, which can be logged on failure like this:
 
-[source,c#]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=logging,indent=0]
 ----
@@ -369,7 +369,7 @@ A failed transaction can involve dozens, even hundreds, of lines of logging, so 
 
 ////
 This will log all lines of any failed transactions, to `WARN` level:
-[source,c#]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=config_warn,indent=0]
 ----
@@ -379,7 +379,7 @@ Please see the xref:howtos:collecting-information-and-logging.adoc[.NET SDK logg
 
 Here is an example of configuring a `Microsoft.Extensions.Logging.ILoggingFactory`:
 
-[source,c#]
+[source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=full-logging,indent=0]
 ----

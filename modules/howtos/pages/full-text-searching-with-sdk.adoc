@@ -35,15 +35,15 @@ var result = cluster.SearchQuery(
 
 All simple query types are created in the same manner, some have additional properties, which can be seen in common query type descriptions.
 Couchbase FTS's xref:{version-server}@server:fts:fts-query-types.adoc[range of query types] enable powerful searching using multiple options, to ensure results are just within the range wanted.
-Here is a date range query that looks for dates between 1st January 2019 and 31st January:
+Here is a date range query that looks for dates between 1st January 2021 and 31st January:
 
 [source,csharp]
 ----
 var result = cluster.SearchQuery(
     "index-name",
     new DateRangeQuery()
-        .Start(DateTime.Parse("2019-01-01"), true) // final parameter is if the range is inclusive
-        .End(DateTime.Parse("2019-02-01"), false),
+        .Start(DateTime.Parse("2021-01-01"), true) // final parameter is if the range is inclusive
+        .End(DateTime.Parse("2021-02-01"), false),
     options => options.Limit(10)
 );
 ----
@@ -56,8 +56,8 @@ var result = cluster.SearchQuery(
     "index-name",
     new ConjunctionQuery(
         new DateRangeQuery()
-            .Start(DateTime.Parse("2019-01-01"), true)
-            .Start(DateTime.Parse("2019-02-01"), false),
+            .Start(DateTime.Parse("2021-01-01"), true)
+            .Start(DateTime.Parse("2021-02-01"), false),
         new MatchQuery("Swanky")
 );
 ----
