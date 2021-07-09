@@ -102,31 +102,7 @@ Local Couchbase Server::
 --
 [source,csharp]
 ----
-using System;
-using System.Threading.Tasks;
-using Couchbase;
-
-namespace examples
-{
-    class Program
-    {
-        static async Task Main(string[] args)
-        {
-            var cluster = await Cluster.ConnectAsync("couchbase://localhost", "username", "password");
-            var bucket = await cluster.BucketAsync("bucket-name");
-            var collection = bucket.DefaultCollection();
-
-            var upsertResult = await collection.UpsertAsync("my-document-key", new { Name = "Ted", Age = 31 });
-            var getResult = await collection.GetAsync("my-document-key");
-            Console.WriteLine(getResult.ContentAs<dynamic>());
-
-            var queryResult = await cluster.QueryAsync<dynamic>("select \"Hello World\" as greeting", new Couchbase.Query.QueryOptions());
-            await foreach (var row in queryResult) {
-                Console.WriteLine(row);
-            }
-        }
-    }
-}
+include::example$StartUsing.cs[tags=**]
 ----
 --
 
