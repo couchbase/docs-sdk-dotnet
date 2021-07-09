@@ -2,42 +2,44 @@
 :nav-title: Error Codes
 :page-topic-type: ref
 
+include::partial$attributes.adoc[]
+
 [abstract]
 The standardized error codes returned by the Couchbase .NET SDK, from cloud connection to sub-document.
 
-include::6.5@sdk:shared:partial$error-ref.adoc[tag=intro]
+include::{version-server}@sdk:shared:partial$error-ref.adoc[tag=intro]
 
-== Shared Error Definitions 
+== Shared Error Definitions
 
-include::6.5@sdk:shared:partial$error-ref.adoc[tag=shared]
+include::{version-server}@sdk:shared:partial$error-ref.adoc[tag=shared]
 
 
 == KeyValue Error Definitions
-include::6.5@sdk:shared:partial$error-ref.adoc[tag=kv]
+include::{version-server}@sdk:shared:partial$error-ref.adoc[tag=kv]
 
 
 == Query Error Definitions
-include::6.5@sdk:shared:partial$error-ref.adoc[tag=query]
+include::{version-server}@sdk:shared:partial$error-ref.adoc[tag=query]
 
 
 == Analytics Error Definitions
-include::6.5@sdk:shared:partial$error-ref.adoc[tag=analytics]
+include::{version-server}@sdk:shared:partial$error-ref.adoc[tag=analytics]
 
 
 == Search Error Definition
-include::6.5@sdk:shared:partial$error-ref.adoc[tag=search]
+include::{version-server}@sdk:shared:partial$error-ref.adoc[tag=search]
 
 
 == View Error Definitions
-include::6.5@sdk:shared:partial$error-ref.adoc[tag=views]
+include::{version-server}@sdk:shared:partial$error-ref.adoc[tag=views]
 
 
 == Management API Error Definitions
-include::6.5@sdk:shared:partial$error-ref.adoc[tag=mgmnt]
+include::{version-server}@sdk:shared:partial$error-ref.adoc[tag=mgmnt]
 
 
 == Field-Level Encryption Error Definitions
-include::6.5@sdk:shared:partial$error-ref.adoc[tag=fle]
+include::{version-server}@sdk:shared:partial$error-ref.adoc[tag=fle]
 
 
 ////
@@ -51,7 +53,7 @@ This range is reserved for sdk-specific error codes which are not standardized, 
 
 
 == Connecting to Cloud
-include::6.5@sdk:shared:partial$error-ref.adoc[tag=cloud]
+include::{version-server}@sdk:shared:partial$error-ref.adoc[tag=cloud]
 
 ----
 2020-06-24T11:30:51.0566120+01:00  [INF] Error trying to retrieve DNS SRV entries. (addddf06)

@@ -15,7 +15,7 @@ For example, to use a custom timeout for Key/Value (K/V) operations  you would d
 [source,csharp]
 ----
 // SDK 3.0 custom k/v timeout
- var options = new ClusterOptions
+var options = new ClusterOptions
 {
     KvTimeout = TimeSpan.FromMilliseconds(5)
 };
@@ -96,7 +96,7 @@ The options can now be made accessible through any services as below,
 ----
 public CustomService ( IOptions<ClusterOptions> clusterOptions)
 {
-    var bucketName = clusterOptions.BucketName;    
+    var bucketName = clusterOptions.BucketName;
 }
 ----
 The "travel-sample" bucket is opened using any of the overridden defaults.
@@ -147,7 +147,7 @@ Default: `false`
 If TLS is enabled via `EnableTls`, setting this to true will disable hostname validation when authenticating
 connections to Couchbase Server.
 This is typically done in test or development environments where a domain name (FQDN) has not been specified
-for the bootstrap server's URI, and the IP address is use to validate the certificate, which will fail with a 
+for the bootstrap server's URI, and the IP address is use to validate the certificate, which will fail with a
 `RemoteCertificateNameMismatch` error.
 
 Name: *Enable Certificate Revocation*::
@@ -265,7 +265,7 @@ The `IoConfig` builder has methods for configuring the circuit breakers of each 
 ----
 var options = new ClusterOptions()
 {
-    CircuitBreakerConfiguration = 
+    CircuitBreakerConfiguration =
     new Couchbase.Core.CircuitBreakers.CircuitBreakerConfiguration
     {
         Enabled = true,
@@ -273,7 +273,7 @@ var options = new ClusterOptions()
         ErrorThresholdPercentage = 25,
         SleepWindow = TimeSpan.FromSeconds(1),
         RollingWindow = TimeSpan.FromMinutes(2)
-        
+
     }
 }
 ----
@@ -447,8 +447,8 @@ Default:  `false`
 +
 Enables the default Orphaned Response Logger.
 +
-If false, the Orphaned Response Logger will not log orphaned responses if a request fails to complete for some reason. 
+If false, the Orphaned Response Logger will not log orphaned responses if a request fails to complete for some reason.
 
 // section on wide area network support
 
-include::6.5@sdk:shared:partial$client-settings-wide-network.adoc[]
+include::{version-server}@sdk:shared:partial$client-settings-wide-network.adoc[]
