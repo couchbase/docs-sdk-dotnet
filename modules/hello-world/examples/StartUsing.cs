@@ -18,12 +18,13 @@ namespace examples
 
             // #tag::bucket[]
             // get a bucket reference
-            var bucket = await cluster.BucketAsync("bucket-name");
+            var bucket = await cluster.BucketAsync("travel-sample");
             // #end::bucket[]
 
             // #tag::collection[]
-            // get a collection reference
-            var collection = bucket.DefaultCollection();
+            // get a user-defined collection reference
+            var scope = await bucket.ScopeAsync("tenant_agent_00");
+            var collection = await scope.CollectionAsync("users");
             // #end::collection[]
 
             // #tag::upsert-get[]
