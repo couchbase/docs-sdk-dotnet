@@ -62,10 +62,8 @@ This would allow you to query the _travel-sample_ bucket's hotel collection rega
 
 [source,n1ql]
 ----
-SELECT
-    `travel-sample`.inventory.name,
-    `travel-sample`.inventory.email
-FROM `travel-sample`.inventory.name
+SELECT name, email
+FROM `travel-sample`.inventory.hotel
 WHERE name="Glasgow Grand Central" OR email="grandcentralhotel@example.com";
 ----
 
