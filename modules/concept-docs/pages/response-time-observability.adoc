@@ -2,7 +2,9 @@
 :nav-title: Response Time Observability
 :page-topic-type: concept
 
+include::partial$attributes.adoc[]
+
 [abstract]
 RTO - Observability using the Open Telemetry API.
 
-include::6.5@sdk:shared:partial$rto.adoc[tag=placeholder]
+include::{version-server}@sdk:shared:partial$rto.adoc[tag=placeholder]

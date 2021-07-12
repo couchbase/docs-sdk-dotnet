@@ -1,4 +1,4 @@
-include::6.5@sdk:pages:partial$webui-cli-access.adoc[]
+include::{version-server}@sdk:pages:partial$webui-cli-access.adoc[]
 
 ////
 = Browser and CLI Access

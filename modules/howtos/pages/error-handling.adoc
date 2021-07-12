@@ -66,7 +66,7 @@ The KV Service exposes several common errors that can be encountered - both duri
 ----
 try
 {
-    await collection.Replace("my-key", new { });
+    await collection.ReplaceAsync("my-key", new { });
 }
 catch (KeyNotFoundException)
 {
@@ -81,7 +81,7 @@ catch (KeyNotFoundException)
 ----
 try
 {
-    await collection.Insert("my-key", new { });
+    await collection.InsertAsync("my-key", new { });
 }
 catch (KeyExistsException)
 {
@@ -96,7 +96,7 @@ catch (KeyExistsException)
 ----
 try
 {
-	  await collection.Insert("my-key", myReallyLargeObject);
+	await collection.InsertAsync("my-key", myReallyLargeObject);
 }
 catch (RequestTooBigException)
 {
@@ -110,8 +110,8 @@ catch (RequestTooBigException)
 ----
 try
 {
-    var result = await collection.Get("my-key");
-    await collection.Replace("my-key", new { }, options => options.WithCas(result.Cas));
+    var result = await collection.GetAsync("my-key");
+    await collection.ReplaceAsync("my-key", new { }, options => options.WithCas(result.Cas));
 }
 catch (CasMismatchException)
 {

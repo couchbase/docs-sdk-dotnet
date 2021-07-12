@@ -1,13 +1,16 @@
-= Working with the  Collections Developer Preview
-:nav-title: Collections DP
+= Working with Collections
+:nav-title: Collections
 :content-type: howto
 :page-topic-type: howto
 
-[abstract]
-Collections is introduced as a Developer Preview feature in Couchbase Server 6.5.
-The 3.0 API SDKs all work with Collections and Scopes.
+include::partial$attributes.adoc[]
 
-The xref:6.5@server:developer-preview:collections/collections-overview.adoc[Developer Preview of the upcoming Collections feature] in Couchbase Server is fully implemented in the 3.0 API versions of the Couchbase SDKs.
-When working without the DP implemented, or with other server versions, the `defaultcollection` is used from the SDK.
+[abstract]
+The 3.0 API SDKs all work with all features of Collections and Scopes.
+
+The xref:{version-server}@server:learn:data/scopes-and-collections.adoc[Collections feature] in Couchbase Server 7.0 is fully implemented in the
+3.0 API versions of the Couchbase SDKs.
+
+NOTE: When working with earlier versions (before the Developer Preview in 6.5), or with other server versions, the `defaultcollection` is used from the SDK.
 
 

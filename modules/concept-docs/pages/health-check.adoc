@@ -3,15 +3,17 @@
 :page-topic-type: concept
 :page-aliases: ROOT:health-check
 
+include::partial$attributes.adoc[]
+
 [abstract]
 Health Check provides ping() and diagnostics() tests for the health of the network and the cluster.
 
 
-include::6.5@sdk:pages:partial$health-check.adoc[tag="intro"]
+include::{version-server}@sdk:pages:partial$health-check.adoc[tag="intro"]
 
-include::6.5@sdk:pages:partial$health-check.adoc[tag="users"]
+include::{version-server}@sdk:pages:partial$health-check.adoc[tag="users"]
 
-include::6.5@sdk:pages:partial$health-check.adoc[tag="ping"]
+include::{version-server}@sdk:pages:partial$health-check.adoc[tag="ping"]
 
 A `ping` can be performed either at the `Cluster` or at the `Bucket` level. They are very similar, although at the `Bucket` level also the Key/Value and View connections for the specific bucket are taken into account.
 
@@ -73,10 +75,10 @@ You will see an output similar to this:
 }
 ----
 
-Notice the `scope` of each service. 
+Notice the `scope` of each service.
 Bucket level services like key/value will have a bucket name as scope, while cluster level services will have "Cluster" as their scope.
 
-include::6.5@sdk:pages:partial$health-check.adoc[tag="diag"]
+include::{version-server}@sdk:pages:partial$health-check.adoc[tag="diag"]
 
 
 [source,javascript]
