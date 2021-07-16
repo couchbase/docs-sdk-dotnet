@@ -9,39 +9,35 @@ namespace Couchbase.Examples
 {
     public class CollectionManager
     {
-
-        async Task<ICouchbaseCollectionManager> getCollectionManager (String username, String password) {
-            Console.WriteLine("create-collection-manager");
-
-            // tag::create-collection-manager[]
-            ICluster cluster = await Cluster.ConnectAsync("couchbase://localhost", username, password);
-            IBucket bucket = await cluster.BucketAsync("travel-sample");
-            ICouchbaseCollectionManager collectionMgr = bucket.Collections;
-            // end::create-collection-manager[]
-
-            return collectionMgr;
-        }
-
         public async Task ExecuteAsync()
         {
-            ICluster cluster = await Cluster.ConnectAsync("couchbase://localhost", "Administrator", "password");
-            IUserManager users =  cluster.Users;
-
-            Console.WriteLine("bucketAdmin");
-            // tag::bucketAdmin[]
+            Console.WriteLine("scopeAdmin");
             {
-                var user = new User("bucketAdmin");
-                user.Password = "password";
-                user.DisplayName = "Bucket Admin [travel-sample]";
-                user.Roles = new List<Role>() {
-                    new Role("bucket_admin", "travel-sample") };
+                // tag::scopeAdmin[]
+                ICluster clusterAdmin = await Cluster.ConnectAsync(
+                    "couchbase://localhost", "Administrator", "password");
+                IUserManager users =  clusterAdmin.Users;
+
+                var user = new User("scopeAdmin") {
+                    Password = "password",
+                    DisplayName = "Manage Scopes [travel-sample:*]",
+                    Roles = new List<Role>() {
+                        new Role("scope_admin", "travel-sample"),
+                        new Role("data_reader", "travel-sample")}
+                };
+
                 await users.UpsertUserAsync(user);
+                // end::scopeAdmin[]
             }
-            // end::bucketAdmin[]
 
+            ICluster cluster = await Cluster.ConnectAsync("couchbase://localhost", "scopeAdmin", "password");
+            IBucket bucket = await cluster.BucketAsync("travel-sample");
+
+            // tag::create-collection-manager[]
+            ICouchbaseCollectionManager collectionMgr = bucket.Collections;
+            // end::create-collection-manager[]
             {
-                var collectionMgr = await getCollectionManager("bucketAdmin", "password");
-
+                Console.WriteLine("create-scope");
                 // tag::create-scope[]
                 try {
                     await collectionMgr.CreateScopeAsync("example-scope");
@@ -51,24 +47,8 @@ namespace Couchbase.Examples
                 }
                 // end::create-scope[]
             }
-
-            Console.WriteLine("scopeAdmin");
-            // tag::scopeAdmin[]
-            {
-                var user = new User("scopeAdmin");
-                user.Password = "password";
-                user.DisplayName = "Manage Collections in Scope [travel-sample:*]";
-                user.Roles = new List<Role>() {
-                    new Role("scope_admin", "travel-sample"),
-                    new Role("data_reader", "travel-sample")};
-                await users.UpsertUserAsync(user);
-            }
-            // end::scopeAdmin[]
-
             {
                 Console.WriteLine("create-collection");
-                var collectionMgr = await getCollectionManager("scopeAdmin", "password");
-
                 // tag::create-collection[]
                 var spec = new CollectionSpec("example-scope", "example-collection");
 
@@ -95,11 +75,9 @@ namespace Couchbase.Examples
                     Console.WriteLine("The specified parent scope doesn't exist");
                 }
                 // end::drop-collection[]
-
             }
             {
                 Console.WriteLine("drop-scope");
-                var collectionMgr = await getCollectionManager("bucketAdmin", "password");
                 // tag::drop-scope[]
                 try {
                     await collectionMgr.DropScopeAsync("example-scope");
