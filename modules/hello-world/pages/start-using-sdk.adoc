@@ -2,6 +2,8 @@
 :page-aliases: ROOT:getting-started,ROOT:start-using,ROOT:hello-couchbase,ROOT:start-using-sdk
 :navtitle: Start Using the SDK
 
+include::partial$attributes.adoc[]
+
 [abstract]
 The Couchbase .NET SDK enables you to interact with a Couchbase Server cluster from .NET using C# and other .NET languages.
 It offers an asynchronous API based on the _Task-based Asynchronous Pattern (TAP)_.
@@ -31,7 +33,7 @@ Install the latest 3.1 https://www.nuget.org/packages/CouchbaseNetClient/[Couchb
 The following code samples assume:
 
 * Couchbase Server is installed and accessible locally (xref:server:getting-started:do-a-quick-install.adoc[Do a Quick Install] if you don't already have Couchbase Server installed).
-* You have create a bucket (perhaps using the xref:7.0@server:manage:manage-settings/install-sample-buckets.adoc[travel-sample dataset], or by creating a new bucket).
+* You have create a bucket (perhaps using the xref:{version-server}@server:manage:manage-settings/install-sample-buckets.adoc[travel-sample dataset], or by creating a new bucket).
 * You have created a Couchbase user named "username" with permissions to access the cluster (at least Application Access permissions).
 
 Firstly, you will need to have a few `using` statements at the top of *Program.cs* in your console program:
@@ -58,16 +60,17 @@ include::example$StartUsing.cs[tag=bucket,indent=0]
 
 Substitute whatever bucket name you want for _bucket-name_ in the above example.
 
-The 3.1 SDK is ready for the introduction of xref:concept-docs:collections.adoc[Collections] in the xref:7.0@server:introduction:whats-new.adoc#whats-new-server-700[next release] of the Couchbase Data Platform.
-The latest release, Couchbase Server 6.6, brings a limited _Developer Preview_ of Collections, allowing Documents to be grouped by purpose or theme, according to specified _Scope_.
-Here we will use the `DefaultCollection`, which covers the whole Bucket and _must be used when connecting to a 6.6 cluster or earlier_.
+The 3.2 SDK is ready for the introduction of xref:concept-docs:collections.adoc[Collections] in the xref:{version-server}@server:introduction:whats-new.adoc#whats-new-server-700[7.0 release] of the Couchbase Data Platform.
+The latest release, Couchbase Server 7.0, brings Collections, allowing Documents to be grouped by purpose or theme, according to specified _Scope_.
 
 [source,csharp]
 ----
 include::example$StartUsing.cs[tag=collection,indent=0]
 ----
 
-To get you started the following code creates a new document and then fetches it again, printing the result.
+NOTE: This feature was previously avaiable as a _developer preview_ from Couchbase Server 6.6. _When connecting to a 6.6 cluster or earlier_, we must use the `DefaultCollection`, which covers the whole Bucket.
+
+To get you started the following code creates a new document in a custom scope and collection and then fetches it again, printing the result.
 
 [source,csharp]
 ----
@@ -99,31 +102,7 @@ Local Couchbase Server::
 --
 [source,csharp]
 ----
-using System;
-using System.Threading.Tasks;
-using Couchbase;
-
-namespace examples
-{
-    class Program
-    {
-        static async Task Main(string[] args)
-        {
-            var cluster = await Cluster.ConnectAsync("couchbase://localhost", "username", "password");
-            var bucket = await cluster.BucketAsync("bucket-name");
-            var collection = bucket.DefaultCollection();
-
-            var upsertResult = await collection.UpsertAsync("my-document-key", new { Name = "Ted", Age = 31 });
-            var getResult = await collection.GetAsync("my-document-key");
-            Console.WriteLine(getResult.ContentAs<dynamic>());
-
-            var queryResult = await cluster.QueryAsync<dynamic>("select \"Hello World\" as greeting", new Couchbase.Query.QueryOptions());
-            await foreach (var row in queryResult) {
-                Console.WriteLine(row);
-            }
-        }
-    }
-}
+include::example$StartUsing.cs[tags=**]
 ----
 --
 

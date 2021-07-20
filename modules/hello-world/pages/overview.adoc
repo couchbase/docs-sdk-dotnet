@@ -14,14 +14,14 @@
 [.column]
 ====== {empty}
 [.content]
-The Couchbase .NET client allows applications to connect to Couchbase Server using any Common Language Runtime (CLR) language, including C#, F#, and VB.NET. 
+The Couchbase .NET client allows applications to connect to Couchbase Server using any Common Language Runtime (CLR) language, including C#, F#, and VB.NET.
 The SDK is written in C#, and some of its idiomatic patterns reflect that choice.
 
 [.column]
 [.content]
 [source,c#]
 ----
-  await collection
+await collection
     .InsertAsync(key, Encoding.UTF8.GetBytes("hello"), options =>
     {
         options.Expiry(TimeSpan.FromSeconds(30));
@@ -83,11 +83,11 @@ Or using Package Reference
 .Practical Howto Docs
 
 [.content]
-Connect to our services -- xref:howtos:kv-operations.adoc[data (KV)]; 
-xref:howtos:n1ql-queries-with-sdk.adoc[Query]; 
-xref:howtos:full-text-searching-with-sdk.adoc[Search]; 
-xref:howtos:analytics-using-sdk.adoc[Analytics]; 
-xref:howtos:view-queries-with-sdk.adoc[Views] -- 
+Connect to our services -- xref:howtos:kv-operations.adoc[data (KV)];
+xref:howtos:n1ql-queries-with-sdk.adoc[Query];
+xref:howtos:full-text-searching-with-sdk.adoc[Search];
+xref:howtos:analytics-using-sdk.adoc[Analytics];
+xref:howtos:view-queries-with-sdk.adoc[Views] --
 and the xref:howtos:subdocument-operations.adoc[Sub-Document API].
 
 [.column]
@@ -117,10 +117,10 @@ Introducing xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distribu
 .About
 
 [.content]
-Those useful nuts-and-bolts guides to 
-xref:project-docs:compatibility.adoc[compatibility tables]; 
-xref:project-docs:sdk-release-notes.adoc[release notes]; 
-xref:project-docs:get-involved.adoc[contribution guide]; and the 
+Those useful nuts-and-bolts guides to
+xref:project-docs:compatibility.adoc[compatibility tables];
+xref:project-docs:sdk-release-notes.adoc[release notes];
+xref:project-docs:get-involved.adoc[contribution guide]; and the
 xref:project-docs:migrating-sdk-code-to-3.n.adoc[migration guide] for moving to the 3.0 API.
 
 [.column]

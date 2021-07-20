@@ -3,10 +3,12 @@
 :page-topic-type: concept
 :page-aliases: managing-clusters
 
+include::partial$attributes.adoc[]
+
 [abstract]
 The Couchbase .NET SDK provides an API for managing a Couchbase cluster programmatically.
 
-include::6.5@sdk:shared:partial$clusters-buckets.adoc[tag=management]
+include::{version-server}@sdk:shared:partial$clusters-buckets.adoc[tag=management]
 
 Management operations in the .NET SDK may be performed through several interfaces depending on the object:
 

@@ -3,6 +3,8 @@
 :page-topic-type: concept
 :page-aliases: ROOT:migrate
 
+include::partial$attributes.adoc[]
+
 [abstract]
 The 3.0 API breaks the existing 2.0 APIs in order to provide a number of improvements.
 Collections and Scopes are introduced.
@@ -15,10 +17,10 @@ In following Microsoft recommendations on .NET, the API has also been changed to
 
 
 
-include::6.5@sdk:shared:partial$migration.adoc[tag=intro]
+include::{version-server}@sdk:shared:partial$migration.adoc[tag=intro]
 
 
-include::6.5@sdk:shared:partial$migration.adoc[tag=terms]
+include::{version-server}@sdk:shared:partial$migration.adoc[tag=terms]
 
 As an example here is a KeyValue document fetch:
 
@@ -41,13 +43,13 @@ IQueryResult<dynamic> result = await cluster.QueryAsync<dynamic>("select 1 = 1",
 
 ----
 
-include::6.5@sdk:shared:partial$migration.adoc[tag=terms2]
+include::{version-server}@sdk:shared:partial$migration.adoc[tag=terms2]
 
 
-include::6.5@sdk:shared:partial$migration.adoc[tag=new]
+include::{version-server}@sdk:shared:partial$migration.adoc[tag=new]
 
 
-include::6.5@sdk:shared:partial$migration.adoc[tag=lang]
+include::{version-server}@sdk:shared:partial$migration.adoc[tag=lang]
 
 ==  Installation and Configuration
 
@@ -92,7 +94,7 @@ For example, to use a custom timeout for Key/Value (K/V) operations in SDK 2.x y
 [source,csharp]
 ----
 // SDK 2.0 custom k/v timeout
- var config = new ClientConfiguration
+var config = new ClientConfiguration
 {
     DefaultOperationLifespan = (uint)TimeSpan.FromMilliseconds(5).TotalMilliseconds
 };
@@ -103,7 +105,7 @@ You can perform the same custom K/V timeout in SDK 3.0, however, you will use th
 [source,csharp]
 ----
 // SDK 3.0 custom k/v timeout
- var options = new ClusterOptions
+var options = new ClusterOptions
 {
     KvTimeout = TimeSpan.FromMilliseconds(5)
 };

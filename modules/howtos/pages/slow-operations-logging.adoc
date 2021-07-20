@@ -12,12 +12,12 @@ These include slow queries, responses taking beyond a certain threshold, and orp
 
 == Observability Metrics
 
-Individual request traces present a very specific (and isolated) view of the system. 
-In addition, it also makes sense to capture information that aggregates request data (i.e. requests per second), 
+Individual request traces present a very specific (and isolated) view of the system.
+In addition, it also makes sense to capture information that aggregates request data (i.e. requests per second),
 but also data which is not tied to a specific request at all (i.e. resource utilization).
 
-The deployment situation itself is similar to the tracer: either applications already have a metrics infrastructure in place or they don’t. 
-The difference is that exposing some kind of metrics is much more common than request based tracing, 
+The deployment situation itself is similar to the tracer: either applications already have a metrics infrastructure in place or they don’t.
+The difference is that exposing some kind of metrics is much more common than request based tracing,
 because most production deployments at least monitor CPU usage etc.
 
 Metrics fall into the following categories:
@@ -38,8 +38,8 @@ Advanced users can build their own implementations of the interface:
 [source,java]
 ----
 interface Meter {
-     Counter counter(String name, Map<String, String> tags)
-     ValueRecorder valueRecorder(String name, Map<String, String> tags)
+    Counter counter(String name, Map<String, String> tags)
+    ValueRecorder valueRecorder(String name, Map<String, String> tags)
 }
 
 interface Counter {
@@ -83,11 +83,11 @@ The overall structure looks like this (here prettified for readability):
 }
 ----
 
-For each service and each node, the total count and the latency percentiles are reported. 
-This will help during debugging to get a decent idea of the latency distribution across services and nodes. 
+For each service and each node, the total count and the latency percentiles are reported.
+This will help during debugging to get a decent idea of the latency distribution across services and nodes.
 For more sophisticated grouping and aggregations, users should use the forthcoming `OpenTelemetryMeter`, or a custom implementation.
 
-The `emit_interval_s` is reported in the meta section of the JSON output since to calculate the ops/s the `total_count` needs to be divided by the `emit_interval_s`. 
+The `emit_interval_s` is reported in the meta section of the JSON output since to calculate the ops/s the `total_count` needs to be divided by the `emit_interval_s`.
 Since the configuration property is not always available when debugging logs it is included to make it simple.
 
 
@@ -115,9 +115,9 @@ You should expect to see output in JSON format in the logs for the services enco
 }
 ----
 
-The `total_count` represents the total amount of over-threshold recorded items in each interval per service. 
-The number of entries in “top_requests” is configured by the `sampleSize`. 
-The service placeholder is replaced with each service -- “kv”, “query”, etc. 
+The `total_count` represents the total amount of over-threshold recorded items in each interval per service.
+The number of entries in “top_requests” is configured by the `sampleSize`.
+The service placeholder is replaced with each service -- “kv”, “query”, etc.
 Each entry looks like this, with all fields populated:
 
 [source,json]
@@ -136,26 +136,26 @@ Each entry looks like this, with all fields populated:
 }
 ----
 
-If a field is not present (because for example dispatch did not happen), it will not be included. 
+If a field is not present (because for example dispatch did not happen), it will not be included.
 
 
 
 == Orphaned Response Reporting
 
-Orphan response reporting acts as an auxiliary tool to the tracing and metrics capabilities. 
+Orphan response reporting acts as an auxiliary tool to the tracing and metrics capabilities.
 It does not expose an external API to the application and is very focussed on its feature set.
 
-The way it works is that every time a response is in the process of being completed, 
-when the SDK detects that the original caller is not listening anymore (likely because of a timeout), 
+The way it works is that every time a response is in the process of being completed,
+when the SDK detects that the original caller is not listening anymore (likely because of a timeout),
 it will send this “orphan” response to a reporting utility which then aggregates it and in regular intervals logs them in a specific format.
 
-When the user then sees timeouts in their logs, they can go look at the output of the orphan reporter and correlate certain properties that aid debugging in production. 
+When the user then sees timeouts in their logs, they can go look at the output of the orphan reporter and correlate certain properties that aid debugging in production.
 For example, if a single node is slow but the rest of the cluster is responsive, this would be visible from orphan reporting.
 
 === Configuring Orphan Logging
 
-The OrphanResponseReporter is very similar in principle to the ThresholdRequestTracer, 
-but instead of tracking responses which are over a specific threshold it tracks those responses which are “orphaned”. 
+The OrphanResponseReporter is very similar in principle to the ThresholdRequestTracer,
+but instead of tracking responses which are over a specific threshold it tracks those responses which are “orphaned”.
 
 The `emitInterval` and `sampleSize` can be adjusted (defaults are 10s and 10 samples per service, respectively).
 The overall structure looks like this (here prettified for readability):
@@ -174,8 +174,8 @@ The overall structure looks like this (here prettified for readability):
 }
 ----
 
-The total_count represents the total amount of  recorded items in each interval per service. 
-The number of entries in “top_requests” is configured by the sampleSize. The service placeholder is replaced with each service, i.e. “kv”, “query” etc. 
+The total_count represents the total amount of  recorded items in each interval per service.
+The number of entries in “top_requests” is configured by the sampleSize. The service placeholder is replaced with each service, i.e. “kv”, “query” etc.
 Each entry looks like this, with all fields populated:
 
 [source,json]
@@ -195,4 +195,4 @@ Each entry looks like this, with all fields populated:
 }
 ----
 
-If a field is not present (because for example dispatch did not happen), it will not be included. 
+If a field is not present (because for example dispatch did not happen), it will not be included.

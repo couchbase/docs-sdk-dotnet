@@ -13,10 +13,10 @@ A couple of points to consider:
 All operations are composed of a `Task` or a `Task<IResult>` depending upon whether or not the task return void or a `TResult`.
 Tasks are evaluated asynchronously using the familiar `await` keyword, and run in a blocking method by calling the `Task.Result()` method.
 If a task is awaited, the method awaiting the task must have the `async` keyword in its signature.
-Tasks can be run concurrently using any of the `System.Threading.Tasks` combinators: `Task.Run`, `Task.WhenAll`, `Task.WhenAny`, etc. 
-More information can be found in Microsoft's documentation here: https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/consuming-the-task-based-asynchronous-pattern#combinators. 
+Tasks can be run concurrently using any of the `System.Threading.Tasks` combinators: `Task.Run`, `Task.WhenAll`, `Task.WhenAny`, etc.
+More information can be found in Microsoft's documentation here: https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/consuming-the-task-based-asynchronous-pattern#combinators.
 
-Note: All examples on this page start with initiating a Cluster object and then opening the default Bucket and Collection:
+Note: All examples on this page start with initiating a Cluster object and then opening a Bucket and Collection:
 
 [source,csharp]
 ----
@@ -26,8 +26,9 @@ var cluster = new Cluster("couchbase://localhost", new ClusterOptions()
                  .WithBuckets("travel-sample")
             );
 
-var bucket = await cluster.BucketAsync("default");
-var collection = bucket.DefaultCollection();
+var bucket = await cluster.BucketAsync("travel-sample");
+var scope = await bucket.ScopeAsync("inventory");
+var collection = await scope.CollectionAsync("hotel");
 ----
 
 == Asynchronous Programming using await
@@ -39,12 +40,12 @@ This is the most common and basic ways for consuming Couchbase operations asynch
 var upsertResult = await collection.UpsertAsync("doc1",new {Name = "Ted", Age = 80});
 using (var getResult = await collection.GetAsync("doc1"))
 {
-     var person = getResult.ContentAs<dynamic>();
+    var person = getResult.ContentAs<dynamic>();
 }
 ----
 
-In this way, every single operation will be fired off on a `System.Threading.Threadpool` thread separately from the main application thread. 
-Note that in the `UpsertAsync` method above, an exception will be thrown if the operation fails; if it succeeds then the result will be an `IMutationResult` that contains the CAS value for reuse, otherwise it can be ignored. 
+In this way, every single operation will be fired off on a `System.Threading.Threadpool` thread separately from the main application thread.
+Note that in the `UpsertAsync` method above, an exception will be thrown if the operation fails; if it succeeds then the result will be an `IMutationResult` that contains the CAS value for reuse, otherwise it can be ignored.
 `GetAsync` returns a `GetResult` if it succeeds, you’ll then have to use `ContentAs` to read the returned value.
 
 
@@ -57,7 +58,7 @@ The same methods above can also be called synchronously, blocking the calling th
 var upsertResult = collection.UpsertAsync("doc1",new {Name = "Ted", Age = 80}).Result;
 using (var getResult = collection.GetAsync("doc1").Result)
 {
-     var person = getResult.ContentAs<dynamic>();
+    var person = getResult.ContentAs<dynamic>();
 }
 ----
 
@@ -68,12 +69,12 @@ Another way of doing this is by calling the awaiter explicitly `Task.GetAwaiter(
 var upsertResult = collection.UpsertAsync("doc1",new {Name = "Ted", Age = 80}).GetAwaiter().GetResult();
 using (var getResult = collection.GetAsync("doc1").GetAwaiter().GetResult())
 {
-     var person = getResult.ContentAs<dynamic>();
+    var person = getResult.ContentAs<dynamic>();
 }
 ----
 
-This is a slightly more verbose way of achieving the same goal: calling the `Task` synchronously in a blocking fashion. 
-Note that Couchbase suggests using the await keyword and running the Task asynchronously, and not blocking the calling thread! 
+This is a slightly more verbose way of achieving the same goal: calling the `Task` synchronously in a blocking fashion.
+Note that Couchbase suggests using the await keyword and running the Task asynchronously, and not blocking the calling thread!
 
 
 == Concurrently executing lots of Tasks using Task.WhenAll
@@ -98,23 +99,23 @@ foreach (var getResult in results)
 }
 ----
 
-In this example we will fetch four documents asynchronously while not blocking the main thread, suspending the state until the results are returned. 
+In this example we will fetch four documents asynchronously while not blocking the main thread, suspending the state until the results are returned.
 Then will loop through and work with each document in a synchronous manner.
 
 
 == What about Task.Wait, Task.WaitAll
 
-`Task.Wait` and `Task.WaitAll` and other _Wait_ methods will block the main thread synchronously while the Task is run; we do not suggest using either of these methods in most cases. 
+`Task.Wait` and `Task.WaitAll` and other _Wait_ methods will block the main thread synchronously while the Task is run; we do not suggest using either of these methods in most cases.
 An example of when you would use one of these methods would be a console app where you do not want the main thread to run through the main method before getting the results back.
 
 
 == Avoiding DeadLocks
 
-When a Task runs, it suspends the current continuation context, executes the Task, and then attempts to continue back where the continuation context suspended. 
-In ASP.NET this is the request context; however, in ASP.NET it is not tied to a specific thread and the context only allows one thread to run at a time. 
-The top level method is blocked by the context and when the continuation context calls back it deadlocks because its already blocked. 
+When a Task runs, it suspends the current continuation context, executes the Task, and then attempts to continue back where the continuation context suspended.
+In ASP.NET this is the request context; however, in ASP.NET it is not tied to a specific thread and the context only allows one thread to run at a time.
+The top level method is blocked by the context and when the continuation context calls back it deadlocks because its already blocked.
 
-The best way to avoid deadlocks such as this, is to avoid blocking on Tasks, which means avoiding any of the _Wait_ methods. 
+The best way to avoid deadlocks such as this, is to avoid blocking on Tasks, which means avoiding any of the _Wait_ methods.
 Another handy way of avoiding deadlocks is to not use a synchronization context:
 
 [source,csharp]
@@ -132,13 +133,13 @@ This will configure the Task to not use the synchronization context even if it e
 
 == Batching
 
-Asynchronous clients inherently batch operations: because the application receives the response at a later stage in the application, batching will be the result of issuing many requests in sequence. 
+Asynchronous clients inherently batch operations: because the application receives the response at a later stage in the application, batching will be the result of issuing many requests in sequence.
 
 Batching in .NET using TAP is relively simple.
-`await Task.WhenAll()` will group together tasks and wait until they are complete before running, 
+`await Task.WhenAll()` will group together tasks and wait until they are complete before running,
 useful where you do not want the main thread to run through the main method before getting the results back.
 
-[source,dotnet]
+[source,csharp]
 ----
 // collection of things that will complete in the future
 var tasks = new List<Task>();
