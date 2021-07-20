@@ -3,7 +3,7 @@
 //      dotnet script Collections.cs
 //
 
-#r "nuget: CouchbaseNetClient, 3.1.7"
+#r "nuget: CouchbaseNetClient, 3.2.0"
 
 using System;
 using System.Text;
