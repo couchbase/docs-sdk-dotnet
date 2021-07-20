@@ -3,14 +3,16 @@
 :page-topic-type: concept
 :page-aliases: sdk-xattr-overview,ROOT:sdk-xattr-overview
 
+include::partial$attributes.adoc[]
+
 [abstract]
 Extended Attributes (XATTR) are metadata that can be provided on a per-application basis.
 
-include::6.5@sdk:shared:partial$sdk-xattr-overview.adoc[tag=intro_extended_attributes]
+include::{version-server}@sdk:shared:partial$sdk-xattr-overview.adoc[tag=intro_extended_attributes]
 
-include::6.5@sdk:shared:partial$sdk-xattr-overview.adoc[tag=using_extended_attributes]
+include::{version-server}@sdk:shared:partial$sdk-xattr-overview.adoc[tag=using_extended_attributes]
 
-include::6.5@sdk:shared:partial$sdk-xattr-overview.adoc[tag=virtual_extended_attributes]
+include::{version-server}@sdk:shared:partial$sdk-xattr-overview.adoc[tag=virtual_extended_attributes]
 
 [source,C#,indent=0]
 ----
