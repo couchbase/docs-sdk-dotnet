@@ -1,48 +1,36 @@
 include::partial$attributes.adoc[]
 
 = Sample Application
+:description: Discover how to program interactions with the Couchbase Server via the data, query, and search services -- using the Travel Sample Application with the built-in Travel Sample data Bucket.
+:nav-title: Travel Sample App
+:content-type: tutorial
+:page-topic-type: tutorial
+:page-aliases: ROOT:sample-application,ROOT:tutorial4,ROOT:sample-app-backend
+
+:travel-sample-git-project: try-cb-dotnet
 
 
+include::project-docs:partial$attributes.adoc[]
 
-Our Travel Sample Application gives you a quick introduction to using the SDK with Couchbase Server, in particular the powerful N1QL language of our Query service.
+include::{version-server}@sdk:shared:partial$sample-application.adoc[tag=abstract]
 
+include::{version-server}@sdk:shared:partial$sample-application.adoc[tag=quick-start]
 
-== Requirements
+include::{version-server}@sdk:shared:partial$sample-application.adoc[tag=bring-your-own]
 
-* We assume that you have xref:{version-server}@server:[already installed Couchbase Server 7.0] -- locally, or on a virtual machine.
-* Install the SDK -- using the xref:start-using-sdk.adoc[Getting Started instructions].
+include::{version-server}@sdk:shared:partial$sample-application.adoc[tag=using]
 
+== Sample App Backend
 
-
-
-We will cover the setting up of the app, then using the app.
-The data model is covered in a xref:travel-sample-data-model/adoc[separate page],
-so as not to interrupt the flow for those in a hurry to get onto working with the code,
-and understanding how to use the key HTTP services (KV, Query, Search) with Couchbase Server.
+The https://github.com/couchbaselabs/{travel-sample-git-project}/tree/HEAD/try-cb-dotnet directory contains the `Startup.cs` entrypoint, and various `Models` and `Controllers` which contain functions for handling users, registration, and N1QL queries.
 
 
-== Setting up the App
+include::{version-server}@sdk:shared:partial$sample-application.adoc[tag=data-model]
 
+// TODO: we don't use the partial here, because of the location of swagger.json
+// in try-cb-dotnet/wwwroot/
+== REST API
 
+You can explore the REST API here in read-only mode, or once you are running the application, at the `/apidocs` endpoint.
 
-
-
-== Using the App
-
-
-
-
-
-
-
-
-== Inside the App
-
-
-
-
-
-== Data Model
-
-See the xref:ref:travel-app-data-model.adoc[Travel App Data Model] reference page for more information about the sample data set used.
-
+swagger_ui::https://raw.githubusercontent.com/couchbaselabs/{travel-sample-git-project}/HEAD/try-cb-dotnet/wwwroot/swagger.json[]
