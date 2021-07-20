@@ -1,10 +1,12 @@
-= Response Time Observability with Open Telemetry
-:nav-title: Response Time Observability
+= Request Tracing and Metrics
+:description: Tracing and Metrics provide fine-grained insight into how an application is performing, and helps to diagnose when it is not.
+:nav-title: Request Tracing and Metrics
 :page-topic-type: concept
+:page-aliases: ROOT:threshold-logging.adoc
 
 include::partial$attributes.adoc[]
 
 [abstract]
-RTO - Observability using the Open Telemetry API.
+{description}
 
 include::{version-server}@sdk:shared:partial$rto.adoc[tag=placeholder]
