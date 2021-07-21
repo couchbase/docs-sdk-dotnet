@@ -109,7 +109,7 @@ Leverage the new Couchbase Server Scopes and Collection features to build multi-
 Integrate with Open Telemetry API to instrument telemetry data for your mission critical workloads that will make troubleshooting and debugging of your applications easier than ever.
 Add an additional layer of security and protect your sensitive workloads using our Client Side Field Level Encryption capability. 
 
-Introducing xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distributed ACID Transactions from the .NET SDK].
+xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distributed ACID Transactions from the .NET SDK].
 
 
 [.column]
