@@ -105,9 +105,9 @@ https://docs.couchbase.com/sdk-api/couchbase-net-client[API Docs^]
 .What's Hot?
 
 [.content]
-The Couchbase .NET SDK 3.0 is a complete rewrite of the API, reducing the number of overloads to present a simplified surface area.
-With better performance and memory management, this is a 100% .NET Core implementation.
-In following Microsoft recommendations on .NET, the API has also been changed to surface many of the APIs as async using Tasks.
+Leverage the new Couchbase Server Scopes and Collection features to build multi-tenant micro-service application.
+Integrate with Open Telemetry API to instrument telemetry data for your mission critical workloads that will make troubleshooting and debugging of your applications easier than ever.
+Add an additional layer of security and protect your sensitive workloads using our Client Side Field Level Encryption capability. 
 
 Introducing xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distributed ACID Transactions from the .NET SDK].
 
