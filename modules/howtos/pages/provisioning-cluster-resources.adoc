@@ -143,6 +143,17 @@ You can create users with the appropriate RBAC programmatically:
 include::example$Couchbase.Examples/CollectionManager.cs[tag=scopeAdmin, indent=0]
 ----
 
+=== Listing the Scopes and Collections available
+
+You can enumerate Scopes and Collections using
+the `CollectionManager` and the properties of the
+`ScopeSpec` and `CollectionSpec` objects retrieved.
+
+[source,csharp]
+----
+include::example$Couchbase.Examples/CollectionManager.cs[tag=listing-scope-collection,indent=0]
+----
+
 ////
 == Index Management
 
