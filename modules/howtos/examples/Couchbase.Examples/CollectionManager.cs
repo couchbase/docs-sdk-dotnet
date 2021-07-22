@@ -62,6 +62,18 @@ namespace Couchbase.Examples
                     Console.WriteLine("The specified parent scope doesn't exist");
                 }
                 // end::create-collection[]
+                
+                Console.WriteLine("listing-scope-collection");
+                // tag::listing-scope-collection[]
+                var scopes = await collectionMgr.GetAllScopesAsync();
+                foreach (ScopeSpec scopeSpec in scopes) {
+                    Console.WriteLine($"Scope: {scopeSpec.Name}");
+                    
+                    foreach (CollectionSpec collectionSpec in scopeSpec.Collections) {
+                        Console.WriteLine($" - {collectionSpec.Name}");
+                    }
+                }
+                // end::listing-scope-collection[]
 
                 Console.WriteLine("drop-collection");
                 // tag::drop-collection[]
