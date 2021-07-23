@@ -14,12 +14,12 @@ It does this via Method injection in the `ClusterOptions` class which is passed 
 
 Note: In most of the examples below, the default .NET logging providers are used,  -- otherwise, we are using the https://github.com/serilog/serilog-extensions-logging-file[Serilog one-liner^] logging https://www.nuget.org/packages/Serilog.Extensions.Logging.File/[package^]:
 
-[source]
+[source,powershell]
 ----
 Install-Package Serilog.Extensions.Logging.File -Version 2.0.0
 ----
 
-[source]
+[source,powershell]
 ----
 <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
 ----
@@ -30,7 +30,7 @@ Install-Package Serilog.Extensions.Logging.File -Version 2.0.0
 If you are not using a `Host`, and not using Dependency Injection, you can still configure a `ILoggerFactory` using the SDK. 
 In this example we have a dependency on Serilog single file logging:
 
-[source]
+[source,powershell]
 ----
 Install-Package Serilog.Extensions.Logging.File -Version 2.0.0
 ----
@@ -39,7 +39,7 @@ We are using a .NET Core Console Application, and simply instantiate the `ILoggi
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples.Logging.NonHost/Program.cs[tag=non-host,indent=0]
+include::example$Couchbase.Examples.Logging.NoHost/Program.cs[tag=non-host,indent=0]
 ----
 
 We then call `ClusterOptions.WithLogging` and pass in the `ILoggerProvider` that we instatiated, and connect to the `Cluster` as usual.
@@ -90,7 +90,7 @@ Finally, we put it all together:
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples.Logging.FullFramework/Program.cs[tag=full-full-framework,indent=0]
+include::example$Couchbase.Examples.Logging.FullFramework/Program.cs[tag=full-framework,indent=0]
 ----
 
 Note that we suggest .NET Core or .NET 5.0 over using SDK3 in .NET Full Framework apps, as the integration is much more difficult.
