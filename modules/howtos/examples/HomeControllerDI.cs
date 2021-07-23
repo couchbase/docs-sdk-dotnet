@@ -9,7 +9,7 @@ namespace sdk_docs_dotnet_web_examples.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ITravelSampleBucketProvider _provider;
+        private readonly INamedBucketProvider _provider;
 
         public HomeController(ILogger<HomeController> logger, INamedBucketProvider provider)
         {
@@ -32,7 +32,7 @@ namespace sdk_docs_dotnet_web_examples.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ITravelSampleBucketProvider _provider;
+        private readonly IMyBucketProvider _provider;
 
         public HomeController(ILogger<HomeController> logger, IMyBucketProvider provider)
         {
