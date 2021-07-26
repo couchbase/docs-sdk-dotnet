@@ -54,7 +54,10 @@ In most cases your query will return more than one result, and you may be lookin
 [source,csharp,indent=0]
 ----
 include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=namedparameter]
+----
 
+[source,csharp,indent=0]
+----
 include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=namedparameter2]
 ----
 
