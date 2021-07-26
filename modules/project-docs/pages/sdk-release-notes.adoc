@@ -106,6 +106,86 @@ git pull origin master
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 3.2.0 (26 July 2021)
+
+Version 3.2.0 is the first release of the 3.2 series, featuring collections and scopes
+
+https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.2.0.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.0[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.2.0[Nuget]
+
+=== Known Issues
+
+* https://issues.couchbase.com/browse/NCBC-2851[NCBC-2851]:
+TimeoutExceptions continue after rebound in Failover/Eject tests.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2660[NCBC-2660]:Operations are not retried if they hit an open circuit breaker
+* https://issues.couchbase.com/browse/NCBC-2719[NCBC-2719]:User Management quick snippets are missing in .NET
+* https://issues.couchbase.com/browse/NCBC-2730[NCBC-2730]:Partition information is not exposed by query management API
+* https://issues.couchbase.com/browse/NCBC-2841[NCBC-2841]:scope.AnalyticsQueryAsync may construct Dataset query_context incorrectly?
+* https://issues.couchbase.com/browse/NCBC-2851[NCBC-2851]:TimeoutExceptions continue after rebound in Failover/Eject tests
+* https://issues.couchbase.com/browse/NCBC-2853[NCBC-2853]:Ensure FF Maps is only used after a NMVB
+* https://issues.couchbase.com/browse/NCBC-2880[NCBC-2880]:Combi test failure: Test_Collections_DataverseCollectionQuery
+* https://issues.couchbase.com/browse/NCBC-2889[NCBC-2889]:NuGet link has a broken reference to the release notes
+* https://issues.couchbase.com/browse/NCBC-2890[NCBC-2890]:Enable and collect server duration for tracing
+* https://issues.couchbase.com/browse/NCBC-2891[NCBC-2891]:Send 0x0 for default scope/collections for certain 7.0.0 beta versions
+* https://issues.couchbase.com/browse/NCBC-2894[NCBC-2894]:Make Increment/decrement CAS option obsolete
+* https://issues.couchbase.com/browse/NCBC-2899[NCBC-2899]:Logging Meter prints every 10 seconds instead of 600
+* https://issues.couchbase.com/browse/NCBC-2900[NCBC-2900]:LoggingMeter  does  not include percentile values
+* https://issues.couchbase.com/browse/NCBC-2902[NCBC-2902]:LoggingMeter Output Format not per RFC
+* https://issues.couchbase.com/browse/NCBC-2903[NCBC-2903]:Leftovers from AggregatingMeter to LoggingMeter
+* https://issues.couchbase.com/browse/NCBC-2904[NCBC-2904]:LoggingMeter JSON output should be terse by default
+* https://issues.couchbase.com/browse/NCBC-2905[NCBC-2905]:ThresholdLoggingTracer should omit null values
+* https://issues.couchbase.com/browse/NCBC-2906[NCBC-2906]:ThresholdLoggingTracer should include timeout
+* https://issues.couchbase.com/browse/NCBC-2907[NCBC-2907]:ThresholdLoggingTracer should be enabled by default
+* https://issues.couchbase.com/browse/NCBC-2908[NCBC-2908]:ThresholdLoggingTracer still printing old format
+* https://issues.couchbase.com/browse/NCBC-2909[NCBC-2909]:Query Metrics not included if metrics(true)
+* https://issues.couchbase.com/browse/NCBC-2910[NCBC-2910]:ThresholdLoggingTracer only includes KV
+* https://issues.couchbase.com/browse/NCBC-2916[NCBC-2916]:Add &quot;operation&quot; property to LoggingMeterReport output
+* https://issues.couchbase.com/browse/NCBC-2917[NCBC-2917]:Fixup breaking query unit test
+* https://issues.couchbase.com/browse/NCBC-2921[NCBC-2921]:Value was either too large or too small for an Int32
+* https://issues.couchbase.com/browse/NCBC-2923[NCBC-2923]:Allow custom IRequestTracer to be configured in ClusterOptions
+* https://issues.couchbase.com/browse/NCBC-2924[NCBC-2924]:DateParseHandling not carried through from SerializerSettings to DefaultStreamingJsonReader
+* https://issues.couchbase.com/browse/NCBC-2927[NCBC-2927]:OOO Disabled By Default
+* https://issues.couchbase.com/browse/NCBC-2928[NCBC-2928]:KV Tracer Output Not Aligning with Spec
+* https://issues.couchbase.com/browse/NCBC-2929[NCBC-2929]:LoggingMeter emit_interval_s wrong unit
+* https://issues.couchbase.com/browse/NCBC-2930[NCBC-2930]:Collection and scope not found not parsing errors correctly
+* https://issues.couchbase.com/browse/NCBC-2931[NCBC-2931]:CollectionIdChanged_RetriesAutomatically test failing
+* https://issues.couchbase.com/browse/NCBC-2933[NCBC-2933]:Unit Tests are being skipped in Jenkins Pipeline
+* https://issues.couchbase.com/browse/NCBC-2934[NCBC-2934]:Fix failing Unit Tests
+
+=== New Features and Behavioral Changes.
+
+* https://issues.couchbase.com/browse/NCBC-2869[NCBC-2869]:OpenTelemetry tracing module
+* https://issues.couchbase.com/browse/NCBC-2893[NCBC-2893]:Allow external spans to be imported as a parent span
+* https://issues.couchbase.com/browse/NCBC-1973[NCBC-1973]:.NET Doc on Error Handling for SDK 3 v1
+* https://issues.couchbase.com/browse/NCBC-2913[NCBC-2913]:Add single query node routing capability
+* https://issues.couchbase.com/browse/NCBC-2856[NCBC-2856]:Add Orphaned Response Logging to SDK
+* https://issues.couchbase.com/browse/NCBC-2882[NCBC-2882]:Support Query Node affinity for Transactions
+* https://issues.couchbase.com/browse/NCBC-2895[NCBC-2895]:create 3.2 release test ticket
+* https://issues.couchbase.com/browse/NCBC-2896[NCBC-2896]:Release 3.2 SDK
+* https://issues.couchbase.com/browse/NCBC-2911[NCBC-2911]:Travel Sample App with Collections
+* https://issues.couchbase.com/browse/NCBC-2926[NCBC-2926]:Add license to footer of all files in Couchbase project
+* https://issues.couchbase.com/browse/NCBC-2574[NCBC-2574]:Manage Remote Links
+* https://issues.couchbase.com/browse/NCBC-2575[NCBC-2575]:Update analytics management API to support compound dataverse names.
+* https://issues.couchbase.com/browse/NCBC-2581[NCBC-2581]:Provide Tracing Interface
+* https://issues.couchbase.com/browse/NCBC-2585[NCBC-2585]:Build Support for Ubuntu 20.04 LTS
+* https://issues.couchbase.com/browse/NCBC-2699[NCBC-2699]:Add Field Level Encryption Support
+* https://issues.couchbase.com/browse/NCBC-2717[NCBC-2717]:Upgrade/Support to .NET 5.0
+* https://issues.couchbase.com/browse/NCBC-2777[NCBC-2777]:Docs Field Level Encryption .NET
+* https://issues.couchbase.com/browse/NCBC-2786[NCBC-2786]:SDK 3.2 Documentation Changes
+* https://issues.couchbase.com/browse/NCBC-2787[NCBC-2787]:SDK 3.2 Code Sample Changes - Named Scope and Collections
+* https://issues.couchbase.com/browse/NCBC-2790[NCBC-2790]:Add Support to Preserve TTL
+* https://issues.couchbase.com/browse/NCBC-2800[NCBC-2800]:Provide Metrics Interface
+* https://issues.couchbase.com/browse/NCBC-2807[NCBC-2807]:Deprecate Collection Manager GetScope()
+* https://issues.couchbase.com/browse/NCBC-2846[NCBC-2846]:SDK Error Handling - LCB_CAS_MISMATCH (209)
+* https://issues.couchbase.com/browse/NCBC-2886[NCBC-2886]:Couchbase Server 7.0 and SDK Compatibility Matrix
+* https://issues.couchbase.com/browse/NCBC-2892[NCBC-2892]:Update .NET Platform Compatibility
+* https://issues.couchbase.com/browse/NCBC-2912[NCBC-2912]:Map Query Error 13014 to AuthenticationException.
+* https://issues.couchbase.com/browse/NCBC-2932[NCBC-2932]:Transactions Query support requires Cause field on Query.Error
+
 
 == Version 3.1.7 (02 June 2021)
 
