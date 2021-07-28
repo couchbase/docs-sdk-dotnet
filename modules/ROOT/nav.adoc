@@ -4,7 +4,7 @@
 .Getting Started
 * xref:hello-world:start-using-sdk.adoc[Start Using the .NET SDK]
 // ** xref:hello-world:platform-help.adoc[Platform Introduction]
-// * xref:hello-world:sample-application.adoc[Sample Application]
+* xref:hello-world:sample-application.adoc[Sample Application]
 
 .Working with Data
 * xref:howtos:kv-operations.adoc[Key Value Operations]
@@ -21,6 +21,7 @@
 * xref:howtos:concurrent-document-mutations.adoc[Concurrent Document Mutations]
 * xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distributed ACID Transactions]
 * xref:howtos:transcoders-nonjson.adoc[Transcoders & Non-JSON]
+* xref:howtos:working-with-collections.adoc[Working with Collections]
 
 .Managing Couchbase
 * xref:howtos:managing-connections.adoc[Managing Connections]
