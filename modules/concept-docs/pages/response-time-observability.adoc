@@ -9,4 +9,4 @@ include::partial$attributes.adoc[]
 [abstract]
 {description}
 
-include::{version-server}@sdk:shared:partial$rto.adoc[tag=placeholder]
+include::{version-server}@sdk:shared:partial$rto.adoc[tag=rto]
