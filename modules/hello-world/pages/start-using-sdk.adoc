@@ -152,7 +152,7 @@ For developing on Couchbase Cloud, if you are not working from the same _Availab
 
 == Additional Resources
 
-The http://docs.couchbase.com/sdk-api/couchbase-net-client/[API reference] is generated for each release.
+The https://docs.couchbase.com/sdk-api/couchbase-net-client/api/index.html[API reference] is generated for each release.
 Older API references are linked from their respective sections in the xref:project-docs:sdk-release-notes.adoc[Release Notes].
 
 xref:project-docs:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code.
