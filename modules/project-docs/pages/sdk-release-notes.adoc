@@ -438,8 +438,9 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.1.1[Nuget]
 
 * https://issues.couchbase.com/browse/NCBC-2565[NCBC-2565]:
 WaitUntilReady failure for 6.5.
-* https://issues.couchbase.com/browse/NCBC-2660[NCBC-2660]:
-Operations are not retried if they hit an open circuit breaker.
+* https://issues.couchbase.com/browse/NCBC-2660[NCBC-2660],
+https://issues.couchbase.com/browse/NCBC-2935[NCBC-2935]:
+Operations are now retried if they hit an open circuit breaker.
 * https://issues.couchbase.com/browse/NCBC-2693[NCBC-2693]:
 MutationToken.GetHashCode() implementation looks suspect.
 * https://issues.couchbase.com/browse/NCBC-2694[NCBC-2694]:
