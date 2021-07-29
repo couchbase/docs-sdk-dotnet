@@ -110,7 +110,7 @@ _Note that you can checkout a specific tag for each release as well._
 
 Version 3.2.0 is the first release of the 3.2 series, featuring collections and scopes
 
-https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.2.0.zip[Download] |
+https://packages.couchbase.com/clients/net/3.2/Couchbase-Net-Client-3.2.0.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.0[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.2.0[Nuget]
 
