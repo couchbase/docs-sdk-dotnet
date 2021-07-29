@@ -160,7 +160,9 @@ For a listing of available `Metrics` in `MetaData`, see the xref:concept-docs:an
 
 From Couchbase Data Platform 6.5, _Deferred Queries_ and _KV Ingestion_ are added to CBAS.
 
-
+////
+// NB: per SDK team, this was removed from SDK, is not in RFC
+//     per Analytics team, is not exposed in Analytics service (though the feature does exist in open source AsteriskDB.)
 === Deferred queries
 
 Deferred queries enable the decoupling of the long-running query execution from the result.
@@ -218,7 +220,7 @@ var json = _fixture.Cluster.ExportDeferredAnalyticsQueryHandle(result.Handle);
 // repopulate query using serialized query
 var handle = _fixture.Cluster.ImportDeferredAnalyticsQueryHandle<dynamic>(json);
 ----
-
+////
 
 === KV ingest
 
