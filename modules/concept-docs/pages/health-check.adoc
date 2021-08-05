@@ -3,7 +3,7 @@
 :page-topic-type: concept
 :page-aliases: ROOT:health-check
 
-include::partial$attributes.adoc[]
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 Health Check provides ping() and diagnostics() tests for the health of the network and the cluster.

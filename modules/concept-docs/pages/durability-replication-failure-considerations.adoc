@@ -2,7 +2,7 @@
 :page-topic-type: concept
 // :page-aliases: ROOT:failure-considerations,ROOT:durability,ROOT:enhanced-durability
 
-include::partial$attributes.adoc[]
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 Data durability refers to the fault tolerance and persistence of data in the face of software or hardware failure.

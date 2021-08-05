@@ -2,7 +2,7 @@
 :nav-title: Error Codes
 :page-topic-type: ref
 
-include::partial$attributes.adoc[]
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 The standardized error codes returned by the Couchbase .NET SDK, from cloud connection to sub-document.

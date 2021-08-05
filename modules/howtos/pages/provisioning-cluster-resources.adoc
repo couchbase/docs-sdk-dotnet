@@ -2,7 +2,7 @@
 :navtitle: Provisioning Cluster Resources
 :page-aliases: ROOT:managing-clusters
 
-include::partial$attributes.adoc[]
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 Provisioning cluster resources is managed at the collection or bucket level, depending upon the service affected.

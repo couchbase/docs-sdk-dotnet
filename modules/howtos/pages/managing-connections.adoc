@@ -3,7 +3,7 @@
 :page-topic-type: howto
 :page-aliases: ROOT:managing-connections,howtos:multi-network,ROOT:connecting,ROOT:connection-advanced,ROOT:cluster-helper
 
-include::partial$attributes.adoc[]
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 This section describes how to connect the .NET SDK to a Couchbase cluster.

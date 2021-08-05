@@ -3,7 +3,7 @@
 :page-topic-type: concept
 :page-aliases:
 
-include::partial$attributes.adoc[]
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 When the unexpected happens, take a step-by-step approach. .
