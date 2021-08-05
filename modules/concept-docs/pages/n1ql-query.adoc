@@ -3,7 +3,7 @@
 :page-topic-type: concept
 :page-aliases: ROOT:n1ql-query,ROOT:prepared-statements,ROOT:querying
 
-include::partial$attributes.adoc[]
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 Parallel data management for complex queries over many records, using a familiar SQL-like syntax.

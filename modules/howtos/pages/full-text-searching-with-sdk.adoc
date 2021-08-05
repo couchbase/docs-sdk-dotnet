@@ -2,7 +2,7 @@
 :navtitle: Searching from the SDK
 :page-topic-type: howto
 
-include::partial$attributes.adoc[]
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 You can use the Full Text Search service (FTS) to create queryable full-text indexes in Couchbase Server.

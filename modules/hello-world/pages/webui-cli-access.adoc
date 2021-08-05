@@ -1,3 +1,5 @@
+include::project-docs:partial$attributes.adoc[]
+
 include::{version-server}@sdk:pages:partial$webui-cli-access.adoc[]
 
 ////
@@ -5,7 +7,6 @@ include::{version-server}@sdk:pages:partial$webui-cli-access.adoc[]
 :page-topic-type: tutorial
 :page-aliases: ROOT:webui-cli-access
 // for C page -- ,server:developer-guide:retrieving,server:developer-guide:cli-overview
-include::partial$attributes.adoc[]
 
 [abstract]
 You can browse and access documents in Couchbase using browser and command line tools without writing any code.

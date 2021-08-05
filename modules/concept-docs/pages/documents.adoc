@@ -4,7 +4,7 @@
 :page-aliases: ROOT:documents,ROOT:documents-basics,ROOT:documents-atomic
 :link-with-underscores: https://docs.couchbase.com/sdk-api/couchbase-net-client/html/T_Couchbase_KeyValue_IBinaryCollection.htm
 
-include::partial$attributes.adoc[]
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 Couchbase supports CRUD operations, various data structures, and binary documents.

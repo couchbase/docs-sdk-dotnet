@@ -3,8 +3,7 @@
 :page-edition: Enterprise Edition
 :page-aliases:ROOT:compression-intro,compression-intro
 
-include::partial$attributes.adoc[]
-
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 In response to increasing volumes of data being sent over the wire, Couchbase Data Platform now provides data compression between the SDK and Couchbase Server.

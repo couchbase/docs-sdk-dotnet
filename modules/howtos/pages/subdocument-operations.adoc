@@ -4,7 +4,7 @@
 :lang: csharp
 :page-aliases: ROOT:sdk-xattr-example.adoc
 
-include::partial$attributes.adoc[]
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 Sub-Document operations can be used to efficiently access and change parts of documents.

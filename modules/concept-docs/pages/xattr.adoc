@@ -3,7 +3,7 @@
 :page-topic-type: concept
 :page-aliases: sdk-xattr-overview,ROOT:sdk-xattr-overview
 
-include::partial$attributes.adoc[]
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 Extended Attributes (XATTR) are metadata that can be provided on a per-application basis.

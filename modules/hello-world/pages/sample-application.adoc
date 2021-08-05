@@ -1,4 +1,4 @@
-include::partial$attributes.adoc[]
+include::project-docs:partial$attributes.adoc[]
 
 = Sample Application
 :description: Discover how to program interactions with the Couchbase Server via the data, query, and search services -- using the Travel Sample Application with the built-in Travel Sample data Bucket.

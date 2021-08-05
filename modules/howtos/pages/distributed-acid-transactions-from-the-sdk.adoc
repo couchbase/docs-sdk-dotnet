@@ -3,7 +3,7 @@
 :page-topic-type: howto
 :page-aliases: acid-transactions.adoc
 
-include::partial$attributes.adoc[]
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 A practical guide to using Couchbase’s distributed ACID transactions, via the .NET API.
