@@ -1,9 +1,9 @@
 = Durability in Action
-:description: Data durability is handled by Couchbase Server, but the application programmer needs to code for the best way of handling problems for their particular application.
+:description: Handling data durability with Couchbase Server.
 :page-topic-type: howto
 
 [abstract]
-{description}
+Data durability is handled by Couchbase Server, but the application programmer needs to code for the best way of handling problems for their particular application.
 This example case covers timeouts, node failures, and how to deal with both Couchbase Server's Synchronous Replication, and the older Server versions' Enhanced Durability.
 
 
