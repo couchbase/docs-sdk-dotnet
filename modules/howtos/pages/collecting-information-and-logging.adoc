@@ -1,9 +1,10 @@
 = Collecting Information and Logging in the .NET SDK with Couchbase Server
+:description: pass:q[Couchbase .NET SDK3 relies on the Microsoft.Extensions.Logging API and specifically on the `Microsoft.Extensions.Logging.ILoggerFactory` interface to support a wide variety of compatible 3rd party logging implementations such as Serilog, NLog, and others.]
 :navtitle: Collecting Information
 :page-aliases: ROOT:event-bus-metrics,ROOT:logging,ROOT:collecting-information-and-logging
 
 [abstract]
-Couchbase .NET SDK3 relies on the Microsoft.Extensions.Logging API and specifically on the `Microsoft.Extensions.Logging.ILoggerFactory` interface to support a wide variety of compatible 3rd party logging implementations such as Serilog, NLog, and others. 
+{description}
 Further details can be found in the Microsoft documentation for https://docs.microsoft.com/en-us/dotnet/core/extensions/logging[Logging^] and https://docs.microsoft.com/en-us/dotnet/core/extensions/logging-providers[Logging Providers^].
 
 

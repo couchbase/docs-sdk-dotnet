@@ -1,4 +1,5 @@
 = Authenticating against Couchbase Server
+:description: As well as Role-Based Access Control (RBAC), Couchbase offers connection with Certificate Authentication, and works transparently with LDAP.
 :page-topic-type: howto
 :page-edition: Enterprise Edition
 :page-aliases: ROOT:sdk-authentication-overview
@@ -6,7 +7,7 @@
 include::project-docs:partial$attributes.adoc[]
 
 [abstract]
-As well as Role-Based Access Control (RBAC), Couchbase offers connection with Certificate Authentication, and works transparently with LDAP.
+{description}
 
 
 Our xref:hello-world:start-using-sdk.adoc[Getting Started] guide covered the basics for authorizing against a Couchbase cluster, but you may need to use alternative authentication methods such as Certification.

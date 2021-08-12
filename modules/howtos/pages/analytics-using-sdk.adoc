@@ -1,11 +1,12 @@
 = Analytics using the .NET SDK
+:description: Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
 :page-topic-type: howto
 :page-edition: Enterprise Edition:
 
 include::project-docs:partial$attributes.adoc[]
 
 [abstract]
-Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
+{description}
 
 
 

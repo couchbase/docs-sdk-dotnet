@@ -1,4 +1,5 @@
 = Querying with N1QL
+:description: Parallel data management for complex queries over many records, using a familiar SQL-like syntax.
 :nav-title: Querying with N1QL
 :page-topic-type: concept
 :page-aliases: ROOT:n1ql-query,ROOT:prepared-statements,ROOT:querying
@@ -6,7 +7,7 @@
 include::project-docs:partial$attributes.adoc[]
 
 [abstract]
-Parallel data management for complex queries over many records, using a familiar SQL-like syntax.
+{description}
 
 
 include::{version-server}@sdk:shared:partial$n1ql-queries.adoc[tag=intro]

@@ -1,9 +1,10 @@
 = Key Value Operations
+:description: link:project-docs:partial$attributes.adoc[]
 :navtitle: KV Operations
 :page-topic-type: howto
 :page-aliases: document-operations.adoc
 
-include::project-docs:partial$attributes.adoc[]
+{description}
 
 // The complete code sample used on this page can be downloaded from
 //  xref::example$document.cs[here]

@@ -1,4 +1,5 @@
 = Document
+:description: Couchbase supports CRUD operations, various data structures, and binary documents.
 :nav-title: Documents & Doc Ops
 :page-topic-type: concept
 :page-aliases: ROOT:documents,ROOT:documents-basics,ROOT:documents-atomic
@@ -7,7 +8,7 @@
 include::project-docs:partial$attributes.adoc[]
 
 [abstract]
-Couchbase supports CRUD operations, various data structures, and binary documents.
+{description}
 
 Although query and path-based (Sub-Document) services are available, the simplicity of the document-based kv interface is the fastest way to perform operations involving single documents.
 
