@@ -1,9 +1,10 @@
 = Tracing from the .NET SDK
+:description: Threshold logging
 :navtitle: Tracing from the SDK
 :page-topic-type: howto
 
 [abstract]
-Threshold logging
+{description}
 
 // https://issues.couchbase.com/browse/DOC-4791 - 
 

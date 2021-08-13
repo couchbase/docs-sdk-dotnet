@@ -1,4 +1,5 @@
 = Durability in Action
+:description: Handling data durability with Couchbase Server.
 :page-topic-type: howto
 
 [abstract]

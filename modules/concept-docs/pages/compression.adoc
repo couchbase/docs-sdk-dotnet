@@ -1,4 +1,5 @@
 = Compression
+:description: Data compression to reduce traffic costs from app to Server. 
 :page-topic-type: concept
 :page-edition: Enterprise Edition
 :page-aliases:ROOT:compression-intro,compression-intro
