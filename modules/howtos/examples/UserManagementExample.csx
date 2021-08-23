@@ -29,6 +29,7 @@ public class UserManagementExample
 
         
         await Example1();
+        // await Example2();
         
         Console.WriteLine("Done");
     }
@@ -53,6 +54,22 @@ public class UserManagementExample
 
         await cluster.Users.UpsertUserAsync(user);
         // end::usermanagement_1[]
+    }
+    
+    public async Task Example2() {
+        // List current users.
+        Console.WriteLine("Listing current users.");
+        // tag::usermanagement_2[]
+        IEnumerable<UserAndMetaData> listOfUsers = await cluster.Users.GetAllUsersAsync();
+        
+        foreach (UserAndMetaData currentUser in listOfUsers) {
+            Console.WriteLine($"User's display name is: { currentUser.User().DisplayName }");
+            IEnumerable<Role> currentRoles = currentUser.User().Roles;
+            foreach (Role role in currentRoles) {
+                Console.WriteLine($"   User has the role: { role.Name }, applicable to bucket { role.Bucket }");
+            }
+        }
+        // end::usermanagement_2[]
     }
 }
 
