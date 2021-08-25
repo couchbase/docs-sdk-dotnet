@@ -1,6 +1,6 @@
 ﻿// Run this using dotnet-script: https://github.com/filipw/dotnet-script
 //
-//      dotnet script UserManagementExample.cs
+//      dotnet script UserManagementExample.csx
 //
 
 #r "nuget: CouchbaseNetClient, 3.2.0"
