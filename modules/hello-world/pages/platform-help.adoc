@@ -1,6 +1,6 @@
-= Setting Up Couchbase .NET SDK with Visual Studio 2019 or VSCode
-:description: pass:q[Discover how to get up and running developing applications with the Couchbase .NET SDK 3.0+ using `Visual Studio 2019` or `Visual Studio Code`.]
-:page-aliases: ROOT:platform-introduction,ROOT:platform-help,
+= Setting Up Couchbase .NET SDK with VSCode
+:description: pass:q[Discover how to get up and running developing applications with the Couchbase .NET SDK 3.0+ using `Visual Studio Code`.]
+:page-aliases: ROOT:platform-introduction,ROOT:platform-help,dotnet-environment
 :navtitle: Setting Up the .NET SDK
 
 [abstract]
@@ -18,21 +18,29 @@ If this is not you, head back to the xref:overview.adoc[rest of the Couchbase .N
 ====
 
 
-== Using an IDE (Visual Studio 2019 Community)
+== Installing .NET SDK Core
 
-* Download Visual Studio 2019 for Windows; note that the Community edition is free! https://visualstudio.microsoft.com/vs/
+NOTE: This is required if you are using VSCode. (If instead you install a full IDE like Visual Studio or Jetbrains Rider instead, a .NET SDK will be installed by default.)
 
-* Click on the Visual Studio Installer and select the following work flows
-    - .NET desktop development (required for demos)
-    - ASP.NET and web development (optional)
+* Start at the download page https://dotnet.microsoft.com/download
+* Windows and Macintosh will run an installer, for Linux you will have to navigate to specific instructions for your distro.
+* We currently recommend the latest .NET 5.0, and our sample code will generally target this.
+* You may prefer to use the LTS (Long Term Support) version .NET Core 3.1., or an earlier version as used in your organization.
+* You can install multiple SDKs, to be able to run code targeting different versions. Use the `dotnet` command to list which versions are available. Here's an example output with 5.0 and 3.1 SDKs installed:
 
-* Click `Install` and let the installation continue; we suggest leaving the defaults in place.
+[source,console]
+----
+❯ dotnet --list-runtimes
+Microsoft.AspNetCore.App 3.1.16 [/usr/local/share/dotnet/shared/Microsoft.AspNetCore.App]
+Microsoft.AspNetCore.App 5.0.3 [/usr/local/share/dotnet/shared/Microsoft.AspNetCore.App]
+Microsoft.NETCore.App 3.1.16 [/usr/local/share/dotnet/shared/Microsoft.NETCore.App]
+Microsoft.NETCore.App 5.0.3 [/usr/local/share/dotnet/shared/Microsoft.NETCore.App]
+❯ dotnet --list-sdks
+3.1.410 [/usr/local/share/dotnet/sdk]
+5.0.103 [/usr/local/share/dotnet/sdk]
+----
 
-* Once installation has been completed, you can create a new application by including a dependency on the .NET SDK via NuGet or by downloading an example application that already has the dependencies defined.
-
-* Details for installing Visual Studio on other operating systems can be found here:
- - MacOS: https://visualstudio.microsoft.com/vs/mac/activation/
- - Linux: Currently there is no support for Visual Studio 2019 on Linux. Please see the <<#vscode, VSCode>> section.
+If you're just starting with .NET or C# then https://dotnet.microsoft.com/learn/dotnet/hello-world-tutorial/intro is a great starting point into the ecosystem.
 
 
 [#vscode]
@@ -40,95 +48,105 @@ If this is not you, head back to the xref:overview.adoc[rest of the Couchbase .N
 
 Visual Studio Code is a free code editor which runs on Windows, Linux and MacOS and can be downloaded link:https://code.visualstudio.com/[here]. Once downloaded, follow the installation details for the relevant platform:
 
-* MacOS: https://code.visualstudio.com/docs/setup/mac
-* Windows: https://code.visualstudio.com/docs/setup/windows
-* Linux: https://code.visualstudio.com/docs/setup/linux
+ * https://code.visualstudio.com/docs/setup/setup-overview
+
+NOTE: we've given instructions for VS Code as it's a currently popular, cross-platform, multi-language editor that's seeing widespread use, and is easy to set up and get started.
+If you're planning to primarily develop in C#, you may prefer to look into using a full IDE like link:https://visualstudio.microsoft.com/[Visual Studio]  (the 2019 Community edition and the Mac edition are both free) or link:https://www.jetbrains.com/rider/[Jetbrains's Rider].
+
 
 === Adding C# Development Support
 
-VSCode is an editor, so in order to have support for various languages like C#, GO, Python, etc. you will need to install a 3rd party extension which supports development in said programming language. For .NET, we suggest using `ms-dotnettools.csharp` which allows for development in link:https://code.visualstudio.com/docs/languages/csharp[C#], the most commonly used .NET language.
+VSCode is a flexible editor, with support for various programming languages. Though basic syntax highlighting for .NET languages is included in the box, you'll find it useful to add an extension with support for development -- debugging, discovery, and navigation -- in your chosen programming language.
 
-* Navigate to https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp
-* Click on `Install` at the top, left hand side.
-* Select `Open Visual Studio Code` which will install `ms-dotnettools.csharp` into the VSCode editor
-* Alternatively, install from VSCode directly:
-    - Open VSCode
-    - Select the `Extensions` button on the left hand side
-    - Type ms-dotnettools.csharp into the `Search Extensions Marketplace` textbox and hit enter
-    - Select and install the language extension into the editor.
+For .NET, we suggest using `ms-dotnettools.csharp`, "C# for Visual Studio Code (powered by OmniSharp)" by Microsoft, which facilitates development in link:https://code.visualstudio.com/docs/languages/csharp[C#], the most commonly used .NET language.
 
+. You can install from within VSCode itself:
+* Open VSCode
+** When you first open a C# project, you will be auto-prompted to install the recommended package.
+** Alternatively, select the `Extensions` button on the left hand side.
+** Type `ms-dotnettools.csharp` into the `Search Extensions in Marketplace` textbox and hit enter.
+** Select and install the language extension into the editor.
 
-== Installing SDK Core
-
-NOTE: This doesn’t need to be done if you're using Visual Studio 2019; however, it is required if you are using VSCode because it is not installed by default.
-
-* For Windows use the installer: https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-3.0.100-windows-x64-installer
-* For linux select the distro you want to develop on: https://dotnet.microsoft.com/download/linux-package-manager/rhel/sdk-current
-* For MacOs use the installer: https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-3.0.100-macos-x64-installer
+. Alternatively, use the VSCode marketplace:
+* Start by opening https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp
+* Clicking on the `Install` button will prompt you to `Open Visual Studio Code` which will then install the extension.
 
 
-== Getting started developing with the SDK
+=== Adding the `code` command
 
-=== Using Visual Studio Community
-[{tabs}]
-==== 
-Windows::
-+
---
-Open Visual Studio from the start menu and click File=>New=>Project:
+If you work from the command-line, you'll want to add the `code` command to allow you to edit a file directly.
 
-* In the New Project dialogue, Installed=>Visual C# from the top Menu 
-    - Select `Console App (.NET Core)`
-    - Type `CouchbaseExample` in the `Name` textbox
-    - Leave the `Location` textbox to its default
-    - Leave the `Solution Name` to its default
-    - Click `Ok` - a solution and project will be created
-* Add the NuGet dependency on `CouchbaseNetClient` to the project:
-    - Right Click on the `CouchbaseExample` project in the `Solution Explorer` pane of Visual Studio
-    - In the Context Menu select `Manage NuGet Packages…`
-    - Click `Browse` in the NuGet Package Manager
-    - Type `CouchbaseNetClient` into the search text box making sure `Include Pre-Release` checkbox is selected if you wish to see pre-GA releases
-    - Select the version to install from the dropdown and click `Install`
---
-MacOS::
-+
---
-Open Visual Studio and click File=>New=>Solution:
+In VSCode, View the Command Palette (kbd:[Ctrl+Shift+P] or kbd:[Cmd+Shift+P]) and search for `Shell command: Install 'code' command in PATH` and press Enter.
 
-* In the New Project dialogue, Web and Console=>App from the Menu on the Left:
-    - Select `Console Application and C#` from the small dropdown (already selected by default)
-    - Leave the `Target Framework` to its default
-    - Type `CouchbaseExample` in the `Project Name` textbox
-    - Leave the `Solution Name` to its default
-    - Leave the `Location` textbox to its default
-    - Click `Ok` - a solution and project will be created
-* Add the NuGet dependency on `CouchbaseNetClient` to the project:
-    - Right Click on the `CouchbaseExample` project in the `Solution Explorer` pane of Visual Studio
-    - In the Context Menu select `Manage NuGet Packages…`
-    - Select `Browse` in the NuGet Package Manager
-    - Type `CouchbaseNetClient` into the search text box making sure `Include Pre-Release` checkbox is selected if you wish to see pre-GA releases
-    - Select the version to install from the dropdown and click `Add Package`
---
-====
+You can now type `code MyExample.cs` to open a single file in VSCode, or `code .` to view the current directory.
 
-=== Using VSCode
 
-If you are using VSCode it is often easier to use both the editor and the Command Line Interface (CLI):
+=== Creating a project
 
-* Open a terminal and make a directory for your project: `mkdir CouchbaseExample`
+An increasingly common way of setting up projects, building, and running code, is by using the `dotnet` executable that is installed along with the .NET SDK.
 
-* Go into the directory: `cd CouchbaseExample`
+In the following example, we'll open our terminal, make a new directory, set up a bare-bones "console" project, install the Couchbase client library, and run the scaffolding code.
 
-* Create the console project: `dotnet new console`
+[source,console]
+----
+$ mkdir CouchbaseExample
+$ cd CouchbaseExample
 
-* Install the CouchbaseNetClient package: `dotnet add package CouchbaseNetClient`           
+# create a basic "console" application
+$ dotnet new console
 
-* Run the application: `dotnet run`
+$ dotnet run
+Hello World!
+
+$ dotnet add package CouchbaseNetClient  
+
+$ ls        
+CouchbaseExample.csproj
+Program.cs
+bin
+obj
+
+$ cat CouchbaseExample.csproj
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CouchbaseNetClient" Version="3.2.0" />
+  </ItemGroup>
+</Project>
+
+$ code Program.cs
+----
 
 You should see a `Hello World` message printed in your terminal, which means the application has run successfully. 
 
 Now you can launch VSCode and open the `CouchbaseExample` directory to start editing the `Program.cs` file.
 
-More details can be found here: https://dotnet.microsoft.com/learn/dotnet/hello-world-tutorial/intro.
+
+== Running Couchbase examples
+
+As you read through the docs, you will see that many code examples link to the link:https://github.com/couchbase/docs-sdk-dotnet/[.NET SDK docs Github repository]. If you wish to run those examples to try things out for yourself, you can clone this repository and run the examples in any directory that contains a .csproj file:
+
+[source,console]
+----
+$ dotnet run
+----
+
+You can read the .csproj file to check which external libraries (such as the Couchbase SDK) are included.
+
+Some examples have been tweaked to use link:https://github.com/filipw/dotnet-script[`dotnet script`], which allows you to run a single `.csx` file from the command-line, without the full overhead of the project/solution wrapper.  This is an extension, so you will have to install it first.
+
+[source,console]
+----
+$ dotnet tool install -g dotnet-script
+
+$ dotnet script modules/howtos/examples/EncryptingUsingSdk.csx
+----
+
+
+== Next steps
 
 That's it! You are now ready to xref:start-using-sdk.adoc[start developing your Couchbase application].
