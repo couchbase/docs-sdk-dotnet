@@ -18,7 +18,7 @@ The simplest way to create a `Cluster` object is to call `Cluster.ConnectAsync()
 
 [source,csharp]
 ----
-include::example$ManagingConnections.cs[tag=simpleconnect,indent=0]
+include::example$ManagingConnections.csx[tag=simpleconnect,indent=0]
 ----
 
 NOTE: If you are connecting to a version of Couchbase Server older than 6.5, it will be more efficient if the addresses are those of data (KV) nodes.
@@ -29,7 +29,7 @@ Multiple addresses may be specified in a connection string by delimiting them wi
 
 [source,csharp]
 ----
-include::example$ManagingConnections.cs[tag=multinodeconnect,indent=0]
+include::example$ManagingConnections.csx[tag=multinodeconnect,indent=0]
 ----
 
 TIP: You don't need to include the address of every node in the cluster.
@@ -55,11 +55,20 @@ nodeA.example.com,nodeB.example.com
 
 .Connection string with two parameters
 ----
-127.0.0.1?io.networkResolution=external&timeout.kvTimeout=10s
+127.0.0.1?network=external&timeout.kv_timeout=1000
 ----
 
+This last connection string with parameters is equivalent to connecting with ClusterOptions:
+
+[source,csharp]
+----
+include::example$ManagingConnections.csx[tag=network-and-timeout,indent=0]
+
+----
+
+// check if following still applies?
 Currently, as of .NET SDK Version 3.0.2 there is only partial mapping of query parameters to options properties.
-This will change in future versions and the entire list of mappings will be found in the client settings reference.
+This will change in future versions and the entire list of mappings will be found in the xref:ref:client-settings.adoc[Client Settings reference].
 
 A connection string may optionally be prefixed by either `"couchbase://"` or `"couchbases://"`. If `"couchbases://"` is used, the client will use secure connections (TLS/SSL) if a valid certificate is configured or you can use the `ClusterOptions.EnableTls` flag.
 // as described in <<ssl>> to do the same.
@@ -228,7 +237,7 @@ The next step is to enable encryption and import the certificate.
 
 [source,csharp]
 ----
-include::example$ManagingConnections.cs[tag=enableTls,indent=0]
+include::example$ManagingConnections.csx[tag=enableTls,indent=0]
 ----
 
 === Importing the Certificate into Windows
@@ -351,7 +360,7 @@ In order to make the SDK actually use the SRV records, you just need to pass in 
 
 [source,csharp]
 ----
-include::example$ManagingConnections.cs[tag=dnssrv,indent=0]
+include::example$ManagingConnections.csx[tag=dnssrv,indent=0]
 ----
 
 If the DNS SRV records could not be loaded properly you’ll get the exception logged and the given host name will be used as a A record lookup.
@@ -375,7 +384,7 @@ If you are working at the _Cluster_ level, then add to the `cluster()` in the xr
 
 [source,csharp]
 ----
-include::example$ManagingConnections.cs[tag=waitUntilReady,indent=0]
+include::example$ManagingConnections.csx[tag=waitUntilReady,indent=0]
 ----
 
 Or more fully:
