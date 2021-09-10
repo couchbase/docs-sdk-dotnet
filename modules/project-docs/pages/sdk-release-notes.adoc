@@ -109,7 +109,7 @@ _Note that you can checkout a specific tag for each release as well._
 
 == Version 3.2.1 (09 Sept 2021)
 
-Version 3.2.1 is the second release of the 3.2 series, featuring collections and scopes
+Version 3.2.1 is the second release of the 3.2 series
 
 https://packages.couchbase.com/clients/net/3.2/Couchbase-Net-Client-3.2.1.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.1[API Reference] |
@@ -122,8 +122,13 @@ TimeoutExceptions continue after rebound in Failover/Eject tests.
 
 === New Features and Behavioral Changes.
 
-* https://issues.couchbase.com/browse/NCBC-2697[NCBC-2697]: Eventing Management API
-* https://issues.couchbase.com/browse/NCBC-2959[NCBC-2959]: Allow sdk to send either the hostname or IP Address while as the target host
+* https://issues.couchbase.com/browse/NCBC-2697[NCBC-2697]: 
+The Eventing Service can now be managed from the SDK. Users can create, delete, publish, pause and select Eventing Functions.
+
+* https://issues.couchbase.com/browse/NCBC-2959[NCBC-2959]:
+By default SDK3 sends the IP as the target host during TLS/SSL authentication, unlike SDK2 which sends either
+the hostname or IP address depending on the returned server configuration.
+A new flag, `ForceIpAsTargetHost`, has been introduced to allow SDK3 to mimic SDK2 behavior.
 
 == Version 3.2.0 (26 July 2021)
 
