@@ -115,7 +115,7 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.2.2[Nuget]
 
 This is a re-release of 3.2.1 with exactly the same commits due to a packaging bug in 3.2.1. The only difference is the version and package fix.
 
-== Version 3.2.1 (9 September 2021) [DO NOT USE - USE 3.2.2 INSTEAD]
+== Version 3.2.1 (9 September 2021) DO NOT USE - USE 3.2.2 INSTEAD
 
 Version 3.2.1 is the second release of the 3.2 series.
 
