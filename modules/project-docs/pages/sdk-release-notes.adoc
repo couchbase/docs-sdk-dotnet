@@ -249,7 +249,7 @@ Add Cause field on Query.Error for Transactions Query support.
 
 Version 3.1.7 is the eighth release of the 3.1 series, bringing enhancements and bugfixes over the last stable release.
 
-https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.1.7.zip[Download] |
+https://packages.couchbase.com/clients/net/3.1/Couchbase-Net-Client-3.1.7.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.1.7[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.1.7[Nuget]
 
