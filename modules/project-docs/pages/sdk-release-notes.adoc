@@ -282,7 +282,7 @@ Now, this is checked for, and we don't send the CID with the key in this case, a
 
 Version 3.1.6 is the seveneth release of the 3.1 series, bringing enhancements and bugfixes over the last stable release.
 
-https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.1.6.zip[Download] |
+https://packages.couchbase.com/clients/net/3.1/Couchbase-Net-Client-3.1.6.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.1.6[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.1.6[Nuget]
 
@@ -302,7 +302,7 @@ Collection GIT_CID Eaccess error fix.
 
 Version 3.1.5 is the sixth release of the 3.1 series, bringing enhancements and bugfixes over the last stable release.
 
-https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.1.5.zip[Download] |
+https://packages.couchbase.com/clients/net/3.1/Couchbase-Net-Client-3.1.5.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.1.5[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.1.5[Nuget]
 
@@ -341,7 +341,7 @@ Move collection id fetch into the operation call on the collection
 
 Version 3.1.4 is the fifth release of the 3.1 series, bringing enhancements and bugfixes over the last stable release.
 
-https://packages.couchbase.com/clients/net/3.0/Couchbase-Net-Client-3.1.4.zip[Download] |
+https://packages.couchbase.com/clients/net/3.1/Couchbase-Net-Client-3.1.4.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.1.4[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.1.4[Nuget]
 
