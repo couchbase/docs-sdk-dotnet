@@ -107,6 +107,43 @@ git pull origin master
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 3.2.3 (6 October 2021)
+
+Version 3.2.3 is the third release of the 3.2 series.
+
+https://packages.couchbase.com/clients/net/3.3/Couchbase-Net-Client-3.2.3.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.3[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.2.3[Nuget]
+
+=== Known Issues
+
+* https://issues.couchbase.com/browse/NCBC-2851[NCBC-2851]:
+TimeoutExceptions continue after rebound in Failover/Eject tests.
+
+=== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-2965[NCBC-2965]:
+Don't capture ExecutionContext for long-running tasks/timers, as this could cause memory leaks.
+* https://issues.couchbase.com/browse/NCBC-2966[NCBC-2966]:
+Allow ILoggerFactory from the DI container to be overridden.
+* https://issues.couchbase.com/browse/NCBC-2967[NCBC-2967]:
+Rewrite OrphanReporter to avoid blocking calls.
+* https://issues.couchbase.com/browse/NCBC-2968[NCBC-2968]:
+Use correct service type name in query context.
+* https://issues.couchbase.com/browse/NCBC-2969[NCBC-2969]:
+Fix auto-repair of the ChannelConnectionPool after a node outage.
+
+=== New Features and Behavioral Changes.
+* https://issues.couchbase.com/browse/NCBC-2949[NCBC-2949]:
+Improve client side error message when TLS is enforced on the server side
+* https://issues.couchbase.com/browse/NCBC-2961[NCBC-2961]:
+Optimize performance of the internal EscapeIfRequired routine.
+* https://issues.couchbase.com/browse/NCBC-2963[NCBC-2963]:
+Support Dependency Injection of Named Scopes/Collections.
+* https://issues.couchbase.com/browse/NCBC-2970[NCBC-2970]:
+Optimize performance of queuing operation completion by more than 50% by using `UnsafeQueueUserWorkItem`.
+* https://issues.couchbase.com/browse/NCBC-2962[NCBC-2962]:
+Add Lambda overloads for Query and Analytics at the Scope level.
+
 == Version 3.2.2 (15 September 2021)
 
 https://packages.couchbase.com/clients/net/3.2/Couchbase-Net-Client-3.2.2.zip[Download] |
@@ -233,7 +270,7 @@ Update and correct links for 3.2.0 release.
 https://issues.couchbase.com/browse/NCBC-2777[NCBC-2777]:
 Provide a framework for client-side encryption of sensitive fields in JSON documents using Field Level Encryption.
 * https://issues.couchbase.com/browse/NCBC-2790[NCBC-2790]:
-Replace, Upsert and MutateIn support `PersistTtl` in servers >= 7.0 which keeps subsequent calls from modifiying the original TTL value on update.
+Replace, Upsert and MutateIn support `PersistTtl` in servers >= 7.0 which keeps subsequent calls from modifying the original TTL value on update.
 * https://issues.couchbase.com/browse/NCBC-2807[NCBC-2807]:
 Deprecate Collection Manager `GetScope()` in favour of `GetAllScopes()`
 * https://issues.couchbase.com/browse/NCBC-2846[NCBC-2846]:
