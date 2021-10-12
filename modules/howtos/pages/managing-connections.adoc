@@ -95,7 +95,7 @@ It simplifies cluster configuration, lifetime management, and bucket injection.
 You can find it on NuGet.org: https://www.nuget.org/packages/Couchbase.Extensions.DependencyInjection/[NuGet package^].
 Or using the NuGet Package Manager, add the dependency directly to your project:
 
-NOTE: Install-Package Couchbase.Extensions.DependencyInjection -Version 3.0.0
+NOTE: Install-Package Couchbase.Extensions.DependencyInjection -Version 3.2.0
 
 === Adding Couchbase To The Services Collection
 
@@ -141,6 +141,18 @@ You are no longer required to know the name of the bucket in the controller, imp
 ----
 include::example$HomeControllerDI.cs[tag=IMybucketprovider,indent=0]
 ----
+
+=== Injecting the Couchbase Cluster
+
+If you wish to inject the Couchbase Cluster, you just need to add the IClusterProvider as a parameter to your constructor or the method that you will
+be calling:
+
+[source,csharp]
+----
+include::example$HomeControllerDI2.cs[tag=IClusterProvider,indent=0]
+----
+
+Once you have done this you can use Cluster level services like Query and Analytics in your code.
 
 === Shutdown
 
