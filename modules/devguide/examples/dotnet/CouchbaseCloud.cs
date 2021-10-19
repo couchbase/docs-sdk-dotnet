@@ -74,9 +74,9 @@ namespace Couchbase.Net.DevGuide
             loggerFactory.AddFile("Logs/myapp-{Date}.txt"); // change to Debug if trying to diagnose
 
 
-            /* Note: in the configuration below, EnableTls is required as Couchbase Cloud is
+            /* Note: in the configuration below, EnableTls is required as Couchbase Capella is
              * always TLS. Also, the IgnoreRemoteCertificateNameMismatch will trust the asserted
-             * CA Cert by Couchbase Cloud. There is a known issue that prevents programmatically
+             * CA Cert by Couchbase Capella. There is a known issue that prevents programmatically
              * adding the cert, so either this or adding it to the platform is required.
              */
             var config = new ClusterOptions

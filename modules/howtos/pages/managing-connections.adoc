@@ -372,7 +372,7 @@ If the DNS SRV records could not be loaded properly you’ll get the exception l
 
 Also, if you pass in more than one node, DNS SRV bootstrap will not be initiated and regular bootstrapping will occur.
 
-// Connecting to Couchbase cloud requires that `ClusterOptions.EnableTls` be set to true along with the `"couchbases://"` connection string pre-fix. Additionally, in certain situations `ClusterOptions.IgnoreRemoteCertificateNameMismatch` may also need to be true. Additionally, in certain situations `ClusterOptions.IgnoreRemoteCertificateNameMismatch` may also need to be true.
+// Connecting to Couchbase Capella requires that `ClusterOptions.EnableTls` be set to true along with the `"couchbases://"` connection string pre-fix. Additionally, in certain situations `ClusterOptions.IgnoreRemoteCertificateNameMismatch` may also need to be true. Additionally, in certain situations `ClusterOptions.IgnoreRemoteCertificateNameMismatch` may also need to be true.
 
 
 == Waiting for Bootstrap Completion
@@ -413,4 +413,4 @@ include::{version-server}@sdk:shared:partial$managing-connections.adoc[tag=cloud
 
 * Our xref:howtos:sdk-authentication.adoc[Authentication] page covers connecting with LDAP and Certificate Authentication.
 * Connecting from SDK to Couchbase Server is best done wih both being in the same LAN-like environment or Cloud _Availability Zone_.
-This is not always possible at the development stage, where you may be using a local laptop for SDK development against a Couchbase Cloud Server, so help is available for timeout issues in such unsupported configurations in our xref:howtos:troubleshooting-cloud-connections.adoc[Troubleshooting Cloud Connections] page.
+This is not always possible at the development stage, where you may be using a local laptop for SDK development against a https://docs.couchbase.com/cloud/index.html[Couchbase Capella] instance, so help is available for timeout issues in such unsupported configurations in our xref:howtos:troubleshooting-cloud-connections.adoc[Troubleshooting Cloud Connections] page.
