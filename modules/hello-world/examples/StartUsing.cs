@@ -35,12 +35,15 @@ namespace examples
             Console.WriteLine(getResult.ContentAs<dynamic>());
             // #end::upsert-get[]
 
-            // #tag::n1ql-query[]
+            // tag::n1ql-query[]
+            // Call the QueryAsync() function on the cluster object and store the result.
             var queryResult = await cluster.QueryAsync<dynamic>("select \"Hello World\" as greeting");
+            
+            // Iterate over the rows to access result data and print to the terminal.
             await foreach (var row in queryResult) {
                 Console.WriteLine(row);
             }
-            // #end::n1ql-query[]
+            // end::n1ql-query[]
 
         }
     }
