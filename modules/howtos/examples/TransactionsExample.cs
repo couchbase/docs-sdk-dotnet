@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Couchbase.KeyValue;
 using Couchbase.Query;
 using Couchbase.Transactions.Config;
-using Couchbase.Transactions.Deferred;
 using Couchbase.Transactions.Error;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -135,6 +134,8 @@ namespace Couchbase.Transactions.Examples
                     var docC = await ctx.GetAsync(_collection, "doc-c").ConfigureAwait(false);
                     await ctx.RemoveAsync(docC).ConfigureAwait(false);
 
+                    // This call is optional - if you leave it off, the transaction
+                    // will be committed anyway.
                     await ctx.CommitAsync().ConfigureAwait(false);
                 }).ConfigureAwait(false);
             }
@@ -469,6 +470,195 @@ namespace Couchbase.Transactions.Examples
                 Console.Error.WriteLine(err);
             }
             // #end::full-logging[]
+        }
+
+                async Task QueryExamples()
+        {
+            // this isn't meant to run, merely to compile correctly.
+            ICluster cluster = null;
+            var transactions = Transactions.Create(cluster);
+            {
+                // tag::queryExamplesSelect[]
+                var st = "SELECT * FROM `travel-sample`.inventory.hotel WHERE country = $1";
+                var transactionResult = await transactions.RunAsync(async ctx => {
+                    IQueryResult<object> qr = await ctx.QueryAsync<object>(st,
+                        new TransactionQueryOptions().Parameter("United Kingdom"));
+
+                    await foreach (var result in qr.Rows)
+                    {
+                        Console.Out.WriteLine($"result = {result}", result);
+                    }
+                });
+                // end::queryExamplesSelect[]
+            }
+
+            {
+                // tag::queryExamplesSelectScope[]
+                IBucket travelSample = await cluster.BucketAsync("travel-sample");
+                IScope inventory = travelSample.Scope("inventory");
+
+                var transactionResult = await transactions.RunAsync(async ctx =>
+                {
+                    var st = "SELECT * FROM `travel-sample`.inventory.hotel WHERE country = $1";
+                    IQueryResult<object> qr = await ctx.QueryAsync<object>(st,
+                        options: new TransactionQueryOptions().Parameter("United Kingdom"),
+                        scope: inventory);
+                });
+                // end::queryExamplesSelectScope[]
+            }
+
+            {
+                IBucket travelSample = await cluster.BucketAsync("travel-sample");
+                IScope inventory = travelSample.Scope("inventory");
+                // tag::queryExamplesUpdate[]
+                var hotelChain = "http://marriot%";
+                var country = "United States";
+
+                await transactions.RunAsync(async ctx => {
+                    var qr = await ctx.QueryAsync<object>(
+                        statement: "UPDATE hotel SET price = $price WHERE url LIKE $url AND country = $country",
+                        configure: options => options.Parameter("price", 99.99m)
+                                          .Parameter("url", hotelChain)
+                                          .Parameter("country", country),
+                        scope: inventory);
+
+                    Console.Out.WriteLine($"Records Updated = {qr?.MetaData.Metrics.MutationCount}");
+                });
+                // end::queryExamplesUpdate[]
+            }
+
+            {
+                IBucket travelSample = await cluster.BucketAsync("travel-sample");
+                IScope inventory = travelSample.Scope("inventory");
+                var hotelChain = "http://marriot%";
+                var country = "United States";
+                //private class Review { };
+                // tag::queryExamplesComplex[]
+                await transactions.RunAsync(async ctx => {
+                    // Find all hotels of the chain
+                    IQueryResult<Review> qr = await ctx.QueryAsync<Review>(
+                        statement: "SELECT reviews FROM hotel WHERE url LIKE $1 AND country = $2",
+                        configure: options => options.Parameter(hotelChain).Parameter(country),
+                        scope: inventory);
+
+                    // This function (not provided here) will use a trained machine learning model to provide a
+                    // suitable price based on recent customer reviews.
+                    var updatedPrice = PriceFromRecentReviews(qr);
+
+                    // Set the price of all hotels in the chain
+                    await ctx.QueryAsync<object>(
+                        statement: "UPDATE hotel SET price = $1 WHERE url LIKE $2 AND country = $3",
+                            configure: options => options.Parameter(hotelChain, country, updatedPrice),
+                            scope: inventory);
+                });
+                // end::queryExamplesComplex[]
+            }
+
+            {
+                // tag::queryInsert[]
+                await transactions.RunAsync(async ctx => {
+                    await ctx.QueryAsync<object>("INSERT INTO `default` VALUES ('doc', {'hello':'world'})", TransactionQueryConfigBuilder.Create());  // <1>
+
+                    // Performing a 'Read Your Own Write'
+                    var st = "SELECT `default`.* FROM `default` WHERE META().id = 'doc'"; // <2>
+                    IQueryResult<object> qr = await ctx.QueryAsync<object>(st, TransactionQueryConfigBuilder.Create());
+                    Console.Out.WriteLine($"ResultCount = {qr?.MetaData.Metrics.ResultCount}");
+                });
+                // end::queryInsert[]
+            }
+
+            {
+                // tag::querySingle[]
+                var bulkLoadStatement = "<a bulk-loading N1QL statement>";
+
+                try
+                {
+                    SingleQueryTransactionResult<object> result = await transactions.QueryAsync<object>(bulkLoadStatement);
+
+                    IQueryResult<object> queryResult = result.QueryResult;
+                }
+                catch (TransactionCommitAmbiguousException e)
+                {
+                    Console.Error.WriteLine("Transaction possibly committed");
+                    foreach (var log in e.Result.Logs)
+                    {
+                        Console.Error.WriteLine(log);
+                    }
+                }
+                catch (TransactionFailedException e)
+                {
+                    Console.Error.WriteLine("Transaction did not reach commit point");
+                    foreach (var log in e.Result.Logs)
+                    {
+                        Console.Error.WriteLine(log);
+                    }
+                }
+                // end::querySingle[]
+            }
+
+            {
+                string bulkLoadStatement = null /* your statement here */;
+
+                // tag::querySingleScoped[]
+                IBucket travelSample = await cluster.BucketAsync("travel-sample");
+                IScope inventory = travelSample.Scope("inventory");
+
+                await transactions.QueryAsync<object>(bulkLoadStatement, scope: inventory);
+                // end::querySingleScoped[]
+            }
+
+            
+            {
+                string bulkLoadStatement = null; /* your statement here */
+
+                // tag::querySingleConfigured[]
+                // with the Builder pattern.
+                await transactions.QueryAsync<object>(bulkLoadStatement, SingleQueryTransactionConfigBuilder.Create()
+                    // Single query transactions will often want to increase the default timeout
+                    .ExpirationTime(TimeSpan.FromSeconds(360)));
+
+                // using the lambda style
+                await transactions.QueryAsync<object>(bulkLoadStatement, config => config.ExpirationTime(TimeSpan.FromSeconds(360)));
+                // end::querySingleConfigured[]
+            }
+
+            {
+                ICouchbaseCollection collection = null;
+                // tag::queryRyow[]
+                await transactions.RunAsync(async ctx => {
+                    _ = await ctx.InsertAsync(collection, "doc", new { Hello = "world" }); // <1>
+
+                    // Performing a 'Read Your Own Write'
+                    var st = "SELECT `default`.* FROM `default` WHERE META().id = 'doc'"; // <2>
+                    var qr = await ctx.QueryAsync<object>(st);
+                    Console.Out.WriteLine($"ResultCount = {qr?.MetaData.Metrics.ResultCount}");
+                });
+                // end::queryRyow[]
+            }
+
+            {
+                // tag::queryOptions[]
+                await transactions.RunAsync(async ctx => {
+                    await ctx.QueryAsync<object>("INSERT INTO `default` VALUES ('doc', {'hello':'world'})",
+                            new TransactionQueryOptions().FlexIndex(true));
+                });
+                // end::queryOptions[]
+            }
+
+            {
+                // tag::custom-metadata[]
+                ICouchbaseCollection metadataCollection = null; // this is a Collection opened by your code earlier
+                Transactions transactionsWithCustomMetadataCollection = Transactions.Create(cluster,
+                        TransactionConfigBuilder.Create().MetadataCollection(metadataCollection));
+                // end::custom-metadata[]
+            }
+        }
+
+        record Review(int starRating, DateTimeOffset date);
+        decimal PriceFromRecentReviews(IQueryResult<Review> queryResults)
+        {
+            // just a placeholder
+            return DateTime.Now.Ticks % 300 + 32;
         }
 
         public void Dispose()
