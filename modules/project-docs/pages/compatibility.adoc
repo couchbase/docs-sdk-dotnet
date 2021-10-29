@@ -99,7 +99,6 @@ See the notes there for Support details.
 == .NET Framework Version Compatibility
 
 include::hello-world:partial$supported.adoc[]
-Other .NET implementations might work but are not tested and are outside of the scope of our technical support organization.
 
 include::{version-server}@sdk:shared:partial$network-requirements.adoc[]
 
