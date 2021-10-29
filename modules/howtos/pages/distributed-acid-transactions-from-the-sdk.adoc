@@ -168,6 +168,8 @@ include::example$TransactionsExample.cs[tag=remove,indent=0]
 
 == Key-Value Reads
 
+=== Getting
+
 There are two ways to get a document, `GetAsync` and `GetOptionalAsync`:
 
 [source,csharp]

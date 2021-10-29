@@ -141,8 +141,8 @@ namespace Couchbase.Transactions.Examples
             }
             catch (TransactionCommitAmbiguousException e)
             {
-               Console.WriteLine("Transaction possibly committed");
-               Console.WriteLine(e);
+                Console.WriteLine("Transaction possibly committed");
+                Console.WriteLine(e);
             }
             catch (TransactionFailedException e)
             {
@@ -472,7 +472,7 @@ namespace Couchbase.Transactions.Examples
             // #end::full-logging[]
         }
 
-                async Task QueryExamples()
+        async Task QueryExamples()
         {
             // this isn't meant to run, merely to compile correctly.
             ICluster cluster = null;
