@@ -14,6 +14,24 @@ This page features the release notes for that library -- for release notes, down
 See the xref:{version-server}@server:learn:data/transactions.adoc[Distributed ACID Transactions concept doc] in the server documentation for details of how Couchbase implements transactions.
 The xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distributed Transactions HOWTO doc] walks you through all aspects of working with Distributed Transactions.
 
+== Version 1.1.0 (29 Oct 2021)
+
+This is the first release of Query support in .NET Distributed ACID Transactions.
+
+Along with Query support, this release includes
+
+* Tracing and Telemetry support via IRequestTracer
+
+* Custom Metadata Collection support
+
+* Support for KV operations in any order on the same document.
+
+=== Known Issues
+
+* This release is focused on features and correctness, and has not been optimized for performance issues.
+
+* In order to prevent race conditions regarding out-of-order operations on the same document in-process, `AttemptContext` operations run inside the `Transactions.Run` lambda do not execute in parallel, even if run with `Task.Run`.
+
 
 == Version 1.0.0 (30 Apr 2021)
 
