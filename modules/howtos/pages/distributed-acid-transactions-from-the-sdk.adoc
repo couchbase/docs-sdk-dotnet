@@ -218,7 +218,7 @@ include::example$TransactionsExample.cs[tag=queryExamplesUpdate,indent=0]
 ----
 
 And an example combining SELECTs and UPDATEs.
-It's possible to call regular Java methods from the lambda, as shown here, permitting complex logic to be performed.
+It's possible to call regular C# methods from the lambda, as shown here, permitting complex logic to be performed.
 Just remember that since the lambda may be called multiple times, so may the method.
 
 [source,csharp]
