@@ -100,7 +100,44 @@ See the notes there for Support details.
 
 include::hello-world:partial$supported.adoc[]
 
-include::{version-server}@sdk:shared:partial$network-requirements.adoc[]
+.Recommended .NET Versions per SDK
+[#table_sdk_versions]
+[cols="40,20,25,20"]
+|===
+| | SDK 2.7  | SDK 3.0, 3.1 | SDK 3.2
 
+| .NET Core 3.1 (Long Term Support)
+| *✔*
+| *✔*
+| *✔*
+
+| .NET 5.0, 6.0 (Recommended)
+| *✔*
+| *✔*
+| *✔*
+
+| .NET Core 2.0, 2.1, 2.2, 3.0
+| *◎*
+| *◎*
+| *◎*
+
+| .NET Framework 4.6.2+
+| *◎*
+| *◎*
+| *◎*
+
+| .NET Core 1.0, 1.1
+| *✖*
+| *✖*
+| *✖*
+
+| .NET Framework 4.5.x, 4.6.0, 4.6.1
+| *✖*
+| *✖*
+| *✖*
+
+|===
+
+include::{version-server}@sdk:shared:partial$network-requirements.adoc[]
 
 include::{version-server}@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
