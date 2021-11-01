@@ -96,7 +96,7 @@ See the notes there for Support details.
 
 
 
-== .NET Framework Version Compatibility
+== .NET Framework Version Compatibility [[dotnet-compatibility]]
 
 include::hello-world:partial$supported.adoc[]
 
