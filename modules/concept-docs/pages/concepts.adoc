@@ -1,9 +1,9 @@
 = Concepts
-:description: link:project-docs:partial$attributes.adoc[]
+:description: Concepts
 :navtitle: Concepts
 :page-topic-type: landing-page
+include::project-docs:partial$attributes.adoc[]
 
-{description}
 
 include::{version-server}@sdk:shared:partial$concepts.adoc[tag=concepts]
 
