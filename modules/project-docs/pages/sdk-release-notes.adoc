@@ -107,6 +107,51 @@ git pull origin master
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 3.2.4 (2 November 2021)
+
+Version 3.2.4 is the fourth release of the 3.2 series.
+
+https://packages.couchbase.com/clients/net/3.3/Couchbase-Net-Client-3.2.4.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.4[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.2.4[Nuget]
+
+=== Known Issues
+
+* https://issues.couchbase.com/browse/NCBC-2851[NCBC-2851]:
+TimeoutExceptions continue after rebound in Failover/Eject tests.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2974[NCBC-2974]:
+When `GetCid` failed, an infinite loop could be triggered, causing the `CidLock` to time out.
+The regression that caused this in the previous release has now been fixed.
+
+* https://issues.couchbase.com/browse/NCBC-2989[NCBC-2989]:
+Fixed side effects related to singleton `CouchbaseHttpClient`.
+Now each consuming service can safely manipulate the `HttpClient`'s timeout and connection ID headers and such without affecting other services.
+
+=== New Features and Behavioral Changes.
+
+* https://issues.couchbase.com/browse/NCBC-2979[NCBC-2979]:
+Added support for Error Map v2.
+
+* https://issues.couchbase.com/browse/NCBC-2987[NCBC-2987]:
+Updated NuGet package info.
+
+* https://issues.couchbase.com/browse/NCBC-2477[NCBC-2477]:
+Replaced `HttpClientHandler` with `SocketsHttpHandler`.
+
+* https://issues.couchbase.com/browse/NCBC-2859[NCBC-2859]:
+Completed Field Level Encryption implementation, adding RSA support for legacy upgrade scenarios.
+
+* https://issues.couchbase.com/browse/NCBC-2865[NCBC-2865]:
+Added new `revEpoch` field, allowing server to provide higher level guidance for current, correct bucket configuration.
+
+* https://issues.couchbase.com/browse/NCBC-2992[NCBC-2992]:
+Renamed `BucketBase.BucketConfig` to `BucketBase.CurrentConfig` for clarity.
+Renamed `BucketConfigExtensions.IsNewer()` to `BucketConfigExtensions.IsNewerThan()`.
+
+
 == Version 3.2.3 (6 October 2021)
 
 Version 3.2.3 is the third release of the 3.2 series.
