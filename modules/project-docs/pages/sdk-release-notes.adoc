@@ -122,18 +122,35 @@ TimeoutExceptions continue after rebound in Failover/Eject tests.
 
 === Fixed Issues
 
-* https://issues.couchbase.com/browse/NCBC-2974[NCBC-2974] : CidLock may be incorrectly released
-* https://issues.couchbase.com/browse/NCBC-2985[NCBC-2985] : HTTP streaming not used as fallback for getting Cluster Config
-* https://issues.couchbase.com/browse/NCBC-2989[NCBC-2989] : Fix side effects related to singleton CouchbaseHttpClient
+* https://issues.couchbase.com/browse/NCBC-2974[NCBC-2974]:
+When `GetCid` failed, an infinite loop could be triggered, causing the `CidLock` to time out.
+The regression that caused this in the previous release has now been fixed.
+
+* https://issues.couchbase.com/browse/NCBC-2989[NCBC-2989]:
+Fixed side effects related to singleton `CouchbaseHttpClient`.
+Now each consuming service can safely manipulate the `HttpClient`'s timeout and connection ID headers and such without affecting other services.
 
 === New Features and Behavioral Changes.
 
-* https://issues.couchbase.com/browse/NCBC-2979[NCBC-2979] : Support Error Map v2
-* https://issues.couchbase.com/browse/NCBC-2987[NCBC-2987] : Update NuGet package info.
-* https://issues.couchbase.com/browse/NCBC-2477[NCBC-2477] : Replace HttpClientHandler with SocketsHttpHandler
-* https://issues.couchbase.com/browse/NCBC-2859[NCBC-2859] : Complete FLE including RSA on upgrade
-* https://issues.couchbase.com/browse/NCBC-2865[NCBC-2865] : Improve bucket configuration handling (revEpoch)
-* https://issues.couchbase.com/browse/NCBC-2992[NCBC-2992] : Rename BucketBase.BucketConfig to BucketBase.CurrentConfig
+* https://issues.couchbase.com/browse/NCBC-2979[NCBC-2979]:
+Added support for Error Map v2.
+
+* https://issues.couchbase.com/browse/NCBC-2987[NCBC-2987]:
+Updated NuGet package info.
+
+* https://issues.couchbase.com/browse/NCBC-2477[NCBC-2477]:
+Replaced `HttpClientHandler` with `SocketsHttpHandler`.
+
+* https://issues.couchbase.com/browse/NCBC-2859[NCBC-2859]:
+Completed Field Level Encryption implementation, adding RSA support for legacy upgrade scenarios.
+
+* https://issues.couchbase.com/browse/NCBC-2865[NCBC-2865]:
+Added new `revEpoch` field, allowing server to provide higher level guidance for current, correct bucket configuration.
+
+* https://issues.couchbase.com/browse/NCBC-2992[NCBC-2992]:
+Renamed `BucketBase.BucketConfig` to `BucketBase.CurrentConfig` for clarity.
+Renamed `BucketConfigExtensions.IsNewer()` to `BucketConfigExtensions.IsNewerThan()`.
+
 
 == Version 3.2.3 (6 October 2021)
 
