@@ -15,6 +15,8 @@ The SDK is written in C#, and some of its idiomatic patterns reflect that choice
 == Installing the SDK
 
 include::partial$supported.adoc[]
+See the xref:project-docs:compatibility.adoc#dotnet-compatibility[Compatibility] section for more details.
+
 The library is distributed in a number of ways:
 
 |===
