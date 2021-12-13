@@ -107,6 +107,46 @@ git pull origin master
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 3.2.5 (10 December 2021)
+
+Version 3.2.5 is the fifth release of the 3.2 series.
+
+https://packages.couchbase.com/clients/net/3.3/Couchbase-Net-Client-3.2.5.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.5[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.2.5[Nuget]
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2851[NCBC-2851]: TimeoutExceptions continue after rebound in Failover/Eject tests.
+* https://issues.couchbase.com/browse/NCBC-2983[NCBC-2983]: Query timeout value cannot be overwritten
+* https://issues.couchbase.com/browse/NCBC-2991[NCBC-2991]: DI NET 6.0 - PlatformNotSupportedException is thrown
+* https://issues.couchbase.com/browse/NCBC-2993[NCBC-2993]: CancellationTokenPair should Dispose the linked CancellationTokenSource it creates
+* https://issues.couchbase.com/browse/NCBC-2995[NCBC-2995]: Slow memory leak in OrphanReporter
+* https://issues.couchbase.com/browse/NCBC-3005[NCBC-3005]: GetCidByName fails with "Not connected to any bucket"
+* https://issues.couchbase.com/browse/NCBC-3007[NCBC-3007]: DataFlowConnectionPool may cause IOException and SocketException when scaling down
+* https://issues.couchbase.com/browse/NCBC-3009[NCBC-3009]: Add missing ConfigureAwait(false) calls to reduce deadlocks
+* https://issues.couchbase.com/browse/NCBC-3013[NCBC-3013]: Canceling K/V operations while waiting on network send kills connection
+* https://issues.couchbase.com/browse/NCBC-3018[NCBC-3018]: Error "Comparing the same configs is not allowed"
+* https://issues.couchbase.com/browse/NCBC-3021[NCBC-3021]: Can't bootstrap Memcached bucket
+* https://issues.couchbase.com/browse/NCBC-3045[NCBC-3045]: WaitUntiReady always timing out on Cluster and Bucket objects
+
+=== New Features and Behavioral Changes.
+
+* https://issues.couchbase.com/browse/NCBC-2948[NCBC-2948]: Handle Rate Limit Error Code
+* https://issues.couchbase.com/browse/NCBC-2600[NCBC-2600]: Default query HTTP Idle timeout to 4.5s
+* https://issues.couchbase.com/browse/NCBC-3041[NCBC-3041]: Remove .netstandard2.0 target from DI project
+* https://issues.couchbase.com/browse/NCBC-2996[NCBC-2996]: Prepare for .NET 6
+* https://issues.couchbase.com/browse/NCBC-3004[NCBC-3004]: Add log warning when socket disconnects from cluster
+* https://issues.couchbase.com/browse/NCBC-3019[NCBC-3019]: Allow SSL cipher configuration
+* https://issues.couchbase.com/browse/NCBC-3020[NCBC-3020]: Support custom deserializers for GET projections
+* https://issues.couchbase.com/browse/NCBC-3022[NCBC-3022]: Improve lock contention getting collection CIDs
+* https://issues.couchbase.com/browse/NCBC-3023[NCBC-3023]: Apply nullable annotations to serializer/transcoder
+* https://issues.couchbase.com/browse/NCBC-3024[NCBC-3024]: Clarify attribute iteration in streaming deserialization
+* https://issues.couchbase.com/browse/NCBC-3025[NCBC-3025]: Cleanup project files and NuGet dependencies
+* https://issues.couchbase.com/browse/NCBC-3031[NCBC-3031]: Add .NET 5 Target
+* https://issues.couchbase.com/browse/NCBC-3034[NCBC-3034]: Reduce blocking in async methods in data structures
+* https://issues.couchbase.com/browse/NCBC-3044[NCBC-3044]: OpenTelemetry tracing is problematic to register in ASP.NET Core
+
 == Version 3.2.4 (2 November 2021)
 
 Version 3.2.4 is the fourth release of the 3.2 series.
