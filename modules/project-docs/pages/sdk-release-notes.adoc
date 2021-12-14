@@ -107,11 +107,100 @@ git pull origin master
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 3.2.5 (10 December 2021)
+
+Version 3.2.5 is the fifth release of the 3.2 series.
+
+https://packages.couchbase.com/clients/net/3.2/Couchbase-Net-Client-3.2.5.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.5[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.2.5[Nuget]
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2851[NCBC-2851]: 
+Fixed TimeoutExceptions after rebound in Failover/Eject tests.
+
+* https://issues.couchbase.com/browse/NCBC-2983[NCBC-2983]: 
+Allowed query timeouts to exceed 100ms.
+
+* https://issues.couchbase.com/browse/NCBC-2991[NCBC-2991]:
+Fixed compatibility with DI NET 6.0 - added support for named bucket/collection DI.
+
+* https://issues.couchbase.com/browse/NCBC-2993[NCBC-2993]:
+Rewrote CancellationTokenPair to dispose the linked CancellationTokenSource during GC, avoiding memory leaks.
+
+* https://issues.couchbase.com/browse/NCBC-2995[NCBC-2995]:
+Fixed slow memory leak in OrphanReporter.
+
+* https://issues.couchbase.com/browse/NCBC-3005[NCBC-3005]: 
+Fixed GetCidByName failure with "Not connected to any bucket", by ensuring the operation is routed to KV node.
+
+* https://issues.couchbase.com/browse/NCBC-3007[NCBC-3007]: 
+Improved logging around connection pool scale down, for deeper inspection of DataFlowConnectionPool behavior.
+
+* https://issues.couchbase.com/browse/NCBC-3009[NCBC-3009]: 
+Addressed sync-over-async deadlocks.
+
+* https://issues.couchbase.com/browse/NCBC-3013[NCBC-3013]: 
+Keep connections alive after send is canceled.
+This fixes issue where canceling K/V operations while waiting on network send killed the connection.
+
+* https://issues.couchbase.com/browse/NCBC-3018[NCBC-3018]: 
+Fix background worker edge case where error "Comparing the same configs is not allowed" was hit.
+
+* https://issues.couchbase.com/browse/NCBC-3021[NCBC-3021]: 
+Fixed regression with legacy Memcached buckets.
+
+* https://issues.couchbase.com/browse/NCBC-3045[NCBC-3045]: 
+Fixed Fix WaitUntilReadyAsync for FTS.
+
+=== New Features and Behavioral Changes.
+
+* https://issues.couchbase.com/browse/NCBC-3041[NCBC-3041];
+https://issues.couchbase.com/browse/NCBC-2996[NCBC-2996];
+https://issues.couchbase.com/browse/NCBC-3031[NCBC-3031]: 
+Work on updating .NET targets.
+Removed unneeded .netstandard2.0 target from DI project.
+Made code changes to prepare for .NET 6.
+Added .NET 5 Target.
+
+* https://issues.couchbase.com/browse/NCBC-2948[NCBC-2948]: 
+Added special error handling for rate and quota limits.
+
+* https://issues.couchbase.com/browse/NCBC-2600[NCBC-2600]: 
+Set default query HTTP Idle timeout to 4.5s, to avoid premature IOException when connecting with default values.
+
+* https://issues.couchbase.com/browse/NCBC-3004[NCBC-3004]: 
+Added log warning when socket disconnects from cluster
+
+* https://issues.couchbase.com/browse/NCBC-3019[NCBC-3019]: 
+Enabled SSL cipher configuration.
+
+* https://issues.couchbase.com/browse/NCBC-3020[NCBC-3020]: 
+Added support for custom deserializers for GET projections.
+
+* https://issues.couchbase.com/browse/NCBC-3022[NCBC-3022]: 
+Improved lock contention getting collection CIDs.
+
+* https://issues.couchbase.com/browse/NCBC-3023[NCBC-3023]: 
+Enabled nullable annotations to serializer/transcoder.
+
+* https://issues.couchbase.com/browse/NCBC-3025[NCBC-3025]: 
+Cleaned up project files and NuGet dependencies.
+
+* https://issues.couchbase.com/browse/NCBC-3034[NCBC-3034]: 
+Reduced blocking in async methods in data structures, resulting in more efficient thread utilization.
+
+* https://issues.couchbase.com/browse/NCBC-3044[NCBC-3044]: 
+Fixes to problematic OpenTelemetry tracing registration.
+A consumer may now register with an OpenTelemetry provider which
+is being managed outside the SDK.
+
 == Version 3.2.4 (2 November 2021)
 
 Version 3.2.4 is the fourth release of the 3.2 series.
 
-https://packages.couchbase.com/clients/net/3.3/Couchbase-Net-Client-3.2.4.zip[Download] |
+https://packages.couchbase.com/clients/net/3.2/Couchbase-Net-Client-3.2.4.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.4[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.2.4[Nuget]
 
@@ -156,7 +245,7 @@ Renamed `BucketConfigExtensions.IsNewer()` to `BucketConfigExtensions.IsNewerTha
 
 Version 3.2.3 is the third release of the 3.2 series.
 
-https://packages.couchbase.com/clients/net/3.3/Couchbase-Net-Client-3.2.3.zip[Download] |
+https://packages.couchbase.com/clients/net/3.2/Couchbase-Net-Client-3.2.3.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.3[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.2.3[Nuget]
 
