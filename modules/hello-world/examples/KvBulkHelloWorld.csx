@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Couchbase;
 using Couchbase.KeyValue;
-using Newtonsoft.Json.Linq;
 
 await new KvBulkHelloWorld().ExampleAsync();
 
