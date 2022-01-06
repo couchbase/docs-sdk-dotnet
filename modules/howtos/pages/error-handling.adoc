@@ -99,7 +99,7 @@ try
 {
 	await collection.InsertAsync("my-key", myReallyLargeObject);
 }
-catch (RequestTooBigException)
+catch (ValueTooLargeException)
 {
 	  // document body is too large
 }
