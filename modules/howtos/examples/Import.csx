@@ -100,7 +100,6 @@ public async Task importJSONL(string filename)
         {
             var record = (JObject)JToken.ReadFrom(jsonlReader);
             await upsertDocument(record);
-
         }
     }
 }
