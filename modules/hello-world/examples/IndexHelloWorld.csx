@@ -21,12 +21,12 @@ public class IndexHelloWorld
 
 		{
 			Console.WriteLine("[primary]");
+			// NOTE: 
+			// * Bucket names containing a `-` need to be escaped, see https://issues.couchbase.com/browse/NCBC-2955.
+			// * The `IgnoreIfExists` option is currently not working as expected, see https://issues.couchbase.com/browse/NCBC-2647.
 			// tag::primary[]
 			try
 			{
-				// NOTE: 
-				// * Bucket names containing a `-` need to be escaped, see https://issues.couchbase.com/browse/NCBC-2955.
-				// * The `IgnoreIfExists` option is currently not working as expected, see https://issues.couchbase.com/browse/NCBC-2647.
 				await cluster.QueryIndexes.CreatePrimaryIndexAsync(
 					"`travel-sample`",
 					options => options.IgnoreIfExists(true)
@@ -38,6 +38,17 @@ public class IndexHelloWorld
 			}
 			// end::primary[]
 			Console.WriteLine("Index creation complete");
+		}
+
+		{
+			Console.WriteLine("\n[named-primary]");
+			// tag::named-primary[]
+			await cluster.QueryIndexes.CreatePrimaryIndexAsync(
+				"`travel-sample`",
+				options => options.IndexName("named_primary_index")
+			);
+			// end::named-primary[]
+			Console.WriteLine("Named primary index creation complete");
 		}
 
 		{
@@ -70,6 +81,17 @@ public class IndexHelloWorld
 			await cluster.QueryIndexes.DropPrimaryIndexAsync("`travel-sample`");
 			// end::drop-primary[]
 			Console.WriteLine("Primary index deleted successfully");
+		}
+
+		{
+			Console.WriteLine("\n[drop-named-primary]");
+			// tag::drop-named-primary[]
+			await cluster.QueryIndexes.DropPrimaryIndexAsync(
+				"`travel-sample`",
+				options => options.IndexName("named_primary_index")
+			);
+			// end::drop-named-primary[]
+			Console.WriteLine("Named primary index deleted successfully");
 		}
 
 		{
