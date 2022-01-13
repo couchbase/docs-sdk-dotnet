@@ -118,10 +118,11 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.2.6[Nuget]
 
 === Fixed Issues
 
-* https://issues.couchbase.com/browse/NCBC-2647[NCBC-2647]: CreatePrimaryIndexAsync throws exceptions / ignores IgnoreIfExists.
+* https://issues.couchbase.com/browse/NCBC-2647[NCBC-2647]: 
+`CreatePrimaryIndexAsync` throws exceptions / ignores `IgnoreIfExists`.
 
 * https://issues.couchbase.com/browse/NCBC-2829[NCBC-2829]:
-NoOp operations can fail with an ObjectDisposedException on MultiplexingConnection.
+NoOp operations can fail with an `ObjectDisposedException` on MultiplexingConnection.
 
 * https://issues.couchbase.com/browse/NCBC-2977[NCBC-2977]: 
 When you cannot connect to a bucket you may recieve a Memcached bucket error.
@@ -133,10 +134,10 @@ Threshold Logging report is missing server duration(s).
 Threshold Logging report is missing timeout.
 
 * https://issues.couchbase.com/browse/NCBC-2999[NCBC-2999]: 
-Subdocument Operation LookupInAsync must throw PathNotFoundException.
+Subdocument Operation `LookupInAsync` must throw `PathNotFoundException`.
 
 * https://issues.couchbase.com/browse/NCBC-3008[NCBC-3008]: 
-RequestTooBigException should be ValueTooLargeException.
+`RequestTooBigException` should be `ValueTooLargeException`.
 
 * https://issues.couchbase.com/browse/NCBC-3047[NCBC-3047]: 
 Tracing is not stopped when the cluster is disposed.
@@ -144,26 +145,25 @@ Tracing is not stopped when the cluster is disposed.
 * https://issues.couchbase.com/browse/NCBC-3050[NCBC-3050]: 
 Exception iterating over a DataStructures dictionary.
 
-* https://issues.couchbase.com/browse/NCBC-3055[NCBC-3055]: 
-Customer Requires a beta copy of .net SDK 3.2.6.
-
 * https://issues.couchbase.com/browse/NCBC-3057[NCBC-3057]: 
 Incorrect and inefficient db.couchbase.service span tags.
 
-* https://issues.couchbase.com/browse/NCBC-3061[NCBC-3061]: PersistentDictionary should use a replace operation when setting Item: key].
+* https://issues.couchbase.com/browse/NCBC-3061[NCBC-3061]: 
+PersistentDictionary should use a replace operation when setting `Item: key`.
 
 * https://issues.couchbase.com/browse/NCBC-3062[NCBC-3062]: 
-Don&#39;t set MaxIdleTime on ServicePoint in .NET Core 3.1.
+Don't set `MaxIdleTime` on `ServicePoint` in .NET Core 3.1.
 
 * https://issues.couchbase.com/browse/NCBC-3072[NCBC-3072]: 
-CollectionManager.GetAllScopesAsync throws on success.
+`CollectionManager.GetAllScopesAsync` throws on success.
 
-* https://issues.couchbase.com/browse/NCBC-3073[NCBC-3073]: PersistentDictionary. TryGetValue does not properly map path not found error.
+* https://issues.couchbase.com/browse/NCBC-3073[NCBC-3073]: 
+PersistentDictionary. TryGetValue does not properly map path not found error.
 
 === New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/NCBC-3029[NCBC-3029]: 
-Create basic implementation of SystemTextJsonSerializer.
+Create basic implementation of `SystemTextJsonSerializer`.
 
 * https://issues.couchbase.com/browse/NCBC-3066[NCBC-3066]: 
 Develop Key/Value API tests.
@@ -178,19 +178,19 @@ log message formatting opCode and endpoint parameters are swapped.
 Add additional unit testing to Rate Limiting code.
 
 * https://issues.couchbase.com/browse/NCBC-3056[NCBC-3056]: 
-Ignore null reference exception in global config resolution is server is less than 6.5.
+Ignore null reference exception in global config resolution is server version is earlier than 6.5.
 
 * https://issues.couchbase.com/browse/NCBC-2692[NCBC-2692]: 
-Management APIs should provide detailed responses to errors (ban EnsureStatusCode).
+Management APIs should provide detailed responses to errors (ban `EnsureStatusCode`).
 
 * https://issues.couchbase.com/browse/NCBC-2937[NCBC-2937]: 
 Support for .NET 6.0.
 
 * https://issues.couchbase.com/browse/NCBC-2946[NCBC-2946]: 
-Bucket Management API - Add Custom Conflict Resolution to the enumeration for Conflict Resolution Type.
+Bucket Management API -- Add Custom Conflict Resolution to the enumeration for Conflict Resolution Type.
 
 * https://issues.couchbase.com/browse/NCBC-2947[NCBC-2947]: 
-ARM - Support for Apple Silicon.
+ARM -- Support for Apple Silicon.
 
 * https://issues.couchbase.com/browse/NCBC-2950[NCBC-2950]: 
 Extend FTS options to set IncludeLocations and Operator.
@@ -199,7 +199,7 @@ Extend FTS options to set IncludeLocations and Operator.
 Support for AWS AWS Graviton2.
 
 * https://issues.couchbase.com/browse/NCBC-2971[NCBC-2971]: 
-Bucket Management API - Add Storage Option.
+Bucket Management API -- Add Storage Option.
 
 * https://issues.couchbase.com/browse/NCBC-3003[NCBC-3003]: InternalServerFailureException.
 
@@ -213,16 +213,17 @@ Reduce tracing related heap allocations.
 Sporadic logging failures in unit tests.
 
 * https://issues.couchbase.com/browse/NCBC-3053[NCBC-3053]: 
-Add lambda to options in Cluster.ConnectAsync overload.
+Add lambda to options in `Cluster.ConnectAsync` overload.
 
 * https://issues.couchbase.com/browse/NCBC-3064[NCBC-3064]: 
-Construct Activity objects using parent ActivityContext.
+Construct Activity objects using parent `ActivityContext`.
 
 * https://issues.couchbase.com/browse/NCBC-3070[NCBC-3070]: 
 Add API documentation to source files in Sub-Doc API.
 
 * https://issues.couchbase.com/browse/NCBC-3080[NCBC-3080]: 
 Use C# LangVersion 10.
+
 
 == Version 3.2.5 (10 December 2021)
 
