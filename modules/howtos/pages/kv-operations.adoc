@@ -2,7 +2,7 @@
 :description: Key Value Operations
 :navtitle: KV Operations
 :page-topic-type: howto
-:page-aliases: document-operations.adoc
+:page-aliases: document-operations.adoc,durability.adoc
 include::project-docs:partial$attributes.adoc[]
 
 
