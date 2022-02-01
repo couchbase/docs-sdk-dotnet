@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.IO;
 using System.Threading.Tasks;
 using System.Text.Json;
@@ -78,6 +79,26 @@ namespace Couchbase.Examples
             var returned = result.ContentAs<byte[]>();
             // #end::binary[]
             Console.WriteLine(returned);
+        }
+
+        public async Task BinaryMemory()
+        {
+
+            // #tag::binary-memory[]
+            var docId = "doc";
+
+            using var buffer = MemoryPool<byte>.Shared.Rent(16);
+            var byteCount = System.Text.Encoding.UTF8.GetBytes("hello world", buffer.Memory.Span);
+            Memory<byte> bytes = buffer.Memory.Slice(0, byteCount);
+
+            await _collection.UpsertAsync(docId, bytes, options => options.Transcoder(new RawBinaryTranscoder()));
+
+            var result = await _collection.GetAsync(docId, options => options.Transcoder(new RawBinaryTranscoder()));
+
+            // Be sure to dispose of the IMemoryOwner<byte> when done, typically via a using statement
+            using var returned = result.ContentAs<IMemoryOwner<byte>>();
+            // #end::binary-memory[]
+            Console.WriteLine(System.Text.Encoding.UTF8.GetString(returned.Memory.Span));
         }
 
         public async Task CustomEncode()
