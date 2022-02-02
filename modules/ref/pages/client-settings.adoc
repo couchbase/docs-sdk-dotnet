@@ -452,14 +452,23 @@ var clusterOptions = new ClusterOptions();
 ----
 +
 
-Name: *Orphaned Response Logger*
-Cluster Option: `EnableOrphanedResponseLogging(bool)`
+Name: *Orphaned Response Tracer*::
+Cluster Option: `WithOrphanTracing(OrphanOptions)`
 +
-Default:  `false`
+Default:  `enabled`
 +
-Enables the default Orphaned Response Logger.
+Orphaned Response Logger will log orphaned responses if a request fails to complete for some reason.
 +
-If false, the Orphaned Response Logger will not log orphaned responses if a request fails to complete for some reason.
+[source, csharp]
+----
+var clusterOptions = new ClusterOptions();
+  clusterOptions.WithOrphanTracing(orphanOptions =>
+  {
+    orphanOptions.WithEnabled(true);
+    orphanOptions.WithEmitInterval(TimeSpan.FromSeconds(10));
+    orphanOptions.WithSampleSize(10);
+  });
+----
 
 // section on wide area network support
 
