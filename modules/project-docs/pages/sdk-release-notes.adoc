@@ -115,78 +115,71 @@ https://packages.couchbase.com/clients/net/3.2/Couchbase-Net-Client-3.2.7.zip[Do
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.7[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.2.7[Nuget]
 
-Note: as of 3.2.5 .NET Core 2.1 support has been dropped from the SDK. This corresponds to Microsoft's decision to EOL .NET Core 2.1 on August 21, 2021.
+NOTE: as of 3.2.5 .NET Core 2.1 support has been dropped from the SDK.
+This corresponds to Microsoft's decision to EOL .NET Core 2.1 on August 21, 2021.
 
 === Fixed Issues
 
 * https://issues.couchbase.com/browse/NCBC-3085[NCBC-3085]:
-Random.Next eventually only returns zero.
+Fixed potential issue with `Random.Next` returning only zero,
+by using `RandomNumberGenerator.GetInt32` if  available.
+
 * https://issues.couchbase.com/browse/NCBC-3086[NCBC-3086]: 
-Improve error handling in QueryIndexManager.
+Improved error handling in QueryIndexManager.
+
 * https://issues.couchbase.com/browse/NCBC-3090[NCBC-3090]: 
-EventingFunctionManager throws TaskCancelledException on all apis.
+Fixed TaskCancellationException in EventingFunctionManager.
 
 * https://issues.couchbase.com/browse/NCBC-3092[NCBC-3092]: 
-Data node DNS changes are not respected by the SDK.
+Resolve DNS for each connection rather than node bootstrap.
 
 * https://issues.couchbase.com/browse/NCBC-3095[NCBC-3095]: 
-Bootstrapper continues processing after cluster dispose.
+Modified to shutdown the Bootstrapper loop on Dispose,
+avoiding an indefinite loop.
 
 * https://issues.couchbase.com/browse/NCBC-3096[NCBC-3096]: 
-Cleanup CancellationTokenSource handling in ConfigHandler.
+Cleaned up `CancellationTokenSource` handling in ConfigHandler.
 
 * https://issues.couchbase.com/browse/NCBC-3100[NCBC-3100]: 
-Include lastDispatchedFrom and LastDispactedTo in IErrorContext implementations.
+Included `LastDispatchedFrom` and `LastDispatchedTo` in `IErrorContext` implementations.
 
 * https://issues.couchbase.com/browse/NCBC-3102[NCBC-3102]:
-Orphaned report is associating remote host with local host.
+Fixed a bug where the `RemoteHost` tag was assigned the value of LocalHost
+when an Orphaned report is generated.
 
 * https://issues.couchbase.com/browse/NCBC-3107[NCBC-3107]: 
-IQueryIndexManager doesn&#39;t accept bucket names already in backticks.
+Escape keyspace values with backticks only if missing,
+fixing an error where `IQueryIndexManager` didn't accept some bucket names.
 
 * https://issues.couchbase.com/browse/NCBC-3109[NCBC-3109]: 
-Quota Limited Exceptions not being thrown for some Management apis.
+Fixed issue with Quota Limited Exceptions not being thrown for some Management apis.
 
 === New Features and Behavioral Changes
 
-* https://issues.couchbase.com/browse/NCBC-3052[NCBC-3052]:
-Update FTS Rate Limit Parsing.
-
-* https://issues.couchbase.com/browse/NCBC-3094[NCBC-3094]: 
-Address sporadic unit tests failures on build agents.
-
 * https://issues.couchbase.com/browse/NCBC-2964[NCBC-2964]: 
-Query - Add Support to Preserve TTL.
+Added `QueryOptions.PreserveExpiry`
 
 * https://issues.couchbase.com/browse/NCBC-2973[NCBC-2973]: 
-Index Management API - Provide ability to manage indexes for a collection.
+Enhanced Index Management API with ability to manage indexes for a collection or scope.
 
 * https://issues.couchbase.com/browse/NCBC-3035[NCBC-3035]:
-Improve performance and trimmability of EnumExtensions.
+Improved performance of EnumExtensions method calls.
 
 * https://issues.couchbase.com/browse/NCBC-3036[NCBC-3036]: 
-Add tracing spans for compression/decompression.
+Added tracing spans for improved Observability of compression/decompression performance.
 
 * https://issues.couchbase.com/browse/NCBC-3059[NCBC-3059]: 
-Reduce heap allocations surrounding OperationCancellationRegistration.
+Reduced heap allocations surrounding OperationCancellationRegistration.
 
 * https://issues.couchbase.com/browse/NCBC-3063[NCBC-3063]: 
-Replace Stopwatch in AsyncState with a lightweight approach.
-
-* https://issues.couchbase.com/browse/NCBC-3075[NCBC-3075]: 
-Support projections with System.Text.Json.
-
-* https://issues.couchbase.com/browse/NCBC-3077[NCBC-3077]: 
-Remove limitations on System.Text.Json.
+Replaced Stopwatch in AsyncState with a lightweight approach.
 
 * https://issues.couchbase.com/browse/NCBC-3089[NCBC-3089]:
-Clone QueryOptions to avoid reuse and potential threading issues.
+Added clone method to QueryOptions to avoid reuse and potential threading issues.
 
 * https://issues.couchbase.com/browse/NCBC-3097[NCBC-3097]: 
-Use TaskCreationOptions.RunContinuationsAsynchronously.
+Reduced risk of odd behaviors during connection pool scale down with use of `TaskCreationOptions.RunContinuationsAsynchronously`.
 
-* https://issues.couchbase.com/browse/NCBC-3101[NCBC-3101]: 
-Use System.Text.Json for bootstrap and internal K/V operations.
 
 == Version 3.2.6 (12 January 2022)
 
