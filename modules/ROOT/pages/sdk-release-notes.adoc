@@ -82,6 +82,25 @@ https://github.com/couchbase/couchbase-net-client/fork
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 2.7.27 (1st February 2022)
+
+https://packages.couchbase.com/clients/net/2.7/Couchbase-Net-Client-2.7.27.zip[Download] |
+http://docs.couchbase.com/sdk-api/couchbase-net-client-2.7.27[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/2.7.27[Nuget]
+
+=== Known Issues
+This release has the following known issues:
+
+* https://issues.couchbase.com/browse/NCBC-1296[NCBC-1296]:
+.NETCore SDK N1QL query throws System.PlatformNotSupportedException on some .NET Core platforms.
+ A workaround is available.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2997[NCBC-2997] : SDK returns false when checking for exist in Couchbase 7.
+* https://issues.couchbase.com/browse/NCBC-3093[NCBC-3093] : ClientConfiguration.NetworkType is not correctly assigned to the bucket config.
+* https://issues.couchbase.com/browse/NCBC-3098[NCBC-3098] : NMVB when using Alternate Addresses.
+
 == Version 2.7.26 (2nd June 2021)
 
 https://packages.couchbase.com/clients/net/2.7/Couchbase-Net-Client-2.7.26.zip[Download] |
