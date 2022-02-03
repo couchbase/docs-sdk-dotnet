@@ -115,7 +115,7 @@ https://packages.couchbase.com/clients/net/3.2/Couchbase-Net-Client-3.2.7.zip[Do
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.7[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.2.7[Nuget]
 
-NOTE: as of 3.2.5 .NET Core 2.1 support has been dropped from the SDK.
+NOTE: .NET Core 2.1 support has been dropped from the SDK, as of 3.2.5.
 This corresponds to Microsoft's decision to EOL .NET Core 2.1 on August 21, 2021.
 
 === Fixed Issues
@@ -188,6 +188,9 @@ Version 3.2.6 is the sixth release of the 3.2 series.
 https://packages.couchbase.com/clients/net/3.2/Couchbase-Net-Client-3.2.6.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.6[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.2.6[Nuget]
+
+NOTE: .NET Core 2.1 support has been dropped from the SDK, as of 3.2.5.
+This corresponds to Microsoft's decision to EOL .NET Core 2.1 on August 21, 2021.
 
 === Fixed Issues
 
@@ -305,6 +308,9 @@ Version 3.2.5 is the fifth release of the 3.2 series.
 https://packages.couchbase.com/clients/net/3.2/Couchbase-Net-Client-3.2.5.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.5[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.2.5[Nuget]
+
+NOTE: .NET Core 2.1 support has been dropped from the SDK, as of 3.2.5.
+This corresponds to Microsoft's decision to EOL .NET Core 2.1 on August 21, 2021.
 
 === Fixed Issues
 
