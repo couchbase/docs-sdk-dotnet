@@ -107,6 +107,79 @@ git pull origin master
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 3.2.7 (1 February 2022)
+
+Version 3.2.7 is the seventh release of the 3.2 series.
+
+https://packages.couchbase.com/clients/net/3.2/Couchbase-Net-Client-3.2.7.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.7[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.2.7[Nuget]
+
+NOTE: .NET Core 2.1 support has been dropped from the SDK, as of 3.2.5.
+This corresponds to Microsoft's decision to EOL .NET Core 2.1 on August 21, 2021.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3085[NCBC-3085]:
+Fixed potential issue with `Random.Next` returning only zero,
+by using `RandomNumberGenerator.GetInt32` if  available.
+
+* https://issues.couchbase.com/browse/NCBC-3086[NCBC-3086]: 
+Improved error handling in QueryIndexManager.
+
+* https://issues.couchbase.com/browse/NCBC-3090[NCBC-3090]: 
+Fixed TaskCancellationException in EventingFunctionManager.
+
+* https://issues.couchbase.com/browse/NCBC-3092[NCBC-3092]: 
+Resolve DNS for each connection rather than node bootstrap.
+
+* https://issues.couchbase.com/browse/NCBC-3095[NCBC-3095]: 
+Modified to shutdown the Bootstrapper loop on Dispose,
+avoiding an indefinite loop.
+
+* https://issues.couchbase.com/browse/NCBC-3096[NCBC-3096]: 
+Cleaned up `CancellationTokenSource` handling in ConfigHandler.
+
+* https://issues.couchbase.com/browse/NCBC-3100[NCBC-3100]: 
+Included `LastDispatchedFrom` and `LastDispatchedTo` in `IErrorContext` implementations.
+
+* https://issues.couchbase.com/browse/NCBC-3102[NCBC-3102]:
+Fixed a bug where the `RemoteHost` tag was assigned the value of LocalHost
+when an Orphaned report is generated.
+
+* https://issues.couchbase.com/browse/NCBC-3107[NCBC-3107]: 
+Escape keyspace values with backticks only if missing,
+fixing an error where `IQueryIndexManager` didn't accept some bucket names.
+
+* https://issues.couchbase.com/browse/NCBC-3109[NCBC-3109]: 
+Fixed issue with Quota Limited Exceptions not being thrown for some Management apis.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-2964[NCBC-2964]: 
+Added `QueryOptions.PreserveExpiry`
+
+* https://issues.couchbase.com/browse/NCBC-2973[NCBC-2973]: 
+Enhanced Index Management API with ability to manage indexes for a collection or scope.
+
+* https://issues.couchbase.com/browse/NCBC-3035[NCBC-3035]:
+Improved performance of EnumExtensions method calls.
+
+* https://issues.couchbase.com/browse/NCBC-3036[NCBC-3036]: 
+Added tracing spans for improved Observability of compression/decompression performance.
+
+* https://issues.couchbase.com/browse/NCBC-3059[NCBC-3059]: 
+Reduced heap allocations surrounding OperationCancellationRegistration.
+
+* https://issues.couchbase.com/browse/NCBC-3063[NCBC-3063]: 
+Replaced Stopwatch in AsyncState with a lightweight approach.
+
+* https://issues.couchbase.com/browse/NCBC-3089[NCBC-3089]:
+Added clone method to QueryOptions to avoid reuse and potential threading issues.
+
+* https://issues.couchbase.com/browse/NCBC-3097[NCBC-3097]: 
+Reduced risk of odd behaviors during connection pool scale down with use of `TaskCreationOptions.RunContinuationsAsynchronously`.
+
 
 == Version 3.2.6 (12 January 2022)
 
@@ -115,6 +188,9 @@ Version 3.2.6 is the sixth release of the 3.2 series.
 https://packages.couchbase.com/clients/net/3.2/Couchbase-Net-Client-3.2.6.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.6[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.2.6[Nuget]
+
+NOTE: .NET Core 2.1 support has been dropped from the SDK, as of 3.2.5.
+This corresponds to Microsoft's decision to EOL .NET Core 2.1 on August 21, 2021.
 
 === Fixed Issues
 
@@ -232,6 +308,9 @@ Version 3.2.5 is the fifth release of the 3.2 series.
 https://packages.couchbase.com/clients/net/3.2/Couchbase-Net-Client-3.2.5.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.5[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.2.5[Nuget]
+
+NOTE: .NET Core 2.1 support has been dropped from the SDK, as of 3.2.5.
+This corresponds to Microsoft's decision to EOL .NET Core 2.1 on August 21, 2021.
 
 === Fixed Issues
 
