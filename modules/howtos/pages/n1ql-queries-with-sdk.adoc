@@ -196,7 +196,7 @@ the assumption is that the `airline` collection exists within a scope `us`.
 include::example$/n1ql-queries-sdk/scope-queries-sdk/Query.cs[tag=scope]
 ----
 
-A complete list of `QueryOptions` can be found in the https://docs.couchbase.com/sdk-api/couchbase-net-client/html/T_Couchbase_Query_QueryOptions.htm[API docs].
+A complete list of `QueryOptions` can be found in the https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.Query.QueryOptions.html[API docs].
 
 
 == Additional Resources
