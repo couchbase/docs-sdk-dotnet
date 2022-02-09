@@ -119,7 +119,8 @@ include::hello-world:partial$supported.adoc[]
 | .NET Core 2.0, 2.1, 2.2, 3.0
 | *◎*
 | *◎*
-| *◎*
+| *◎* +
+except *✖* 2.0, 2.1 xref:project-docs:sdk-release-notes.adoc#version-3-2-5-10-december-2021[from 3.2.5]
 
 | .NET Framework 4.6.2+
 | *◎*
