@@ -75,7 +75,7 @@ public async Task<ActionResult<string>> Get(int id)
 ----
 
 We can also improve the POST function to deal with some of the errors it may encounter.
-Even if something unexpected happens, we can still be helpful by including the error in the 500 response, by catching any `CouchbaseError` as a fallback.
+Even if something unexpected happens, we can still be helpful by including the error in the 500 response, by catching any `CouchbaseException` as a fallback.
 
 // TODO: convert to include statements, and actually show returning error codes from http
 [source,csharp]
