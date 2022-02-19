@@ -142,3 +142,6 @@ except *✖* 2.0, 2.1 xref:project-docs:sdk-release-notes.adoc#version-3-2-5-10-
 include::{version-server}@sdk:shared:partial$network-requirements.adoc[]
 
 include::{version-server}@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
+
+include::7.0@sdk:shared:partial$api-version.adoc[tag=api-version]
+
