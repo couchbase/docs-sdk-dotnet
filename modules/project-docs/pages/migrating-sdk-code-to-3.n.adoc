@@ -53,16 +53,16 @@ include::{version-server}@sdk:shared:partial$migration.adoc[tag=lang]
 The .NET SDK 3.x is available for download from the same resources as the previous generation 2.0 SDK:
 
 * From NuGet (the most popular choice): `Install-Package CouchbaseNetClient -Version 3.2.7`
-* By downloading a [zip]https://packages.couchbase.com/clients/net/3.0/CouchbaseNetClient-3.2.7.zip file directly
-* (Not officially supported) By cloning and building the source code directly on [github]https://github.com/couchbase/couchbase-net-client/tree/master
+* By downloading a https://packages.couchbase.com/clients/net/3.0/CouchbaseNetClient-3.2.7.zip[zip] file directly
+* (Not officially supported) By cloning and building the source code directly on https://github.com/couchbase/couchbase-net-client/tree/master[github]
 
 Please see the xref:sdk-release-notes.adoc[Release Notes] for up-to-date information.
 
-Couchbase .NET SDK 3.2.7 build targets include .NETStandard 2.0, .NETStandard 2.1, .NETCoreApp 3.1, .NET5 and .NET6.
+Couchbase .NET SDK 3.2.7 build targets include .NET Standard 2.0, .NET Standard 2.1, .NET CoreApp 3.1, .NET 5 and .NET 6.
 This was chosen so .NET Full Framework 4.8 can be supported along with .NET Core 3.x and earlier and follows the suggested path for library authors as well as the latest .NET Versions.
 The goal is to use the latest and greatest .NET Core libraries available, but still allow fallback for developers still using .NET Full Framework as they progress towards .NET Standard compliance.
 
-While the older target Frameworks are still targeted, Couchbase suggests that users target .net6 as it provides the latest, most performant .NET version. Additionally, as Microsoft
+While the older target Frameworks are still targeted, Couchbase suggests that users target .NET 6 as it provides the latest, most performant .NET version. Additionally, as Microsoft
 
 === Dependencies
 
@@ -443,7 +443,7 @@ var config = new ClusterOptions()
 config.WithConnectionString("couchbase://localhost");
 ----
 
-Couchbase recommends [Serilog]https://serilog.net/, however, any 3rd party logging library (Log4Net, ) will work as long as it is based off Microsoft.Extensions.Logging. 
+Couchbase recommends https://serilog.net/[Serilog], however, any 3rd party logging library (Log4Net and others) will work as long as it is based off Microsoft.Extensions.Logging. 
 Please see the 3rd party logging libraries documentation for details on its idiomatic logging configuration.
 
 [source]
