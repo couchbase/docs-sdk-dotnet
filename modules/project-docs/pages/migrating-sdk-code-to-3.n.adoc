@@ -308,8 +308,8 @@ In SDK 2 the main method to control transcoding was through providing different 
 This only worked for the KV APIs though -- Query, Search, Views, and other services exposed their JSON rows/hits in different ways.
 All of this has been unified in SDK 3 under a single concept: serializers and transcoders.
 
-By default, all KV APIs transcode to and from JSON either with `dynamic` objects or POCOs. In general this will suffice for the vast number of use cases, however, 
-sometimes another transcoder will be needed.
+By default, all KV APIs transcode to and from JSON either with `dynamic` objects or POCOs.
+In general this will suffice for the vast number of use cases, however, sometimes another transcoder will be needed.
 
 If you want to write already-encoded JSON, you would pass in the `RawJsonTranscoder` in the options block:
 
@@ -338,7 +338,7 @@ Here is a mapping table from the SDK 2 `Document<T>` and/or `IOperationResult<T>
 |`byte[]`              | `RawBinaryTranscoder`
 |=======================
 
-*Note that .NET SDK 2 had a DefaultTranscoder for storing JSON, a BinaryTranscoder for storing binary content and a BinaryToJsonTranscoder for handling legacy upgrades from very early server versions.
+*Note that .NET SDK 2 had a `DefaultTranscoder` for storing JSON, a `BinaryTranscoder` for storing binary content and a `BinaryToJsonTranscoder` for handling legacy upgrades from very early server versions.
 
 Serializers and transcoders can also be customized and overwritten on a per-operation basis, please see the appropriate documentation section for details.
 
@@ -350,7 +350,8 @@ Usually there is no need to override it unless you want to provide your own impl
 == Exception Handling
 
 While how to _handle_ exceptions is unchanged from SDK 2, using a try/catch clause, the way common errors are exposed to the application layer by SDK3 is significantly different.
-In SDK2, exceptions are not thrown for most operations, only for terminal failures within the SDK. Instead an `IResult` implementation was returned which contained a `Success`, `Status` and `Exception` fields.
+In SDK2, exceptions are not thrown for most operations, only for terminal failures within the SDK.
+Instead an `IResult` implementation was returned which contained a `Success`, `Status` and `Exception` fields.
 In SDK3, this has changed and now all errors are thrown from the SDK (as well as terminal failures) and must be handled by the application code.
 
 There have been changes made in the following areas:
@@ -384,9 +385,9 @@ Besides the stacktrace and exception message, there is also additional context i
 ----
 
 The expectation is that the application catches the `CouchbaseException` and deals with it as an unexpected error (e.g. logging with subsequent bubbling up of the exception or failing).
-In addition to that, each method exposes exceptions that can be caught separately if needed. For example, a `GetAsync()` may throw a `DocumentNotFoundException` or a 
-`TimeoutException` in addition to a more generic `CouchbaseException`.These exceptions extend `CouchbaseException`, but both the `TimeoutException` and the 
-`DocumentNotFoundException` can be caught individually if specific logic should be executed to handle them.
+In addition to that, each method exposes exceptions that can be caught separately if needed. 
+For example, a `GetAsync()` may throw a `DocumentNotFoundException` or a `TimeoutException` in addition to a more generic `CouchbaseException`.
+These exceptions extend `CouchbaseException`, but both the `TimeoutException` and the `DocumentNotFoundException` can be caught individually if specific logic should be executed to handle them.
 
 [source,csharp]
 ----
@@ -521,9 +522,8 @@ The signatures now look very similar.
 The concept of the `IDocument` as a type is gone in SDK 3 and instead you need to pass in the properties explicitly.
 This makes it very clear what is returned, especially on the response side.
 
-Thus, the `GetAsync` method does not return a `IDocumentResult` or a `IOperationResult` but a `IGetResult` instead, and the `UpsertAsync` does not return a 
-`IDocumentResult` or a `IOperationResult` but a `IMutationResult`. Each of those results only contain the field that the specific method can actually return, 
-making it impossible to accidentally try to access the `expiry` on the `IDocumentResult` after a mutation, for example.
+Thus, the `GetAsync` method does not return a `IDocumentResult` or a `IOperationResult` but a `IGetResult` instead, and the `UpsertAsync` does not return a `IDocumentResult` or a `IOperationResult` but a `IMutationResult`. 
+Each of those results only contain the field that the specific method can actually return, making it impossible to accidentally try to access the `expiry` on the `IDocumentResult` after a mutation, for example.
 
 Instead of having many overloads, all optional params are now part of the `Option` block.
 All required params are still part of the method signature, making it clear what is required and what is not (or has default values applied if not overridden).
