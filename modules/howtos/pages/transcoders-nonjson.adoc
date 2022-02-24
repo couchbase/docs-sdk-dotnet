@@ -143,25 +143,40 @@ include::example$Transcoding.cs[tag=string,indent=0]
 
 === RawBinaryTranscoder
 The RawBinaryTranscoder provides the ability for the user to explicitly store and retrieve raw byte data to Couchbase.
-The transcoder does not perform any form of real transcoding, and does not take a serializer, but rather passes the data through and assigns the appropriate binary Common Flag.
+The transcoder does not perform any form of real transcoding, and does not take a serializer, but rather passes the data through and assigns the appropriate `Binary` Common Flag (except in the case of an exception).
 
 [cols="3", options="header"]
 |===
 |Item
-|Result
-|Common Flag
+|Encoding Result
+|Decoding Result
 
 |String
 |InvalidArgumentException
-|-
+|InvalidArgumentException
 
 |byte[]
 |Passthrough
-|Binary
+|Passthrough
+
+|Memory<byte>
+|Passthrough +
+(from 3.2.6)
+|InvalidArgumentException
+
+|ReadOnlyMemory<byte>
+|Passthrough +
+(from 3.2.6)
+|InvalidArgumentException
+
+|IMemoryOwner<byte>
+|InvalidArgumentException
+|Passthrough +
+(from 3.2.6)
 
 |Other `Object`
 |InvalidArgumentException
-|-
+|InvalidArgumentException
 |===
 
 Here’s an example of using the `RawBinaryTranscoder`:
@@ -169,6 +184,14 @@ Here’s an example of using the `RawBinaryTranscoder`:
 [source,csharp]
 ----
 include::example$Transcoding.cs[tag=binary,indent=0]
+----
+
+From version 3.2.6, the `RawBinaryTranscoder` will accept `Memory<byte>` and `ReadOnlyMemory<byte>` inputs and can return `IMemoryOwner<byte>` outputs.
+Using these types may improve performance by not allocating large, temporary `byte[]` arrays on the heap.
+
+[source,csharp]
+----
+include::example$Transcoding.cs[tag=binary-memory,indent=0]
 ----
 
 == Custom Transcoders and Serializers
