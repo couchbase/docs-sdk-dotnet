@@ -107,6 +107,67 @@ git pull origin master
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 3.2.8 (2 March 2022)
+
+Version 3.2.8 is the seventh release of the 3.2 series.
+
+https://packages.couchbase.com/clients/net/3.2/Couchbase-Net-Client-3.2.8.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.8[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.2.8[Nuget]
+
+NOTE: .NET Core 2.1 support has been dropped from the SDK, as of 3.2.5.
+This corresponds to Microsoft's decision to EOL .NET Core 2.1 on August 21, 2021.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3091[NCBC-3091]:
+NRE GetDocumentFromReplicaAsync when EndPoint is null v3.2.X
+
+* https://issues.couchbase.com/browse/NCBC-3110[NCBC-3110]:
+PingReport does not honor token or default timeout
+
+* https://issues.couchbase.com/browse/NCBC-3114[NCBC-3114]:
+Json Converters not used for some EventingFunctionSetting fields
+
+* https://issues.couchbase.com/browse/NCBC-3119[NCBC-3119]:
+MutateIn does not use registered ITranscoder or ITypeSerializer
+
+=== New Features and Behavioral Changes
+
+*https://issues.couchbase.com/browse/NCBC-3103[NCBC-3103]:
+Integrate Transactions into couchbase-net-client repo
+
+* https://issues.couchbase.com/browse/NCBC-3105[NCBC-3105]:
+Build and package Couchbase.Transactions with CouchbaseNetClient
+
+* https://issues.couchbase.com/browse/NCBC-2176[NCBC-2176]:
+3.0 API Migration guide
+
+* https://issues.couchbase.com/browse/NCBC-2711[NCBC-2711]:
+Build DocFx site in Jenkins during release pipeline.
+
+* https://issues.couchbase.com/browse/NCBC-3112[NCBC-3112]:
+Update integration tests to work with System.Text.Json
+
+* https://issues.couchbase.com/browse/NCBC-3012[NCBC-3012]:
+Review GitHub protocol security and replace git://
+
+* https://issues.couchbase.com/browse/NCBC-3017[NCBC-3017]:
+Expose key/value metrics for instrumentation and observability
+
+* https://issues.couchbase.com/browse/NCBC-3060[NCBC-3060]:
+Reduce heap allocations for ClusterNode.SendAsync
+
+* https://issues.couchbase.com/browse/NCBC-3081[NCBC-3081]:
+Reuse CancellationTokenSources which have not timed out
+
+* https://issues.couchbase.com/browse/NCBC-3113[NCBC-3113]:
+Update DataStructures to be compatible with System.Text.Json
+
+* https://issues.couchbase.com/browse/NCBC-3120[NCBC-3120]:
+Use System.Text.Json to serialize QueryOptions
+
+
 == Version 3.2.7 (1 February 2022)
 
 Version 3.2.7 is the seventh release of the 3.2 series.
