@@ -1,10 +1,12 @@
 = Distributed Transactions from the .NET SDK
-:description: A practical guide to using Couchbase’s distributed ACID transactions, via the .NET API.
+:description: A practical guide to using Couchbase's distributed ACID transactions, via the .NET API.
 :navtitle: ACID Transactions
 :page-topic-type: howto
 :page-aliases: acid-transactions.adoc
+:page-toclevels: 2
 
 include::project-docs:partial$attributes.adoc[]
+include::partial$acid-transactions-attributes.adoc[]
 
 [abstract]
 {description}
@@ -65,23 +67,8 @@ Here are all imports used by the following examples:
 
 [source,csharp]
 ----
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Couchbase.KeyValue;
-using Couchbase.Query;
-using Couchbase.Transactions.Config;
-using Couchbase.Transactions.Deferred;
-using Couchbase.Transactions.Error;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
-----
-////
-----
 include::example$TransactionsExample.cs[tag=imports,indent=0]
 ----
-////
 
 The starting point is the `Transactions` object.
 It is very important that the application ensures that only one of these is created per cluster, as it performs automated background clean-up processes that should not be duplicated.
@@ -93,6 +80,7 @@ include::example$TransactionsExample.cs[tag=init,indent=0]
 ----
 
 === Multiple Transactions Objects
+
 Generally an application will need just one `Transactions` object, and in fact the library will usually warn if more are created.
 Each `Transactions` object uses some resources, including a thread-pool.
 
@@ -123,28 +111,20 @@ The asynchronous API allows you to use the thread pool, which can help you scale
 However, operations inside an individual transaction should be kept in-order and executed using `await` immediately.
 Do not use fire-and-forget tasks under any circumstances.
 
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=lambda-ctx]
 
-== Examples
-
-A code example is worth a thousand words, so here is a quick summary of the main transaction operations.
-They are described in more detail below.
+// Examples
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=examples-intro]
 
 [source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=examples,indent=0]
 ----
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=mechanics]
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tags=mechanics;!integrated-sdk-cleanup-process]
 
 
 == Key-Value Mutations
-
-=== Inserting
-
-[source,csharp]
-----
-include::example$TransactionsExample.cs[tag=insert,indent=0]
-----
 
 === Replacing
 
@@ -166,9 +146,14 @@ As with replaces, removing a document requires awaiting a `TransactionGetResult`
 include::example$TransactionsExample.cs[tag=remove,indent=0]
 ----
 
-== Key-Value Reads
+=== Inserting
 
-=== Getting
+[source,csharp]
+----
+include::example$TransactionsExample.cs[tag=insert,indent=0]
+----
+
+== Key-Value Reads
 
 There are two ways to get a document, `GetAsync` and `GetOptionalAsync`:
 
@@ -188,15 +173,16 @@ include::example$TransactionsExample.cs[tag=getReadOwnWrites,indent=0]
 ----
 
 
-include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=query-intro]
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tags=query-intro;!integrated-sdk-begin-transaction]
 
 === Using N1QL
+
 If you already use N1QL from the .NET SDK, then its use in transactions is very similar.
-it returns the same `IQueryResult<T>` you are used to, and takes most of the same options.
+It returns the same `IQueryResult<T>` you are used to, and takes most of the same options.
 
 You must take care to write `ctx.QueryAsync()` inside the lambda however, rather than `cluster.QueryAsync()` or `scope.QueryAsync()`.
 
-An example of SELECTing some rows from the `travel-sample` bucket:
+An example of selecting some rows from the `travel-sample` bucket:
 
 [source,csharp]
 ----
@@ -227,19 +213,22 @@ include::example$TransactionsExample.cs[tag=queryExamplesComplex,indent=0]
 ----
 
 === Read Your Own Writes
+
 As with Key-Value operations, N1QL queries support Read Your Own Writes.
 
-This example shows INSERTing a document and then SELECTing it again.
+This example shows inserting a document and then selecting it again.
 
 [source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=queryInsert,indent=0]
 ----
+
 <1> The inserted document is only staged at this point. as the transaction has not yet committed.
 Other transactions, and other non-transactional actors, will not be able to see this staged insert yet.
 <2> But the SELECT can, as we are reading a mutation staged inside the same transaction.
 
 === Mixing Key-Value and N1QL
+
 Key-Value operations and queries can be freely intermixed, and will interact with each other as you would expect.
 
 In this example we insert a document with Key-Value, and read it with a SELECT.
@@ -251,20 +240,36 @@ include::example$TransactionsExample.cs[tag=queryRyow,indent=0]
 <2> But the SELECT can view it, as the insert was in the same transaction.
 
 === Query Options
-Query options can be provided via `TransactionsQueryOptions`, which provides a subset of the options in the .NET SDK's `QueryOptions`.
+
+Query options can be provided via `TransactionQueryOptions`, which provides a subset of the options in the .NET SDK's `QueryOptions`.
 
 [source,csharp]
 ----
 include::example$TransactionsExample.cs[tag=queryOptions,indent=0]
 ----
 
-include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=query-options]
+The supported options are:
+
+* Parameter
+* ScanConsistency
+* FlexIndex
+* Serializer
+* ClientContextId
+* ScanWait
+* ScanCap
+* PipelineBatch
+* PipelineCap
+* Readonly
+* AdHoc
+* Raw
 
 See the xref:howtos:n1ql-queries-with-sdk.adoc#query-options[QueryOptions documentation] for details on these.
 
-include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=query-perf]
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=query-concurrency]
 
-include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=query-single]
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=query-perf]
+
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=query-single]
 
 [source,csharp]
 ----
@@ -342,30 +347,11 @@ After a transaction is rolled back, it cannot be committed, no further operation
 
 
 //  Error Handling
-// tag::error[]
-== Error Handling
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=error]
 
-As discussed previously, the transactions library will attempt to resolve many errors itself, through a combination of retrying individual operations and the application's lambda.
-This includes some transient server errors, and conflicts with other transactions.
-
-But there are situations that cannot be resolved, and total failure is indicated to the application via exceptions.
-These errors include:
-
-* Any exception thrown by your transaction lambda, either deliberately or through an application logic bug.
-* Attempting to insert a document that already exists.
-* Attempting to remove or replace a document that does not exist.
-* Calling `ctx.GetAsync()` on a document key that does not exist.
-
-IMPORTANT: Once one of these errors occurs, the current attempt is irrevocably failed (though the transaction may retry the lambda).
-It is not possible for the application to catch the failure and continue.
-Once a failure has occurred, all other operations tried in this attempt (including commit) will instantly fail.
-
-Transactions, as they are multi-stage and multi-document, also have a concept of partial success/failure.
-This is signalled to the application through the `TransactionResult.UnstagingComplete` property, described later.
-
-There are three exceptions that the transactions library can raise to the application: `TransactionFailed`, `TransactionExpired`, and `TransactionCommitAmbiguous`.
-All exceptions derive from `TransactionFailed` for backwards-compatibility purposes.
-// end::error[]
+There are three exceptions that Couchbase transactions can raise to the application:
+`TransactionFailedException`, `TransactionExpiredException` and `TransactionCommitAmbiguousException`.
+All exceptions derive from `TransactionFailedException` for backwards-compatibility purposes.
 
 //  txnfailed
 include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed]
@@ -375,57 +361,11 @@ include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=txnfaile
 include::example$TransactionsExample.cs[tag=config-expiration,indent=0]
 ----
 
-// tag::txnfailed1[]
-This will allow the protocol more time to get past any transient failures (for example, those caused by a cluster rebalance).
-The tradeoff to consider with longer expiration times, is that documents that have been staged by a transaction are effectively locked from modification from other transactions, until the expiration time has exceeded.
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed1]
 
-Note that expiration is not guaranteed to be followed precisely.
-For example, if the application were to do a long blocking operation inside the lambda (which should be avoided), then expiration can only trigger after this finishes.
-Similarly, if the transaction attempts a key-value operation close to the expiration time, and that key-value operation times out, then the expiration time may be exceeded.
+Similar to `TransactionResult`, `SingleQueryTransactionResult` also has an `UnstagingComplete` property.
 
-=== TransactionCommitAmbiguous
-
-As discussed <<mechanics,previously>>, each transaction has a 'single point of truth' that is updated atomically to reflect whether it is committed.
-
-However, it is not always possible for the protocol to become 100% certain that the operation was successful, before the transaction expires.
-That is, the operation may have successfully completed on the cluster, or may succeed soon, but the protocol is unable to determine this (whether due to transient network failure or other reason).
-This is important as the transaction may or may not have reached the commit point, e.g. succeeded or failed.
-
-The library raises `TransactionCommitAmbiguous` to indicate this state.
-It should be rare to receive this exception.
-
-If the transaction had in fact successfully reached the commit point, then the transaction will be fully completed ("unstaged") by the asynchronous cleanup process at some point in the future.
-With default settings this will usually be within a minute, but whatever underlying fault has caused the TransactionCommitAmbiguous may lead to it taking longer.
-
-If the transaction had not in fact reached the commit point, then the asynchronous cleanup process will instead attempt to roll it back at some point in the future.
-If unable to, any staged metadata from the transaction will not be visible, and will not cause problems (e.g. there are safety mechanisms to ensure it will not block writes to these documents for long).
-
-==== Handling
-This error can be challenging for an application to handle.
-As with `TransactionFailed` it is recommended that it at least writes any logs from the transaction, for future debugging.
-It may wish to retry the transaction at a later point, or globally extend transactional expiration times to give the protocol additional time to resolve the ambiguity.
-
-=== TransactionResult.UnstagingComplete
-
-As above, there is a 'single point of truth' for a transaction.
-After this atomic commit point is reached, the documents themselves will still be individually committed (we also call this "unstaging").
-However, transactionally-aware actors will now be returning the post-transaction versions of the documents, and the transaction is effectively fully committed to those actors.
-
-So if the application is solely working with transaction-aware actors, then the unstaging process is optional.
-And failures during the unstaging process are not particularly important, in this case.
-(Note the asynchronous cleanup process will still complete the unstaging process at a later point.)
-
-Hence, many errors during unstaging will cause the transaction to immediately return success.
-That is, successful return simply means that the commit point was reached.
-
-The property `TransactionResult.UnstagingComplete` indicates whether the unstaging process completed successfully or not.
-This should be used any time that the application needs all results of the transaction to be immediately available to non-transactional actors (which currently includes N1QL and non-transactional Key-Value reads).
-
-Error handling differs depending on whether a transaction is before or after the point of commit (or rollback).
-// end::txnfailed1[]
-
-
-== Full Error Handling Example
+=== Full Error Handling Example
 
 Pulling all of the above together, this is the suggested best practice for error handling:
 
@@ -436,7 +376,20 @@ include::example$TransactionsExample.cs[tag=full-error-handling,indent=0]
 
 
 // == Asynchronous Cleanup
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=cleanup]
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tags=cleanup;!integrated-sdk-cleanup-collections]
+
+[#tuning-cleanup]
+=== Configuring Cleanup
+
+The cleanup settings can be configured as so:
+
+[options="header"]
+|===
+|Setting|Default|Description
+|`CleanupWindow`|60 seconds|This determines how long a cleanup 'run' is; that is, how frequently this client will check its subset of ATR documents.  It is perfectly valid for the application to change this setting, which is at a conservative default.  Decreasing this will cause expiration transactions to be found more swiftly (generally, within this cleanup window), with the tradeoff of increasing the number of reads per second used for the scanning process.
+|`CleanupLostAttempts`|true|This is the thread that takes part in the distributed cleanup process described above, that cleans up expired transactions created by any client.  It is strongly recommended that it is left enabled.
+|`CleanupClientAttempts`|true|This thread is for cleaning up transactions created just by this client.  The client will preferentially aim to send any transactions it creates to this thread, leaving transactions for the distributed cleanup process only when it is forced to (for example, on an application crash).  It is strongly recommended that it is left enabled.
+|===
 
 ////
 === Monitoring Cleanup
@@ -499,5 +452,5 @@ include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=custom-m
 
 == Further Reading
 
-* There’s plenty of explanation about how Transactions work in Couchbase in our xref:{version-server}@server:learn:data/transactions.adoc[Transactions documentation].
+* There's plenty of explanation about how Transactions work in Couchbase in our xref:{version-server}@server:learn:data/transactions.adoc[Transactions documentation].
 * You can find further code examples on our https://github.com/couchbaselabs/couchbase-transactions-dotnet-examples[transactions examples repository].

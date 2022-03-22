@@ -1,4 +1,5 @@
-﻿using System;
+﻿// tag::imports[]
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Couchbase.KeyValue;
@@ -8,6 +9,7 @@ using Couchbase.Transactions.Error;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
+// end::imports[]
 
 namespace Couchbase.Transactions.Examples
 {
