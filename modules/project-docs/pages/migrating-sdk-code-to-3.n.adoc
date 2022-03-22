@@ -118,14 +118,7 @@ var options = new ClusterOptions
 };
 ----
 
-The configuration options are passed into the `Cluster` object via a constructor:
-
-[source,csharp]
-----
-var cluster = new Cluster("couchbase://localhost", options);
-----
-
-Or by using one of the static `Cluster.ConnectAsync(...)` methods:
+The configuration options are passed into one of the static `Cluster.ConnectAsync(...)` methods:
 
 [source,csharp]
 ----
