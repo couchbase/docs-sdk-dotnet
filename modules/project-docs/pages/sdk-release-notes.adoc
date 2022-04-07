@@ -115,7 +115,10 @@ https://packages.couchbase.com/clients/net/3.2/Couchbase-Net-Client-3.2.9.zip[Do
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.9[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.2.9[Nuget]
 
-== Fixed Issues
+=== Special Note
+* Between bug fixes and performance improvements, the ChannelConnectionPool will be made the default in a future release.  Give it a try now with `ClusterOptions.Experiments.ChannelConnectionPools = true;`
+
+=== Fixed Issues
 * https://issues.couchbase.com/browse/NCBC-3174[NCBC-3174]: Out of Retries misclassified as Operation Timed Out
 
 * https://issues.couchbase.com/browse/NCBC-3176[NCBC-3176]: ExponentialBackoff only ever increases globally
