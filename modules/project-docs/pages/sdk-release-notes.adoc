@@ -107,6 +107,53 @@ git pull origin master
 After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
 _Note that you can checkout a specific tag for each release as well._
 
+== Version 3.2.9 (4 April 2022)
+
+Version 3.2.9 is the eighth release of the 3.2 series.
+
+https://packages.couchbase.com/clients/net/3.2/Couchbase-Net-Client-3.2.9.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.9[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.2.9[Nuget]
+
+=== Special Note
+* Between bug fixes and performance improvements, the ChannelConnectionPool will be made the default in a future release.  Give it a try now with `ClusterOptions.Experiments.ChannelConnectionPools = true;`
+
+=== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-3174[NCBC-3174]: Out of Retries misclassified as Operation Timed Out
+
+* https://issues.couchbase.com/browse/NCBC-3176[NCBC-3176]: ExponentialBackoff only ever increases globally
+
+* https://issues.couchbase.com/browse/NCBC-2994[NCBC-2994]: Trace listener leaks spans when an exception is thrown
+
+* https://issues.couchbase.com/browse/NCBC-3076[NCBC-3076]: NullReferenceException when tracing span has no parent
+
+* https://issues.couchbase.com/browse/NCBC-3111[NCBC-3111]: PingReport output should not include last_activity_us
+
+* https://issues.couchbase.com/browse/NCBC-3122[NCBC-3122]: Duplicate view exception types for DesignDocumentNotFound
+
+* https://issues.couchbase.com/browse/NCBC-3127[NCBC-3127]: Search query ConsistentWith uses bucket name instead of index name for scan vector key
+
+* https://issues.couchbase.com/browse/NCBC-3149[NCBC-3149]: Synchronize bucket creation to avoid Object Disposed Exceptions
+
+* https://issues.couchbase.com/browse/NCBC-3160[NCBC-3160]: Wrong host was used for lookup
+
+* https://issues.couchbase.com/browse/NCBC-3163[NCBC-3163]: Bucket name escaping in QueryIndexManager.GetAllIndexesAsync
+
+* https://issues.couchbase.com/browse/NCBC-3171[NCBC-3171]: Request keys are corrupted when connected to mixed-node cluster running 7.0.3 and < 7.x
+
+* https://issues.couchbase.com/browse/NCBC-3172[NCBC-3172]: .NET SDK fails to connect to correct node in custom port (cluster_run) multi-node setup
+
+=== New Features and Behavioral Changes
+* https://issues.couchbase.com/browse/NCBC-3099[NCBC-3099]: Clean up uses of ToString() on primitives to be sure we use InvariantCulture.
+
+* https://issues.couchbase.com/browse/NCBC-3125[NCBC-3125]: Use System.Text.Json for bucket management
+
+* https://issues.couchbase.com/browse/NCBC-3133[NCBC-3133]: Use System.Text.Json to serialize OperationResult and OperationResult<T>.ToString()
+
+* https://issues.couchbase.com/browse/NCBC-3150[NCBC-3150]: Improve error messages in views and FTS
+
+* https://issues.couchbase.com/browse/NCBC-3168[NCBC-3168]: Add exception to debug log in CircuitBreaker
+
 == Version 3.2.8 (2 March 2022)
 
 Version 3.2.8 is the seventh release of the 3.2 series.
@@ -134,7 +181,7 @@ MutateIn does not use registered ITranscoder or ITypeSerializer
 
 === New Features and Behavioral Changes
 
-*https://issues.couchbase.com/browse/NCBC-3103[NCBC-3103]:
+* https://issues.couchbase.com/browse/NCBC-3103[NCBC-3103]:
 Integrate Transactions into couchbase-net-client repo
 
 * https://issues.couchbase.com/browse/NCBC-3105[NCBC-3105]:
