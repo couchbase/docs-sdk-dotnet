@@ -116,6 +116,8 @@ https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.9[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.2.9[Nuget]
 
 === Special Note
+* During a rebalance upgrade from 6.x (or any earlier version) to 7x, in a mixed mode there is a known issue where data may be written to the wrong location.  Solution would be to either upgrade to 3.2.9 or quiesce application processing so there are no writes and upgrade all nodes.  If you encounter a similar situation during migration and need help with mitigation please contact our support team.
+
 * Between bug fixes and performance improvements, the ChannelConnectionPool will be made the default in a future release.  Give it a try now with `ClusterOptions.Experiments.ChannelConnectionPools = true;`
 
 === Fixed Issues
@@ -139,7 +141,7 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.2.9[Nuget]
 
 * https://issues.couchbase.com/browse/NCBC-3163[NCBC-3163]: Bucket name escaping in QueryIndexManager.GetAllIndexesAsync
 
-* https://issues.couchbase.com/browse/NCBC-3171[NCBC-3171]: Documents may be written to the wrong location during write operations to a  mixed-mode cluster running 7.0.3 and < 7.x
+* https://issues.couchbase.com/browse/NCBC-3171[NCBC-3171]: Documents may be written to the wrong location in a mixed-mode cluster setup. See Special Note for more details.
 
 * https://issues.couchbase.com/browse/NCBC-3172[NCBC-3172]: .NET SDK fails to connect to correct node in custom port (cluster_run) multi-node setup
 
