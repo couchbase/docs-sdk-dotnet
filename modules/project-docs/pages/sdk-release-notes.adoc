@@ -109,7 +109,7 @@ _Note that you can checkout a specific tag for each release as well._
 
 == Version 3.2.9 (4 April 2022)
 
-Version 3.2.9 is the eighth release of the 3.2 series.
+Version 3.2.9 is the ninth release of the 3.2 series.
 
 https://packages.couchbase.com/clients/net/3.2/Couchbase-Net-Client-3.2.9.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.9[API Reference] |
@@ -156,7 +156,7 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.2.9[Nuget]
 
 == Version 3.2.8 (2 March 2022)
 
-Version 3.2.8 is the seventh release of the 3.2 series.
+Version 3.2.8 is the eighth release of the 3.2 series.
 
 https://packages.couchbase.com/clients/net/3.2/Couchbase-Net-Client-3.2.8.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.8[API Reference] |
