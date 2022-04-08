@@ -139,7 +139,7 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.2.9[Nuget]
 
 * https://issues.couchbase.com/browse/NCBC-3163[NCBC-3163]: Bucket name escaping in QueryIndexManager.GetAllIndexesAsync
 
-* https://issues.couchbase.com/browse/NCBC-3171[NCBC-3171]: Request keys are corrupted when connected to mixed-node cluster running 7.0.3 and < 7.x
+* https://issues.couchbase.com/browse/NCBC-3171[NCBC-3171]: Documents may be written to the wrong location during write operations to a  mixed-mode cluster running 7.0.3 and < 7.x
 
 * https://issues.couchbase.com/browse/NCBC-3172[NCBC-3172]: .NET SDK fails to connect to correct node in custom port (cluster_run) multi-node setup
 
