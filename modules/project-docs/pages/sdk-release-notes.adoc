@@ -116,9 +116,16 @@ https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.9[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.2.9[Nuget]
 
 === Special Note
-* Between bug fixes and performance improvements, the ChannelConnectionPool will be made the default in a future release.  Give it a try now with `ClusterOptions.Experiments.ChannelConnectionPools = true;`
+
+* During a rebalance upgrade from 6.x (or any earlier version) to 7x, in mixed mode (where you are communicating with Couchbase Server whilst some but not all nodes are upgraded), there is a known issue where data may be written to the wrong location.  
+The solution is to either upgrade to 3.2.9, or to quiesce application processing so there are no writes until you have upgraded all nodes.  
+If you encounter a similar situation during migration and need help with mitigation, please contact our support team.
+
+* Between bug fixes and performance improvements, the `ChannelConnectionPool` will be made the default in a future release.  
+Give it a try now with `ClusterOptions.Experiments.ChannelConnectionPools = true;`
 
 === Fixed Issues
+
 * https://issues.couchbase.com/browse/NCBC-3174[NCBC-3174]: Out of Retries misclassified as Operation Timed Out
 
 * https://issues.couchbase.com/browse/NCBC-3176[NCBC-3176]: ExponentialBackoff only ever increases globally
@@ -139,7 +146,8 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.2.9[Nuget]
 
 * https://issues.couchbase.com/browse/NCBC-3163[NCBC-3163]: Bucket name escaping in QueryIndexManager.GetAllIndexesAsync
 
-* https://issues.couchbase.com/browse/NCBC-3171[NCBC-3171]: Documents may be written to the wrong location during write operations to a  mixed-mode cluster running 7.0.3 and < 7.x
+* https://issues.couchbase.com/browse/NCBC-3171[NCBC-3171]: Documents may be written to the wrong location in a mixed-mode cluster set-up. 
+See the <<special-note,Special Note>> for more details.
 
 * https://issues.couchbase.com/browse/NCBC-3172[NCBC-3172]: .NET SDK fails to connect to correct node in custom port (cluster_run) multi-node setup
 
@@ -164,6 +172,11 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.2.8[Nuget]
 
 NOTE: .NET Core 2.1 support has been dropped from the SDK, as of 3.2.5.
 This corresponds to Microsoft's decision to EOL .NET Core 2.1 on August 21, 2021.
+
+=== Known Issues
+
+* https://issues.couchbase.com/browse/NCBC-3171[NCBC-3171]: Documents may be written to the wrong location in a mixed-mode cluster set-up. 
+See the <<special-note,Special Note>> for more details.
 
 === Fixed Issues
 
@@ -225,6 +238,11 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.2.7[Nuget]
 
 NOTE: .NET Core 2.1 support has been dropped from the SDK, as of 3.2.5.
 This corresponds to Microsoft's decision to EOL .NET Core 2.1 on August 21, 2021.
+
+=== Known Issues
+
+* https://issues.couchbase.com/browse/NCBC-3171[NCBC-3171]: Documents may be written to the wrong location in a mixed-mode cluster set-up. 
+See the <<special-note,Special Note>> for more details.
 
 === Fixed Issues
 
@@ -299,6 +317,11 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.2.6[Nuget]
 
 NOTE: .NET Core 2.1 support has been dropped from the SDK, as of 3.2.5.
 This corresponds to Microsoft's decision to EOL .NET Core 2.1 on August 21, 2021.
+
+=== Known Issues
+
+* https://issues.couchbase.com/browse/NCBC-3171[NCBC-3171]: Documents may be written to the wrong location in a mixed-mode cluster set-up. 
+See the <<special-note,Special Note>> for more details.
 
 === Fixed Issues
 
@@ -420,6 +443,11 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.2.5[Nuget]
 NOTE: .NET Core 2.1 support has been dropped from the SDK, as of 3.2.5.
 This corresponds to Microsoft's decision to EOL .NET Core 2.1 on August 21, 2021.
 
+=== Known Issues
+
+* https://issues.couchbase.com/browse/NCBC-3171[NCBC-3171]: Documents may be written to the wrong location in a mixed-mode cluster set-up. 
+See the <<special-note,Special Note>> for more details.
+
 === Fixed Issues
 
 * https://issues.couchbase.com/browse/NCBC-2851[NCBC-2851]: 
@@ -501,6 +529,7 @@ Fixes to problematic OpenTelemetry tracing registration.
 A consumer may now register with an OpenTelemetry provider which
 is being managed outside the SDK.
 
+
 == Version 3.2.4 (2 November 2021)
 
 Version 3.2.4 is the fourth release of the 3.2 series.
@@ -510,6 +539,9 @@ https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.4[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.2.4[Nuget]
 
 === Known Issues
+
+* https://issues.couchbase.com/browse/NCBC-3171[NCBC-3171]: Documents may be written to the wrong location in a mixed-mode cluster set-up. 
+See the <<special-note,Special Note>> for more details.
 
 * https://issues.couchbase.com/browse/NCBC-2851[NCBC-2851]:
 TimeoutExceptions continue after rebound in Failover/Eject tests.
@@ -556,6 +588,9 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.2.3[Nuget]
 
 === Known Issues
 
+* https://issues.couchbase.com/browse/NCBC-3171[NCBC-3171]: Documents may be written to the wrong location in a mixed-mode cluster set-up. 
+See the <<special-note,Special Note>> for more details.
+
 * https://issues.couchbase.com/browse/NCBC-2851[NCBC-2851]:
 TimeoutExceptions continue after rebound in Failover/Eject tests.
 
@@ -591,6 +626,12 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.2.2[Nuget]
 
 This is a re-release of 3.2.1 with exactly the same commits due to a packaging bug in 3.2.1. The only difference is the version and package fix.
 
+=== Known Issues
+
+* https://issues.couchbase.com/browse/NCBC-3171[NCBC-3171]: Documents may be written to the wrong location in a mixed-mode cluster set-up. 
+See the <<special-note,Special Note>> for more details.
+
+
 == Version 3.2.1 (9 September 2021) DO NOT USE - USE 3.2.2 INSTEAD
 
 Version 3.2.1 is the second release of the 3.2 series.
@@ -601,6 +642,8 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.2.1[Nuget]
 
 === Known Issues
 
+* https://issues.couchbase.com/browse/NCBC-3171[NCBC-3171]: Documents may be written to the wrong location in a mixed-mode cluster set-up. 
+See the <<special-note,Special Note>> for more details.
 * https://issues.couchbase.com/browse/NCBC-2851[NCBC-2851]:
 TimeoutExceptions continue after rebound in Failover/Eject tests.
 
@@ -624,6 +667,9 @@ https://docs.couchbase.com/sdk-api/couchbase-net-client-3.2.0[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.2.0[Nuget]
 
 === Known Issues
+
+* https://issues.couchbase.com/browse/NCBC-3171[NCBC-3171]: Documents may be written to the wrong location in a mixed-mode cluster set-up. 
+See the <<special-note,Special Note>> for more details.
 
 * https://issues.couchbase.com/browse/NCBC-2851[NCBC-2851]:
 TimeoutExceptions continue after rebound in Failover/Eject tests.
