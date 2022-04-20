@@ -65,7 +65,7 @@ The quickest way to get up and running is with NuGet, from the Package Manager C
  Install-Package CouchbaseNetClient
 ----
 
-All other installation methods can be found in our xref:project-docs:sdk-full-installation[full installation guide].
+All other installation methods can be found in our xref:project-docs:sdk-full-installation.adoc[full installation guide].
 
 
 == Step by Step
