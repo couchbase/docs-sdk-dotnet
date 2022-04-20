@@ -35,9 +35,9 @@ var clientConfig = new ClientConfiguration {
 ----
 
 The listing above is an example of a client level configuration for bootstrapping against a cluster containing the following nodes: `+http://server1.somedomain.com:8091+`, `+http://server2.somedomain.com:8091+` and `+http://server3.somedomain.com:8091+`.
-This will override the default bootstrap host of `+http://localhost:8091+` and the client will use this list to bootstrap the itself to the cluster.
+This will override the default bootstrap host of `+http://localhost:8091+` and the client will use this list to bootstrap itself to the cluster.
 
-Once you have a config, you'll either pass it into the constructor or the `Cluster` class:
+Once you have a config, you can pass it into the constructor of the `Cluster` class:
 
 [source,csharp]
 ----
@@ -51,7 +51,7 @@ Alternatively, you can initialize the cluster helper:
 ClusterHelper.Initialize(clientConfig);
 ----
 
-NOTE: calling a Initialize more than once per process or application may cause inconsistent behavior.
+NOTE: calling Initialize more than once per process or application may cause inconsistent behavior.
 
 A more advanced configuration that uses all three levels might look something like this:
 
@@ -77,10 +77,10 @@ A more advanced configuration that uses all three levels might look something li
 In this example we are creating a configuration that also overrides the default BucketConfiguration and PoolConfiguration settings.
 
 [#dotnet-appconfig-webconfig-configuration]
-== Using an App.Config or Web.Config Configuration
+== Using App.Config or Web.Config Configuration
 
-The section above shows how to programmatically configure the client, however in some situations you may want to use an App.Config or Web.Config to configure your client.
-For the most part, everything that is available programmatically can be done via the App.Config or Web.Config, for example:
+The section above shows how to programmatically configure the client, however in some situations you may want to use App.Config or Web.Config to configure your client.
+For the most part, everything that is available programmatically can be done via App.Config or Web.Config, for example:
 
 [source,xml]
 ----
@@ -176,11 +176,11 @@ These settings apply to each and every client instance globally.
 | 75000ms
 
 | `UseSsl`
-| Whether or not to use SSL encrypt data being sent to and from the server
+| Whether or not to use SSL to encrypt the data being sent to and from the server
 | false
 
 | `SslPort`
-| Overrides the `DirectPort` and sets the SSL port to use for key-value operations using the binary memcached protocol id UseSsl is enabled
+| Overrides the `DirectPort` and sets the SSL port to use for key-value operations using the binary memcached protocol if UseSsl is enabled
 | 11207
 
 | `ForceSaslPlain`
@@ -360,7 +360,7 @@ These settings apply to a specific bucket and will override any global settings.
 | "default"
 
 | `UseSsl`
-| Whether or not to use SSL encrypt data being sent to and from the server
+| Whether or not to use SSL to encrypt the data being sent to and from the server
 | false
 
 | `Password`
@@ -393,7 +393,7 @@ Note that in `App.config` this is set via `operationLifespan`
 [#dotnet-poolconfiguration-settings]
 == PoolConfiguration Settings
 
-These settings apply to the connection level of a specific bucket configuration and override any bucket or client level settings, if applicable.
+These settings apply to the connection level of a specific bucket configuration and override any bucket or client level settings if applicable.
 
 .PoolConfiguration Properties
 [cols="153,343,100"]
@@ -427,7 +427,7 @@ These settings apply to the connection level of a specific bucket configuration 
 | 15000 ms
 
 | `UseSsl`
-| Whether or not to use SSL encrypt data being sent to and from the server
+| Whether or not to use SSL to encrypt the data being sent to and from the server
 | false
 
 | `BufferSize`
@@ -435,7 +435,7 @@ These settings apply to the connection level of a specific bucket configuration 
 | 16k
 
 | `EnableTcpKeepAlives`
-| Gets or sets a value indicating whether enable TCP keep alives.
+| Gets or sets a value indicating whether to enable TCP keep alives.
 | true
 
 | `TcpKeepAliveTime`
