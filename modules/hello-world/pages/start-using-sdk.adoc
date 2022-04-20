@@ -79,9 +79,10 @@ Install the latest 3.3 https://www.nuget.org/packages/CouchbaseNetClient/[Couchb
 
 The following code samples assume:
 
-* Couchbase Server is installed and accessible locally (xref:server:getting-started:do-a-quick-install.adoc[Do a Quick Install] if you don't already have Couchbase Server installed).
+* Couchbase xref:cloud:ROOT:index.adoc[Capella] cluster, or Couchbase Server is installed and accessible locally (xref:server:getting-started:do-a-quick-install.adoc[Do a Quick Install] if you don't already have Couchbase Server installed).
 * You have create a bucket (perhaps using the xref:{version-server}@server:manage:manage-settings/install-sample-buckets.adoc[travel-sample dataset], or by creating a new bucket).
-* You have created a Couchbase user named "username" with permissions to access the cluster (at least Application Access permissions).
+Note, the Travel Sample bucket is installed automatically by the Capella free trial.
+* You have created a Couchbase user named "username" [change as appropriate] with permissions to access the cluster (at least Application Access permissions).
 
 Firstly, you will need to have a few `using` statements at the top of *Program.cs* in your console program:
 [source,csharp]
