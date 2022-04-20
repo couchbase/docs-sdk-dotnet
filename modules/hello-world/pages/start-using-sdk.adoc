@@ -12,26 +12,70 @@ It offers an asynchronous API based on the link:https://docs.microsoft.com/en-us
 The Couchbase .NET client allows applications to connect to Couchbase Server using any Common Language Runtime (CLR) language, including C#, F#, and VB.NET.
 The SDK is written in C#, and some of its idiomatic patterns reflect that choice.
 
+
+== Hello Couchbase
+
+On this page we show you how to quickly get up and running -- installing the Couchbase .NET SDK, and trying out the C# _Hello World_ code example against Couchbase Capella, or against a local Couchbase cluster.
+
+We will go through the code sample step by step, but for those in a hurry to see it, here it is:
+
+[{tabs}]
+====
+Couchbase Capella Sample::
++
+--
+If you are connecting to https://docs.couchbase.com/cloud/index.html[Couchbase Capella], be sure to get the correct endpoint as well as user, password, and `couchbasecloudbucket` -- and see the <<cloud-connections, Cloud section>>, below.
+
+[source,csharp]
+----
+include::devguide:example$dotnet/Cloud.cs[]
+----
+--
+
+Local Couchbase Server::
++
+--
+[source.try-it,csharp]
+----
+include::example$StartUsing.cs[tags=**]
+----
+--
+====
+
+
 == Installing the SDK
+
+=== Requirements
 
 include::partial$supported.adoc[]
 See the xref:project-docs:compatibility.adoc#dotnet-compatibility[Compatibility] section for more details.
 
-The library is distributed in a number of ways:
 
-|===
-|NuGet |NuGet package host at https://www.nuget.org/packages/CouchbaseNetClient/[nuget.org] (_recommended_)
-|Zip |Zip files for each release are linked from the Release Notes xref:project-docs:sdk-release-notes.adoc[here].
-|Build from Source |Build the library from https://github.com/couchbase/couchbase-net-client/[source available on GitHub] (not officially supported)
-|===
+=== Quick Install
+
+The quickest way to get up and running is with NuGet, from the Package Manager Console,  within your project:
+
+. From the Visual Studio menu bar, click *Tools*.
+. Select *NuGet Package Manager > Package Manager Console*.
+. In the console, enter the package installation command:
+ ** To install the latest version:
+
+[source,console]
+----
+ Install-Package CouchbaseNetClient
+----
+
+All other installation methods can be found in our xref:project-docs:sdk-full-installation[full installation guide].
 
 
-== Hello Couchbase
+== Step by Step
 
-Start a new console project (in Visual Studio or VS Code, etc). +
+Start a new console project (in Visual Studio or VS Code, etc). 
 Go to our xref:platform-help.adoc[Platform Introduction] if you don't already have an editor or IDE setup for working in .NET -- e.g. you are evaluating the .NET SDK, but .NET is not your normal platform.
 
-Install the latest 3.2 https://www.nuget.org/packages/CouchbaseNetClient/[CouchbaseNetClient^] NuGet package.
+=== Prerequisites
+
+Install the latest 3.3 https://www.nuget.org/packages/CouchbaseNetClient/[CouchbaseNetClient^] NuGet package -- see <<quick-install,above>>.
 
 The following code samples assume:
 
@@ -45,33 +89,49 @@ Firstly, you will need to have a few `using` statements at the top of *Program.c
 include::example$StartUsing.cs[tag=using,indent=0]
 ----
 
+=== Connection
+
 Then you can connect to the cluster:
 
+[{tabs}] 
+====
+Capella::
++
+--
+[source,csharp]
+----
+// TODO
+----
+--
+
+Local Server::
++
+--
 [source,csharp]
 ----
 include::example$StartUsing.cs[tag=connect,indent=0]
 ----
+--
+====
 
 Couchbase uses xref:server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
 If you're developing client code on the same machine as the Couchbase Server, your URI can be _couchbase://localhost_.
 
-Then open the bucket:
+=== Bucket, Scopes, and Collections
+
+Open the bucket:
 [source,csharp]
 ----
 include::example$StartUsing.cs[tag=bucket,indent=0]
 ----
 
-Substitute whatever bucket name you want for _bucket-name_ in the above example.
-
-The 3.2 SDK is ready for the introduction of xref:concept-docs:collections.adoc[Collections] in the xref:{version-server}@server:introduction:whats-new.adoc#whats-new-server-700[7.0 release] of the Couchbase Data Platform.
-The latest release, Couchbase Server 7.0, brings Collections, allowing Documents to be grouped by purpose or theme, according to specified _Scope_.
+Collections allowi Documents to be grouped by purpose or theme, according to specified _Scope_.
+Our Travel Sample bucket has separate scopes for inventory (flights, etc.), and for tenants (different travel agents).
 
 [source,csharp]
 ----
 include::example$StartUsing.cs[tag=collection,indent=0]
 ----
-
-NOTE: This feature was previously avaiable as a _developer preview_ from Couchbase Server 6.6. _When connecting to a 6.6 cluster or earlier_, we must use the `DefaultCollection`, which covers the whole Bucket.
 
 To get you started the following code creates a new document in a custom scope and collection and then fetches it again, printing the result.
 
@@ -94,47 +154,37 @@ include::example$StartUsing.cs[tag=n1ql-query,indent=0]
 
 You can learn more about N1QL queries on the xref:howtos:n1ql-queries-with-sdk.adoc[Query page].
 
-== Full Example
-
-If you want to copy and paste to run the full example, here it is:
-
-[{tabs}]
-====
-Local Couchbase Server::
-+
---
-[source.try-it,csharp]
-----
-include::example$StartUsing.cs[tags=**]
-----
---
-
-Couchbase Capella Sample::
-+
---
-If you are connecting to https://docs.couchbase.com/cloud/index.html[Couchbase Capella], be sure to get the correct endpoint as well as user, password, and `couchbasecloudbucket` -- and see the <<cloud-connections, Cloud section>>, below.
-
-[source,csharp]
-----
-include::devguide:example$dotnet/Cloud.cs[]
-----
---
-====
-
-
-== Cloud Connections
-
-For developing on https://docs.couchbase.com/cloud/index.html[Couchbase Capella], if you are not working from the same _Availability Zone_, refer to the follorwing:
-
-* Notes on xref:ref:client-settings.adoc#constrained-network-environments[Constrained Network Environments],
-* xref:project-docs:compatibility.adoc#network-requirements[Network Requirements],
-* If you have a consumer-grade router which has problems with DNS-SRV records review our xref:howtos:troubleshooting-cloud-connections.adoc#troubleshooting-host-not-found[Troubleshooting Guide].
 
 
 
-== Additional Resources
+== Next Steps
+
+Now you're up and running, try one of the following:
+
+* Our xref:hello-world:sample-application.adoc[Travel Sample Application] demonstrates all the basics you need to know;
+* Explore xref:howtos:kv-operations.adoc[Key Value Operations] against a document database;
+* Or xref:howtos:n1ql-queries-with-sdk.adoc[Query] with our SQL-based N1QL language;
+// * Try longer-running queries with our xref:howtos:analytics-using-sdk.adoc[Analytics Service];
+// * A xref:howtos:full-text-searching-with-sdk.adoc[Full Text Search];
+* Or read up on xref:concept-docs:data-services.adoc[which service fits your use case].
+
+
+=== Additional Resources
+
 
 The https://docs.couchbase.com/sdk-api/couchbase-net-client/api/index.html[API reference] is generated for each release.
 Older API references are linked from their respective sections in the xref:project-docs:sdk-release-notes.adoc[Release Notes].
 
-xref:project-docs:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code.
+xref:project-docs:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code from our earlier 2.x .NET SDK.
+
+// Couchbase welcomes community contributions to the Python SDK.
+// The Python SDK source code is available on https://github.com/couchbase/couchbase-python-client[GitHub].
+
+=== Troubleshooting
+
+* Couchbase Server is designed to work in the same WAN or availability zone as the client application.
+If you're running the SDK on your laptop against a Capella cluster, see further information on:
+** Notes on xref:ref:client-settings.adoc#constrained-network-environments[Constrained Network Environments].
+** xref:project-docs:compatibility.adoc#network-requirements[Network Requirements].
+** If you have a consumer-grade router which has problems with DNS-SRV records review our xref:howtos:troubleshooting-cloud-connections.adoc#troubleshooting-host-not-found[Troubleshooting Guide].
+* Our https://forums.couchbase.com/c/net-sdk/6[community forum] is a great source of help.

@@ -1,0 +1,126 @@
+= Couchbase .NET SDK Installation
+:description: Installation instructions for the Couchbase .NET Client.
+:navtitle: Full Installation
+:page-partial:
+:page-topic-type: project-doc
+:page-toclevels: 3
+
+[abstract]
+{description}
+
+
+
+
+This page covers installation of the SDK.
+A quick start guide in our xref:hello-world:start-using-sdk.adoc#[Getting Started Guide] should work for most users --
+and for anyone in a hurry to try out the SDK and our _Hello World_ program, that page is usually the best place to get started --
+but more detailed installation instructions are provided here on this page for every supported platform.
+This guide assumes you have some familiarity with development using .NET -- if you are evaluating the SDK as a software architect, tester, or other non-.NET role, you will benefit from our xref:hello-world:platform-help.adoc#[Platform Help page].
+
+
+// tag::prep[]
+== .NET Compatibility
+
+include::partial$supported.adoc[]
+See the xref:project-docs:compatibility.adoc#dotnet-compatibility[Compatibility] section for more details.
+
+The library is distributed in a number of ways:
+
+|===
+|NuGet |NuGet package host at https://www.nuget.org/packages/CouchbaseNetClient/[nuget.org] (_recommended_)
+|Zip |Zip files for each release are linked from the Release Notes xref:project-docs:sdk-release-notes.adoc[here].
+|Build from Source |Build the library from https://github.com/couchbase/couchbase-net-client/[source available on GitHub] (not officially supported)
+|===
+
+
+== Installation
+
+=== Quick Installation Using NuGet
+
+For every release, we currently package the binaries and store the latest version in https://www.nuget.org/packages/CouchbaseNetClient/[NuGet].
+If you are not familiar with NuGet, it's the official and most widely supported package manager for Microsoft Visual Studio and .NET in general.
+
+==== NuGet from Visual Studio
+
+Using Visual Studio 2013 or later, follow these steps to get started with the Couchbase .NET SDK:
+
+. From the IDE, right-click the project you want to add the dependency to.
+. In the context menu, click *Manage NuGet Packages*. The NuGet package manager modal dialog opens.
+. From the Tree View menu on the left, select *Online > nuget.org*.
+. In the search box at the top right-hand side of the dialog, type CouchbaseNetClient and then press enter on your keyboard.
+. In the search results, select the CouchbaseNetClient package and then click *Install*.
+
+==== NuGet from the Package Manager Console
+
+From the Package Manager Console within your project:
+
+. From the Visual Studio menu bar, click *Tools*.
+. Select *NuGet Package Manager > Package Manager Console*.
+. In the console, enter the package installation command:
+ ** To install the latest version:
+
+[source,console]
+----
+ Install-Package CouchbaseNetClient
+----
+
+ ** To install a specific version, include the version parameter.
+For example:
+
+[source,console]
+----
+ Install-Package CouchbaseNetClient -Version 3.2.3
+----
+
+=== Downloading and referencing the binaries
+
+If you do not want to use NuGet to include the Couchbase .NET SDK in your project, you can download and reference the binaries directly. If you chose this route, you'll also be responsible for including and resolving dependencies used internally by the SDK.
+
+To download and reference the binaries directly:
+
+. Download the version of the SDK you want to install.
+. In Visual Studio, right-click the project you want to include the SDK in and then click *Add*.
+. Click *Reference* to open the Reference Manager.
+. On the left side, click *Browse* and select the binaries you downloaded.
+. Click *OK*.
+
+After you have referenced the Couchbase .NET SDK binaries, you need to locate and reference the dependencies it uses in a similar fashion. At the time of this writing, the dependencies are:
+
+* Apache Common Infrastructure Libraries for .NET
+v3.3.1: https://www.nuget.org/packages/Common.Logging/3.3.1
+* Json.NET
+v9.0.1: https://www.nuget.org/packages/Newtonsoft.Json/8.0.3[https://www.nuget.org/packages/Newtonsoft.Json/9.0.1]
+
+Other versions might not be compatible with the current SDK version.
+
+=== Building from source
+
+If none of the other installation options suffice or if you want to debug the source or perhaps contribute, building directly from the source is the best option for you. All source is located on GitHub.
+
+NOTE: The software provided via NuGet and S3 are the official releases that have been through a rigorous testing process.
+Code on GitHub that is not tagged as an official release is still in development.
+
+To build the .NET SDK from source:
+
+. (Optional) Fork the GitHub repository:
+https://github.com/couchbase/couchbase-net-client/fork
+. Using a Git console, enter the command to clone the repository:
+
+
+[source,console]
+----
+git clone https://github.com/couchbase/couchbase-net-client.git
+----
+
+. Enter the command to retrieve the latest code from GitHub:
+
+[source,console]
+----
+git pull origin master
+----
+
+. Navigate to the directory that the source was cloned to and open the solution.
+. Build the solution.
+
+After you have successfully built the source, it's then just a matter of referencing the binaries (.DLL files) from your consuming project.
+_Note that you can checkout a specific tag for each release as well._
