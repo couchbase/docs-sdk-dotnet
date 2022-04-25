@@ -3,6 +3,7 @@
 Plus notes on Cloud, networks, and AWS Lambda.
 :navtitle: Compatibility
 :page-aliases: ROOT:overview,ROOT:compatibility-versions-features,compatibility-versions-features
+:page-toclevels: 2
 
 include::partial$attributes.adoc[]
 
@@ -52,6 +53,43 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 
 Note the https://www.couchbase.com/support-policy[End of Life dates^] for Couchbase Server and SDK versions.
 See the notes there for Support details.
+
+
+== Platform Compatibility
+
+Microsoft's CLR eliminates many of the compatibility problems found in other languages, but occasional problems can be caused by the underlying Opiratoeg System (OS).
+The Couchbase .NET SDK is tested and supported on the following platforms:
+
+****
+[discrete]
+=== GNU/Linux
+
+* Amazon Linux 2.
+* Red Hat Enterprise Linux 7 & 8;
+* CentOS 7 & 8.
+* Ubuntu (LTS) 16.04 (_Xenial_), 18.04 (_Bionic_), & 20.04 (_Focal_).
+* Debian 9 (_Stretch_) & 10 (_Buster_).
+* Alpine Linux
+
+[discrete]
+=== Microsoft Windows
+
+Microsoft Windows 10 / All LTS releases from Windows Server 2016.
+
+[discrete]
+=== Mac OS X
+
+The current and previous two releases of OS X.
+At time of writing (April 2022): 10.15 (_Catalina_), 11 (_Big Sur_), and 12 (_Monterey_).
+M1 ARM  architecture is fully supported in the 3.3 .NET SDK.
+****
+
+Although installable or compilable on many other platforms, we cannot provide support for untested combinations.
+
+=== ARM Processor Support
+
+.NET 3.3 SDK supports AWS Amazon Graviton2 and Apple M1 ARM processors.
+
 
 == Couchbase New Feature Availability Matrix
 
@@ -139,6 +177,8 @@ except *✖* 2.0, 2.1 xref:project-docs:sdk-release-notes.adoc#version-3-2-5-10-
 | *✖*
 
 |===
+
+
 
 include::{version-server}@sdk:shared:partial$network-requirements.adoc[]
 
