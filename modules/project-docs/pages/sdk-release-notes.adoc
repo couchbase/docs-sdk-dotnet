@@ -15,6 +15,73 @@ For release notes, download links, and installation methods for 2.7 and earlier 
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
+== Version 3.3.0 (27 April 2022)
+
+Version 3.3.0 is the first release of the 3.2 series.
+
+https://packages.couchbase.com/clients/net/3.3/Couchbase-Net-Client-3.3.0.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.3.0[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.3.0[Nuget]
+
+=== Special Note
+
+* During a rebalance upgrade from 6.x (or any earlier version) to 7x, in mixed mode (where you are communicating with Couchbase Server whilst some but not all nodes are upgraded), there is a known issue where data may be written to the wrong location.  
+The solution is to either upgrade to 3.2.9 or greater, or to quiesce application processing so there are no writes until you have upgraded all nodes.  
+If you encounter a similar situation during migration and need help with mitigation, please contact our support team.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2543[NCBC-2543]: QueryIndexManager fails to create indexes in Linq2Couchbase integration tests
+
+* https://issues.couchbase.com/browse/NCBC-2847[NCBC-2847]: AuthenticationFailureException is suppressed if invalid credentials are supplied
+
+* https://issues.couchbase.com/browse/NCBC-3054[NCBC-3054]: DependencyInjection tests fail due to Moq with .NET 5.0 and 6.0
+
+* https://issues.couchbase.com/browse/NCBC-3115[NCBC-3115]: EventingFunctionManager GetFunctionAsync throws generic HttpRequestException on error
+
+* https://issues.couchbase.com/browse/NCBC-3123[NCBC-3123]: BucketNotFoundException thrown when Cluster.BucketAsync fails
+
+* https://issues.couchbase.com/browse/NCBC-3124[NCBC-3124]: FTS throws generic CouchbaseException skipping error handling
+
+* https://issues.couchbase.com/browse/NCBC-3151[NCBC-3151]: ScopeNotFoundException on DropCollection does not have proper message
+
+* https://issues.couchbase.com/browse/NCBC-3164[NCBC-3164]: NRE on OperationBuilderPool.Get() for NOOP
+
+* https://issues.couchbase.com/browse/NCBC-3177[NCBC-3177]: NRE when rebalancing and cluster map is missing an alternate address
+
+* https://issues.couchbase.com/browse/NCBC-3179[NCBC-3179]: Move the specific BucketExistsException before the generic CouchBaseException
+
+* https://issues.couchbase.com/browse/NCBC-3190[NCBC-3190]: CreateDataverseAsync fails with System.ArgumentOutOfRangeException
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-2870[NCBC-2870]: AggregatingMeter Otel integration
+
+* https://issues.couchbase.com/browse/NCBC-3082[NCBC-3082]: Support parameterized N1QL queries using string interpolation in .NET 6
+
+* https://issues.couchbase.com/browse/NCBC-2955[NCBC-2955]: CreateIndexAsync doesn&#39;t escape bucket names with dashes
+
+* https://issues.couchbase.com/browse/NCBC-3173[NCBC-3173]: Capella CA Certificate Bundled with SDK (Note: fix is .NET 5+ only)
+
+* https://issues.couchbase.com/browse/NCBC-3180[NCBC-3180]: Incorrect GetAllIndexes response on default collection
+
+* https://issues.couchbase.com/browse/NCBC-3000[NCBC-3000]: Invalid password should raise AuthenticationFailedException instead it raises ServiceNotAvailableException
+
+* https://issues.couchbase.com/browse/NCBC-3043[NCBC-3043]: Make ChannelConnectionPool the default
+
+* https://issues.couchbase.com/browse/NCBC-3079[NCBC-3079]: Improve logging performance in hot paths
+
+* https://issues.couchbase.com/browse/NCBC-3126[NCBC-3126]: Reduce heap allocations deserializing vBucket maps
+
+* https://issues.couchbase.com/browse/NCBC-3132[NCBC-3132]: Investigate usage of Newtonsoft.Json in KeyValueErrorContext
+
+* https://issues.couchbase.com/browse/NCBC-3134[NCBC-3134]: Use System.Text.Json in OperationSpec.ToString
+
+* https://issues.couchbase.com/browse/NCBC-3137[NCBC-3137]: Use System.Text.Json in ClusterVersionProvider
+
+* https://issues.couchbase.com/browse/NCBC-3138[NCBC-3138]: Support both Newtonsoft and System.Text.Json for DiagnosticReport
+
+* https://issues.couchbase.com/browse/NCBC-3182[NCBC-3182]: ClusterOptions.WithCertificateFactory() does not apply to Server Certificate Validation
 
 == Version 3.2.9 (4 April 2022)
 
