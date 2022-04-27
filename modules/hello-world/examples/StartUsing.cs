@@ -15,7 +15,6 @@ namespace examples
              var cluster = await Cluster.ConnectAsync("couchbase://localhost", "username", "password");
             // #end::connect[]
 
-
             // #tag::bucket[]
             // get a bucket reference
             var bucket = await cluster.BucketAsync("travel-sample");

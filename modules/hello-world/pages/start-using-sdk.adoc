@@ -25,7 +25,7 @@ We will go through the code sample step by step, but for those in a hurry to see
 Couchbase Capella Sample::
 +
 --
-If you are connecting to https://docs.couchbase.com/cloud/index.html[Couchbase Capella], be sure to get the correct endpoint as well as user, password, and `couchbasecloudbucket` -- and see the <<cloud-connections, Cloud section>>, below.
+If you are connecting to https://docs.couchbase.com/cloud/index.html[Couchbase Capella], be sure to get the correct endpoint as well as user, password -- and see the <<cloud-connections, Cloud section>>, below.
 
 [source,csharp]
 ----
@@ -63,7 +63,7 @@ The quickest way to get up and running is with NuGet, from the Package Manager C
 
 [source,console]
 ----
- Install-Package CouchbaseNetClient
+Install-Package CouchbaseNetClient
 ----
 
 All other installation methods can be found in our xref:project-docs:sdk-full-installation.adoc[full installation guide].
@@ -86,6 +86,7 @@ Note, the Travel Sample bucket is installed automatically by the Capella free tr
 * You have created a Couchbase user named "username" [change as appropriate] with permissions to access the cluster (at least Application Access permissions).
 
 Firstly, you will need to have a few `using` statements at the top of *Program.cs* in your console program:
+
 [source,csharp]
 ----
 include::example$StartUsing.cs[tag=using,indent=0]
@@ -102,7 +103,8 @@ Capella::
 --
 [source,csharp]
 ----
-// TODO
+include::devguide:example$Cloud.cs[tag=connect,indent=0]
+
 ----
 --
 
