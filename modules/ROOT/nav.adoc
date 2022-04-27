@@ -3,7 +3,7 @@
 
 .Getting Started
 * xref:hello-world:start-using-sdk.adoc[Start Using the .NET SDK]
-// ** xref:hello-world:platform-help.adoc[Platform Introduction]
+** xref:hello-world:platform-help.adoc[Platform Introduction]
 * xref:hello-world:sample-application.adoc[Sample Application]
 
 .Working with Data

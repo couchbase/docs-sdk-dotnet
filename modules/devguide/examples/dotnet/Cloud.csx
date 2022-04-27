@@ -20,9 +20,12 @@ class CloudExample
 {
     public async Task Main()
     {
-
         // #tag::connect[]
-            var cluster = await Cluster.ConnectAsync("couchbase://localhost", "username", "password");
+        var cluster = await Cluster.ConnectAsync(
+            // Update these credentials for your Capella instance!
+            "couchbases://cb.njg8j7mwqnvwjqah.cloud.couchbase.com",
+            "username",
+            "Password!123");
         // #end::connect[]
 
         // #tag::bucket[]
@@ -53,6 +56,5 @@ class CloudExample
             Console.WriteLine(row);
         }
         // end::n1ql-query[]
-
     }
 }

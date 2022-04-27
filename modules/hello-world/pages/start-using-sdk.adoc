@@ -29,8 +29,10 @@ If you are connecting to https://docs.couchbase.com/cloud/index.html[Couchbase C
 
 [source,csharp]
 ----
-include::devguide:example$dotnet/Cloud.cs[]
+include::devguide:example$dotnet/Cloud.csx[tags=**]
 ----
+
+The Couchbase Capella free trial version comes with the Travel Sample Bucket, and its Query indexes, loaded and ready.
 --
 
 Local Couchbase Server::
@@ -41,6 +43,10 @@ Local Couchbase Server::
 include::example$StartUsing.cs[tags=**]
 ----
 --
+
+As well as the .NET SDK (see below), and a running instance of Couchbase Server, you will need to load up the Travel Sample Bucket
+using either the xref:{version-server}@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Web interface]
+or the xref:{version-server}@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-cli[command line].
 ====
 
 
@@ -52,7 +58,7 @@ include::partial$supported.adoc[]
 See the xref:project-docs:compatibility.adoc#dotnet-compatibility[Compatibility] section for more details.
 
 
-=== Quick Install
+=== Quick Installation
 
 The quickest way to get up and running is with NuGet, from the Package Manager Console,  within your project:
 
@@ -98,17 +104,19 @@ Then you can connect to the cluster:
 
 [{tabs}] 
 ====
-Capella::
+Capella Connection::
 +
 --
 [source,csharp]
 ----
-include::devguide:example$Cloud.cs[tag=connect,indent=0]
-
+include::devguide:example$dotnet/Cloud.csx[tag=connect,indent=0]
 ----
---
 
-Local Server::
+From 3.3, the .NET SDK includes Capella's standard certificates by default, so you do not need to additional configuration.
+You do need to enable TLS, which can be done by simply using `couchbases:` in the Connection String as in this example.
+See xref:howtos:managing-connections.adoc[Managing Connections] for full configuration details.
+--
+Local Server Connection::
 +
 --
 [source,csharp]
@@ -159,8 +167,6 @@ include::example$StartUsing.cs[tag=n1ql-query,indent=0]
 You can learn more about N1QL queries on the xref:howtos:n1ql-queries-with-sdk.adoc[Query page].
 
 
-
-
 == Next Steps
 
 Now you're up and running, try one of the following:
@@ -181,8 +187,8 @@ Older API references are linked from their respective sections in the xref:proje
 
 xref:project-docs:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code from our earlier 2.x .NET SDK.
 
-// Couchbase welcomes community contributions to the Python SDK.
-// The Python SDK source code is available on https://github.com/couchbase/couchbase-python-client[GitHub].
+// Couchbase welcomes community contributions to the .NET SDK.
+// The .NET SDK source code is available on https://github.com/couchbase/couchbase-net-client[GitHub].
 
 === Troubleshooting
 
