@@ -1,63 +1,55 @@
-﻿using System;
+﻿// Run this using dotnet-script: https://github.com/filipw/dotnet-script
+//
+//      dotnet script Cloud.cs
+//
+
+#r "nuget: CouchbaseNetClient, 3.3.0"
+
+using System;
+// #tag::using[]
 using System.Threading.Tasks;
 using Couchbase;
-using Couchbase.Query;
-using Couchbase.Management.Query;
-// using Microsoft.Extensions.DependencyInjection;
-// using Microsoft.Extensions.Logging;
-// using Serilog;
-// using Serilog.Extensions.Logging;
+// #end::using[]
 
-namespace net3
+await new CollectionsExample().Main();
+
+class StartUsing
 {
-    class Program
+    public async Task Main(string[] args)
     {
-        static async Task Main(string[] args)
-        {
-            // Update this to your cluster
-            var endpoint = "cb.13d1a4bc-31a8-49c6-9ade-74073df0799f.dp.cloud.couchbase.com";
-            var bucketName = "couchbasecloudbucket";
-            var username = "user";
-            var password = "password";
-            // User Input ends here.
 
-            // IServiceCollection serviceCollection = new ServiceCollection();
-            // serviceCollection.AddLogging(builder => builder.AddFilter(level => level >= LogLevel.Trace));
+        // #tag::connect[]
+            var cluster = await Cluster.ConnectAsync("couchbase://localhost", "username", "password");
+        // #end::connect[]
 
-            // var loggerFactory = serviceCollection.BuildServiceProvider().GetService<ILoggerFactory>();
-            // loggerFactory.AddFile("Logs/myapp-{Date}.txt", LogLevel.Debug);
+        // #tag::bucket[]
+        // get a bucket reference
+        var bucket = await cluster.BucketAsync("travel-sample");
+        // #end::bucket[]
 
-            // Initialize the Connection
-            var opts = new ClusterOptions().WithCredentials(username, password);
-            // opts = opts.WithLogging(loggerFactory);
-            opts.IgnoreRemoteCertificateNameMismatch = true;
+        // #tag::collection[]
+        // get a user-defined collection reference
+        var scope = await bucket.ScopeAsync("tenant_agent_00");
+        var collection = await scope.CollectionAsync("users");
+        // #end::collection[]
 
-            var cluster = await Cluster.ConnectAsync("couchbases://"+endpoint, opts);
-            var bucket = await cluster.BucketAsync(bucketName);
-            var collection = bucket.DefaultCollection();
+        // #tag::upsert-get[]
+        // Upsert Document
+        var upsertResult = await collection.UpsertAsync("my-document-key", new { Name = "Ted", Age = 31 });
+        var getResult = await collection.GetAsync("my-document-key");
 
-            // Store a Document
-            var upsertResult = await collection.UpsertAsync("king_arthur", new {
-                Name = "Arthur",
-                Email = "kingarthur@couchbase.com",
-                Interests = new[] { "Holy Grail", "African Swallows" }
-            });
+        Console.WriteLine(getResult.ContentAs<dynamic>());
+        // #end::upsert-get[]
 
-            // Load the Document and print it
-            var getResult = await collection.GetAsync("king_arthur");
-            Console.WriteLine(getResult.ContentAs<dynamic>());
-
-            // Perform a N1QL Query
-            var queryResult = await cluster.QueryAsync<dynamic>(
-                String.Format("SELECT name FROM `{0}` WHERE $1 IN interests", bucketName), 
-                new QueryOptions().Parameter("African Swallows")
-            );
-
-            // Print each found Row
-            await foreach (var row in queryResult)
-            {
-                Console.WriteLine(row);
-            }
+        // tag::n1ql-query[]
+        // Call the QueryAsync() function on the cluster object and store the result.
+        var queryResult = await cluster.QueryAsync<dynamic>("select \"Hello World\" as greeting");
+        
+        // Iterate over the rows to access result data and print to the terminal.
+        await foreach (var row in queryResult) {
+            Console.WriteLine(row);
         }
+        // end::n1ql-query[]
+
     }
 }
