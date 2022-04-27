@@ -54,6 +54,11 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 Note the https://www.couchbase.com/support-policy[End of Life dates^] for Couchbase Server and SDK versions.
 See the notes there for Support details.
 
+=== Capella Compatibility
+
+At time of release, the Couchbase 3£ .NET SDK is fully compatible with Couchbase Capella, our fully-hosted database-as-a-service.
+To make development easier, the 3.3 SDK includes the Capella client certificate ready installed.
+
 
 == Platform Compatibility
 
@@ -88,7 +93,7 @@ Although installable or compilable on many other platforms, we cannot provide su
 
 === ARM Processor Support
 
-.NET 3.3 SDK supports AWS Amazon Graviton2 and Apple M1 ARM processors.
+The .NET 3.3 SDK supports AWS Amazon Graviton2 and Apple M1 ARM processors.
 
 
 == Couchbase New Feature Availability Matrix
