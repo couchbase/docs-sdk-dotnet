@@ -1,9 +1,12 @@
 ﻿// Run this using dotnet-script: https://github.com/filipw/dotnet-script
 //
-//      dotnet script Cloud.cs
+//      dotnet script Cloud.csx
 //
 
-#r "nuget: CouchbaseNetClient, 3.3.0"
+#r "nuget: CouchbaseNetClient, 3.2.8-pre"
+// #r "nuget: System.Text.Json, 6.0.2"
+// #r "nuget: Microsoft.Extensions.Logging.Abstractions, 6.0.1"
+// #r "nuget: CouchbaseNetClient, 3.3.0"
 
 using System;
 // #tag::using[]
@@ -11,11 +14,11 @@ using System.Threading.Tasks;
 using Couchbase;
 // #end::using[]
 
-await new CollectionsExample().Main();
+await new CloudExample().Main();
 
-class StartUsing
+class CloudExample
 {
-    public async Task Main(string[] args)
+    public async Task Main()
     {
 
         // #tag::connect[]
