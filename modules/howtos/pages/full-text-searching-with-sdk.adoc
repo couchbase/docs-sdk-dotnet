@@ -35,7 +35,7 @@ var result = cluster.SearchQuery(
 ----
 
 All simple query types are created in the same manner, some have additional properties, which can be seen in common query type descriptions.
-Couchbase FTS's xref:{version-server}@server:fts:fts-query-types.adoc[range of query types] enable powerful searching using multiple options, to ensure results are just within the range wanted.
+Couchbase FTS's xref:7.0@server:fts:fts-query-types.adoc[range of query types] enable powerful searching using multiple options, to ensure results are just within the range wanted.
 Here is a date range query that looks for dates between 1st January 2021 and 31st January:
 
 [source,csharp]
