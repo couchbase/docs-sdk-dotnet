@@ -114,7 +114,6 @@ include::devguide:example$dotnet/Cloud/Cloud.cs[tag=connect,indent=0]
 
 From 3.3, the .NET SDK includes Capella's standard certificates by default, so you do not need to additional configuration.
 You do need to enable TLS, which can be done by simply using `couchbases:` in the Connection String as in this example.
-See xref:howtos:managing-connections.adoc[Managing Connections] for full configuration details.
 --
 Local Server Connection::
 +
@@ -124,12 +123,12 @@ Local Server Connection::
 include::example$StartUsing.cs[tag=connect,indent=0]
 ----
 
-If you're developing client code on the same machine as the Couchbase Server, your URI can be _couchbase://localhost_ as here.
-
-WARNING: for Production deployments, you will want to use a secure server,
-with `couchbases://`
+For developing locally on the same machine as the Couchbase Server, your URI can be _couchbase://localhost_ as here. But for Production deployments, you will want to use a secure server,
+with `couchbases://`.
 --
 ====
+
+See xref:howtos:managing-connections.adoc[Managing Connections] for full configuration details.
 
 Couchbase uses xref:server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
 
