@@ -1,14 +1,4 @@
-﻿// Run this using dotnet-script: https://github.com/filipw/dotnet-script
-//
-//      dotnet script Cloud.csx
-//
-
-#r "nuget: CouchbaseNetClient, 3.2.8-pre"
-// #r "nuget: System.Text.Json, 6.0.2"
-// #r "nuget: Microsoft.Extensions.Logging.Abstractions, 6.0.1"
-// #r "nuget: CouchbaseNetClient, 3.3.0"
-
-using System;
+﻿using System;
 // #tag::using[]
 using System.Threading.Tasks;
 using Couchbase;
@@ -24,8 +14,12 @@ class CloudExample
         var cluster = await Cluster.ConnectAsync(
             // Update these credentials for your Capella instance!
             "couchbases://cb.njg8j7mwqnvwjqah.cloud.couchbase.com",
-            "username",
-            "Password!123");
+            new ClusterOptions
+            {
+                UserName = "username",
+                Password = "Password!123",
+                KvTimeout = TimeSpan.FromSeconds(10)
+            });
         // #end::connect[]
 
         // #tag::bucket[]
