@@ -29,7 +29,7 @@ If you are connecting to https://docs.couchbase.com/cloud/index.html[Couchbase C
 
 [source,csharp]
 ----
-include::devguide:example$dotnet/Cloud.csx[tags=**]
+include::devguide:example$dotnet/Cloud/Cloud.cs[tags=**]
 ----
 
 The Couchbase Capella free trial version comes with the Travel Sample Bucket, and its Query indexes, loaded and ready.
@@ -109,7 +109,7 @@ Capella Connection::
 --
 [source,csharp]
 ----
-include::devguide:example$dotnet/Cloud.csx[tag=connect,indent=0]
+include::devguide:example$dotnet/Cloud/Cloud.cs[tag=connect,indent=0]
 ----
 
 From 3.3, the .NET SDK includes Capella's standard certificates by default, so you do not need to additional configuration.
@@ -123,11 +123,16 @@ Local Server Connection::
 ----
 include::example$StartUsing.cs[tag=connect,indent=0]
 ----
+
+If you're developing client code on the same machine as the Couchbase Server, your URI can be _couchbase://localhost_ as here.
+
+WARNING: for Production deployments, you will want to use a secure server,
+with `couchbases://`
 --
 ====
 
 Couchbase uses xref:server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
-If you're developing client code on the same machine as the Couchbase Server, your URI can be _couchbase://localhost_.
+
 
 === Bucket, Scopes, and Collections
 
@@ -137,7 +142,7 @@ Open the bucket:
 include::example$StartUsing.cs[tag=bucket,indent=0]
 ----
 
-Collections allowi Documents to be grouped by purpose or theme, according to specified _Scope_.
+Collections allow Documents to be grouped by purpose or theme, according to specified _Scope_.
 Our Travel Sample bucket has separate scopes for inventory (flights, etc.), and for tenants (different travel agents).
 
 [source,csharp]

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CouchbaseNetClient" Version="3.3.0" />
+  </ItemGroup>
+    <Target Name="RecordReferencePaths" AfterTargets="AfterResolveReferences">
+    <WriteLinesToFile File="$(OutputPath)/ReferencePaths.txt" Lines="@(ReferencePath)" />
+  </Target>
+
+</Project>
