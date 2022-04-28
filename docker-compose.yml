@@ -1,0 +1,27 @@
+version: "3.9"
+
+# USAGE:   docker-compose run cb-dotnet-sdk bash
+
+services:
+  cb-dotnet-sdk:
+    build: .
+    depends_on:
+      - db
+    container_name: cb-dotnet-sdk
+    entrypoint: [ "/bin/bash", "-l", "-c" ]
+    volumes:
+      - .:/app/docs-sdk-dotnet
+
+  db:
+    image: build-docker.couchbase.com:443/couchbase/server-internal:7.1.0-2549
+    ports:
+      - "8091-8095:8091-8095"
+      - "11210:11210"
+    expose: # expose ports 8091 & 8094 to other containers (mainly for backend)
+      - "8091"
+      - "8092"
+      - "8093"
+      - "8094"
+      - "8095"
+      - "11210"
+    container_name: couchbase-db
