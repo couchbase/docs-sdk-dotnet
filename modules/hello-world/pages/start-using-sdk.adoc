@@ -25,12 +25,14 @@ We will go through the code sample step by step, but for those in a hurry to see
 Couchbase Capella Sample::
 +
 --
-If you are connecting to https://docs.couchbase.com/cloud/index.html[Couchbase Capella], be sure to get the correct endpoint as well as user, password, and `couchbasecloudbucket` -- and see the <<cloud-connections, Cloud section>>, below.
+If you are connecting to https://docs.couchbase.com/cloud/index.html[Couchbase Capella], be sure to get the correct endpoint as well as user, password -- and see the <<cloud-connections, Cloud section>>, below.
 
 [source,csharp]
 ----
-include::devguide:example$dotnet/Cloud.cs[]
+include::devguide:example$dotnet/Cloud/Cloud.cs[tags=**]
 ----
+
+The Couchbase Capella free trial version comes with the Travel Sample Bucket, and its Query indexes, loaded and ready.
 --
 
 Local Couchbase Server::
@@ -41,6 +43,10 @@ Local Couchbase Server::
 include::example$StartUsing.cs[tags=**]
 ----
 --
+
+As well as the .NET SDK (see below), and a running instance of Couchbase Server, you will need to load up the Travel Sample Bucket
+using either the xref:7.0@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Web interface]
+or the xref:7.0@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-cli[command line].
 ====
 
 
@@ -52,7 +58,7 @@ include::partial$supported.adoc[]
 See the xref:project-docs:compatibility.adoc#dotnet-compatibility[Compatibility] section for more details.
 
 
-=== Quick Install
+=== Quick Installation
 
 The quickest way to get up and running is with NuGet, from the Package Manager Console,  within your project:
 
@@ -63,7 +69,7 @@ The quickest way to get up and running is with NuGet, from the Package Manager C
 
 [source,console]
 ----
- Install-Package CouchbaseNetClient
+Install-Package CouchbaseNetClient
 ----
 
 All other installation methods can be found in our xref:project-docs:sdk-full-installation.adoc[full installation guide].
@@ -81,11 +87,12 @@ Install the latest 3.3 https://www.nuget.org/packages/CouchbaseNetClient/[Couchb
 The following code samples assume:
 
 * Couchbase xref:cloud:ROOT:index.adoc[Capella] cluster, or Couchbase Server is installed and accessible locally (xref:server:getting-started:do-a-quick-install.adoc[Do a Quick Install] if you don't already have Couchbase Server installed).
-* You have create a bucket (perhaps using the xref:{version-server}@server:manage:manage-settings/install-sample-buckets.adoc[travel-sample dataset], or by creating a new bucket).
+* You have create a bucket (perhaps using the xref:7.0@server:manage:manage-settings/install-sample-buckets.adoc[travel-sample dataset], or by creating a new bucket).
 Note, the Travel Sample bucket is installed automatically by the Capella free trial.
 * You have created a Couchbase user named "username" [change as appropriate] with permissions to access the cluster (at least Application Access permissions).
 
 Firstly, you will need to have a few `using` statements at the top of *Program.cs* in your console program:
+
 [source,csharp]
 ----
 include::example$StartUsing.cs[tag=using,indent=0]
@@ -97,27 +104,34 @@ Then you can connect to the cluster:
 
 [{tabs}] 
 ====
-Capella::
+Capella Connection::
 +
 --
 [source,csharp]
 ----
-// TODO
+include::devguide:example$dotnet/Cloud/Cloud.cs[tag=connect,indent=0]
 ----
---
 
-Local Server::
+From 3.3, the .NET SDK includes Capella's standard certificates by default, so you do not need to additional configuration.
+You do need to enable TLS, which can be done by simply using `couchbases:` in the Connection String as in this example.
+--
+Local Server Connection::
 +
 --
 [source,csharp]
 ----
 include::example$StartUsing.cs[tag=connect,indent=0]
 ----
+
+For developing locally on the same machine as the Couchbase Server, your URI can be _couchbase://localhost_ as here. But for Production deployments, you will want to use a secure server,
+with `couchbases://`.
 --
 ====
 
+See xref:howtos:managing-connections.adoc[Managing Connections] for full configuration details.
+
 Couchbase uses xref:server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
-If you're developing client code on the same machine as the Couchbase Server, your URI can be _couchbase://localhost_.
+
 
 === Bucket, Scopes, and Collections
 
@@ -127,7 +141,7 @@ Open the bucket:
 include::example$StartUsing.cs[tag=bucket,indent=0]
 ----
 
-Collections allowi Documents to be grouped by purpose or theme, according to specified _Scope_.
+Collections allow Documents to be grouped by purpose or theme, according to specified _Scope_.
 Our Travel Sample bucket has separate scopes for inventory (flights, etc.), and for tenants (different travel agents).
 
 [source,csharp]
@@ -157,8 +171,6 @@ include::example$StartUsing.cs[tag=n1ql-query,indent=0]
 You can learn more about N1QL queries on the xref:howtos:n1ql-queries-with-sdk.adoc[Query page].
 
 
-
-
 == Next Steps
 
 Now you're up and running, try one of the following:
@@ -179,8 +191,8 @@ Older API references are linked from their respective sections in the xref:proje
 
 xref:project-docs:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code from our earlier 2.x .NET SDK.
 
-// Couchbase welcomes community contributions to the Python SDK.
-// The Python SDK source code is available on https://github.com/couchbase/couchbase-python-client[GitHub].
+// Couchbase welcomes community contributions to the .NET SDK.
+// The .NET SDK source code is available on https://github.com/couchbase/couchbase-net-client[GitHub].
 
 === Troubleshooting
 

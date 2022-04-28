@@ -12,9 +12,12 @@ namespace examples
         {
 
             // #tag::connect[]
-             var cluster = await Cluster.ConnectAsync("couchbase://localhost", "username", "password");
+            var cluster = await Cluster.ConnectAsync(
+                // Update these credentials for your Local Couchbase instance!
+                "couchbase://localhost",
+                "username",
+                "password");
             // #end::connect[]
-
 
             // #tag::bucket[]
             // get a bucket reference

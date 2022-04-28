@@ -301,7 +301,7 @@ await collection.MutateIn("key",
 ----
 
 In Couchbase Server 6.5 and up, this is built upon with xref:concept-docs:durability-replication-failure-considerations.adoc#durable-writes[Durable Writes],
-which uses the concept of xref:{version-server}@server:learn:data/durability.adoc#majority[majority] to indicate the number of configured Data Service nodes to which commitment is required:
+which uses the concept of xref:7.0@server:learn:data/durability.adoc#majority[majority] to indicate the number of configured Data Service nodes to which commitment is required:
 
 [source,csharp]
 ----
