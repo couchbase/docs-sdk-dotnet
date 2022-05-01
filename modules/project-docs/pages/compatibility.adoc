@@ -56,7 +56,7 @@ See the notes there for Support details.
 
 === Capella Compatibility
 
-At time of release, the Couchbase 3£ .NET SDK is fully compatible with Couchbase Capella, our fully-hosted database-as-a-service.
+At time of release, the Couchbase 3.3 .NET SDK is fully compatible with Couchbase Capella, our fully-hosted database-as-a-service.
 To make development easier, the 3.3 SDK includes the Capella client certificate ready installed.
 
 
