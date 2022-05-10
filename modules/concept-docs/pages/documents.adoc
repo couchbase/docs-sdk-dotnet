@@ -42,7 +42,7 @@ await collection.MutateInAsync("customer123", new List<MutateInSpec>
 });
 ----
 
-or xref:7.0@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
+or xref:7.1@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
 
 [source,sql]
 ----
@@ -126,5 +126,5 @@ include::{version-server}@sdk:shared:partial$documents.adoc[tag=expiration]
 IMPORTANT: If you are using the overloads that take `IDocument`, note that the `IDocument.Expiry` property assumes ms (milli-seconds), and is converted to seconds before being sent to the server.
 All other overloads take a `TimeSpan` or an `uint`, and assume an expiry in seconds
 A time of zero will set the document to never expire
-(a negative number will set expiry to immediate -- creating a xref:7.0@server:learn:buckets-memory-and-storage/storage.adoc#tombstones[tombstone]).
+(a negative number will set expiry to immediate -- creating a xref:7.1@server:learn:buckets-memory-and-storage/storage.adoc#tombstones[tombstone]).
 Values above 0ms but below 1000ms are rounded up to one second before being sent to the server -- _if you are using .NET SDK 3.0.4 or later_.
