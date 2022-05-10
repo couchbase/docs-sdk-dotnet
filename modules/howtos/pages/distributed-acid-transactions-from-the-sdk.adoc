@@ -455,5 +455,5 @@ include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=custom-m
 
 == Further Reading
 
-* There's plenty of explanation about how Transactions work in Couchbase in our xref:7.0@server:learn:data/transactions.adoc[Transactions documentation].
+* There's plenty of explanation about how Transactions work in Couchbase in our xref:7.1@server:learn:data/transactions.adoc[Transactions documentation].
 * You can find further code examples on our https://github.com/couchbaselabs/couchbase-transactions-dotnet-examples[transactions examples repository].
