@@ -215,7 +215,7 @@ On all other platforms, the OS-configured time is used (and you need to tune it 
 Name: *Key/Value Endpoints per Node*::
 Cluster Option: https://docs.couchbase.com/sdk-api/couchbase-net-client/html/P_Couchbase_ClusterOptions_NumKvConnections.htm[`NumKvConnections(int)`]
 +
-Default:  `1`
+Default:  `2`
 +
 
 The number of actual endpoints (sockets) to open per node in the cluster against the Key/Value service.
@@ -223,14 +223,14 @@ By default, for every node in the cluster one socket is opened where all traffic
 That way the SDK implicitly benefits from network batching characteristics when the workload increases.
 If you suspect based on profiling and benchmarking that the socket is saturated you can think about slightly increasing it to have more "parallel pipelines".
 This might be especially helpful if you need to push large documents through it.
-The recommendation is keeping it at 1 unless there is other evidence.
+// The recommendation is keeping it at 1 unless there is other evidence.
 +
 NOTE: xref:concept-docs:durability-replication-failure-considerations.adoc#synchronous-writes[Durable Write] operations with Couchbase Server 6.5 and above require up to 16 kvEndpoints per node, for most efficient operation, unless the environment dictates something a little lower.
 
 Name: *Max HTTP Endpoints per Service per Node*::
 Cluster Option: `MaxHttpConnections(int)`
 +
-Default:  `0`
+Default:  `5`
 
 Each service (except the Key/Value service) has a separate dynamically sized pool of HTTP connections for issuing requests.
 This setting puts an upper bound on the number of HTTP connections in each pool.
