@@ -4,10 +4,11 @@
 :page-topic-type: howto
 :page-aliases: ROOT:handling-error-conditions,handling-error-conditions,errors,handling-errors
 :source-language: csharp
+:page-toclevels: 2
 
 [abstract]
-{description} which are focussed on one goal:
-keeping your application available as best as possible even in the face of (transient) failures.
+{description} 
+Learn how to keep your application available as best as possible even in the face of (transient) failures.
 
 Unfortunately, the SDK alone can't make all the decisions needed since it lacks the understanding of your application domain. 
 In most cases transparent retry is the best choice, but maybe sometimes you need to fail quickly and switch over to an alternate data source. 
@@ -16,28 +17,28 @@ On this page you will learn about basic and advanced error handling mechanisms, 
 
 == Error Handling Fundamentals
 
-The following fundamentals help you understand how the SDK makes retry decisions and how errors are surfaced. 
+The following fundamentals will help you understand how the SDK makes retry decisions and how errors are surfaced. 
 Later sections will cover how you can influence this behavior.
 
-=== The Request Lifecycle
+=== Request Lifecycle
 
-The following image shows the high-level phases during a request lifecycle:
+The image below shows the high-level phases during a request lifecycle:
 
 image::request-lifecycle.png[Request Lifecycle]
 
- - *Pre-Dispatch:* This is the initial phase of the request lifecycle. 
- The request is created and the SDK is trying to find the right socket/endpoint to dispatch the operation into.
+ - *Pre-Dispatch:* The initial phase of the request lifecycle. 
+ When a request is created, the SDK tries to find the right socket/endpoint to dispatch the operation into.
  - *Dispatch:* The SDK puts the operation onto the network and waits for a response. 
- This is a critical point in the lifecycle because the retryability depends on the idempotence of the request (discussed later).
+ This is a critical point in the lifecycle because the retryability depends on the idempotency of the request (discussed later).
  - *Response Arrived:* Once a response arrives from the server, the SDK decides what to do with it (in the best case, complete the operation successfully).
 
-All the specifics are discussed below, but a broad categorization of exceptions can be outlined already:
+All the specifics are discussed in the following sections, but a broad categorization of exceptions can be outlined already:
 
- 1. If a response arrived and it indicates non-success and the SDK determines that it cannot be retried the operation will fail with an explicit exception. 
- For example, if you perform an `insert` operation and the document already exists, the SDK will fail the operation with a `DocumentExistsException`.
- 2. Failures in all other cases, especially during pre-dispatch and dispatch, will result in either a `TimeoutException` or a `RequestCanceledException`.
+ 1. If an unsuccessful response arrives and the SDK determines that it cannot be retried, the operation will fail with an explicit exception. 
+ For example, performing an `insert` operation when a document already exists will cause a `DocumentExistsException`.
+ 2. Failures in all other cases, especially during `pre-dispatch` and `dispatch`, will result in either a `TimeoutException` or a `RequestCanceledException`.
 
-=== The Ubiquitous TimeoutException
+=== TimeoutException
 
 The one exception that you are inevitably going to hit is the `TimeoutException`, 
 or more specifically its child implementations the `UnambiguousTimeoutException` and the `AmbiguousTimeoutException`.
@@ -50,7 +51,7 @@ The SDK will raise an `AmbiguousTimeoutException` unless it can be sure that it 
 Most of the time it is enough to just handle the generic `TimeoutException`.
 
 Since the timeout is never the cause, always the symptom, it is important to provide contextual information on what might have caused it in the first place. 
-In this newest generation of the SDK, we introduced the concept of an `ErrorContext` which helps with exactly that.
+From .NET SDK 3.0 onwards, we introduced the concept of an `ErrorContext` which helps with exactly that.
 
 The `ErrorContext` is available as a method on the `TimeoutException` through the `context()` getter, but most importantly it is automatically attached to the exception output when printed in the logs. 
 Here is an example output of such a `TimeoutException` with the attached context:
@@ -68,9 +69,9 @@ Couchbase.Core.Exceptions.UnambiguousTimeoutException: The operation /26 timed o
 
 The full reference for the `ErrorContext` can be found <<#errorcontext,at the bottom of the page>>, but just by looking at it we can observe the following information:
 
- - A `Get` timed out after `2500` ms.
- - The document in question had the ID `airline_10226` and we used the `travel-sample` bucket.
- - It has been retried 15 times and the reason was always `SocketNotAvailable`.
+* A `Get` timed out after `2500` ms.
+* The document in question had the ID `airline_10226` and we used the `travel-sample` bucket.
+* It has been retried 15 times and the reason was always `SocketNotAvailable`.
 
 We'll discuss retry reasons later in this document, but `SocketNotAvailable` signals that we could not send the operation over the socket because it was not connected/available. 
 Since we now know that the socket had issues, we can inspect the logs to see if we find anything related:
@@ -85,8 +86,9 @@ System.IO.IOException: The operation is not allowed on non-connected sockets.
 //	... (rest of stack omitted) ...
 ----
 
-Looks like we tried to connect to the server, but the connection got refused. 
-Next step would be to triage the socket issue on the server side, but in this case it's not needed since I just stopped the server for this experiment. 
+Looks like we tried to connect to the server, but the connection was refused. 
+The next step would be to triage the socket issue on the server side, but in this case it's not needed since we just stopped the server for this experiment. 
+
 Time to start it up again and jump to the next section!
 
 === Request Cancellations
@@ -94,9 +96,9 @@ Time to start it up again and jump to the next section!
 Since we've covered timeouts already, the other remaining special exception is the `RequestCanceledException`. 
 It will be thrown in the following cases:
 
- - The `RetryStrategy` determined that the `RetryReason` must not be retried (covered later).
- - Too many requests are being stuck waiting to be retried (signaling backpressure).
- - The SDK is already shut down when an operation is performed.
+* The `RetryStrategy` determined that the `RetryReason` must not be retried (covered later).
+* Too many requests are being stuck waiting to be retried (signaling backpressure).
+* The SDK is already shut down when an operation is performed.
 
 There are potentially other reasons as well, but where it originates is not as important as the information it conveys. 
 If you get a `RequestCanceledException`, it means the SDK is not able to further retry the operation and it is terminated before the timeout interval.
@@ -104,14 +106,15 @@ If you get a `RequestCanceledException`, it means the SDK is not able to further
 Transparently retrying should only be done if the `RetryStrategy` has been customized and you are sure that the retried operation hasn't performed any side-effects on the server that can lead to data loss. 
 Most of the time the logs need to be inspected after the fact to figure out what went wrong.
 
-To aid with debugging after the fact, the `RequestCanceledException` also contains an `ErrorContext`, very similar to what has been discussed in the timeout section above.
+To aid with debugging after the fact, the `RequestCanceledException` also contains an `ErrorContext`, very similar to what has been discussed in the <<TimeoutException>> section.
 
 === Idempotent vs. Non-Idempotent Requests
 
 Operations flowing through the SDK are either idempotent or non-idempotent. 
 If an operation is idempotent, it can be sent to the server multiple times without changing the result more than once.
 
-This distinction is important when the SDK sends the operation to the server and the socket gets closed before it receives a response. If it is not idempotent the SDK cannot be sure if it caused a side-effect on the server side and needs to cancel it. 
+This distinction is important when the SDK sends the operation to the server and the socket gets closed before it receives a response.
+If it is not idempotent the SDK cannot be sure if it caused a side-effect on the server side and needs to cancel it. 
 In this case, the application will receive a `RequestCanceledException`.
 
 If it is idempotent though, the SDK will transparently retry the operation since it has a chance of succeeding eventually. 
@@ -122,27 +125,26 @@ The following picture illustrates when idempotency is important in the request l
 
 image::request-lifecycle-idempotent.png[Request Lifecycle With Idempotence]
 
-
-The SDK is very conservative on which operations are considered idempotent, because it really wants to avoid accidential data loss. 
+The SDK is very conservative on which operations are considered idempotent, because it really wants to avoid accidental data loss. 
 Imagine a situation where a mutating operation is applied twice by accident but another application server changed it in the meantime. 
 That change is lost without a chance to potentially recover it. 
 
 The following operations are considered idempotent out of the box (aside from specific internal requests that are not covered):
 
- - Cluster: `Search`, `Ping`, `WaitUntilReady`.
- - Bucket: `View`, `Ping`, `WaitUntilReady`.
- - Collection: `Get`, `LookupIn`, `GetAnyReplica`, `GetAllReplicas`, `Exists`.
- - Management commands that only retrieve information.
+* Cluster: `Search`, `Ping`, `WaitUntilReady`.
+* Bucket: `View`, `Ping`, `WaitUntilReady`.
+* Collection: `Get`, `LookupIn`, `GetAnyReplica`, `GetAllReplicas`, `Exists`.
+* Management commands that only retrieve information.
 
 Both `Query` and `AnalyticsQuery` commands are not in the list because the SDK does not inspect the `statement` string to check if you are actually performing a mutating operation or not. 
-If you are certain that you are only selecting data you can manually tell the client about it and benefit from idempotent retries:
+If you are certain that you are only selecting data, you can manually tell the client about it and benefit from idempotent retries:
 
 [source,csharp]
 ----
 include::example$ErrorHandling.csx[tag=readonly,indent=0]
 ----
 
-=== The RetryStrategy and RetryReasons
+=== RetryStrategy and RetryReasons
 
 The `RetryStrategy` decides whether or not a request should be retried based on the `RetryReason`. 
 By default, the SDK ships with a `BestEffortRetryStrategy` which, when faced with a retryable error, retries the request until it either succeeds or the timeout expires.
@@ -151,9 +153,9 @@ IMPORTANT: SDK 2 ships with a `FailFastRetryStrategy` which is intended to be us
 SDK 3 also ships with one, but it is marked as `@Internal`. 
 We recommend extending and customizing the `BestEffortRetryStrategy` as described in <<Customizing the RetryStrategy>>.
 
-The `RetryReasons` are good to look at (see the <<reference>> section), because they give insight into why an operation got retried. 
-The `ErrorContext` described in the previous chapters exposes the reasons as a list, since it is certainly possible that a request gets retried more than once because of different reasons. 
-So a request might be retried on one occasion because the socket went down during dispatch, 
+The `RetryReasons` provide useful information that gives insight into why an operation was retried. 
+The `ErrorContext` exposes the reasons as a list, since it is certainly possible that a request gets retried more than once because of different reasons. 
+A request might be retried on one occasion because the socket went down during dispatch, 
 and then on another because the response indicated a temporary failure.
 
 See <<Customizing the RetryStrategy>> for more information on how to tailor the default behavior to your needs.
@@ -182,7 +184,7 @@ In this case you can either propagate the `CouchbaseException` up your call stac
 include::example$ErrorHandling.csx[tag=getfetch,indent=0]
 ----
 
-In a different case, a document not being present might be an indication that you need to create it. 
+A document not being present might be an indication that you need to create it. 
 In this case you can catch it explicitly and handle it, while re-throwing all others:
 
 [source,csharp]
@@ -190,7 +192,7 @@ In this case you can catch it explicitly and handle it, while re-throwing all ot
 include::example$ErrorHandling.csx[tag=getcatch,indent=0]
 ----
 
-Please refer to each individual method (API docs) for more information about which exceptions are thrown on top of the `TimeoutException` and `RequestCanceledException`.
+Please refer to each individual method (https://docs.couchbase.com/sdk-api/couchbase-net-client/[API docs]) for more information about which exceptions are thrown on top of the `TimeoutException` and `RequestCanceledException`.
 
 Now that we've covered falling back to another method or propagating the error, we also need to touch on retrying. 
 As mentioned previously, the SDK will retry as much as it can, but in some cases it cannot know if an operation is retryable or not without the additional context you have as an application developer. 
@@ -241,7 +243,6 @@ include::example$ErrorHandling.csx[tag=customclass,indent=0]
 Importantly, do not omit the `return base.RetryAfter(request, reason);` as a fallback so that all other cases are handled for you.
 
 Implementing a concrete example, there is a chance that you are using a `CircuitBreaker` configuration and want to fail-fast on an open circuit:
-
 
 [source,csharp]
 ----
@@ -342,7 +343,7 @@ Please note that we do not provide any stability guarantees on the names and val
 |Name | Description
 
 | status
-| The generic response status code which indicates sucess or why the operation failed (based on the server response). Correlates with the `ResponseStatus` enum usually.
+| The generic response status code which indicates success or why the operation failed (based on the server response). Correlates with the `ResponseStatus` enum usually.
 
 | requestId
 | A unique ID for each request which is assigned automatically.
