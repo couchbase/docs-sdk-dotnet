@@ -15,6 +15,96 @@ For release notes, download links, and installation methods for 2.7 and earlier 
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
+[#version-3-3-2]
+== Version 3.3.2 (16 June 2022)
+
+Version 3.3.2 is the third release of the 3.3 series.
+
+https://packages.couchbase.com/clients/net/3.3/Couchbase-Net-Client-3.3.2.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.3.2[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.3.2[Nuget]
+
+=== Special Note
+
+* During a rebalance upgrade from 6.x (or any earlier version) to 7x, in mixed mode (where you are communicating with Couchbase Server whilst some but not all nodes are upgraded), there is a known issue where data may be written to the wrong location.  
+The solution is to either upgrade to 3.2.9 or greater, or to pause application processing so there are no writes until you have upgraded all nodes.  
+If you encounter a similar situation during migration and need help with mitigation, please contact our support team.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3067[NCBC-3067]:
+GetAndLockAsync times out instead of throwing DocumentLockedException.
+* https://issues.couchbase.com/browse/NCBC-3195[NCBC-3195]:
+N1QL queries with the default serializer don&#39;t read DateTimeOffset correctly.
+* https://issues.couchbase.com/browse/NCBC-3197[NCBC-3197]:
+FailFast Retry Strategy May Result in Infinite Processing Loop for Query, Views, Analytics, Search requests.
+* https://issues.couchbase.com/browse/NCBC-3198[NCBC-3198]:
+Blocked Task when Helo is called on a nonresponsive socket.
+* https://issues.couchbase.com/browse/NCBC-3199[NCBC-3199]:
+Timeout log message uses misleading Operation.Timeout.
+* https://issues.couchbase.com/browse/NCBC-3200[NCBC-3200]:
+Unlock returns DocumentLockedException.
+* https://issues.couchbase.com/browse/NCBC-3201[NCBC-3201]:
+Remove bootstrap endpoint comparison from network resolution.
+* https://issues.couchbase.com/browse/NCBC-3203[NCBC-3203]:
+NotMyVbucket exception while in mixed mode (CB  6.5 &amp; 7.X).
+* https://issues.couchbase.com/browse/NCBC-3205[NCBC-3205]:
+A locked status is mapped to temporary failure.
+* https://issues.couchbase.com/browse/NCBC-3206[NCBC-3206]:
+DI provider caches bad bootstrap results.
+* https://issues.couchbase.com/browse/NCBC-3216[NCBC-3216]:
+LoggingMeterReport can crash the process in the timer.
+* https://issues.couchbase.com/browse/NCBC-3217[NCBC-3217]:
+InternalSerializationContext throws a NotSupportedException when the object graph contains JObject.
+* https://issues.couchbase.com/browse/NCBC-3218[NCBC-3218]:
+Redacted&lt;T&gt; doesn&#39;t close tags properly.
+* https://issues.couchbase.com/browse/NCBC-3225[NCBC-3225]:
+QueryOptions.MaxServerParallelism should be serialized as a string.
+* https://issues.couchbase.com/browse/NCBC-3226[NCBC-3226]:
+Opaque is written to packet in NBO making WireShark tracing difficult.
+* https://issues.couchbase.com/browse/NCBC-3227[NCBC-3227]:
+Opaque is reused during retries making debugging difficult.
+* https://issues.couchbase.com/browse/NCBC-3232[NCBC-3232]:
+Ensure collections are enabled for all connections.
+* https://issues.couchbase.com/browse/NCBC-3236[NCBC-3236]:
+Issues with KV and NMVB against pre 6.5 cluster.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-1973[NCBC-1973]:
+.NET Doc on Error Handling for SDK 3 v1.
+* https://issues.couchbase.com/browse/NCBC-3186[NCBC-3186]:
+Review .NET SDK Snippets in VSCode.
+* https://issues.couchbase.com/browse/NCBC-3189[NCBC-3189]:
+Mark IEventingFunctionManager as Uncommitted.
+* https://issues.couchbase.com/browse/NCBC-3202[NCBC-3202]:
+Dead Link in Repo.
+* https://issues.couchbase.com/browse/NCBC-3223[NCBC-3223]:
+Flag RetryReason as Volatile.
+* https://issues.couchbase.com/browse/NCBC-3002[NCBC-3002]:
+Validate: Document accessed after Locking should raise DocumentLockedException or Timeout?.
+* https://issues.couchbase.com/browse/NCBC-3028[NCBC-3028]:
+Upgrade App.Metrics to mitigate security scan warnings.
+* https://issues.couchbase.com/browse/NCBC-3038[NCBC-3038]:
+Add retry reasons to ErrorContext.
+* https://issues.couchbase.com/browse/NCBC-3078[NCBC-3078]:
+Mark synchronous methods in data structures as obsolete.
+* https://issues.couchbase.com/browse/NCBC-3168[NCBC-3168]:
+Add exception to debug log in CircuitBreaker.
+* https://issues.couchbase.com/browse/NCBC-3188[NCBC-3188]:
+Add retry reasons to ErrorContext for UnAmbiguousTimeouts.
+* https://issues.couchbase.com/browse/NCBC-3207[NCBC-3207]:
+Remove dependency on Crc32.NET in Transactions.
+* https://issues.couchbase.com/browse/NCBC-3208[NCBC-3208]:
+Review all SDK and verify if new SQL++ Feature introduced in 7.1.1(Include MISSING) will work as expected without any change in the code.
+* https://issues.couchbase.com/browse/NCBC-3228[NCBC-3228]:
+Make BestEffortRetryStrategy.RetryAfter virtual so it can be overridden.
+* https://issues.couchbase.com/browse/NCBC-3229[NCBC-3229]:
+Add 30s lock limit for GetAndLock API docs.
+* https://issues.couchbase.com/browse/NCBC-3152[NCBC-3152]:
+Improved code documention for KV API.
+
+
 [#version-3-3-1]
 == Version 3.3.1 (03 May 2022)
 
