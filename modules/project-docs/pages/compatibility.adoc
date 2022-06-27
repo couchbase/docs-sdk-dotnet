@@ -191,3 +191,4 @@ include::{version-server}@sdk:shared:partial$interface-stability-pars.adoc[tag=i
 
 include::{version-server}@sdk:shared:partial$api-version.adoc[tag=api-version]
 
+include::7.1@sdk:shared:partial$archive.adoc[tag=link]
