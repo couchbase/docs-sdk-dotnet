@@ -1,0 +1,224 @@
+
+= Observability Metrics Reporting
+:description: Individual request tracing presents a very specific (though isolated) view of the system.
+:page-topic-type: howto
+
+[abstract]
+{description}
+In addition, it also makes sense to capture information that aggregates request data (i.e. requests per second),
+but also data which is not tied to a specific request at all (i.e. resource utilization).
+
+The deployment situation itself is similar to the request tracer: either applications already have a metrics infrastructure in place or they don’t. 
+The difference is that exposing some kind of metrics is much more common than request based tracing, 
+because most production deployments at least monitor CPU and memory usage (e.g. through JMX).
+
+Metrics broadly fall into the following categories:
+
+* Request/Response Metrics (such as requests per second).
+* SDK Metrics (such as how many open collections, various queue lengths).
+* System Metrics (such as cpu usage or garbage collection performance).
+
+Right now only the first category is implemented by the SDK, more are planned.
+
+== The Default LoggingMeter
+
+The default implementation aggregates and logs request and response metrics.
+
+By default the metrics will be emitted every 10 minutes, but you can customize the emit interval as well:
+
+[source,csharp]
+----
+clusterOptions.WithLoggingMeterOptions(
+    new LoggingMeterOptions()
+    .Enabled(true)
+    .EmitInterval(TimeSpan.FromSeconds(30)));
+----
+
+Once enabled, there is no further configuration needed. The `LoggingMeter` will emit the collected request statistics every interval.
+A possible report looks like this (prettified for better readability):
+
+[source,json]
+----
+{
+   "meta":{
+      "emit_interval_s":10
+   },
+   "query":{
+      "127.0.0.1":{
+         "total_count":9411,
+         "percentiles_us":{
+            "50.0":544.767,
+            "90.0":905.215,
+            "99.0":1589.247,
+            "99.9":4095.999,
+            "100.0":100663.295
+         }
+      }
+   },
+   "kv":{
+      "127.0.0.1":{
+         "total_count":9414,
+         "percentiles_us":{
+            "50.0":155.647,
+            "90.0":274.431,
+            "99.0":544.767,
+            "99.9":1867.775,
+            "100.0":574619.647
+         }
+      }
+   }
+}
+----
+
+Each report contains one object for each service that got used and is further separated on a per-node basis so they can be analyzed in isolation.
+
+For each service / host combination, a total amount of recorded requests is reported, as well as percentiles from a histogram in microseconds. 
+The meta section on top contains information such as the emit interval in seconds so tooling can later calculate numbers like requests per second.
+
+The `LoggingMeter` can be configured on the environment as shown above.
+The following table shows the currently available properties:
+
+.LoggingMeterConfig Properties
+[options="header"]
+|====
+| Property       | Default | Description
+| `enabled`   | false | If the `LoggingMeter` should be enabled.
+| `emitInterval` | 600 seconds | The interval where found orphans are emitted.
+|====
+
+
+== OpenTelemetry Integration
+
+The SDK supports plugging in any `OpenTelemetry` metrics consumer instead of using the default `LoggingMeter`.
+To do this, first you need to add an additional dependency to your application:
+
+[source,xml]
+----
+<PackageReference Include="Couchbase.Extensions.OpenTelemetry" Version="3.3.2" />
+----
+
+In addition, you need to add the OpenTelemetry exporter of your choice. 
+As an example this could be the Console exporter:
+
+[source,xml]
+----
+<PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.3.0" />
+----
+
+Next, you need to initialize your OpenTelemetry `Meter` and associate the Couchbase metrics with the exporter. Again, the following example uses Console:
+
+[source,csharp]
+----
+ using var meterProvider = Sdk.CreateMeterProviderBuilder()
+    .AddCouchbaseInstrumentation()
+    .AddConsoleExporter()
+    .Build();
+----
+
+Once your meter is initialized, the Couchbase `Cluster` and `Bucket` need to be injected via configuration:
+
+[source,csharp]
+----
+ IHost host = Host.CreateDefaultBuilder(args)
+    .ConfigureServices((hostContext, services) =>
+    {
+        services.AddCouchbase(opts =>
+        {
+            opts.WithConnectionString("couchbase://localhost");
+            opts.WithCredentials("Administrator", "password");
+        });
+        services.AddCouchbaseBucket<INamedBucketProvider>("default");
+        services.AddHostedService<Worker>();
+    }).ConfigureAppConfiguration(app => {})
+    .Build();
+
+host.Run();
+----
+
+The application being metered is a simple `IHostedWorker` class:
+
+[source, csharp]
+----
+public class Worker : IHostedService {
+    public Worker(INamedBucketProvider provider) {
+        Provider = provider;
+    }
+
+    public INamedBucketProvider Provider { get; }
+
+    public async Task StartAsync(CancellationToken cancellationToken) {
+        var bucket = await Provider.GetBucketAsync();
+        while (true)
+        {
+            var upsert = await bucket.DefaultCollection().UpsertAsync<dynamic>("key1", new { Name = "key1" });
+            await Task.Delay(400);
+        }
+    }
+
+    public Task StopAsync(CancellationToken cancellationToken) {
+        throw new NotImplementedException();
+    }
+}
+----
+
+At this point the SDK is hooked up with the OpenTelemetry metrics and will emit them to the exporter. 
+The specific output format is still evolving, but look out for metrics with the `cb.` prefix: `cb.requests` and `cb.responses`. 
+The `cb.requests` is a counter while the `cb.responses` is a `ValueRecorder` which also collects latency information for each request. 
+Each metric contains tags that allow you to group them in different ways, including the service type (e.g. `query`) or the server hostname.
+
+== Additional Couchbase .NET Event Counters
+
+The Couchbase .NET SDK offers [metrics](https://docs.microsoft.com/en-us/dotnet/core/diagnostics/metrics) to support
+instrumenting your application. These metrics may be [collected](https://docs.microsoft.com/en-us/dotnet/core/diagnostics/metrics-collection)
+in a variety of ways such as the [dotnet-counters tool](https://docs.microsoft.com/en-us/dotnet/core/diagnostics/dotnet-counters),
+the new [dotnet-monitor tool](https://devblogs.microsoft.com/dotnet/announcing-dotnet-monitor-in-net-6/), or instrumented
+directly in code using the [MeterListener class](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.metrics.meterlistener?view=net-6.0).
+
+=== Meter Types
+
+==== Gauge
+
+Gauges show a snapshot of the value at a given point in time.
+
+==== Counter
+
+Counters return a total that continues to increase over time. These are useful for calculating the rate of events over some period of time.
+
+==== Histogram
+
+Typically used for measuring durations, this meter tracks distributions such as averages and 95th percentile.
+
+=== Meters
+
+The following meters are exposed under the `CouchbaseNetClient` meter name.
+
+|=========================================================
+| Instrument Name                   | Type      | Description 
+
+| db.couchbase.connections          | Gauge     | Total number of active connections to data nodes 
+
+| db.couchbase.operations           | Histogram | Distribution of operation durations, in microseconds 
+
+| db.couchbase.retries              | Counter   | Number of operation retries, excluding first attempts 
+
+| db.couchbase.orphaned             | Counter   | Number of operations which were sent but for which a response was never received 
+
+| db.couchbase.sendqueue.fullerrors | Counter   | Number of times a connection pool rejected an operation because the send queue was full 
+
+| db.couchbase.sendqueue.length     | Gauge     | Total number of items waiting to be sent 
+
+| db.couchbase.timeouts             | Counter   | Number of operations that failed due to a client-side timeout 
+|=========================================================
+## Tags
+
+Output measurements to these meters may be tagged with additional data.
+
+|=========================================================
+| Key                    | Description
+
+| db.couchbase.service   | Service involved, such as "kv", "query", "search", "analytics"
+
+| db.couchbase.operation | Type of data operation, such as "get"
+|=========================================================
+
+
