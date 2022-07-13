@@ -1,0 +1,122 @@
+= Request Tracing
+:description: Collecting information about an individual request and its response is an essential feature of every observability stack.
+:page-topic-type: howto
+:page-aliases: ROOT:tracing-from-the-sdk.adoc
+
+[abstract]
+{description}
+
+To give insight into a request/response flow, the SDK provides a `RequestTracer` interface and ships with both a default implementation as well as modules that can be plugged into feed the traces to external systems (including OpenTelemetry).
+
+
+== The Default ThresholdLoggingTracer
+
+By default, the SDK will emit information about requests that are over a configurable threshold every 10 seconds. 
+Note that if no requests are over the threshold no event / log will be emitted.
+
+It is possible to customize this behavior by modifying the configuration:
+
+[source,csharp]
+----
+var options = new ClusterOptions();
+options.WithThresholdTracing(new ThresholdOptions
+{
+    Enabled = true,
+    EmitInterval = TimeSpan.FromSeconds(18)
+});
+var cluster = await ClusterAsync.Connect("administrator", "password", options);
+----
+
+In this case the emit interval is one minute and Key/Value requests will only be considered if their latency is greater or equal than two seconds.
+
+The JSON blob emitted looks similar to the following (prettified here for readability):
+
+[source,json]
+----
+[
+   {
+      "top":[
+         {
+            "operation_name":"Get",
+            "server_us":2,
+            "last_local_id":"E64FED2600000001/00000000EA6B514E",
+            "last_local_address":"127.0.0.1:51807",
+            "last_remote_address":"127.0.0.1:11210",
+            "last_dispatch_us":2748,
+            "last_operation_id":"0x9",
+            "total_us":324653
+         },
+         {
+            "operation_name":"Get",
+            "server_us":0,
+            "last_local_id":"E64FED2600000001/00000000EA6B514E",
+            "last_local_address":"127.0.0.1:51807",
+            "last_remote_address":"127.0.0.1:11210",
+            "last_dispatch_us":1916,
+            "last_operation_id":"0x1b692",
+            "total_us":2007
+         }
+      ],
+      "service":"kv",
+      "count":2
+   }
+]
+----
+
+For each service (e.g. Key/Value or Query) an entry exists in the outer JSON array. 
+The top N (10 by default) slowest operations are collected and displayed, sorted by the total duration. 
+This promotes quick visibility of the "worst offenders" and more efficient troubleshooting.
+
+Please note that in future releases this format is planned to change for easier readability, 
+so we do not provide any stability guarantees on the logging output format and it might change between minor versions.
+
+== OpenTelemetry Integration
+
+The built-in tracer is great if you do not have a centralized monitoring system, but if you already plug into the OpenTelemetry ecosystem we want to make sure to provide first-class support.
+
+The first thing you need to do is include an andditional dependency which provides the interoperability code in your project file:
+
+[source,xml]
+----
+<PackageReference Include="Couchbase.Extensions.OpenTelemetry" Version="3.3.2" />
+----
+
+You also need to include your downstream exporter of choice, in the following example we'll use Zipkin tracing:
+
+[source,xml]
+----
+<PackageReference Include="OpenTelemetry.Exporter.Zipkin" Version="1.3.0" />
+----
+
+Next up, initialize the Zipkin[https://zipkin.io/pages/quickstart] tracer:
+
+[source,csharp]
+----
+var traceProvider = Sdk.CreateTracerProviderBuilder()
+    .SetSampler(new AlwaysOnSampler())
+    .AddZipkinExporter()
+    .AddCouchbaseInstrumentation()
+    .Build();
+----
+
+Once the exporter is set up, the `OpenTelemetryRequestTracer` can be used to automatically send the traces to  the exporter.
+
+[source,csharp]
+----
+ options.TracingOptions
+    .WithEnabled(true)
+    .WithTracer(new OpenTelemetryRequestTracer());
+----
+
+At this point, all traces will be sent into the OpenTelemetry exporter. 
+If you want to set a parent for a SDK request, you can do it in the respective `*Options`:
+
+[source,csharp]
+----
+var  result = collection.GetAsync(
+    "my-doc", 
+    GetOptions().RequestSpan(parentSpan)
+)
+----
+
+
