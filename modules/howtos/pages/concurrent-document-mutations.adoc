@@ -12,27 +12,31 @@ include::{version-server}@sdk:shared:partial$cas.adoc[tag=example]
 
 include::{version-server}@sdk:shared:partial$cas.adoc[tag=errors]
 
-[source,java]
+[source,csharp]
 ----
-      int maxRetries = 10;
+var maxRetries = 10;
 
-      for (int i = 0; i < maxRetries; i++) {
-        // Get the current document contents
-        GetResult getResult = collection.get("user-id");
+for (var i = 0; i < maxRetries; i++)
+{
+    // Get the current document contents
+    var getResult = await collection.GetAsync("user-id");
 
-        // Increment a count on the user
-        JsonObject content = getResult.contentAsObject();
-        content.put("visitCount", content.getLong("visitCount") + 1);
+    // Increment a count on the user
+    var content = getResult.ContentAs<JObject>();
+    content["visitCount"] = content["visitCount"].Value<long>() + 1;
 
-        try {
-          // Attempt to replace the document with cas
-          collection.replace("user-id", content, replaceOptions().cas(getResult.cas()));
-          break;
-        } catch (CasMismatchException ex) {
-          // continue the loop on cas mismatch to try again
-          // note that any other exception will be raised and break the loop as well
-        }
-      }
+    try
+    {
+        // Attempt to replace the document with cas
+        await collection.ReplaceAsync("user-id", content, options => options.Cas(getResult.Cas));
+        break;
+    }
+    catch (CasMismatchException ex)
+    {
+        // continue the loop on cas mismatch to try again
+        // note that any other exception will be raised and break the loop as well
+    }
+}
 ----
 
 Sometimes more logic is needed when performing updates, for example, if a property is mutually exclusive with another property; only one or the other can exist, but not both.
@@ -44,17 +48,17 @@ include::{version-server}@sdk:shared:partial$cas.adoc[tag=format]
 
 include::{version-server}@sdk:shared:partial$cas.adoc[tag=locking]
 
-[source,java]
+[source,csharp]
 ----
-      GetResult getAndLockResult = collection.getAndLock("key", Duration.ofSeconds(2));
+var getAndLockResult = await collection.GetAndLockAsync("key", TimeSpan.FromSeconds(2));
 
-      long lockedCas = getAndLockResult.cas();
+var lockedCas = getAndLockResult.Cas;
 
-      /* an example of simply unlocking the document:
-      collection.unlock("key", lockedCas);
-       */
+/* an example of simply unlocking the document:
+   await collection.UnlockAsync("key", lockedCas);
+*/
 
-      collection.replace("key", "new value", replaceOptions().cas(lockedCas));
+await collection.ReplaceAsync("key", "new value", options => options.Cas(lockedCas));
 ----
 
 (For the .NET equivalent, refer to the https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.KeyValue.GetAndLockOptions.html[API documentation].)
