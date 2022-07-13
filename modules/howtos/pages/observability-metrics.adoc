@@ -169,8 +169,8 @@ Each metric contains tags that allow you to group them in different ways, includ
 
 == Additional Couchbase .NET Event Counters
 
-The Couchbase .NET SDK offers [metrics](https://docs.microsoft.com/en-us/dotnet/core/diagnostics/metrics) to support instrumenting your application.
-These metrics may be [collected](https://docs.microsoft.com/en-us/dotnet/core/diagnostics/metrics-collection) in a variety of ways such as the [dotnet-counters tool](https://docs.microsoft.com/en-us/dotnet/core/diagnostics/dotnet-counters), the new [dotnet-monitor tool](https://devblogs.microsoft.com/dotnet/announcing-dotnet-monitor-in-net-6/), or instrumented directly in code using the [MeterListener class](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.metrics.meterlistener?view=net-6.0).
+The Couchbase .NET SDK offers https://docs.microsoft.com/en-us/dotnet/core/diagnostics/metrics[metrics] to support instrumenting your application.
+These metrics may be https://docs.microsoft.com/en-us/dotnet/core/diagnostics/metrics-collection[collected] in a variety of ways such as the https://docs.microsoft.com/en-us/dotnet/core/diagnostics/dotnet-counters[dotnet-counters tool], the new https://devblogs.microsoft.com/dotnet/announcing-dotnet-monitor-in-net-6/[dotnet-monitor tool], or instrumented directly in code using the https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.metrics.meterlistener?view=net-6.0[MeterListener class].
 
 === Meter Types
 
@@ -209,7 +209,7 @@ The following meters are exposed under the `CouchbaseNetClient` meter name.
 | db.couchbase.timeouts             | Counter   | Number of operations that failed due to a client-side timeout
 |===
 
-== Tags
+=== Tags
 
 Output measurements to these meters may be tagged with additional data.
 
