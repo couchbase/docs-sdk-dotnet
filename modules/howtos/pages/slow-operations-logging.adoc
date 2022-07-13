@@ -54,4 +54,4 @@ Each entry looks like this, with all fields populated:
 }
 ----
 
-If a field is not present (because for example dispatch did not happen), it will not be included. 
+If a field is not present (because for example dispatch did not happen), it will not be included.
