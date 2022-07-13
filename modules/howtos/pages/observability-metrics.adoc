@@ -138,7 +138,7 @@ host.Run();
 
 The application being metered is a simple `IHostedWorker` class:
 
-[source, csharp]
+[source,csharp]
 ----
 public class Worker : IHostedService {
     public Worker(INamedBucketProvider provider) {
