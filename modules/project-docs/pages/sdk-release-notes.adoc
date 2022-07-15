@@ -32,24 +32,31 @@ If you encounter a similar situation during migration and need help with mitigat
 
 === Fixed Issues
 
-* https://issues.couchbase.com/browse/NCBC-3010[NCBC-3010]: BucketNotFoundException when there is no database running.
-* https://issues.couchbase.com/browse/NCBC-3191[NCBC-3191]: Eventing function manager throwing generic CouchbaseException for CompilationFailure
-* https://issues.couchbase.com/browse/NCBC-3214[NCBC-3214]: DI Packaging bug: Error using Distributed Cache Dependency 3.2.5 when 3.3.0
-* https://issues.couchbase.com/browse/NCBC-3231[NCBC-3231]: MutateIn throws CAS error instead of KeyExists when doc exists and StoreSemantics.Insert
-* https://issues.couchbase.com/browse/NCBC-3239[NCBC-3239]: NullReferenceException when bootstrapping fails and a mangement API call is made
-* https://issues.couchbase.com/browse/NCBC-3240[NCBC-3240]: WaitUntilReadyAsync fails when it cannot connect to a cluster before timeout
-* https://issues.couchbase.com/browse/NCBC-3241[NCBC-3241]: QueryIndexManager throws generic exception as opposed to IndexNotFoundException
+* https://issues.couchbase.com/browse/NCBC-3010[NCBC-3010]:
+`BucketNotFoundException` incorrectly raised when there is no database running.
+* https://issues.couchbase.com/browse/NCBC-3191[NCBC-3191]:
+`EventingFunctionManager` throws wrong exception for compilation failure.
+* https://issues.couchbase.com/browse/NCBC-3214[NCBC-3214]:
+Fixed NuGet packaging issues causing problems with dependencies for some users.
+* https://issues.couchbase.com/browse/NCBC-3231[NCBC-3231]:
+MutateIn throws `CAS` error instead of `KeyExists` when doc exists and `StoreSemantics.Insert`.
+* https://issues.couchbase.com/browse/NCBC-3239[NCBC-3239]:
+`NullReferenceException` when bootstrapping fails and a mangement API call is made.
+* https://issues.couchbase.com/browse/NCBC-3240[NCBC-3240]:
+`WaitUntilReadyAsync` fails when it cannot connect to a cluster before timeout.
+* https://issues.couchbase.com/browse/NCBC-3241[NCBC-3241]:
+`QueryIndexManager` throws generic exception as opposed to `IndexNotFoundException`.
 
 === New Features and Behavioral Changes
 
-* https://issues.couchbase.com/browse/NCBC-3166[NCBC-3166]: Performance Best Practices in API Docs
-* https://issues.couchbase.com/browse/NCBC-3169[NCBC-3169]: Provide Docs Guidance for Performance Best Practices
-* https://issues.couchbase.com/browse/NCBC-3178[NCBC-3178]: Pathfind: Review Unit &amp; Combination Test Coverage
-* https://issues.couchbase.com/browse/NCBC-3196[NCBC-3196]: Documentation Clean Up
-* https://issues.couchbase.com/browse/NCBC-3224[NCBC-3224]: Flag ErrorContext as uncommitted
-* https://issues.couchbase.com/browse/NCBC-3242[NCBC-3242]: Update Newtonsoft.JSON to 13.0.1 or later.
-* https://issues.couchbase.com/browse/NCBC-2953[NCBC-2953]: Support for Serverless/Lambda Execution Environments
-* https://issues.couchbase.com/browse/NCBC-3182[NCBC-3182]: Document ClusterOptions.WithCertificateFactory() does not apply to Server Certificate Validation
+* https://issues.couchbase.com/browse/NCBC-3166[NCBC-3166]:
+Added performance best practices in API Docs.
+* https://issues.couchbase.com/browse/NCBC-3224[NCBC-3224]:
+Flagged `ErrorContext` as uncommitted.
+* https://issues.couchbase.com/browse/NCBC-3242[NCBC-3242]:
+Updated `Newtonsoft.JSON` to version `13.0.1` or later.
+* https://issues.couchbase.com/browse/NCBC-2953[NCBC-2953]:
+Added support for Serverless/Lambda Execution Environments
 
 [#version-3-3-2]
 == Version 3.3.2 (16 June 2022)
