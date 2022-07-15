@@ -15,6 +15,49 @@ For release notes, download links, and installation methods for 2.7 and earlier 
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
+[#version-3-3-3]
+== Version 3.3.3 (11 July 2022)
+
+Version 3.3.3 is the third release of the 3.3 series.
+
+https://packages.couchbase.com/clients/net/3.3/Couchbase-Net-Client-3.3.3.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.3.3[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.3.3[Nuget]
+
+=== Special Note
+
+* During a rebalance upgrade from 6.x (or any earlier version) to 7x, in mixed mode (where you are communicating with Couchbase Server whilst some but not all nodes are upgraded), there is a known issue where data may be written to the wrong location.  
+The solution is to either upgrade to 3.2.9 or greater, or to pause application processing so there are no writes until you have upgraded all nodes.  
+If you encounter a similar situation during migration and need help with mitigation, please contact our support team.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3010[NCBC-3010]:
+`BucketNotFoundException` incorrectly raised when there is no database running.
+* https://issues.couchbase.com/browse/NCBC-3191[NCBC-3191]:
+`EventingFunctionManager` throws wrong exception for compilation failure.
+* https://issues.couchbase.com/browse/NCBC-3214[NCBC-3214]:
+Fixed NuGet packaging issues causing problems with dependencies for some users.
+* https://issues.couchbase.com/browse/NCBC-3231[NCBC-3231]:
+MutateIn throws `CAS` error instead of `KeyExists` when doc exists and `StoreSemantics.Insert`.
+* https://issues.couchbase.com/browse/NCBC-3239[NCBC-3239]:
+`NullReferenceException` when bootstrapping fails and a mangement API call is made.
+* https://issues.couchbase.com/browse/NCBC-3240[NCBC-3240]:
+`WaitUntilReadyAsync` fails when it cannot connect to a cluster before timeout.
+* https://issues.couchbase.com/browse/NCBC-3241[NCBC-3241]:
+`QueryIndexManager` throws generic exception as opposed to `IndexNotFoundException`.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-3166[NCBC-3166]:
+Added performance best practices in API Docs.
+* https://issues.couchbase.com/browse/NCBC-3224[NCBC-3224]:
+Flagged `ErrorContext` as uncommitted.
+* https://issues.couchbase.com/browse/NCBC-3242[NCBC-3242]:
+Updated `Newtonsoft.JSON` to version `13.0.1` or later.
+* https://issues.couchbase.com/browse/NCBC-2953[NCBC-2953]:
+Added support for Serverless/Lambda Execution Environments
+
 [#version-3-3-2]
 == Version 3.3.2 (16 June 2022)
 
