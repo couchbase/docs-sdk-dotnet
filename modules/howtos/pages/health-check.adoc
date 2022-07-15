@@ -17,115 +17,134 @@ More extensive discussion of the uses of Health Check can be found in the xref:c
 
 At its simplest, `ping` provides information about the current state of the connections in the Couchbase Cluster, by actively polling:
 
-// 2.7 SDK
-[source,java]
+[source,csharp]
 ----
-void printDiagnostics(Bucket bucket) {
-    bucket.ping();
-    DiagnosticsReport report = cluster.diagnostics();
-    System.out.println(report.exportToJson(true));
+async Task PrintPingAsync(IBucket bucket)
+{
+    var pingResult =  await bucket.PingAsync();
+    Console.WriteLine(pingResult.ToString());
 }
 ----
 
 Which, for a single-node test cluster, will return a payload similar to this:
-// TODO -- multiple nodes
 
-// 2.x SDK
+[source,json]
 ----
 {
-  "services" : {
-    "view" : [ {
-      "last_activity_us" : 2863,
-      "state" : "connected",
-      "id" : "0x46ee8659",
-      "remote" : "localhost:8092",
-      "local" : "localhost:53309"
-    } ],
-    "fts" : [ {
-      "last_activity_us" : 2625,
-      "state" : "connected",
-      "id" : "0x1c5de614",
-      "remote" : "localhost:8094",
-      "local" : "localhost:53308"
-    } ],
-    "kv" : [ {
-      "last_activity_us" : 19243,
-      "state" : "connected",
-      "id" : "0x7d942ebb",
-      "remote" : "localhost:11210",
-      "local" : "localhost:53307"
-    } ],
-    "n1ql" : [ {
-      "last_activity_us" : 1963,
-      "state" : "connected",
-      "id" : "0x8de927d",
-      "remote" : "localhost:8093",
-      "local" : "localhost:53310"
-    } ]
-  },
-  "sdk" : "couchbase-java-client/2.5.8 (git: 2.5.8, core: 1.5.8) (Mac OS X/10.13.4 x86_64; Java HotSpot(TM) 64-Bit Server VM 1.8.0_171-b11)",
-  "id" : "9c7e2ac7-9a41-4e67-8cdf-bf16abaa35a4",
-  "version" : 1
+	"id": "0b0b9c07-f202-4218-a9c7-c66d436c1912",
+	"version": 1,
+	"config_rev": 814,
+	"sdk": "couchbase-net-sdk/3.3.3.0 (clr/.NET 6.0.5) (os/Microsoft Windows 10.0.19044)",
+	"services": {
+		"kv": [{
+			"id": "4247429530963144166",
+			"local": "[::1]:29075",
+			"remote": "[::1]:11210",
+			"latency_us": 1544,
+			"scope": "default",
+			"state": "ok"
+		}, {
+			"id": "10567074834237322808",
+			"local": "[::1]:29074",
+			"remote": "[::1]:11210",
+			"latency_us": 1173,
+			"scope": "default",
+			"state": "ok"
+		}],
+		"fts": [{
+			"remote": "localhost:11210",
+			"latency_us": 2560,
+			"scope": "Cluster",
+			"state": "ok"
+		}],
+		"view": [{
+			"remote": "localhost:11210",
+			"latency_us": 4749,
+			"scope": "default",
+			"state": "ok"
+		}],
+		"n1ql": [{
+			"remote": "localhost:11210",
+			"latency_us": 2382,
+			"scope": "Cluster",
+			"state": "ok"
+		}]
+	}
 }
 ----
 
-If you only wish to know if there's a connection that's up, filter out the rest of the information:
+//**Removing below because of bug NCBC-3246**
+//If you only wish to know if there's a connection that's up, filter out the rest of the information:
 
 // 2.x example
-[source,java]
-----
-boolean allEndpointsConnected(DiagnosticsReport report) {
-    for (EndpointHealth endpoint : report.endpoints()) {
-        if (endpoint.state() != LifecycleState.CONNECTED) {
-            return false;
-        }
-    }
-    return true;
-}
-----
-
-
-
+//[source,java]
+//----
+//boolean allEndpointsConnected(DiagnosticsReport report) {
+//for (EndpointHealth endpoint : report.endpoints()) {
+//  if (endpoint.state() != LifecycleState.CONNECTED) {
+//       return false;
+//   }
+// return true;
+//}
+//----
 
 == Diagnostics
-
 
 `Diagnostics` returns a list of the nodes that the SDK currently has (or had) a connection to, and the current status of the connection.
 However this call _does not_ actively poll the nodes, reporting instead the state the last time it tried to access each node.
 If you want the _current_ status, then use xref:#ping[Ping].
 
-[source,javascript]
+[source,csharp]
 ----
-bucket.diagnostics((err, res) => {
-    console.log(res)
-})
-/*
+async Task PrintDiagnosticsAsync(IBucket bucket)
 {
-    "id":"0x10290d100","kv":[
-        {
-            "id":"0000000072b21d66",
-            "last_activity_us":2363294,
-            "local":"10.112.195.1:51473",
-            "remote":"10.112.195.101:11210",
-            "status":"connected"
-        },
-        {
-            "id":"000000000ba84e5e",
-            "last_activity_us":7369021,
-            "local":"10.112.195.1:51486",
-            "remote":"10.112.195.102:11210",
-            "status":"connected"
-        },
-        {
-            "id":"0000000077689398",
-            "last_activity_us":4855640,
-            "local":"10.112.195.1:51409",
-            "remote":"10.112.195.103:11210",
-            "status":"connected"
-        }
-    ],
-    "sdk":"libcouchbase/2.9.5-njs couchnode/2.6.9 (node/10.16.0; v8/6.8.275.32-node.52; ssl/1.1.1b)",
-    "version":1
+    var diagnosticsResult = await cluster.DiagnosticsAsync();
+    Console.WriteLine(diagnosticsResult.ToString());
 }
-*/
+----
+
+Which will print something like this:
+
+[source,json]
+----
+{
+	"id": "d1eda895-ace4-4151-b77f-75b93e01eb60",
+	"version": 1,
+	"sdk": "couchbase-net-sdk/3.3.3.0 (clr/.NET 6.0.5) (os/Microsoft Windows 10.0.19044)",
+	"services": {
+		"kv": [{
+			"id": "12886484481666434437",
+			"local": "[::1]:29613",
+			"remote": "[::1]:11210",
+			"last_activity_us": 421997,
+			"scope": "default",
+			"state": "authenticating"
+		}, {
+			"id": "11904762720158946993",
+			"local": "[::1]:29614",
+			"remote": "[::1]:11210",
+			"last_activity_us": 593999,
+			"scope": "default",
+			"state": "authenticating"
+		}],
+		"view": [{
+			"remote": "localhost:11210",
+			"last_activity_us": 0,
+			"scope": "default",
+			"state": "new"
+		}],
+		"n1ql": [{
+			"remote": "localhost:11210",
+			"last_activity_us": 0,
+			"scope": "Cluster",
+			"state": "new"
+		}],
+		"fts": [{
+			"remote": "localhost:11210",
+			"last_activity_us": 0,
+			"scope": "Cluster",
+			"state": "new"
+		}]
+	}
+}
 ----
