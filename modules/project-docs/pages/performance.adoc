@@ -1,8 +1,6 @@
 = Performance Best Practices
 :description: Performance best practices for Couchbase .NET applications.
 :navtitle: Best Practices
-:page-topic-type: howto
-:page-aliases: ROOT:handling-error-conditions,handling-error-conditions,errors,handling-errors
 :source-language: csharp
 :page-toclevels: 2
 
