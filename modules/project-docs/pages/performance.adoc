@@ -121,7 +121,7 @@ This is a trival example as partitioning keys may be very domain specific, but i
 
 The Couchbase .NET SDK was designed for asynchronous the entire way down; however, at the application layer you can still block and wait for each operation. 
 Doing this is an antipattern and may cause deadlocks, and most definitly will degrade performance. 
-Here is an example of _synch_ over _asynch_:
+Here is an example of _sync_ over _async_:
 
 [source,csharp]
 ----
