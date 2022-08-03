@@ -1,0 +1,31 @@
+= Single Query Transactions
+:description: Learn how to perform bulk-loading transactions with the SDK.
+:page-partial:
+:page-topic-type: howto
+:page-pagination: full
+
+include::project-docs:partial$attributes.adoc[]
+
+[abstract]
+{description}
+
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=single-query-transactions-intro]
+
+[source,csharp]
+----
+include::example$TransactionsExample.cs[tag=querySingle,indent=0]
+----
+
+You can also run a single query transaction against a particular `IScope` (these examples will exclude the full error handling for brevity):
+
+[source,csharp]
+----
+include::example$TransactionsExample.cs[tag=querySingleScoped,indent=0]
+----
+
+and configure it:
+
+[source,csharp]
+----
+include::example$TransactionsExample.cs[tag=querySingleConfigured,indent=0]
+----

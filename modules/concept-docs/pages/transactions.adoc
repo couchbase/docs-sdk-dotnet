@@ -1,0 +1,70 @@
+= Distributed ACID Transactions
+:description:  A high-level overview of Distributed ACID Transactions with Couchbase.
+:page-toclevels: 2
+:page-pagination: next
+
+include::project-docs:partial$attributes.adoc[]
+include::howtos:partial$acid-transactions-attributes.adoc[]
+
+[abstract]
+{description}
+
+For a practical guide, see xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distributed ACID Transactions from the Java SDK].
+
+== Overview
+
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tags=intro]
+
+== Transaction Mechanics
+
+[source,csharp]
+----
+include::howtos:example$TransactionsExample.cs[tag=create-simple,indent=0]
+----
+
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tags=mechanics;!integrated-sdk-cleanup-process]
+
+TIP: Committing is automatic: if there is no explicit call to `ctx.CommitAsync()` at the end of the transaction logic callback, and no exception is thrown, it will be committed.
+
+=== Rollback
+
+When an exception is thrown, either by the application from the {lambda}, or by the transactions logic itself (e.g. on a failed operation), then that attempt is rolled back.
+
+The application's {lambda} may or may not be retried, depending on the error that occurred.
+The general rule for retrying is whether the transaction is likely to succeed on a retry.
+For example, if this transaction is trying to write a document that is currently involved in another transaction (a write-write conflict), this will lead to a retry as that is likely a transient state.
+But if the transaction is trying to get a document that does not exist, it will not retry.
+
+If the transaction is not retried then it will throw a `{transaction-failed}`.
+
+[source,csharp]
+----
+include::howtos:example$TransactionsExample.cs[tag=rollback-cause,indent=0]
+----
+
+The transaction can also be explicitly rolled back:
+
+[source,csharp]
+----
+include::howtos:example$TransactionsExample.cs[tag=rollback,indent=0]
+----
+
+In this case, if `ctx.RollbackAsync()` is reached, then the transaction will be regarded as successfully rolled back and no `{transaction-failed}` will be thrown.
+
+After a transaction is rolled back, it cannot be committed, no further operations are allowed on it, and the SDK will not try to automatically commit it at the end of the code block.
+
+== Transaction Operations
+
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tags=query;!integrated-sdk-begin-transaction]
+
+== Custom Metadata Collections
+
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=custom-metadata-1]
+
+[source,csharp]
+----
+include::howtos:example$TransactionsExample.cs[tag=custom-metadata,indent=0]
+----
+
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=custom-metadata-2]
+

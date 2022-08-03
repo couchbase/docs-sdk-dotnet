@@ -30,4 +30,4 @@ include::{version-server}@sdk:shared:partial$errors.adoc[tag=observability]
 
 == ACID Transactions
 
-For a discussion of errors affecting multi-document ACID transactions, see xref:howtos:distributed-acid-transactions-from-the-sdk.adoc#error-handling[our documentation on transactions from the .NET SDK].
+For a discussion of errors affecting multi-document ACID transactions, see xref:concept-docs:transactions-error-handling.adoc#error-handling[our documentation on transactions from the .NET SDK].
