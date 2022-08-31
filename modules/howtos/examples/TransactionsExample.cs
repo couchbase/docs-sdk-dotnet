@@ -36,7 +36,7 @@ namespace Couchbase.Transactions.Examples
             var options = new ClusterOptions().WithCredentials("Administrator", "password");
             var cluster = await Cluster.ConnectAsync("couchbase://localhost", options).ConfigureAwait(false);
             var bucket = await cluster.BucketAsync("default").ConfigureAwait(false);
-            var collection = bucket.DefaultCollection();
+            var collection = await bucket.ScopeAsync("inventory").CollectionAsync("airport").ConfigureAwait(false);
 
             // Create the single Transactions object
             var transactions = Transactions.Create(cluster, TransactionConfigBuilder.Create());
@@ -76,6 +76,24 @@ namespace Couchbase.Transactions.Examples
                 .CleanupWindow(TimeSpan.FromSeconds(120))
                 .Build());
             // #end::config-cleanup[]
+        }
+
+        async Task CreateSimpleAsync()
+        {
+            var doc1Content = new { };
+            var doc2Content = new { };
+
+            // tag::create-simple[]
+            await _transactions.RunAsync(async (ctx) =>
+            {
+                await ctx.InsertAsync(_collection, "doc-1", doc1Content).ConfigureAwait(false);
+
+                var doc2 = await ctx.GetAsync(_collection, "doc-2").ConfigureAwait(false);
+                await ctx.ReplaceAsync(doc2, doc2Content).ConfigureAwait(false);
+
+                await ctx.CommitAsync().ConfigureAwait(false);
+            }).ConfigureAwait(false);
+            // end::create-simple[]
         }
 
         async Task CreateAsync()
@@ -335,9 +353,7 @@ namespace Couchbase.Transactions.Examples
         private async Task RollbackCause()
         {
             const int costOfItem = 10;
-
-            // #tag::rollback-cause[]
-
+            // tag::rollback-cause[]
             try
             {
                 await _transactions.RunAsync(async ctx =>
@@ -351,8 +367,7 @@ namespace Couchbase.Transactions.Examples
             catch (TransactionCommitAmbiguousException e)
             {
                 // This exception can only be thrown at the commit point, after the
-                // BalanceInsufficient logic has been passed, so there is no need to
-                // check getCause here.
+                // BalanceInsufficient logic has been passed.
                 Console.Error.WriteLine("Transaction possibly committed");
                 Console.Error.WriteLine(e);
             }
@@ -361,7 +376,7 @@ namespace Couchbase.Transactions.Examples
                 Console.Error.WriteLine("Transaction did not reach commit point");
             }
 
-            // #end::rollback-cause[]
+            // end::rollback-cause[]
         }
 
         async Task CompleteErrorHandling()
@@ -559,7 +574,10 @@ namespace Couchbase.Transactions.Examples
             {
                 // tag::queryInsert[]
                 await transactions.RunAsync(async ctx => {
-                    await ctx.QueryAsync<object>("INSERT INTO `default` VALUES ('doc', {'hello':'world'})", TransactionQueryConfigBuilder.Create());  // <1>
+                    await ctx.QueryAsync<object>(
+                        "INSERT INTO `default` VALUES ('doc', {'hello':'world'})",
+                        TransactionQueryConfigBuilder.Create()
+                    );  // <1>
 
                     // Performing a 'Read Your Own Write'
                     var st = "SELECT `default`.* FROM `default` WHERE META().id = 'doc'"; // <2>
@@ -649,7 +667,8 @@ namespace Couchbase.Transactions.Examples
 
             {
                 // tag::custom-metadata[]
-                ICouchbaseCollection metadataCollection = null; // this is a Collection opened by your code earlier
+                // Replace with your own metadata collection.
+                ICouchbaseCollection metadataCollection = null;
                 Transactions transactionsWithCustomMetadataCollection = Transactions.Create(cluster,
                         TransactionConfigBuilder.Create().MetadataCollection(metadataCollection));
                 // end::custom-metadata[]
