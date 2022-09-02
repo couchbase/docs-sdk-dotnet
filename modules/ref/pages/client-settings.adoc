@@ -441,7 +441,7 @@ The default tracer logs the slowest requests per service.
 var clusterOptions = new ClusterOptions();
   clusterOptions.WithThresholdTracing(thresholdOptions =>
   {
-      thresholdOptions.WithInterval(TimeSpan.FromSeconds(10));
+      thresholdOptions.WithEmitInterval(TimeSpan.FromSeconds(10));
       thresholdOptions.WithSampleSize(10);
       thresholdOptions.WithKvThreshold(TimeSpan.FromMilliseconds(500));
       thresholdOptions.WithQueryThreshold(TimeSpan.FromSeconds(1));
