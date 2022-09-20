@@ -18,7 +18,7 @@ The full installation instructions that were previously on this page can now be 
 [#version-3-3-5]
 == Version 3.3.5 (16 September 2022)
 
-Version 3.3.5 is the fifth release of the 3.3 series.
+Version 3.3.5 is the sixth release of the 3.3 series.
 
 https://packages.couchbase.com/clients/net/3.3/Couchbase-Net-Client-3.3.5.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.3.5[API Reference] |
@@ -33,16 +33,9 @@ If you encounter a similar situation during migration and need help with mitigat
 === Fixed Issues
 
 * https://issues.couchbase.com/browse/NCBC-3256[NCBC-3256]:
-Search.MetaData.TimeTook is wrong by an order of magnitude.
+Fixed issue where `Search.MetaData.TimeTook` was being parsed as ticks, not nanoseconds.
 * https://issues.couchbase.com/browse/NCBC-3257[NCBC-3257]:
-KV Failure when using Memcached Bucket
-
-=== New Features and Behavioral Changes
-
-* https://issues.couchbase.com/browse/NCBC-3158[NCBC-3158]:
-Concurrency Testing: Run in Jenkins
-* https://issues.couchbase.com/browse/NCBC-2193[NCBC-2193]:
-Ensure combination testing runs for branches other than master
+Fixed a bug where operations failed on memcached bucket types.
 
 [#version-3-3-4]
 == Version 3.3.4 (02 August 2022)
