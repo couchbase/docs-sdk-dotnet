@@ -15,6 +15,28 @@ For release notes, download links, and installation methods for 2.7 and earlier 
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
+[#version-3-3-5]
+== Version 3.3.5 (16 September 2022)
+
+Version 3.3.5 is the sixth release of the 3.3 series.
+
+https://packages.couchbase.com/clients/net/3.3/Couchbase-Net-Client-3.3.5.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.3.5[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.3.5[Nuget]
+
+=== Special Note
+
+* During a rebalance upgrade from 6.x (or any earlier version) to 7.x, in mixed mode (where you are communicating with Couchbase Server whilst some but not all nodes are upgraded), there is a known issue where data may be written to the wrong location.  
+The solution is to either upgrade to `3.2.9` or greater, or to pause application processing so there are no writes until you have upgraded all nodes.  
+If you encounter a similar situation during migration and need help with mitigation, please contact our support team.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3256[NCBC-3256]:
+Fixed issue where `Search.MetaData.TimeTook` was being parsed as ticks, not nanoseconds.
+* https://issues.couchbase.com/browse/NCBC-3257[NCBC-3257]:
+Fixed a bug where operations failed on memcached bucket types.
+
 [#version-3-3-4]
 == Version 3.3.4 (02 August 2022)
 
