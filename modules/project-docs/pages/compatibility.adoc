@@ -59,7 +59,7 @@ See the notes there for Support details.
 At time of release, the Couchbase 3.3 .NET SDK is fully compatible with Couchbase Capella, our fully-hosted database-as-a-service.
 To make development easier, the 3.3 SDK includes the Capella client certificate ready installed.
 
-include::{version-server}@sdk:shared:partial$capella.adoc[tag=cloud]
+include::{version-common}@sdk:shared:partial$capella.adoc[tag=cloud]
 
 
 == Platform Compatibility
@@ -187,10 +187,10 @@ except *✖* 2.0, 2.1 xref:project-docs:sdk-release-notes.adoc#version-3-2-5-10-
 
 
 
-include::{version-server}@sdk:shared:partial$network-requirements.adoc[]
+include::{version-common}@sdk:shared:partial$network-requirements.adoc[]
 
-include::{version-server}@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
+include::{version-common}@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
 
-include::{version-server}@sdk:shared:partial$api-version.adoc[tag=api-version]
+include::{version-common}@sdk:shared:partial$api-version.adoc[tag=api-version]
 
-include::7.1@sdk:shared:partial$archive.adoc[tag=link]
+include::{version-common}@sdk:shared:partial$archive.adoc[tag=link]

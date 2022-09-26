@@ -23,9 +23,9 @@ include::example$Auth.cs[tag=basic,indent=0]
 ----
 
 
-include::{version-server}@sdk:shared:partial$auth-overview.adoc[tag=rbac]
+include::{version-common}@sdk:shared:partial$auth-overview.adoc[tag=rbac]
 
-include::{version-server}@sdk:shared:partial$auth-overview.adoc[tag=cert-auth]
+include::{version-common}@sdk:shared:partial$auth-overview.adoc[tag=cert-auth]
 
 
 == Authenticating a .NET Client by Certificate
@@ -40,4 +40,4 @@ That is, a cluster certificate has been created and installed on the server, a c
 include::example$Auth.cs[tag=auth,indent=0]
 ----
 
-include::{version-server}@sdk:shared:partial$auth-overview.adoc[tag=ldap]
+include::{version-common}@sdk:shared:partial$auth-overview.adoc[tag=ldap]

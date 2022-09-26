@@ -1,6 +1,6 @@
 include::project-docs:partial$attributes.adoc[]
 
-include::{version-server}@sdk:pages:partial$webui-cli-access.adoc[]
+include::{version-common}@sdk:pages:partial$webui-cli-access.adoc[]
 
 ////
 = Browser and CLI Access

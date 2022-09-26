@@ -15,9 +15,9 @@ Individual behaviour changes across services are explained here.
 
 In following Microsoft recommendations on .NET, the API has also been changed to surface many of the APIs as async using Tasks.
 
-include::{version-server}@sdk:shared:partial$migration.adoc[tag=intro]
+include::{version-common}@sdk:shared:partial$migration.adoc[tag=intro]
 
-include::{version-server}@sdk:shared:partial$migration.adoc[tag=terms]
+include::{version-common}@sdk:shared:partial$migration.adoc[tag=terms]
 
 As an example here is a KeyValue document fetch:
 
@@ -40,13 +40,13 @@ IQueryResult<dynamic> result = await cluster.QueryAsync<dynamic>("select 1 = 1",
 
 ----
 
-include::{version-server}@sdk:shared:partial$migration.adoc[tag=terms2]
+include::{version-common}@sdk:shared:partial$migration.adoc[tag=terms2]
 
 
-include::{version-server}@sdk:shared:partial$migration.adoc[tag=new]
+include::{version-common}@sdk:shared:partial$migration.adoc[tag=new]
 
 
-include::{version-server}@sdk:shared:partial$migration.adoc[tag=lang]
+include::{version-common}@sdk:shared:partial$migration.adoc[tag=lang]
 
 ==  Installation and Configuration
 
@@ -933,4 +933,4 @@ Note that some options have been removed, and others have different ways to conf
 |`Serializer`                               |`Serializer`			
 |====
 
-include::7.1@sdk:shared:partial$archive.adoc[tag=migration]
+include::{version-common}@sdk:shared:partial$archive.adoc[tag=migration]
