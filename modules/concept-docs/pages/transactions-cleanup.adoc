@@ -9,7 +9,7 @@
 include::project-docs:partial$attributes.adoc[]
 include::howtos:partial$acid-transactions-attributes.adoc[]
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tags=cleanup;!integrated-sdk-cleanup-collections]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tags=cleanup;!integrated-sdk-cleanup-collections]
 
 [#tuning-cleanup]
 === Configuring Cleanup

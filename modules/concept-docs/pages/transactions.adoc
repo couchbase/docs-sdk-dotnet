@@ -13,7 +13,7 @@ For a practical guide, see xref:howtos:distributed-acid-transactions-from-the-sd
 
 == Overview
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tags=intro]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tags=intro]
 
 == Transaction Mechanics
 
@@ -22,7 +22,7 @@ include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tags=intro]
 include::howtos:example$TransactionsExample.cs[tag=create-simple,indent=0]
 ----
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tags=mechanics;!integrated-sdk-cleanup-process]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tags=mechanics;!integrated-sdk-cleanup-process]
 
 TIP: Committing is automatic: if there is no explicit call to `ctx.CommitAsync()` at the end of the transaction logic callback, and no exception is thrown, it will be committed.
 
@@ -55,16 +55,16 @@ After a transaction is rolled back, it cannot be committed, no further operation
 
 == Transaction Operations
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tags=query;!integrated-sdk-begin-transaction]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tags=query;!integrated-sdk-begin-transaction]
 
 == Custom Metadata Collections
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=custom-metadata-1]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=custom-metadata-1]
 
 [source,csharp]
 ----
 include::howtos:example$TransactionsExample.cs[tag=custom-metadata,indent=0]
 ----
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=custom-metadata-2]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=custom-metadata-2]
 

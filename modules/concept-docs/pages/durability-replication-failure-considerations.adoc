@@ -11,17 +11,17 @@ Even the most reliable software and hardware might fail at some point, and along
 Couchbase’s durability features include Synchronous Replication, and the possibility to use distributed, multi-document ACID transactions.
 It is the responsibility of the development team and the software architect to evaluate the best choice for each use case.
 
-include::{version-server}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=intro]
+include::{version-common}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=intro]
 
-include::{version-server}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=syncrep]
-include::{version-server}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=syncrep2]
-include::{version-server}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=syncrep3]
+include::{version-common}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=syncrep]
+include::{version-common}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=syncrep2]
+include::{version-common}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=syncrep3]
 
-include::{version-server}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=older]
+include::{version-common}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=older]
 
-include::{version-server}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=performance]
+include::{version-common}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=performance]
 
-// include::{version-server}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=txns]
+// include::{version-common}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=txns]
 
-// include::{version-server}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=failover]
+// include::{version-common}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=failover]
 

@@ -4,6 +4,7 @@
 :page-topic-type: howto
 :page-aliases: document-operations.adoc,durability.adoc
 :page-toclevels: 2
+
 include::project-docs:partial$attributes.adoc[]
 
 
@@ -156,7 +157,7 @@ A network timeout can be set with the optional `TouchOptions()`, in the same fas
 include::example$Couchbase.Examples/KvOperations.cs[tag=touchwithtimeout,indent=0]
 ----
 
-include::{version-server}@sdk:shared:partial$documents.adoc[tag=exp-note]
+include::{version-common}@sdk:shared:partial$documents.adoc[tag=exp-note]
 
 IMPORTANT: If you are using the overloads that take `IDocument`, note that the `IDocument.Expiry` property assumes ms (milli-seconds), and is converted to seconds before being sent to the server.
 All other overloads take a `TimeSpan` or an `uint`, and assume an expiry in seconds
@@ -196,7 +197,7 @@ include::example$Couchbase.Examples/KvOperations.cs[tag=binarydecrementwithoptio
 NOTE: Increment & Decrement are considered part of the ‘binary’ API and as such may still be subject to change
 
 
-include::7.1@sdk:shared:partial$atomic.adoc[tag=xdcr]
+include::{version-common}@sdk:shared:partial$atomic.adoc[tag=xdcr]
 
 
 == Scoped KV Operations

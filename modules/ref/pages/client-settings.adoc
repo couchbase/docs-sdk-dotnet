@@ -472,4 +472,4 @@ var clusterOptions = new ClusterOptions();
 
 // section on wide area network support
 
-include::{version-server}@sdk:shared:partial$client-settings-wide-network.adoc[]
+include::{version-common}@sdk:shared:partial$client-settings-wide-network.adoc[]

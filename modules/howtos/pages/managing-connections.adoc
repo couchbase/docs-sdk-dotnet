@@ -362,7 +362,7 @@ E.....@.@.............+....Z.'yZ..#........
 
 
 
-include::{version-server}@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
+include::{version-common}@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
 
 
 == DNS SRV Bootstrapping
@@ -418,7 +418,7 @@ Other timeout issues may occur when using the SDK located geographically separat
 See the xref:#working-in-the-cloud[Cloud section] below for some suggestions of settings adjustments.
 
 // ******** cloud ********
-include::{version-server}@sdk:shared:partial$managing-connections.adoc[tag=cloud]
+include::{version-common}@sdk:shared:partial$managing-connections.adoc[tag=cloud]
 
 
 == Additional Resources

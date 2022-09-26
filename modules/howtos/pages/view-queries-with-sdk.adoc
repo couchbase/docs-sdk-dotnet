@@ -9,12 +9,12 @@ include::project-docs:partial$attributes.adoc[]
 [abstract]
 {description}
 
-include::{version-server}@sdk:shared:partial$views.adoc[tag=deprecate]
+include::{version-common}@sdk:shared:partial$views.adoc[tag=deprecate]
 
 
-include::{version-server}@sdk:shared:partial$views.adoc[tag=views-intro]
+include::{version-common}@sdk:shared:partial$views.adoc[tag=views-intro]
 
-include::{version-server}@sdk:shared:partial$views.adoc[tag=example-beer]
+include::{version-common}@sdk:shared:partial$views.adoc[tag=example-beer]
 
 
 [source,csharp]
@@ -25,7 +25,7 @@ var result = await bucket.ViewQueryAsync("beers", "by_name", options => {
 });
 ----
 
-include::{version-server}@sdk:shared:partial$views.adoc[tag=example-travel]
+include::{version-common}@sdk:shared:partial$views.adoc[tag=example-travel]
 
 
 [source,csharp]
