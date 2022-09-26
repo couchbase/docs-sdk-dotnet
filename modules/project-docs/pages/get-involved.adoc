@@ -1,7 +1,6 @@
 include::partial$attributes.adoc[]
 
 = Get Involved
-:navtitle: Get Involved
 
 == Contributing
 

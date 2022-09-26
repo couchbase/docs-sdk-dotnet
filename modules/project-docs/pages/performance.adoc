@@ -1,8 +1,8 @@
 = Performance Best Practices
 :description: Performance best practices for Couchbase .NET applications.
-:navtitle: Best Practices
 :source-language: csharp
 :page-toclevels: 2
+:page-topic-type: concept
 
 [abstract]
 {description} 

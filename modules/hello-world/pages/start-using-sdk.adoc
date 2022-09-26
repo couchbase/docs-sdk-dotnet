@@ -1,8 +1,9 @@
-= Install and Start Using the .NET SDK with Couchbase Server
+= Start Using the .NET SDK
 :description: The Couchbase .NET SDK enables you to interact with a Couchbase Server cluster from .NET using C# and other .NET languages.
 :page-aliases: ROOT:getting-started,ROOT:start-using,ROOT:hello-couchbase,ROOT:start-using-sdk
-:navtitle: Start Using the SDK
 :page-toclevels: 2
+:page-pagination: full
+:page-topic-type: tutorial
 
 include::project-docs:partial$attributes.adoc[]
 

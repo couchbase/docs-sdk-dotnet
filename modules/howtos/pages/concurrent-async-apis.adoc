@@ -1,6 +1,5 @@
-= Choosing an API
+= Async and Batching APIs
 :description: pass:q[The Couchbase .NET SDK uses the _Task-based Asynchronous Pattern (TAP)_ using types in the System.Threading.Tasks namespace to represent asynchronous operations against the Couchbase Server which can be awaited via the `await` keyword.]
-:navtitle: Choosing an API
 :page-topic-type: howto
 :page-aliases: ROOT:async-programming,ROOT:batching-operations
 

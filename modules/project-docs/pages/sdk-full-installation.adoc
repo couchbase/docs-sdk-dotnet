@@ -1,8 +1,7 @@
-= Couchbase .NET SDK Installation
+= Full Installation
 :description: Installation instructions for the Couchbase .NET Client.
-:navtitle: Full Installation
 :page-partial:
-:page-topic-type: project-doc
+:page-topic-type: howto
 :page-toclevels: 3
 
 [abstract]
@@ -21,7 +20,7 @@ This guide assumes you have some familiarity with development using .NET -- if y
 // tag::prep[]
 == .NET Compatibility
 
-include::partial$supported.adoc[]
+include::hello-world:partial$supported.adoc[]
 See the xref:project-docs:compatibility.adoc#dotnet-compatibility[Compatibility] section for more details.
 
 The library is distributed in a number of ways:

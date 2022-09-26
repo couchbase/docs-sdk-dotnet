@@ -1,6 +1,5 @@
-= Couchbase Distributed ACID Transactions for .NET SDK Release Notes
-:navtitle: Transactions Release Notes
-:page-topic-type: project-doc
+= Transactions Release Notes
+:page-topic-type: reference
 :page-aliases: transactions-release-notes
 
 include::partial$attributes.adoc[]
