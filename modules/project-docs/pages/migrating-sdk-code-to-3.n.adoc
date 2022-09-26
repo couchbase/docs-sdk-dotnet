@@ -1,7 +1,6 @@
-= Migrating from SDK2 to SDK3 API
+= Migrating to SDK 3 API
 :description: The 3.0 API breaks the existing 2.0 APIs in order to provide a number of improvements. \
 Collections and Scopes are introduced.
-:nav-title: Migrating to .NET SDK 3.0 API
 :page-topic-type: concept
 :page-aliases: ROOT:migrate
 

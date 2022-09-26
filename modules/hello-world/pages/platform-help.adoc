@@ -1,7 +1,8 @@
-= Setting Up Couchbase .NET SDK with VSCode
+= Platform Introduction
 :description: pass:q[Discover how to get up and running developing applications with the Couchbase .NET SDK 3.0+ using `Visual Studio Code`.]
 :page-aliases: ROOT:platform-introduction,ROOT:platform-help,dotnet-environment
-:navtitle: Setting Up the .NET SDK
+:page-pagination: next
+:page-topic-type: tutorial
 
 [abstract]
 {description}

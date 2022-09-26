@@ -1,11 +1,14 @@
-= Key Value Operations
-:description: Key Value Operations
-:navtitle: KV Operations
+= Data Operations
+:description: Data service offers the simplest way to retrieve or mutate data where the key is known. Here we cover CRUD operations, document expiration, and optimistic locking with CAS.
 :page-topic-type: howto
 :page-aliases: document-operations.adoc,durability.adoc
 :page-toclevels: 2
+:page-pagination: full
 
 include::project-docs:partial$attributes.adoc[]
+
+[abstract]
+{description}
 
 
 // The complete code sample used on this page can be downloaded from

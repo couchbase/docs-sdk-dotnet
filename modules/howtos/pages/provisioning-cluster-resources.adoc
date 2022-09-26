@@ -1,8 +1,8 @@
 = Provisioning Cluster Resources
 :description: Provisioning cluster resources is managed at the collection or bucket level, depending upon the service affected.
-:navtitle: Provisioning Cluster Resources
 :page-aliases: ROOT:managing-clusters
 :page-toclevels: 2
+:page-topic-type: howto
 
 // API refs
 :bucket-api-reference: pass:q[IBucketManager -- https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.Cluster.html#Couchbase_Cluster_Buckets[`Cluster.Buckets`]]
