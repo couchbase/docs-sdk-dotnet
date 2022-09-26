@@ -1,5 +1,5 @@
 name: dotnet-sdk
-version: '3.3'
+version: '3.4'
 title: ".NET SDK"
 start_page: hello-world:overview.adoc
 nav:
