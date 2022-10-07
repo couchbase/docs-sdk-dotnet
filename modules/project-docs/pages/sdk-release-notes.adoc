@@ -15,6 +15,7 @@ For release notes, download links, and installation methods for 2.7 and earlier 
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
+
 [#version-3-3-6]
 == Version 3.3.6 (06 October 2022)
 
@@ -33,27 +34,28 @@ If you encounter a similar situation during migration and need help with mitigat
 === Fixed Issues
 
 * https://issues.couchbase.com/browse/NCBC-3265[NCBC-3265]:
-Ensure SDK can bootstrap from a non data service node.
+Ensure SDK can bootstrap from a non-data-service node.
 * https://issues.couchbase.com/browse/NCBC-3270[NCBC-3270]:
-Make Increment and Decrement take unsigned long delta per the RFC.
+Make `Increment` and `Decrement` take unsigned long delta, per the RFC.
 
 === New Features and Behavioral Changes
 * https://issues.couchbase.com/browse/NCBC-3167[NCBC-3167]:
 Load Testing Performance App for .NET.
 * https://issues.couchbase.com/browse/NCBC-3258[NCBC-3258]:
-Change QueryRequest from /query to /query/service.
+Changed `QueryRequest` from /query to /query/service.
 * https://issues.couchbase.com/browse/NCBC-3263[NCBC-3263]:
-Support For Configuration Profiles.
+Support For Configuration Profiles added.
 * https://issues.couchbase.com/browse/NCBC-2953[NCBC-2953]:
 Support for Serverless/Lambda Execution Environments.
 * https://issues.couchbase.com/browse/NCBC-3261[NCBC-3261]:
-Where possible use ArrayPool instead of MemoryPool.
+Where possible, we now use `ArrayPool` instead of `MemoryPool`.
 * https://issues.couchbase.com/browse/NCBC-3264[NCBC-3264]:
-Improve performance of lambda processing for subdoc operations.
+Improved performance of lambda processing for subdoc operations.
 * https://issues.couchbase.com/browse/NCBC-3267[NCBC-3267]:
-Update tag before creating snapshot packages in Jenkins.
+When creating snapshot packages in Jenkins, the latest tag is now always used as a base for the snapshot name.
 * https://issues.couchbase.com/browse/NCBC-3268[NCBC-3268]:
-Ensure SessionState is ready for GA.
+`Session
+State` GA readiness.
 
 [#version-3-3-5]
 == Version 3.3.5 (16 September 2022)
