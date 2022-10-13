@@ -39,8 +39,6 @@ Ensure SDK can bootstrap from a non-data-service node.
 Make `Increment` and `Decrement` take unsigned long delta, per the RFC.
 
 === New Features and Behavioral Changes
-* https://issues.couchbase.com/browse/NCBC-3167[NCBC-3167]:
-Load Testing Performance App for .NET.
 * https://issues.couchbase.com/browse/NCBC-3258[NCBC-3258]:
 Changed `QueryRequest` from /query to /query/service.
 * https://issues.couchbase.com/browse/NCBC-3263[NCBC-3263]:
