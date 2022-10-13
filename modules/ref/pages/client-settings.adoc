@@ -2,6 +2,7 @@
 :description: pass:q[The `ClusterOptions` class enables you to configure .NET SDK options for bootstrapping, timeouts, reliability, and performance.]
 :page-topic-type: reference
 :page-aliases: ROOT:client-settings, ROOT:env-config, ROOT:configuring-the-client
+:page-toclevels: 2
 
 include::project-docs:partial$attributes.adoc[]
 
@@ -472,3 +473,49 @@ var clusterOptions = new ClusterOptions();
 // section on wide area network support
 
 include::{version-common}@sdk:shared:partial$client-settings-wide-network.adoc[]
+
+== Configuration Profiles
+
+Configuration Profiles provide predefined client settings that allow you to quickly configure an environment for common use-cases.
+When using a configuration profile, the current client settings are overridden with the values provided in the profile.
+Any property that is not specified in the profile is left unchanged.
+
+CAUTION: The Configuration Profiles feature is currently a xref:java-sdk:project-docs:compatibility.adoc#interface-stability[Volatile API] and may be subject to change.
+
+=== WAN Development
+
+*Cluster Option:* `ApplyProfile("wan-development")`
+
+A `wan-development` configuration profile can be used to modify client settings for development or high-latency environments.
+This profile changes the default timeouts.
+
+
+.Profile Settings
+[cols="1,1"]
+|===
+| Setting | Value
+
+| `KvConnectTimeout`
+| 10s
+
+| `KvTimeout`
+| 2.5s
+
+| `KvDurabilityTimeout`
+| 10s
+
+| `ViewTimeout`
+| 75s
+
+| `QueryTimeout`
+| 75s
+
+| `AnalyticsTimeout`
+| 75s
+
+| `SearchTimeout`
+| 75s
+
+| `ManagementTimeout`
+| 75s
+|===

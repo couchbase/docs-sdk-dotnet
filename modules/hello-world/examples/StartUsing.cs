@@ -39,8 +39,9 @@ namespace examples
             // #end::upsert-get[]
 
             // tag::n1ql-query[]
-            // Call the QueryAsync() function on the cluster object and store the result.
-            var queryResult = await cluster.QueryAsync<dynamic>("select \"Hello World\" as greeting");
+            // Call the QueryAsync() function on the scope object and store the result.
+            var inventoryScope = bucket.Scope("inventory");
+            var queryResult = await inventoryScope.QueryAsync<dynamic>("SELECT * FROM airline WHERE id = 10");
             
             // Iterate over the rows to access result data and print to the terminal.
             await foreach (var row in queryResult) {
