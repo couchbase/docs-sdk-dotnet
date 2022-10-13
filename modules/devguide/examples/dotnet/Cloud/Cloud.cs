@@ -11,15 +11,23 @@ class CloudExample
     public async Task Main()
     {
         // #tag::connect[]
+        var options = new ClusterOptions
+        {
+            // Update these credentials for your Capella instance
+            UserName = "username",
+            Password = "Password!123",
+        };
+
+        // Sets a pre-configured profile called "wan-development" to help avoid latency issues
+        // when accessing Capella from a different Wide Area Network
+        // or Availability Zone (e.g. your laptop).
+        options.ApplyProfile("wan-development");
+
         var cluster = await Cluster.ConnectAsync(
-            // Update these credentials for your Capella instance!
-            "couchbases://cb.njg8j7mwqnvwjqah.cloud.couchbase.com",
-            new ClusterOptions
-            {
-                UserName = "username",
-                Password = "Password!123",
-                KvTimeout = TimeSpan.FromSeconds(10)
-            });
+            // Update these credentials for your Capella instance
+            "couchbases://cb.<your-endpoint>.cloud.couchbase.com",
+            options
+        );
         // #end::connect[]
 
         // #tag::bucket[]
@@ -42,8 +50,9 @@ class CloudExample
         // #end::upsert-get[]
 
         // tag::n1ql-query[]
-        // Call the QueryAsync() function on the cluster object and store the result.
-        var queryResult = await cluster.QueryAsync<dynamic>("select \"Hello World\" as greeting");
+        // Call the QueryAsync() function on the scope object and store the result.
+        var inventoryScope = bucket.Scope("inventory");
+        var queryResult = await inventoryScope.QueryAsync<dynamic>("SELECT * FROM airline WHERE id = 10");
         
         // Iterate over the rows to access result data and print to the terminal.
         await foreach (var row in queryResult) {
