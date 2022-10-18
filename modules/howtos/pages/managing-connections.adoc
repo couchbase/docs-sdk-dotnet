@@ -2,6 +2,7 @@
 :description: This section describes how to connect the .NET SDK to a Couchbase cluster.
 :page-topic-type: howto
 :page-aliases: ROOT:managing-connections,howtos:multi-network,ROOT:connecting,ROOT:connection-advanced,ROOT:cluster-helper
+:page-toclevels: 2
 
 include::project-docs:partial$attributes.adoc[]
 
@@ -212,9 +213,30 @@ NOTE: Any TLS certificates must be set up at the point where the connections are
 [#ssl]
 == Secure Connections
 
-Couchbase Server Enterprise Edition supports full encryption of client-side traffic using Transport Layer Security (TLS). That includes key-value type operations, queries, and configuration communication. Make sure you have the Enterprise Edition of Couchbase Server before proceeding with configuring encryption on the client side.
+Couchbase Server Enterprise Edition and Couchbase Capella support full encryption of client-side traffic using Transport Layer Security (TLS).
+That includes key-value type operations, queries, and configuration communication.
+Make sure you have the Enterprise Edition of Couchbase Server, or a Couchbase Capella account, before proceeding with configuring encryption on the client side.
 
-To configure encryption for the .NET SDK:
+=== Couchbase Capella
+
+The .NET SDK bundles Capella’s standard root certificate by default.
+This means you don’t need any additional configuration to enable TLS -- simply use `couchbases://` in your connection string.
+
+NOTE: Capella's root certificate is *not* signed by a well known CA (Certificate Authority).
+However, as the certificate is bundled with the SDK, it is trusted by default.
+
+=== Couchbase Server
+
+As of SDK 3.4, if you connect to a Couchbase Server cluster with a root certificate issued by a trusted CA (Certificate Authority), you no longer need to configure this in the `ClusterOptions`.
+
+The cluster's root certificate just needs to be issued by a CA whose certificate is in your system trust store.
+This includes well known CAs (e.g., GoDaddy, Verisign, etc...), plus any other CA certificates that you wish to add.
+
+IMPORTANT: .NET SDK sets `ClusterOptions.ForceIpAsTargetHost` to `false` by default, which means it will send the IP as the target host during TLS authentication.
+This will cause a certificate name mismatch.
+As a workaround, you need to set `ClusterOptions.ForceIpAsTargetHost` to `true` for the above to work.
+
+You can still provide a certificate explicitly if necessary:
 
  . Get the CA certificate from the cluster and save it in a text file.
 
@@ -251,7 +273,7 @@ The next step is to enable encryption and import the certificate.
 include::example$ManagingConnections.csx[tag=enableTls,indent=0]
 ----
 
-=== Importing the Certificate into Windows
+==== Importing the Certificate into Windows
 
 For development, do the following steps to install the certificate:
 
@@ -268,7 +290,7 @@ For development, do the following steps to install the certificate:
  . Select "Next" and then store it as "Trusted Root Certificate Authority".
 
 
-=== Importing the Certificate into MacOS
+==== Importing the Certificate into MacOS
 
  . Copy the certificate into a text file with the extension ".crt".
 
@@ -279,8 +301,7 @@ For development, do the following steps to install the certificate:
  . Exit and approve.
 
 
-
-=== Importing the Certificate into GNU/Linux
+==== Importing the Certificate into GNU/Linux
 
 Although different distributions differ slightly in the details of their certificate handling, they will be similar to one of the two patterns below.
 Refer to your distribution's documentation for precise instructions.
@@ -343,7 +364,7 @@ $ sudo update-ca-trust extract
 ====
 
 
-=== Certificate Verification
+==== Certificate Verification
 
 If you want to verify it’s actually working, you can use a tool like *tcpdump*.
 For example, an unencrypted upsert request looks like this (using `sudo tcpdump -i lo0 -A -s 0 port 11210`):
