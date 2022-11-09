@@ -14,6 +14,31 @@ For release notes, download links, and installation methods for 2.7 and earlier 
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
+[#version-3-4-0]
+== Version 3.4.0 (10 November 2022)
+
+Version 3.4.0 is the first release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.0.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.0[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.0[Nuget]
+
+=== Special Note
+
+* During a rebalance upgrade from 6.x (or any earlier version) to 7.x, in mixed mode (where you are communicating with Couchbase Server whilst some but not all nodes are upgraded), there is a known issue where data may be written to the wrong location.  
+The solution is to either upgrade to `3.2.9` or greater, or to pause application processing so there are no writes until you have upgraded all nodes.  
+If you encounter a similar situation during migration and need help with mitigation, please contact our support team.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3246[NCBC-3246]: EndpointDiagnostics.State always returns &quot;Authenticating&quot; for KV and not implemented per RFC
+* https://issues.couchbase.com/browse/NCBC-3266[NCBC-3266]: A timeout may have a status of &quot;success&quot;
+* https://issues.couchbase.com/browse/NCBC-3281[NCBC-3281]: Erroneous time reported in timeout log message.
+* https://issues.couchbase.com/browse/NCBC-3286[NCBC-3286]: RetryHandler does not apply backoff when a request is not AlwaysRetry.
+
+=== New Features and Behavioral Changes
+* https://issues.couchbase.com/browse/NCBC-3271[NCBC-3271]: Error Message for Bucket Hibernation
+
 
 [#version-3-3-6]
 == Version 3.3.6 (06 October 2022)
