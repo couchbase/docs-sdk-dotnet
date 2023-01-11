@@ -2189,7 +2189,8 @@ Reduce heap allocations calling BucketAsync
 == Pre-releases
 
 Numerous _Alpha_ and _Beta_ releases were made in the run-up to the 3.0 release, and although unsupported, the release notes and download links are retained for archive purposes xref:3.0-pre-release-notes.adoc[here].
-
+// https://docs.couchbase.com/dotnet-sdk/current/project-docs/3.0-pre-release-notes.html
+// Full link once 3.0 goes to archive
 
 == Older Releases
 
