@@ -13,6 +13,22 @@ These pages cover the 3._x_ versions of the Couchbase .NET SDK.
 For release notes, download links, and installation methods for 2.7 and earlier releases of the Couchbase .NET Client,  please see the xref:2.7@dotnet-sdk::sdk-release-notes.adoc[2.x .NET Release Notes & Download Archive].
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
+
+
+[#version-3-4-2]
+== Version 3.4.2 (13 January 2023)
+
+Version 3.4.2 is the third release of the 3.4 series.
+
+=== Fixed Issues
+
+*https://issues.couchbase.com/browse/NCBC-3269[NCBC-3269]: InternalServerFailureException error message caught in SDK Query Response
+*https://issues.couchbase.com/browse/NCBC-3297[NCBC-3297]: KV Range Scan breaks with NCBC-2167
+*https://issues.couchbase.com/browse/NCBC-3305[NCBC-3305]: Pickup latest range scan RFC changes
+*https://issues.couchbase.com/browse/NCBC-3310[NCBC-3310]: Scan: Fix RangeScanContinue parsing offset
+*https://issues.couchbase.com/browse/NCBC-3313[NCBC-3313]: Sub-Document LookupInAsync.Exists throws SubdocException when path not found
+
+
 [#version-3-4-1]
 == Version 3.4.1 (09 December 2022)
 
