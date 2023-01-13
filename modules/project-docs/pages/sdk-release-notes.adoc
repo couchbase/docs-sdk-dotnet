@@ -1,6 +1,6 @@
 = Release Notes
 :description: Release notes and download archive for the Couchbase .NET Client.
-:page-topic-type: reference
+// :page-topic-type: project doc
 :page-aliases: relnotes-dotnet-sdk
 :page-partial:
 
@@ -17,12 +17,6 @@ The full installation instructions that were previously on this page can now be 
 == Version 3.4.1 (09 December 2022)
 
 Version 3.4.1 is the second release of the 3.4 series.
-
-=== Special Note
-
-* During a rebalance upgrade from 6.x (or any earlier version) to 7.x, in mixed mode (where you are communicating with Couchbase Server whilst some but not all nodes are upgraded), there is a known issue where data may be written to the wrong location.  
-The solution is to either upgrade to `3.2.9` or greater, or to pause application processing so there are no writes until you have upgraded all nodes.  
-If you encounter a similar situation during migration and need help with mitigation, please contact our support team.
 
 === Fixed Issues
 
@@ -47,12 +41,6 @@ https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.0.zip[Do
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.0[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.4.0[Nuget]
 
-=== Special Note
-
-* During a rebalance upgrade from 6.x (or any earlier version) to 7.x, in mixed mode (where you are communicating with Couchbase Server whilst some but not all nodes are upgraded), there is a known issue where data may be written to the wrong location.  
-The solution is to either upgrade to `3.2.9` or greater, or to pause application processing so there are no writes until you have upgraded all nodes.  
-If you encounter a similar situation during migration and need help with mitigation, please contact our support team.
-
 === Fixed Issues
 
 * https://issues.couchbase.com/browse/NCBC-3246[NCBC-3246]: EndpointDiagnostics.State always returns &quot;Authenticating&quot; for KV and not implemented per RFC
@@ -72,12 +60,6 @@ Version 3.3.6 is the seventh release of the 3.3 series.
 https://packages.couchbase.com/clients/net/3.3/Couchbase-Net-Client-3.3.6.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.3.6[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.3.6[Nuget]
-
-=== Special Note
-
-* During a rebalance upgrade from 6.x (or any earlier version) to 7.x, in mixed mode (where you are communicating with Couchbase Server whilst some but not all nodes are upgraded), there is a known issue where data may be written to the wrong location.  
-The solution is to either upgrade to `3.2.9` or greater, or to pause application processing so there are no writes until you have upgraded all nodes.  
-If you encounter a similar situation during migration and need help with mitigation, please contact our support team.
 
 === Fixed Issues
 
@@ -103,6 +85,7 @@ When creating snapshot packages in Jenkins, the latest tag is now always used as
 `Session
 State` GA readiness.
 
+
 [#version-3-3-5]
 == Version 3.3.5 (16 September 2022)
 
@@ -112,18 +95,13 @@ https://packages.couchbase.com/clients/net/3.3/Couchbase-Net-Client-3.3.5.zip[Do
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.3.5[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.3.5[Nuget]
 
-=== Special Note
-
-* During a rebalance upgrade from 6.x (or any earlier version) to 7.x, in mixed mode (where you are communicating with Couchbase Server whilst some but not all nodes are upgraded), there is a known issue where data may be written to the wrong location.  
-The solution is to either upgrade to `3.2.9` or greater, or to pause application processing so there are no writes until you have upgraded all nodes.  
-If you encounter a similar situation during migration and need help with mitigation, please contact our support team.
-
 === Fixed Issues
 
 * https://issues.couchbase.com/browse/NCBC-3256[NCBC-3256]:
 Fixed issue where `Search.MetaData.TimeTook` was being parsed as ticks, not nanoseconds.
 * https://issues.couchbase.com/browse/NCBC-3257[NCBC-3257]:
 Fixed a bug where operations failed on memcached bucket types.
+
 
 [#version-3-3-4]
 == Version 3.3.4 (02 August 2022)
@@ -133,12 +111,6 @@ Version 3.3.4 is the fifth release of the 3.3 series.
 https://packages.couchbase.com/clients/net/3.3/Couchbase-Net-Client-3.3.4.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.3.4[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.3.4[Nuget]
-
-=== Special Note
-
-* During a rebalance upgrade from 6.x (or any earlier version) to 7.x, in mixed mode (where you are communicating with Couchbase Server whilst some but not all nodes are upgraded), there is a known issue where data may be written to the wrong location.  
-The solution is to either upgrade to `3.2.9` or greater, or to pause application processing so there are no writes until you have upgraded all nodes.  
-If you encounter a similar situation during migration and need help with mitigation, please contact our support team.
 
 === Fixed Issues
 
@@ -163,12 +135,6 @@ Version 3.3.3 is the fourth release of the 3.3 series.
 https://packages.couchbase.com/clients/net/3.3/Couchbase-Net-Client-3.3.3.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.3.3[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.3.3[Nuget]
-
-=== Special Note
-
-* During a rebalance upgrade from 6.x (or any earlier version) to 7x, in mixed mode (where you are communicating with Couchbase Server whilst some but not all nodes are upgraded), there is a known issue where data may be written to the wrong location.  
-The solution is to either upgrade to 3.2.9 or greater, or to pause application processing so there are no writes until you have upgraded all nodes.  
-If you encounter a similar situation during migration and need help with mitigation, please contact our support team.
 
 === Fixed Issues
 
@@ -198,6 +164,7 @@ Updated `Newtonsoft.JSON` to version `13.0.1` or later.
 * https://issues.couchbase.com/browse/NCBC-2953[NCBC-2953]:
 Added support for Serverless/Lambda Execution Environments
 
+
 [#version-3-3-2]
 == Version 3.3.2 (16 June 2022)
 
@@ -206,12 +173,6 @@ Version 3.3.2 is the third release of the 3.3 series.
 https://packages.couchbase.com/clients/net/3.3/Couchbase-Net-Client-3.3.2.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.3.2[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.3.2[Nuget]
-
-=== Special Note
-
-* During a rebalance upgrade from 6.x (or any earlier version) to 7x, in mixed mode (where you are communicating with Couchbase Server whilst some but not all nodes are upgraded), there is a known issue where data may be written to the wrong location.  
-The solution is to either upgrade to 3.2.9 or greater, or to pause application processing so there are no writes until you have upgraded all nodes.  
-If you encounter a similar situation during migration and need help with mitigation, please contact our support team.
 
 === Fixed Issues
 
@@ -297,16 +258,11 @@ https://packages.couchbase.com/clients/net/3.3/Couchbase-Net-Client-3.3.1.zip[Do
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.3.1[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.3.1[Nuget]
 
-=== Special Note
-
-* During a rebalance upgrade from 6.x (or any earlier version) to 7x, in mixed mode (where you are communicating with Couchbase Server whilst some but not all nodes are upgraded), there is a known issue where data may be written to the wrong location.  
-The solution is to either upgrade to 3.2.9 or greater, or to pause application processing so there are no writes until you have upgraded all nodes.  
-If you encounter a similar situation during migration and need help with mitigation, please contact our support team.
-
 === Fixed Issues
 
 * https://issues.couchbase.com/browse/NCBC-3192[NCBC-3192]:
 Fixed erroneous `InvalidArgumentException` with default TLS settings.
+
 
 == Version 3.3.0 (27 April 2022)
 
@@ -2233,7 +2189,8 @@ Reduce heap allocations calling BucketAsync
 == Pre-releases
 
 Numerous _Alpha_ and _Beta_ releases were made in the run-up to the 3.0 release, and although unsupported, the release notes and download links are retained for archive purposes xref:3.0-pre-release-notes.adoc[here].
-
+// https://docs.couchbase.com/dotnet-sdk/current/project-docs/3.0-pre-release-notes.html
+// Full link once 3.0 goes to archive
 
 == Older Releases
 
