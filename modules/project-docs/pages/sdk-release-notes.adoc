@@ -14,11 +14,50 @@ For release notes, download links, and installation methods for 2.7 and earlier 
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
+[#version-3-4-3]
+== Version 3.4.3 (08 February 2023)
+
+Version 3.4.3 is the fourth release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.3.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.3[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.3[Nuget]
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3316[NCBC-3316]:
+Scan: Refactored operation parsing, so `RangeScanContinue.OnNext()` doesn't get called after the first batch of a partition has been consumed. 
+* https://issues.couchbase.com/browse/NCBC-3329[NCBC-3329]:
+`NamedBucketProxyGenerator` and `NamedCollectionProxyGenerator` caches were not thread-safe during start up. 
+This applies primarily to unit testing scenarios -- most MVC applications were not affected, as it doesn't affect anything once the DI container is configured, because startup DI registration is single-threaded.
+* https://issues.couchbase.com/browse/NCBC-3331[NCBC-3331]:
+Retrying Named Prepared Queries from the SDK -- added an example of a custom `RetryStrategy` for the case where you do not want the named prepared statement to be retried, and want a fast-fail in that specific case and tests for named parameters.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-1999[NCBC-1999]:
+Added a `TryGetAsync` method to handle the case where `KeyNotFound` is returned by the server -- for improved performance over throwing
+an exception.
+* https://issues.couchbase.com/browse/NCBC-3293[NCBC-3293]:
+Handle case where a response contains a document that exceeds 8120b [_sic_] -- provided a test to show that large documents are correctly parsed
+and returned to the caller.
+* https://issues.couchbase.com/browse/NCBC-3307[NCBC-3307]:
+Scan: Implemented `BatchByteLimit`, `BatchItemLimit`, and `BatchTimeLimit`.
+* https://issues.couchbase.com/browse/NCBC-3318[NCBC-3318]:
+Protostellar: Exposed KV operation option values publicly, via read-only record copy.
+* https://issues.couchbase.com/browse/NCBC-3326[NCBC-3326]:
+Encode Duration was tracked twice for the Threshold Tracing -- as `RequestSpan` was disposed more than once. 
+This has now been fixed, and the correct value should be returned.
+
 
 [#version-3-4-2]
 == Version 3.4.2 (13 January 2023)
 
 Version 3.4.2 is the third release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.2.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.2[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.2[Nuget]
 
 === Fixed Issues
 
@@ -33,6 +72,10 @@ Version 3.4.2 is the third release of the 3.4 series.
 == Version 3.4.1 (09 December 2022)
 
 Version 3.4.1 is the second release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.1.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.1[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.1[Nuget]
 
 === Fixed Issues
 
