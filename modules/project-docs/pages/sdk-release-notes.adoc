@@ -14,6 +14,42 @@ For release notes, download links, and installation methods for 2.7 and earlier 
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
+[#version-3-4-4]
+== Version 3.4.4 (10 March 2023)
+
+Version 3.4.4 is the fifth release of the 3.4 series.
+
+=== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-3340[NCBC-3340]Possible Connection Leak in 3.3.6 version
+* https://issues.couchbase.com/browse/NCBC-3356[NCBC-3356]Queries include query_context param against &lt;7.0 server versions
+* https://issues.couchbase.com/browse/NCBC-3343[NCBC-3343]Bootstrap node may not call SelectBucket
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-3309[NCBC-3309]Handle query_context changes
+* https://issues.couchbase.com/browse/NCBC-3348[NCBC-3348]Throw exception when ConnectionString hosts are null.
+* https://issues.couchbase.com/browse/NCBC-3353[NCBC-3353]Remove build targets for out-of-support versions of .NET Framework.
+
+[#version-3-4-3]
+== Version 3.4.3 (08 February 2023)
+
+Version 3.4.3 is the fourth release of the 3.4 series.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3316[NCBC-3316]:Scan: Refactor operation parsing 
+* https://issues.couchbase.com/browse/NCBC-3327[NCBC-3327]:Ensure Encoding is only disposed is only disposed once in SendAsync 
+* https://issues.couchbase.com/browse/NCBC-3329[NCBC-3329]:NamedBucketProxyGenerator and NamedCollectionProxyGenerator caches are not thread-safe
+* https://issues.couchbase.com/browse/NCBC-3331[NCBC-3331]:Retrying Named Prepared Queries from the SDK
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-1999[NCBC-1999]:Add TryGet extension methods for supporting KeyNotFound status
+* https://issues.couchbase.com/browse/NCBC-3293[NCBC-3293]:Handle case where a response contains a document that exceeds 8120b (sic)
+* https://issues.couchbase.com/browse/NCBC-3307[NCBC-3307]:Scan: Implement BatchByteLimit, BatchItemLimit and BatchTimeLimit
+* https://issues.couchbase.com/browse/NCBC-3318[NCBC-3318]:Protostellar: Expose KV operation option values publicly.
+* https://issues.couchbase.com/browse/NCBC-3326[NCBC-3326]:Encode Duration is tracked twice for the Threshold Tracing
+
 
 [#version-3-4-2]
 == Version 3.4.2 (13 January 2023)
