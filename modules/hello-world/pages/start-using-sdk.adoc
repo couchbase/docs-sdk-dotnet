@@ -161,14 +161,14 @@ include::example$StartUsing.cs[tag=upsert-get,indent=0]
 Other possible key/value CRUD Operations are described in detail on the xref:howtos:kv-operations.adoc[KV Operations page].
 ====
 
-You can also perform a N1QL query with the cluster object:
+You can also perform a {sqlpp} (formerly N1QL) query with the cluster object:
 
 [source,csharp]
 ----
 include::example$StartUsing.cs[tag=n1ql-query,indent=0]
 ----
 
-You can learn more about N1QL queries on the xref:howtos:n1ql-queries-with-sdk.adoc[Query page].
+You can learn more about {sqlpp} queries on the xref:howtos:n1ql-queries-with-sdk.adoc[Query page].
 
 
 == Next Steps
@@ -177,7 +177,7 @@ Now you're up and running, try one of the following:
 
 * Our xref:hello-world:sample-application.adoc[Travel Sample Application] demonstrates all the basics you need to know;
 * Explore xref:howtos:kv-operations.adoc[Key Value Operations] against a document database;
-* Or xref:howtos:n1ql-queries-with-sdk.adoc[Query] with our SQL-based N1QL language;
+* Or xref:howtos:n1ql-queries-with-sdk.adoc[Query] with our SQL-based {sqlpp} language;
 // * Try longer-running queries with our xref:howtos:analytics-using-sdk.adoc[Analytics Service];
 // * A xref:howtos:full-text-searching-with-sdk.adoc[Full Text Search];
 * Or read up on xref:concept-docs:data-services.adoc[which service fits your use case].
