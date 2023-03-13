@@ -9,7 +9,7 @@ using Couchbase.Query;
 namespace Couchbase.Net.DevGuide
 {
     /**
- * Example of Querying using placeholders with N1QL in Java for the Couchbase Developer Guide.
+ * Example of Querying using placeholders with SQL++ (N1QL) in Java for the Couchbase Developer Guide.
  */
     public class QueryPlaceHolders : ConnectionBase
     {

@@ -47,7 +47,7 @@ namespace net3
             var getResult = await collection.GetAsync("king_arthur");
             Console.WriteLine(getResult.ContentAs<dynamic>());
 
-            // Perform a N1QL Query
+            // Perform a SQL++ (N1QL) Query
             var queryResult = await cluster.QueryAsync<dynamic>(
                 String.Format("SELECT name FROM `{0}` WHERE $1 IN interests", bucketName), 
                 new QueryOptions().Parameter("African Swallows")

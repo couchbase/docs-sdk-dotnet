@@ -589,7 +589,7 @@ namespace Couchbase.Transactions.Examples
 
             {
                 // tag::querySingle[]
-                var bulkLoadStatement = "<a bulk-loading N1QL statement>";
+                var bulkLoadStatement = "<a bulk-loading query statement>";
 
                 try
                 {
