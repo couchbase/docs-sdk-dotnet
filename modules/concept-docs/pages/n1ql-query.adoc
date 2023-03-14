@@ -1,4 +1,4 @@
-= Query
+= Querying with {sqlpp}
 :description: Parallel data management for complex queries over many records, using a familiar SQL-like syntax.
 :page-topic-type: concept
 :page-aliases: ROOT:n1ql-query,ROOT:prepared-statements,ROOT:querying
@@ -139,7 +139,7 @@ If index-maintenance is running behind, the query waits for it to catch up.
 * `request_plus`: Executes the query, requiring the indexes first to be updated to the timestamp of the current query-request.
 If index-maintenance is running behind, the query waits for it to catch up.
 
-For N1QL, the default consistency is `not_bounded`.
+For {sqlpp}, the default consistency is `not_bounded`.
 ////
 Consider the following snippet:
 
@@ -191,10 +191,10 @@ LINQ is a community project.
 Although it works well with Couchbase, it is not part of the officially-supported product.
 
 LINQ (Language Integrated Query), is a powerful way to guide you in building your statements:
-you obtain Type safety and auto completion of relevant methods and N1QL clauses.
+you obtain Type safety and auto completion of relevant methods and {sqlpp} clauses.
 It implements https://msdn.microsoft.com/en-us/library/mt693024.aspx[Microsoft’s language integrated query extensions to the C# language],
 and is similar to other LINQ providers like Linq2SQL, Entity Framework and NHibernate.
-The difference is that it emits N1QL in place of SQL.
+The difference is that it emits {sqlpp} in place of SQL.
 If you have used any other LINQ provider, you will find its familiarity and consistency make it an easy transition.
 
 _Linq2Couchbase_, the LINQ provider for the Couchbase .NET SDK, is a stand-alone project which depends on Couchbase .NET SDK
@@ -205,7 +205,7 @@ and can be found on https://www.nuget.org/packages/linq2Couchbase[NuGet] -- and 
 PM> Install-Package Linq2Couchbase
 ----
 
-Once you have included the dependency, you can construct queries just like any other LINQ provider in a SQL-like fashion. Nearly all N1QL statements and functions are supported, for example:
+Once you have included the dependency, you can construct queries just like any other LINQ provider in a SQL-like fashion. Nearly all {sqlpp} statements and functions are supported, for example:
 
 * INNER, LEFT Outer, and Index JOINs
 * Math and Date functions
@@ -214,6 +214,6 @@ Once you have included the dependency, you can construct queries just like any o
 * META keyword, NEST and UNNEST
 * Etc.
 
-In addition to N1QL language features, Linq2Coucbase supports ORM features like Change-tracking, and mapping of JSON fields to keys and other POCO properties.
+In addition to {sqlpp} language features, Linq2Coucbase supports ORM features like Change-tracking, and mapping of JSON fields to keys and other POCO properties.
 The provider’s core object is the `BucketContext`, which is a Unit of Work (UoW) type object for performing querying and mutations on a per request basis.
 ////
