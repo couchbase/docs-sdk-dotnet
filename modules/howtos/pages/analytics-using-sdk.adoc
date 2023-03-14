@@ -1,5 +1,5 @@
 = Analytics
-:description: Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
+:description: Parallel data management for complex queries over many records, using a familiar {sqlpp} syntax.
 :page-topic-type: howto
 :page-edition: Enterprise Edition
 
@@ -277,6 +277,6 @@ include::devguide:example$dotnet/Analytics.cs[tag=handle-scope,indent=0]
 ////
 == Additional Resources
 
-To learn more about using N1QL for Analytics -- the first commercial implementation of SQL++ -- see our link:https://sqlplusplus-tutorial.couchbase.com[Tutorial Introduction to SQL++ for SQL users].
+To learn more about using {sqlpp} for Analytics -- see our link:https://sqlplusplus-tutorial.couchbase.com[Tutorial Introduction to SQL++ for SQL users].
 
 ////
