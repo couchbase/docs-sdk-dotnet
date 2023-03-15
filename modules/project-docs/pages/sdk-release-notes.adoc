@@ -14,6 +14,7 @@ For release notes, download links, and installation methods for 2.7 and earlier 
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
+
 [#version-3-4-4]
 == Version 3.4.4 (10 March 2023)
 
@@ -24,15 +25,26 @@ https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.4[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.4.4[Nuget]
 
 === Fixed Issues
-* https://issues.couchbase.com/browse/NCBC-3340[NCBC-3340]Possible Connection Leak in 3.3.6 version
-* https://issues.couchbase.com/browse/NCBC-3356[NCBC-3356]Queries include query_context param against &lt;7.0 server versions
-* https://issues.couchbase.com/browse/NCBC-3343[NCBC-3343]Bootstrap node may not call SelectBucket
+
+* https://issues.couchbase.com/browse/NCBC-3340[NCBC-3340]: 
+When an op timed out, the socket connection was closed and then recreating.
+With a large number of unexpected timeouts, many sockets could be left in `TIME_WAIT`.
+Making `ChannelConnectionProcessor` reuse connections after timeout shoeld reduce the number of file descripters and local ports left open.
+* https://issues.couchbase.com/browse/NCBC-3356[NCBC-3356]: 
+Cluster level `query_context`, which is not supported by Server versions earlier than 7.0, has been removed for these versions.
+* https://issues.couchbase.com/browse/NCBC-3343[NCBC-3343]: 
+Fixed a bug where `SelectBucket` may not be called on the internal node used as the bootstrapping endpoint. 
+This resulted in a `BucketNotConnected` error for certain ops -- which will now no longer occur.
 
 === New Features and Behavioral Changes
 
-* https://issues.couchbase.com/browse/NCBC-3309[NCBC-3309]Handle query_context changes
-* https://issues.couchbase.com/browse/NCBC-3348[NCBC-3348]Throw exception when ConnectionString hosts are null.
-* https://issues.couchbase.com/browse/NCBC-3353[NCBC-3353]Remove build targets for out-of-support versions of .NET Framework.
+* https://issues.couchbase.com/browse/NCBC-3309[NCBC-3309]: 
+Handled `query_context` changes by adding to every index manager request.
+* https://issues.couchbase.com/browse/NCBC-3348[NCBC-3348]: 
+When ConnectionString hosts are null, the SDK now throws an exception, with a more explicit error message.
+* https://issues.couchbase.com/browse/NCBC-3353[NCBC-3353]: 
+Removed build targets for out-of-support versions of .NET Framework.
+
 
 [#version-3-4-3]
 == Version 3.4.3 (08 February 2023)
