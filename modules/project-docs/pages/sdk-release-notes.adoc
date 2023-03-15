@@ -27,7 +27,7 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.4.4[Nuget]
 === Fixed Issues
 
 * https://issues.couchbase.com/browse/NCBC-3340[NCBC-3340]: 
-When an op timed out, the socket connection was closed and then recreating.
+When an op timed out, the socket connection was closed and then recreated.
 With a large number of unexpected timeouts, many sockets could be left in `TIME_WAIT`.
 Making `ChannelConnectionProcessor` reuse connections after timeout shoeld reduce the number of file descripters and local ports left open.
 * https://issues.couchbase.com/browse/NCBC-3356[NCBC-3356]: 
