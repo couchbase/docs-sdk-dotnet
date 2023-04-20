@@ -14,6 +14,35 @@ For release notes, download links, and installation methods for 2.7 and earlier 
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
+[#version-3-4-5]
+== Version 3.4.5 (20 April 2023)
+
+Version 3.4.5 is the fifth release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.5.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.5[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.5[Nuget]
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3334[NCBC-3334]: `KvNotMyVBucket` errors after add node + rebalance
+* https://issues.couchbase.com/browse/NCBC-3337[NCBC-3337]: NullReferenceException when bootstrapping against a non-existent bucket
+* https://issues.couchbase.com/browse/NCBC-3347[NCBC-3347]: IGetResult shouldn't have an internal Status property
+* https://issues.couchbase.com/browse/NCBC-3360[NCBC-3360]: Fix QueryContext bug in QueryIndexManager 
+* https://issues.couchbase.com/browse/NCBC-3362[NCBC-3362]: SDK writes to _default collection when intended collection is dropped
+* https://issues.couchbase.com/browse/NCBC-3363[NCBC-3363]: SubDoc SuccessDeleted not treated as Success
+* https://issues.couchbase.com/browse/NCBC-3365[NCBC-3365]: Change Search Metadata setters from internal to public
+* https://issues.couchbase.com/browse/NCBC-3369[NCBC-3369]: Ensure ClusterNode list matches Cluster config after rebalance up/down
+* https://issues.couchbase.com/browse/NCBC-3372[NCBC-3372]: Removed/rebalanced out node continues to be hit with http requests
+
+=== New Features and Behavioral Changes
+* https://issues.couchbase.com/browse/NCBC-3220[NCBC-3220]: Properly map server query timeout while streaming (1080)
+* https://issues.couchbase.com/browse/NCBC-3308[NCBC-3308]: Scan: Refactor sorting/merging into non-blocking implementation
+* https://issues.couchbase.com/browse/NCBC-3332[NCBC-3332]: Protostellar: Implement KV SubDoc
+* https://issues.couchbase.com/browse/NCBC-3355[NCBC-3355]: Update FIT performer
+* https://issues.couchbase.com/browse/NCBC-3274[NCBC-3274]: Add public API for KV Range Scan
+* https://issues.couchbase.com/browse/NCBC-3370[NCBC-3370]: Lock on sync object instead of nodes list.
+
 
 [#version-3-4-4]
 == Version 3.4.4 (10 March 2023)
