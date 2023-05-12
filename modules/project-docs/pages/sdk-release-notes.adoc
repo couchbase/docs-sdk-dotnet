@@ -35,6 +35,7 @@ In the latest development server versions 0xD is occasionally returned by the se
 Scan: Add missing Unit Tests.
 
 === New Features and Behavioral Changes
+
 * https://issues.couchbase.com/browse/NCBC-3273[NCBC-3273]: 
 SDK Support for Native KV Range Scans.
 * https://issues.couchbase.com/browse/NCBC-3364[NCBC-3364]: 
