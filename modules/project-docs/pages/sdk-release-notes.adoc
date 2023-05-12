@@ -14,6 +14,37 @@ For release notes, download links, and installation methods for 2.7 and earlier 
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
+[#version-3-4-6]
+== Version 3.4.6 (12 May 2023)
+
+Version 3.4.6 is the seventh release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.6.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.6[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.6[Nuget]
+
+== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3300[NCBC-3300]: 
+SamplingScan: Limit parameter not limiting results.
+* https://issues.couchbase.com/browse/NCBC-3301[NCBC-3301]: 
+SamplingScan: Requesting too few documents throws an error.
+* https://issues.couchbase.com/browse/NCBC-3345[NCBC-3345]: 
+In the latest development server versions 0xD is occasionally returned by the server.
+* https://issues.couchbase.com/browse/NCBC-3311[NCBC-3311]: 
+Scan: Add missing Unit Tests.
+
+=== New Features and Behavioral Changes
+* https://issues.couchbase.com/browse/NCBC-3273[NCBC-3273]: 
+SDK Support for Native KV Range Scans.
+* https://issues.couchbase.com/browse/NCBC-3364[NCBC-3364]: 
+Improve hot-path perf in `ClusterContext.GetOrCreateBucketAsync`.
+* https://issues.couchbase.com/browse/NCBC-3349[NCBC-3349]: 
+Added FIT support for QueryCollectionIndexManager
+* https://issues.couchbase.com/browse/NCBC-3315[NCBC-3315]: 
+Scan: Implement latest RFC changes.
+
+
 [#version-3-4-5]
 == Version 3.4.5 (20 April 2023)
 
