@@ -26,24 +26,18 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.4.6[Nuget]
 == Fixed Issues
 
 * https://issues.couchbase.com/browse/NCBC-3300[NCBC-3300]: 
-SamplingScan: Limit parameter not limiting results.
+SamplingScan: Fixed bug in limiting option 
 * https://issues.couchbase.com/browse/NCBC-3301[NCBC-3301]: 
-SamplingScan: Requesting too few documents throws an error.
+SamplingScan: Fixed bug where requesting too few documents returned incorrect responses.
 * https://issues.couchbase.com/browse/NCBC-3345[NCBC-3345]: 
-In the latest development server versions 0xD is occasionally returned by the server.
-* https://issues.couchbase.com/browse/NCBC-3311[NCBC-3311]: 
-Scan: Add missing Unit Tests.
+In the latest development server versions, 0xD is occasionally returned by the server.
 
 === New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/NCBC-3273[NCBC-3273]: 
-SDK Support for Native KV Range Scans.
+Added SDK Support for Native KV Range Scans.
 * https://issues.couchbase.com/browse/NCBC-3364[NCBC-3364]: 
-Improve hot-path perf in `ClusterContext.GetOrCreateBucketAsync`.
-* https://issues.couchbase.com/browse/NCBC-3349[NCBC-3349]: 
-Added FIT support for QueryCollectionIndexManager
-* https://issues.couchbase.com/browse/NCBC-3315[NCBC-3315]: 
-Scan: Implement latest RFC changes.
+Improved hot-path performance in `ClusterContext.GetOrCreateBucketAsync`.
 
 
 [#version-3-4-5]
