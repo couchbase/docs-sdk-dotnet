@@ -1,9 +1,9 @@
 .Getting Started
-* xref:hello-world:platform-help.adoc[]
 * xref:hello-world:start-using-sdk.adoc[]
+** xref:hello-world:platform-help.adoc[]
 * xref:howtos:kv-operations.adoc[]
-* xref:howtos:n1ql-queries-with-sdk.adoc[]
-* xref:howtos:full-text-searching-with-sdk.adoc[]
+* xref:howtos:n1ql-queries-with-sdk.adoc[Query]
+* xref:howtos:full-text-searching-with-sdk.adoc[Search]
 * xref:hello-world:sample-application.adoc[]
 
 .Transactions
@@ -15,7 +15,7 @@
 ** xref:concept-docs:transactions-cleanup.adoc[]
 ** xref:concept-docs:transactions-error-handling.adoc[]
 
-.Working with Data
+.Further Data Ops
 * xref:howtos:subdocument-operations.adoc[]
 //  ** xref:howtos:sdk-xattr-example.adoc[Extended Attributes]
 * xref:howtos:analytics-using-sdk.adoc[]
@@ -25,7 +25,6 @@
 * xref:howtos:concurrent-document-mutations.adoc[]
 * xref:howtos:encrypting-using-sdk.adoc[]
 * xref:howtos:transcoders-nonjson.adoc[Transcoders & Non-JSON Documents]
-* xref:howtos:working-with-collections.adoc[Working with Collections]
 
 .Managing Couchbase
 * xref:howtos:managing-connections.adoc[]
@@ -80,12 +79,13 @@
 * xref:project-docs:sdk-release-notes.adoc[]
 * xref:project-docs:distributed-transactions-dotnet-release-notes.adoc[]
 * xref:project-docs:compatibility.adoc[]
- ** xref:project-docs:migrating-sdk-code-to-3.n.adoc[]
+** xref:project-docs:migrating-sdk-code-to-3.n.adoc[]
+** xref:howtos:working-with-collections.adoc[Working with Collections]
 * xref:project-docs:sdk-full-installation.adoc[]
 * xref:project-docs:performance.adoc[]
 * https://docs-archive.couchbase.com/home/index.html[Older Versions Archive]
 // ** xref:hello-world:platform-help.adoc[Platform Introduction]
 * xref:project-docs:sdk-licenses.adoc[]
 * xref:project-docs:get-involved.adoc[Get involved]
- ** https://docs.couchbase.com/home/contribute/index.html[Improve the Docs]
+** https://docs.couchbase.com/home/contribute/index.html[Improve the Docs]
 * xref:project-docs:metadoc-about-these-sdk-docs.adoc[About These Docs]
