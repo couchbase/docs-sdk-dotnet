@@ -14,6 +14,35 @@ For release notes, download links, and installation methods for 2.7 and earlier 
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
+[#version-3-4-7]
+== Version 3.4.7 (07 June 2023)
+
+Version 3.4.7 is the eighth release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.7.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.7[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.7[Nuget]
+
+== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3350[NCBC-3350]: NotMyVBucket result in TaskCancellationException
+* https://issues.couchbase.com/browse/NCBC-3376[NCBC-3376]: Operation Elapsed property is not calculated properly for completed operations with retriable response status
+* https://issues.couchbase.com/browse/NCBC-3379[NCBC-3379]: OpenTelemetry request tracing doesn&#39;t properly handle sampling
+* https://issues.couchbase.com/browse/NCBC-3380[NCBC-3380]: ResponseStatusExtensions.SubDocPathException does not dispose of the IMemoryOwner
+* https://issues.couchbase.com/browse/NCBC-3382[NCBC-3382]: HTTP query clients aren&#39;t streaming results
+* https://issues.couchbase.com/browse/NCBC-3383[NCBC-3383]: Couchbase.ServiceNotAvailableException: Service n1ql is either not configured or cannot be reached.
+* https://issues.couchbase.com/browse/NCBC-3390[NCBC-3390]: Get Cluster Map operations are linked to the bootstrap trace
+* https://issues.couchbase.com/browse/NCBC-3392[NCBC-3392]: Scan: Use ConsistentWith MutationTokens for RangeScanCreate Operation
+* https://issues.couchbase.com/browse/NCBC-3393[NCBC-3393]: OperationCanceledException continues after rebalance completes
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-3391[NCBC-3391]: Scan: Implement PrefixScan
+* https://issues.couchbase.com/browse/NCBC-2394[NCBC-2394]: Ensure Query 4040 is handled like 4050 et al.
+* https://issues.couchbase.com/browse/NCBC-3354[NCBC-3354]: Use LoggerMessage for logging in Channel* classes
+* https://issues.couchbase.com/browse/NCBC-3378[NCBC-3378]: Refactor GET_CID use in CouchbaseBucket
+* https://issues.couchbase.com/browse/NCBC-3381[NCBC-3381]: Remove ClusterNodesChanged and VBucketMapChanged from BucketConfig
+
 [#version-3-4-6]
 == Version 3.4.6 (12 May 2023)
 
