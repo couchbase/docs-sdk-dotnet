@@ -14,6 +14,57 @@ For release notes, download links, and installation methods for 2.7 and earlier 
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
+
+[#version-3-4-7]
+== Version 3.4.7 (07 June 2023)
+
+Version 3.4.7 is the eighth release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.7.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.7[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.7[Nuget]
+
+== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3350[NCBC-3350]: 
+`NotMyVBucket` will no longer result in `TaskCancellationException`.
+* https://issues.couchbase.com/browse/NCBC-3376[NCBC-3376]: 
+Correct timeout response will now be returned during a rebalance.
+* https://issues.couchbase.com/browse/NCBC-3379[NCBC-3379]: 
+OpenTelemetry tracing was losing track of the parent span in cases where the parent span was not sampled, resulting in orphaned spans and increased trace volume.
+By capturing the `ExecutionContext`, if any, when queuing operations on the `ChannelConnectionPool`, and sending the operations on the captured context, the spans are now correctly sampled.
+* https://issues.couchbase.com/browse/NCBC-3380[NCBC-3380]: 
+When `IOperation.ExtractBody` is called it should always dispose of the returned IMemoryOwner, generally with a using statement; . 
+Failure to do so will cause the buffer to be garbage collected rather than returned to the ArrayPool -- which can lead to memory holes and decreased GC efficiency.
+This has no been fixed, and should no longer occur.
+* https://issues.couchbase.com/browse/NCBC-3382[NCBC-3382]: 
+Streaming support now working correctly for Analytics, Query, and Views.
+* https://issues.couchbase.com/browse/NCBC-3383[NCBC-3383]: 
+Couchbase.ServiceNotAvailableException: Service n1ql is either not configured or cannot be reached.
+* https://issues.couchbase.com/browse/NCBC-3390[NCBC-3390]: 
+Get Cluster Map operations were linked to the bootstrap trace, cusing erroneous large traces.
+A check has been added which fixes this.
+* https://issues.couchbase.com/browse/NCBC-3392[NCBC-3392]: 
+Scan: Use `ConsistentWith` MutationTokens for `RangeScanCreate` Operation.
+* https://issues.couchbase.com/browse/NCBC-3393[NCBC-3393]: 
+Fixed regression where `OperationCanceledException` continues after rebalance completes.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-3391[NCBC-3391]: 
+Scan: Implemented `PrefixScan` helper method.
+* https://issues.couchbase.com/browse/NCBC-2394[NCBC-2394]: 
+Query 4040 is now handled like 4050, _et al_ --
+e.g. prepared statement cache for it is removed and transparent reprepare is performed.
+* https://issues.couchbase.com/browse/NCBC-3354[NCBC-3354]: 
+Changed logging to use `LoggerMessage` in Channel classes.
+Added `ChannelConnectionEvent` in LoggingEvents.
+* https://issues.couchbase.com/browse/NCBC-3378[NCBC-3378]: 
+Improve `GET_CID` use in `CouchbaseBucket`.
+* https://issues.couchbase.com/browse/NCBC-3381[NCBC-3381]: 
+Removed `ClusterNodesChanged` and `VBucketMapChanged` (which are only used internally) from `BucketConfig`.
+
+
 [#version-3-4-6]
 == Version 3.4.6 (12 May 2023)
 
