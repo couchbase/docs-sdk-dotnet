@@ -14,6 +14,29 @@ For release notes, download links, and installation methods for 2.7 and earlier 
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
+[#version-3-4-8]
+== Version 3.4.8 (12 June 2023)
+
+Version 3.4.8 is the nineth release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.8.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.8[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.8[Nuget]
+
+== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3392[NCBC-3392]: 
+Scan - Use ConsistentWith MutationTokens for RangeScanCreate Operation
+* https://issues.couchbase.com/browse/NCBC-3395[NCBC-3395]: 
+Scan - Sampling Scan Limit parameter must be &gt; 0
+* https://issues.couchbase.com/browse/NCBC-3399[NCBC-3399]: 
+Regression in bootstrapping in 3.4.7 around NRE in PruneNodes
+
+=== New Features and Behavioral 
+
+* https://issues.couchbase.com/browse/NCBC-3391[NCBC-3391]: 
+Scan - Implement PrefixScan
+
 
 [#version-3-4-7]
 == Version 3.4.7 (07 June 2023)
