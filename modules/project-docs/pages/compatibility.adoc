@@ -33,7 +33,7 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 | *✔*
 | *✔*
 
-| *Server 7.0 - 7.1*
+| *Server 7.0 - 7.2*
 | *◎*
 | *✔*
 | *✔*
@@ -52,7 +52,7 @@ include::{version-common}@sdk:shared:partial$capella.adoc[tag=cloud]
 
 == Platform Compatibility
 
-Microsoft's CLR eliminates many of the compatibility problems found in other languages, but occasional problems can be caused by the underlying Opiratoeg System (OS).
+Microsoft's CLR eliminates many of the compatibility problems found in other languages, but occasional problems can be caused by the underlying Operating System (OS).
 The Couchbase .NET SDK is tested and supported on the following platforms:
 
 ****
