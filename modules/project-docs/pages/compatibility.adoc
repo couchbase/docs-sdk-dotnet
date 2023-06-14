@@ -64,7 +64,7 @@ include::{version-server}@sdk:shared:partial$capella.adoc[tag=cloud]
 
 == Platform Compatibility
 
-Microsoft's CLR eliminates many of the compatibility problems found in other languages, but occasional problems can be caused by the underlying Opiratoeg System (OS).
+Microsoft's CLR eliminates many of the compatibility problems found in other languages, but occasional problems can be caused by the underlying Operating System (OS).
 The Couchbase .NET SDK is tested and supported on the following platforms:
 
 ****
