@@ -1,6 +1,6 @@
 = Release Notes
 :description: Release notes and download archive for the Couchbase .NET Client.
-// :page-topic-type: project doc
+:page-topic-type: project doc
 :page-aliases: relnotes-dotnet-sdk
 :page-partial:
 
@@ -17,7 +17,7 @@ The full installation instructions that were previously on this page can now be 
 [#version-3-4-8]
 == Version 3.4.8 (12 June 2023)
 
-Version 3.4.8 is the nineth release of the 3.4 series.
+Version 3.4.8 is the ninth release of the 3.4 series.
 
 https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.8.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.8[API Reference] |
