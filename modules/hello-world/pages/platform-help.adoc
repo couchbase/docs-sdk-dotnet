@@ -58,7 +58,7 @@ Visual Studio Code is a free code editor which runs on Windows, Linux, and MacOS
  * https://code.visualstudio.com/docs/setup/setup-overview
 
 NOTE: We've given instructions for VS Code as it's a currently popular, cross-platform, multi-language editor that's seeing widespread use, and is easy to set up and get started.
-If you're planning to primarily develop in C#, you may prefer to look into using a full IDE like link:https://visualstudio.microsoft.com/[Visual Studio]  (the 2019 Community edition and the Mac edition are both free) or link:https://www.jetbrains.com/rider/[Jetbrains's Rider].
+If you're planning to primarily develop in C#, you may prefer to look into using a full IDE like link:https://visualstudio.microsoft.com/[Visual Studio]  (the 2019 Community edition and the Mac edition are both free) or link:https://www.jetbrains.com/rider/[JetBrains Rider].
 
 
 === Adding C# Development Support
