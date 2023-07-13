@@ -24,13 +24,16 @@ If this is not you, head back to the xref:overview.adoc[rest of the Couchbase .N
 
 TIP: VSCode requires installing the .NET SDK Core. Full IDEs like Visual Studio or Jetbrains Rider instead install a .NET SDK by default.
 
-NOTE: The latest Short Term Support (STS) version, .NET 7, isn't tested against version {dotnet-current-version} of the Couchbase .NET SDK. If you have any issues with this version, switch to a supported version.
+NOTE: The latest Short Term Support (STS) version, .NET 7, isn't tested against version {dotnet-current-version} of the Couchbase .NET SDK. 
+If you have any issues with this version, switch to a supported version.
 
 * Start at the .NET https://dotnet.microsoft.com/download[download page]
 * Windows and Mac run an installer, for Linux you have to navigate to the specific instructions for your distribution.
 * Couchbase recommends .NET 6, and the sample code generally targets this.
-* You may prefer to use an earlier version used in your organization. See xref:project-docs:compatibility.adoc#dotnet-compatibility[compatibility] for more information.
-* You can install multiple SDKs, to be able to run code targeting different versions. Use the `dotnet` command to list which versions are available. Here's an example output with 5.0 and 3.1 SDKs installed:
+* You may prefer to use an earlier version used in your organization. 
+See xref:project-docs:compatibility.adoc#dotnet-compatibility[compatibility] for more information.
+* You can install multiple SDKs, to be able to run code targeting different versions. 
+Use the `dotnet` command to list which versions are available. Here's an example output with 5.0 and 3.1 SDKs installed:
 
 [source,console]
 ----
@@ -54,7 +57,7 @@ Visual Studio Code is a free code editor which runs on Windows, Linux, and MacOS
 
  * https://code.visualstudio.com/docs/setup/setup-overview
 
-NOTE: we've given instructions for VS Code as it's a currently popular, cross-platform, multi-language editor that's seeing widespread use, and is easy to set up and get started.
+NOTE: We've given instructions for VS Code as it's a currently popular, cross-platform, multi-language editor that's seeing widespread use, and is easy to set up and get started.
 If you're planning to primarily develop in C#, you may prefer to look into using a full IDE like link:https://visualstudio.microsoft.com/[Visual Studio]  (the 2019 Community edition and the Mac edition are both free) or link:https://www.jetbrains.com/rider/[Jetbrains's Rider].
 
 
