@@ -14,6 +14,32 @@ For release notes, download links, and installation methods for 2.7 and earlier 
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
+[#version-3-4-9]
+== Version 3.4.9 (20 July 2023)
+
+Version 3.4.9 is the tenth release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.8.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.8[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.8[Nuget]
+
+=== Fixed Issues
+
+ * https://issues.couchbase.com/browse/NCBC-3367 [NCBC-3367]: FIT: Issue in returned QueryIndex: null values for Bucket, Scope and Collection names
+ * https://issues.couchbase.com/browse/NCBC-3417 [NCBC-3417]: MutateIn modifies global Transcoder setting, possibly corrupting data for all other operations.
+ * https://issues.couchbase.com/browse/NCBC-3433 [NCBC-3433]: Regression in 3.4.8 may cause IOException if Query has no content
+
+=== New Features and Behavioral Changes
+
+ * https://issues.couchbase.com/browse/NCBC-3412 [NCBC-3412]: Support Query with Read from Replica
+ * https://issues.couchbase.com/browse/NCBC-3418 [NCBC-3418]: Experimental support for HTTP2 when using the Query service
+ * https://issues.couchbase.com/browse/NCBC-3351 [NCBC-3351]: SDKs must encode URIs
+ * https://issues.couchbase.com/browse/NCBC-3437 [NCBC-3437]: Add .NET 4.8 back to .NET SDK unit and integration tests
+ * https://issues.couchbase.com/browse/NCBC-3384 [NCBC-3384]: Resolve all compiler warnings
+ * https://issues.couchbase.com/browse/NCBC-3386 [NCBC-3386]: Add conditional support for TLS 1.3 for .NET 6.0 and higher
+ * https://issues.couchbase.com/browse/NCBC-3401 [NCBC-3401]: Scan: Implement latest RFC revision (#9)
+ * https://issues.couchbase.com/browse/NCBC-3403 [NCBC-3403]: Improve memory usage of SearchClient
+
 [#version-3-4-8]
 == Version 3.4.8 (12 June 2023)
 
