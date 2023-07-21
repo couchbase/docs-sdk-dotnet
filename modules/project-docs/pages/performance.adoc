@@ -186,15 +186,17 @@ The current SDK comes with three different connection pools: The default `Channe
 In general, the default `ChannelConnectionPool` should do everything you need. 
 The pool will scale up and down depending upon the values found in `ClusterOptions.NumKvConnections` and `ClusterOptions.MaxKvConnections`. 
 The defaults for these values are `2` for the former and `5` for the latter. 
-Note, if you set the values to a number, the scaling mechanism will be disabled. 
-We suggest not changing these values most cases, however if you do, then you will want to do some benchamrking to determie the effects of the change on the client and on the server. 
-More connections does not mean better performance!
+If both values are set to a number less than or equal to `1`, a `SingleConnectionPool` will be used and scaling will be disabled.
+We DO NOT suggest changing these values most cases. However, if you do, then you should perform some benchmarking to determine the effects of the change on the client and on the server. 
+More connections does not necessarily mean better performance overall!
 
 The `SingleConnectionPool` is a very simple pool that contains exactly one connection. 
 It's useful for debugging connection related problems as it is has very few features and allows you to quickly isolate problems. 
-It is also suitable for some application -- however, we suggest the `ChannelConnectionPool`.
+It may also be suitable for some applications or micro-services that need to constrain the number of active connections. However, in general, we suggest using the `ChannelConnectionPool`.
+As mentioned above, setting both `ClusterOptions.NumKvConnections` and `ClusterOptions.MaxKvConnections` to a number less than or equal to `1` will cause the `SingleConnectionPool` to be used.
 
-The `DataFlowConnectionPool` is legacy and we do not suggest that you use it!
+
+The `DataFlowConnectionPool` is a legacy pool and we DO NOT suggest that you use it!
 
 === Operation Builder Pool Tuning
 
