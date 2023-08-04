@@ -20,9 +20,9 @@ The full installation instructions that were previously on this page can now be 
 
 Version 3.4.10 is the eleventh release of the 3.4 series.
 
-https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.8.zip[Download] |
-https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.8[API Reference] |
-https://www.nuget.org/packages/CouchbaseNetClient/3.4.8[Nuget]
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.10.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.10[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.10[Nuget]
 
 === Fixed Issues
 
@@ -66,9 +66,9 @@ We have removed these NuGet dependencies for the .NET 6 Target, which will reduc
 
 Version 3.4.9 is the tenth release of the 3.4 series.
 
-https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.8.zip[Download] |
-https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.8[API Reference] |
-https://www.nuget.org/packages/CouchbaseNetClient/3.4.8[Nuget]
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.9.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.9[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.9[Nuget]
 
 === Fixed Issues
 
