@@ -14,6 +14,32 @@ For release notes, download links, and installation methods for 2.7 and earlier 
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
+[#version-3-4-10]
+== Version 3.4.10 (03 Aug 2023)
+
+Version 3.4.10 is the eleventh release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.8.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.8[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.8[Nuget]
+
+=== Fixed Issues
+
+* 'https://issues.couchbase.com/browse/NCBC-3424[NCBC-3424]: Changes to Hello on the server create a server features list w/one extra item
+* 'https://issues.couchbase.com/browse/NCBC-3445[NCBC-3445]: Regression:  SubDocMultiPathFailureDeleted throws instead of returning status.
+* 'https://issues.couchbase.com/browse/NCBC-3423[NCBC-3423]: Add GetClusterConfigWithKnownVersion support to Hello
+* 'https://issues.couchbase.com/browse/NCBC-3425[NCBC-3425]: Add HELLO flag called DedupeNotMyVbucketClustermap
+* 'https://issues.couchbase.com/browse/NCBC-3427[NCBC-3427]: Support SnappyEverywhere 0x13 flag
+* 'https://issues.couchbase.com/browse/NCBC-3428[NCBC-3428]: Support ClustermapChangeNotificationBrief flag 0x1f
+* 'https://issues.couchbase.com/browse/NCBC-3429[NCBC-3429]: Add support for Duplex (0x0c) to Hello for Unordered Execution
+* 'https://issues.couchbase.com/browse/NCBC-3430[NCBC-3430]: Support ClustermapChangeNotification flag 0x0d
+
+=== New Features and Behavioral Changes
+
+* 'https://issues.couchbase.com/browse/NCBC-3278[NCBC-3278]: Improve error message when Uri is null when creating scope
+* 'https://issues.couchbase.com/browse/NCBC-3421[NCBC-3421]: Reduce heap allocations deserialing with DefaultSerializer
+* 'https://issues.couchbase.com/browse/NCBC-3432[NCBC-3432]: Add additional logging around IO exceptions
+* 'https://issues.couchbase.com/browse/NCBC-3438[NCBC-3438]: Reduce NuGet Dependencies for .NET 6 Target
 
 [#version-3-4-9]
 == Version 3.4.9 (20 July 2023)
