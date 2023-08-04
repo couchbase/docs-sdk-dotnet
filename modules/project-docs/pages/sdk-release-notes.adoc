@@ -55,7 +55,7 @@ Deserializing K/V operations with the `DefaultSerializer` was allocating an exce
 This change introduces a reusable pool of text readers which reads directly from the memory buffer without stream-related overhead or intermediate buffers.
 This results in a performance gain and a significant reduction in heap allocations when deserializing from a memory buffer.
 * https://issues.couchbase.com/browse/NCBC-3432[NCBC-3432]: 
-Added additional loggging at the IO level to capture more details of exceptions thrown when sockets are opened.
+Added additional logging at the IO level to capture more details of exceptions thrown when sockets are opened.
 * https://issues.couchbase.com/browse/NCBC-3438[NCBC-3438]: 
 Several of the listed dependencies for the .NET 6 target were unnecessary, as those packages are now included in the .NET framework and we're not targeting a higher version. 
 We have removed these NuGet dependencies for the .NET 6 Target, which will reduce restore time and size for consumers.
