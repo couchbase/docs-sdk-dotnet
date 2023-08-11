@@ -14,6 +14,84 @@ For release notes, download links, and installation methods for 2.7 and earlier 
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
+
+[#version-3-4-10]
+== Version 3.4.10 (03 Aug 2023)
+
+Version 3.4.10 is the eleventh release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.10.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.10[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.10[Nuget]
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3424[NCBC-3424]: 
+Future server versions will add an extra item to the features list returned, which effects the parsing of the body.
+This change prepares for the effects of those  flexible framing extras.
+* https://issues.couchbase.com/browse/NCBC-3445[NCBC-3445]: 
+At some point, `SubDocMultiPathFailureDeleted` was added as a special case of `SubDocMultiPathFailure`, but from an SDK point of view they should be handled them similarly.
+This change ensures that when doing a `LookupIn` against a Tombstone with `AccessDeleted` flag set, `SubDocMultiPathFailureDeleted` response status should not throw, and should be treated the same as `SubDocMultiPathFailure`.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-3423[NCBC-3423]: 
+Added `GetClusterConfigWithKnownVersion` support to Hello.
+* https://issues.couchbase.com/browse/NCBC-3425[NCBC-3425]: 
+Added a `HELLO` flag called `DedupeNotMyVbucketClustermap`.
+* https://issues.couchbase.com/browse/NCBC-3427[NCBC-3427]: 
+Added `SnappyEverywhere` flag support, in preparation for the .NET SDK supporting Compression.
+* https://issues.couchbase.com/browse/NCBC-3428[NCBC-3428]: 
+Added `ClustermapChangeNotificationBrief` flag support to subscribe to configuration notifications, where available.
+* https://issues.couchbase.com/browse/NCBC-3429[NCBC-3429]: 
+Added support for Duplex mode flag to Hello, for Unordered Execution.
+* https://issues.couchbase.com/browse/NCBC-3430[NCBC-3430]: 
+Added `ClustermapChangeNotification` flag support.
+// I think the below was closed with no fix necessary - let me know if I'm wrong and it should be uncommented.
+// * https://issues.couchbase.com/browse/NCBC-3278[NCBC-3278]: 
+// Improve error message when Uri is null when creating scope
+* https://issues.couchbase.com/browse/NCBC-3421[NCBC-3421]: 
+Deserializing K/V operations with the `DefaultSerializer` was allocating an excessive number of buffers for each operation.
+This change introduces a reusable pool of text readers which reads directly from the memory buffer without stream-related overhead or intermediate buffers.
+This results in a performance gain and a significant reduction in heap allocations when deserializing from a memory buffer.
+* https://issues.couchbase.com/browse/NCBC-3432[NCBC-3432]: 
+Added additional logging at the IO level to capture more details of exceptions thrown when sockets are opened.
+* https://issues.couchbase.com/browse/NCBC-3438[NCBC-3438]: 
+Several of the listed dependencies for the .NET 6 target were unnecessary, as those packages are now included in the .NET framework and we're not targeting a higher version. 
+We have removed these NuGet dependencies for the .NET 6 Target, which will reduce restore time and size for consumers.
+
+
+[#version-3-4-9]
+== Version 3.4.9 (20 July 2023)
+
+Version 3.4.9 is the tenth release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.9.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.9[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.9[Nuget]
+
+=== Fixed Issues
+
+ * https://issues.couchbase.com/browse/NCBC-3367[NCBC-3367]: 
+The SDK was returning `QueryIndexes` with null values for Bucket/Scope/Collection names (BucketName should return the Keyspace value when null).
+Added BucketName field with backing field for conditionally returning either BucketNameField or Keyspace.
+ * https://issues.couchbase.com/browse/NCBC-3417[NCBC-3417]: 
+`MutateIn` was modifying global Transcoder setting; nothing registered as a Singleton should be mutable and changes have been made to ensure that this can no longer happen.
+ * https://issues.couchbase.com/browse/NCBC-3433[NCBC-3433]: 
+Fixed regression in 3.4.8 which could cause `IOException` if Query has no content.
+
+=== New Features and Behavioral Changes
+
+ * https://issues.couchbase.com/browse/NCBC-3412[NCBC-3412]: Support Query with Read from Replica
+ * https://issues.couchbase.com/browse/NCBC-3418[NCBC-3418]: Experimental support for HTTP2 when using the Query service
+ * https://issues.couchbase.com/browse/NCBC-3351[NCBC-3351]: SDKs must encode URIs
+ * https://issues.couchbase.com/browse/NCBC-3437[NCBC-3437]: Add .NET 4.8 back to .NET SDK unit and integration tests
+ * https://issues.couchbase.com/browse/NCBC-3384[NCBC-3384]: Resolve all compiler warnings
+ * https://issues.couchbase.com/browse/NCBC-3386[NCBC-3386]: Add conditional support for TLS 1.3 for .NET 6.0 and higher
+ * https://issues.couchbase.com/browse/NCBC-3401[NCBC-3401]: Scan: Implement latest RFC revision (#9)
+ * https://issues.couchbase.com/browse/NCBC-3403[NCBC-3403]: Improve memory usage of SearchClient
+
+
 [#version-3-4-8]
 == Version 3.4.8 (12 June 2023)
 
