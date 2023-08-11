@@ -7,7 +7,7 @@ namespace Couchbase.Examples
     {
         static async Task Main(string[] args)
         {
-            var cluster = await Cluster.ConnectAsync("couchbase://localhost", "Administrator", "password");
+            var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "Administrator", "password");
             var bucket = await cluster.BucketAsync("travel-sample");
             var collection = bucket.DefaultCollection();
 

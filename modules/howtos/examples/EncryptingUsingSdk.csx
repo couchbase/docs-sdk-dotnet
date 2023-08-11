@@ -40,7 +40,7 @@ public class EncryptingUsingSdk
 
         var clusterOptions = new ClusterOptions()
             .WithTranscoder(encryptedTranscoder)
-            .WithConnectionString("couchbase://localhost")
+            .WithConnectionString("couchbase://your-ip")
             .WithCredentials("Administrator", "password");
 
         var cluster = await Cluster.ConnectAsync(clusterOptions);

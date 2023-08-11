@@ -3,7 +3,7 @@
 //      dotnet script KvHelloWorldScoped.csx
 //
 
-#r "nuget: CouchbaseNetClient, 3.2.5"
+#r "nuget: CouchbaseNetClient, 3.4.8"
 
 using System;
 using System.Threading.Tasks;
@@ -17,7 +17,7 @@ public class KvHelloWorldScoped
 {
 	public async Task ExampleAsync()
 	{
-		var cluster = await Cluster.ConnectAsync("couchbase://localhost", "Administrator", "password");
+		var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "Administrator", "password");
 		var bucket = await cluster.BucketAsync("travel-sample");
 		var inventoryScope = await bucket.ScopeAsync("inventory");
 		var hotelCollection = await inventoryScope.CollectionAsync("hotel");

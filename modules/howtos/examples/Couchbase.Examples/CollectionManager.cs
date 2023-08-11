@@ -15,7 +15,7 @@ namespace Couchbase.Examples
             {
                 // tag::scopeAdmin[]
                 ICluster clusterAdmin = await Cluster.ConnectAsync(
-                    "couchbase://localhost", "Administrator", "password");
+                    "couchbase://your-ip", "Administrator", "password");
                 IUserManager users =  clusterAdmin.Users;
 
                 var user = new User("scopeAdmin") {
@@ -30,7 +30,7 @@ namespace Couchbase.Examples
                 // end::scopeAdmin[]
             }
 
-            ICluster cluster = await Cluster.ConnectAsync("couchbase://localhost", "scopeAdmin", "password");
+            ICluster cluster = await Cluster.ConnectAsync("couchbase://your-ip", "scopeAdmin", "password");
             IBucket bucket = await cluster.BucketAsync("travel-sample");
 
             // tag::create-collection-manager[]

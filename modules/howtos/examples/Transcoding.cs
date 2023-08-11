@@ -138,7 +138,7 @@ namespace Couchbase.Examples
         {
             // #tag::global[]
             var clusterOptions = new ClusterOptions().WithSerializer(new DotnetJsonSerializer());
-            var cluster = await Cluster.ConnectAsync("couchbase://localhost", clusterOptions);
+            var cluster = await Cluster.ConnectAsync("couchbase://your-ip", clusterOptions);
 
 
             var results = await cluster.QueryAsync<dynamic>("SELECT * FROM `default`");

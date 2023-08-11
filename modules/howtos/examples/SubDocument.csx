@@ -10,7 +10,7 @@ using Couchbase;
 using Couchbase.KeyValue;
 
 var cluster = await Cluster.ConnectAsync(
-    "couchbase://localhost",
+    "couchbase://your-ip",
     "Administrator", "password");
 var bucket =  await cluster.BucketAsync("travel-sample");
 var _collection = bucket.DefaultCollection();

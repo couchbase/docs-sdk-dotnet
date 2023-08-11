@@ -29,7 +29,7 @@ namespace LoggingExample
                 Logging = loggerFactory,
                 UserName = "Administrator",
                 Password = "password",
-                ConnectionString = "http://localhost"
+                ConnectionString = "http://your-ip"
             };
            
            var cluster = await Cluster.ConnectAsync(options);

@@ -25,7 +25,7 @@ public class UserManagementExample
     public async Task ExampleAsync()
     {
         cluster = await Cluster.ConnectAsync(
-            "couchbase://localhost",
+            "couchbase://your-ip",
             "Administrator", "password");
 
         await Example1();
@@ -81,7 +81,7 @@ public class UserManagementExample
 
         // tag::usermanagement_3[]
         var userCluster = await Cluster.ConnectAsync(
-            "couchbase://localhost",
+            "couchbase://your-ip",
             testUsername, testPassword);
 
         var userBucket = await userCluster.BucketAsync(bucketName);

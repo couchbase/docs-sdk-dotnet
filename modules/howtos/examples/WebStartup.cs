@@ -33,7 +33,7 @@ namespace LoggingWebExample
                 Logging = loggerFactory,
                 UserName = "Administrator",
                 Password = "password",
-                ConnectionString = "http://localhost"
+                ConnectionString = "http://your-ip"
             };
 
             // Bootstrap Cluster Object.

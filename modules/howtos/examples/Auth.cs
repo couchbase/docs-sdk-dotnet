@@ -14,7 +14,7 @@ namespace sdk_docs_dotnet_examples
                 // tag::basic[]
                 try
                 {
-                    var cluster = await Cluster.ConnectAsync("couchbase://localhost", "username", "password");
+                    var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "username", "password");
                     // use the cluster
                 }
                 catch (Exception e)

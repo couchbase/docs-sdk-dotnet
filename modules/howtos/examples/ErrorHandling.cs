@@ -12,7 +12,7 @@ namespace sdk_docs_dotnet_examples
         private static int MaxRetries = 5;
         static async Task Main(string[] args)
         {
-            var cluster = await Cluster.ConnectAsync("couchbase://localhost", "username", "password");
+            var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "username", "password");
             var bucket = await cluster.BucketAsync("travel-sample");
             var collection = bucket.DefaultCollection();
 

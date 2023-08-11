@@ -20,7 +20,7 @@ public class ErrorHandling
 {
     public async Task ExampleAsync()
     {
-         var cluster = await Cluster.ConnectAsync("couchbase://localhost", "Administrator", "password");
+         var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "Administrator", "password");
          var bucket = await cluster.BucketAsync("default");
          var collection = bucket.DefaultCollection(); 
 

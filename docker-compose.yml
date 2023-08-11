@@ -1,27 +1,41 @@
 version: "3.9"
 
-# USAGE:   docker-compose run cb-dotnet-sdk bash
-
 services:
-  cb-dotnet-sdk:
-    build: .
-    depends_on:
-      - db
-    container_name: cb-dotnet-sdk
-    entrypoint: [ "/bin/bash", "-l", "-c" ]
-    volumes:
-      - .:/app/docs-sdk-dotnet
-
-  db:
-    image: build-docker.couchbase.com:443/couchbase/server-internal:7.1.0-2549
+  # Docker uses services names as DNS records.
+  # Calling the db container this means the
+  # connection strings in the samples work but,
+  # still look like placeholders.
+  your-ip:
+    image: couchbase/server-sandbox:7.1.1
     ports:
       - "8091-8095:8091-8095"
+      - "9102:9102"
       - "11210:11210"
-    expose: # expose ports 8091 & 8094 to other containers (mainly for backend)
+    expose:
       - "8091"
-      - "8092"
-      - "8093"
       - "8094"
-      - "8095"
-      - "11210"
-    container_name: couchbase-db
+    container_name: Couchbase-7.1.1
+    profiles:
+      - prod
+      - local
+
+  # The GH Action uses this profile to run tests.
+  dotnet-sdk-repo:
+    build: .
+    depends_on:
+      - your-ip
+    container_name: dotnet-sdk
+    profiles: 
+      - prod
+
+  # This profile is for local use creating tests.
+  local-dotnet-sdk-repo:
+    build:
+      dockerfile: local-tests.Dockerfile
+    depends_on:
+      - your-ip
+    container_name: dotnet-sdk-local
+    volumes:
+      - .:/app
+    profiles: 
+      - local

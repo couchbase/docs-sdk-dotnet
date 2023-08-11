@@ -17,7 +17,7 @@ public class ProvisioningResourcesBuckets
     public async Task ExampleAsync()
     {
         // tag::creatingBucketMgr[]
-        var cluster = await Cluster.ConnectAsync("couchbase://localhost", "Administrator", "password");
+        var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "Administrator", "password");
         var bucketMgr = cluster.Buckets;
         // end::creatingBucketMgr[]
 

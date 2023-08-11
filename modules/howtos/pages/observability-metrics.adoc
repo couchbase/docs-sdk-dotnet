@@ -124,7 +124,7 @@ Once your meter is initialized, the Couchbase `Cluster` and `Bucket` need to be 
     {
         services.AddCouchbase(opts =>
         {
-            opts.WithConnectionString("couchbase://localhost");
+            opts.WithConnectionString("couchbase://your-ip");
             opts.WithCredentials("Administrator", "password");
         });
         services.AddCouchbaseBucket<INamedBucketProvider>("default");

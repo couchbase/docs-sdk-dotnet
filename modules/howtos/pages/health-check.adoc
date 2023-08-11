@@ -51,19 +51,19 @@ Which, for a single-node test cluster, will return a payload similar to this:
 			"state": "ok"
 		}],
 		"fts": [{
-			"remote": "localhost:11210",
+			"remote": "your-ip:11210",
 			"latency_us": 2560,
 			"scope": "Cluster",
 			"state": "ok"
 		}],
 		"view": [{
-			"remote": "localhost:11210",
+			"remote": "your-ip:11210",
 			"latency_us": 4749,
 			"scope": "default",
 			"state": "ok"
 		}],
 		"n1ql": [{
-			"remote": "localhost:11210",
+			"remote": "your-ip:11210",
 			"latency_us": 2382,
 			"scope": "Cluster",
 			"state": "ok"
@@ -127,19 +127,19 @@ Which will print something like this:
 			"state": "authenticating"
 		}],
 		"view": [{
-			"remote": "localhost:11210",
+			"remote": "your-ip:11210",
 			"last_activity_us": 0,
 			"scope": "default",
 			"state": "new"
 		}],
 		"n1ql": [{
-			"remote": "localhost:11210",
+			"remote": "your-ip:11210",
 			"last_activity_us": 0,
 			"scope": "Cluster",
 			"state": "new"
 		}],
 		"fts": [{
-			"remote": "localhost:11210",
+			"remote": "your-ip:11210",
 			"last_activity_us": 0,
 			"scope": "Cluster",
 			"state": "new"

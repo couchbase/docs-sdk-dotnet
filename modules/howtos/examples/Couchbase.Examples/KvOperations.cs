@@ -12,7 +12,7 @@ namespace Couchbase.Examples
         {
             Console.WriteLine("Running KvOperations samples");
 
-            var cluster = await Cluster.ConnectAsync("couchbase://localhost", "Administrator", "password");
+            var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "Administrator", "password");
             var bucket = await cluster.BucketAsync("travel-sample");
             var collection = await bucket.DefaultCollectionAsync();
 

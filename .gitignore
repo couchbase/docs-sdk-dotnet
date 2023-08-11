@@ -21,4 +21,5 @@ local.config
 *.lock.json
 Couchbase.snk
 *.nupkg
-
+*.out
+*.vscode

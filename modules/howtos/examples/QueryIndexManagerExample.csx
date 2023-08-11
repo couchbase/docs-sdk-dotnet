@@ -18,7 +18,7 @@ public class QueryIndexManagerExample
     public async Task ExampleAsync()
     {
         // tag::creating-index-mgr[]
-        var cluster = await Cluster.ConnectAsync("couchbase://localhost", "Administrator", "password");
+        var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "Administrator", "password");
         var queryIndexMgr = cluster.QueryIndexes;
         // end::creating-index-mgr[]
 

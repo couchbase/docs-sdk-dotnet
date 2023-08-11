@@ -19,7 +19,7 @@ public class CollectionsExample
     public async Task ExampleAsync()
     {
         var cluster = await Cluster.ConnectAsync(
-            "couchbase://localhost",
+            "couchbase://your-ip",
             "Administrator", "password");
 
         var bucket = await cluster.BucketAsync("travel-sample");

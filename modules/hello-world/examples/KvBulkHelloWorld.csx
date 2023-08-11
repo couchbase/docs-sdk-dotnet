@@ -3,7 +3,7 @@
 //      dotnet script KvBulkHelloWorld.csx
 //
 
-#r "nuget: CouchbaseNetClient, 3.2.5"
+#r "nuget: CouchbaseNetClient, 3.4.8"
 
 using System;
 using System.Threading.Tasks;
@@ -16,7 +16,7 @@ public class KvBulkHelloWorld
 {
 	public async Task ExampleAsync()
 	{
-		var cluster = await Cluster.ConnectAsync("couchbase://localhost", "Administrator", "password");
+		var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "Administrator", "password");
 		var bucket = await cluster.BucketAsync("travel-sample");
 		var tenantScope = await bucket.ScopeAsync("tenant_agent_00");
 		var usersCollection = await tenantScope.CollectionAsync("users");

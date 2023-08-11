@@ -31,7 +31,7 @@ Directory.SetCurrentDirectory(GetScriptFolder());
 
 // tag::connect[]
 var cluster = await Cluster.ConnectAsync(
-    "couchbase://localhost",
+    "couchbase://your-ip",
     "Administrator", "password");
 var bucket =  await cluster.BucketAsync("travel-sample");
 var scope = await bucket.ScopeAsync("inventory");

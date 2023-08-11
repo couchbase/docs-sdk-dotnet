@@ -18,7 +18,7 @@ public class ProvisioningResourcesViews
     public async Task ExampleAsync()
     {
         // tag::viewmgr[]
-        var cluster = await Cluster.ConnectAsync("couchbase://localhost", "Administrator", "password");
+        var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "Administrator", "password");
         var bucket = await cluster.BucketAsync("travel-sample");
         var viewMgr = bucket.ViewIndexes;
         // end::viewmgr[]

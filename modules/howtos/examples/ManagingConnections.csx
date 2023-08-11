@@ -13,7 +13,7 @@ public class ManagingConnections
         {
             Console.WriteLine("simpleconnect");
             // tag::simpleconnect[]
-            var cluster = await Cluster.ConnectAsync("couchbase://localhost", "username", "password");
+            var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "username", "password");
             var bucket =  await cluster.BucketAsync("travel-sample");
             var collection = bucket.DefaultCollection();
 
