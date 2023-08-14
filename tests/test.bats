@@ -23,3 +23,8 @@ load 'test_helper'
 }
 
 ### Howtos tests
+
+@test "[howtos] - KvOperations.csx" {
+  runExample $HOWTOS_DIR KvOperations.csx
+  assert_success
+}
