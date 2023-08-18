@@ -1,4 +1,9 @@
-﻿#r "nuget: CouchbaseNetClient, 3.2.0"
+﻿// Run this using dotnet-script: https://github.com/filipw/dotnet-script
+//
+//      dotnet script ManagingConnections.csx
+//
+
+#r "nuget: CouchbaseNetClient, 3.2.0"
 
 using System;
 using System.Threading.Tasks;
@@ -13,7 +18,7 @@ public class ManagingConnections
         {
             Console.WriteLine("simpleconnect");
             // tag::simpleconnect[]
-            var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "username", "password");
+            var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "Administrator", "password");
             var bucket =  await cluster.BucketAsync("travel-sample");
             var collection = bucket.DefaultCollection();
 
@@ -22,8 +27,8 @@ public class ManagingConnections
 
             // You can access collections other than the default
             // if your version of Couchbase Server supports this feature.
-            var customerA = bucket.Scope("customer-a");
-            var widgets = customerA.Collection("widgets");
+            var inventory = bucket.Scope("inventory");
+            var airline = inventory.Collection("airline");
 
             // For a graceful shutdown, disconnect from the cluster when the program ends.
             await cluster.DisposeAsync();
@@ -33,14 +38,14 @@ public class ManagingConnections
         {
             Console.WriteLine("multinodeconnect");
             // tag::multinodeconnect[]
-            var cluster = await Cluster.ConnectAsync("192.168.56.101,192.168.56.102", "username", "password");
+            var cluster = await Cluster.ConnectAsync("192.168.56.101,192.168.56.102", "Administrator", "password");
             // end::multinodeconnect[]
         }
 
         {
             Console.WriteLine("waitUntilReady");
             // tag::waitUntilReady[]
-            var cluster = await Cluster.ConnectAsync("couchbase://127.0.0.1", "username", "password");
+            var cluster = await Cluster.ConnectAsync("your-ip", "Administrator", "password");
             await cluster.WaitUntilReadyAsync(TimeSpan.FromSeconds(10));
             var bucket = await cluster.BucketAsync("travel-sample");
             var collection = bucket.DefaultCollection();
@@ -54,7 +59,7 @@ public class ManagingConnections
                 "127.0.0.1",
                 new ClusterOptions
                 {
-                    UserName = "username",
+                    UserName = "Administrator",
                     Password = "password",
                     NetworkResolution = NetworkResolution.External,
                     KvTimeout = TimeSpan.FromSeconds(1)
@@ -71,7 +76,7 @@ public class ManagingConnections
                     EnableTls = true
                 }
                 .WithConnectionString("couchbase://127.0.0.1")
-                .WithCredentials("username", "password"));
+                .WithCredentials("Administrator", "password"));
             // end::enableTls[]
         }
 
@@ -83,7 +88,7 @@ public class ManagingConnections
                     EnableTls = true
                 }
                 .WithConnectionString("couchbases://[YOUR DNS CONNECTION STRING]")
-                .WithCredentials("username", "password"));
+                .WithCredentials("Administrator", "password"));
             // end::dnssrv[]
         }
     }

@@ -1,3 +1,8 @@
+// Run this using dotnet-script: https://github.com/filipw/dotnet-script
+//
+//      dotnet script KvOperations.csx
+//
+
 #r "nuget: CouchbaseNetClient, 3.4.8"
 
 using System;

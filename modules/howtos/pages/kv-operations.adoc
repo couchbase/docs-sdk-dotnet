@@ -34,7 +34,7 @@ Here is the _Insert_ operation at its simplest:
 .Insert
 [source,csharp]
 ----
-include::example$Couchbase.Examples/KvOperations.cs[tag=insert,indent=0]
+include::example$KvOperations.csx[tag=insert,indent=0]
 ----
 
 Options may be added to operations:
@@ -42,7 +42,7 @@ Options may be added to operations:
 .Insert (with options)
 [source,csharp]
 ----
-include::example$Couchbase.Examples/KvOperations.cs[tag=insertwithoptions,indent=0]
+include::example$KvOperations.csx[tag=insertwithoptions,indent=0]
 ----
 
 Setting a Compare and Swap (CAS) value is a form of optimistic locking - dealt with in depth in the xref:concurrent-document-mutations.adoc[CAS page].
@@ -56,7 +56,7 @@ We will add to these options for the _Replace_ example:
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples/KvOperations.cs[tag=replacewithcas,indent=0]
+include::example$KvOperations.csx[tag=replacewithcas,indent=0]
 ----
 
 Expiration sets an explicit time to live (TTL) for a document.
@@ -66,7 +66,7 @@ xref:7.1@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-ttl[
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples/KvOperations.cs[tag=upsertwithtimeout,indent=0]
+include::example$KvOperations.csx[tag=upsertwithtimeout,indent=0]
 ----
 
 Here, we have add _Durability_ options, namely `PersistTo` and `ReplicateTo`.
@@ -90,7 +90,7 @@ The following example demonstrates using the newer durability features available
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples/KvOperations.cs[tag=upsertwithdurability,indent=0]
+include::example$KvOperations.csx[tag=upsertwithdurability,indent=0]
 ----
 
 If a version of Couchbase Server earlier than 6.5 is being used then the application can fall-back to xref:concept-docs:durability-replication-failure-considerations.adoc#older-server-versions['client verified' durability].
@@ -122,7 +122,7 @@ Using the `GetAsync()` method with the document key can be done in a similar fas
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples/KvOperations.cs[tag=get,indent=0]
+include::example$KvOperations.csx[tag=get,indent=0]
 ----
 
 Timeout can also be set - as in the earlier `Insert` example:
@@ -130,7 +130,7 @@ Timeout can also be set - as in the earlier `Insert` example:
 .Get (with options)
 [source,csharp]
 ----
-include::example$Couchbase.Examples/KvOperations.cs[tag=getwithtimeout,indent=0]
+include::example$KvOperations.csx[tag=getwithtimeout,indent=0]
 ----
 
 == Removing
@@ -140,7 +140,7 @@ When removing a document, you will have the same concern for durability as with 
 .Remove (with options)
 [source,csharp]
 ----
-include::example$Couchbase.Examples/KvOperations.cs[tag=remove,indent=0]
+include::example$KvOperations.csx[tag=remove,indent=0]
 ----
 
 == Expiration / TTL
@@ -150,14 +150,14 @@ Using `Touch()`, you can set expiration values on documents to handle transient 
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples/KvOperations.cs[tag=touch,indent=0]
+include::example$KvOperations.csx[tag=touch,indent=0]
 ----
 
 A network timeout can be set with the optional `TouchOptions()`, in the same fashion as earlier examples on this page:
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples/KvOperations.cs[tag=touchwithtimeout,indent=0]
+include::example$KvOperations.csx[tag=touchwithtimeout,indent=0]
 ----
 
 include::{version-common}@sdk:shared:partial$documents.adoc[tag=exp-note]
@@ -176,25 +176,25 @@ The value of a document can be increased or decreased atomically using `Binary.I
 .Increment
 [source,csharp]
 ----
-include::example$Couchbase.Examples/KvOperations.cs[tag=binaryincrement,indent=0]
+include::example$KvOperations.csx[tag=binaryincrement,indent=0]
 ----
 
 .Increment (with options)
 [source,csharp]
 ----
-include::example$Couchbase.Examples/KvOperations.cs[tag=binaryincrementwithoptions,indent=0]
+include::example$KvOperations.csx[tag=binaryincrementwithoptions,indent=0]
 ----
 
 .Decrement
 [source,csharp]
 ----
-include::example$Couchbase.Examples/KvOperations.cs[tag=binarydecrement,indent=0]
+include::example$KvOperations.csx[tag=binarydecrement,indent=0]
 ----
 
 .Decrement (with options)
 [source,csharp]
 ----
-include::example$Couchbase.Examples/KvOperations.cs[tag=binarydecrementwithoptions,indent=0]
+include::example$KvOperations.csx[tag=binarydecrementwithoptions,indent=0]
 ----
 
 NOTE: Increment & Decrement are considered part of the ‘binary’ API and as such may still be subject to change
@@ -211,7 +211,7 @@ Here is an example showing an upsert in the `users` collection, which lives in t
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples/KvOperations.cs[tag=named-collection-upsert,indent=0]
+include::example$KvOperations.csx[tag=named-collection-upsert,indent=0]
 ----
 
 

@@ -8,7 +8,7 @@ include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 {description}
-It contains best practices as well as information on TLS/SSL and other advanced connection options.
+It contains best practices as well as information about TLS/SSL and other advanced connection options.
 
 == Connecting to a Cluster
 
@@ -21,7 +21,7 @@ The simplest way to create a `Cluster` object is to call `Cluster.ConnectAsync()
 include::example$ManagingConnections.csx[tag=simpleconnect,indent=0]
 ----
 
-NOTE: If you are connecting to a version of Couchbase Server older than 6.5, it will be more efficient if the addresses are those of data (KV) nodes.
+NOTE: If you are connecting to a version of Couchbase Server earlier than 6.5, it will be more efficient if the addresses are those of data (KV) nodes.
 You will in any case, with 6.0 and earlier, need to open a ``Bucket` instance before connecting to any other HTTP services (such as _Query_ or _Search_.
 
 In a production environment, your connection string should include the addresses of multiple server nodes in case some are currently unavailable.
@@ -32,7 +32,7 @@ Multiple addresses may be specified in a connection string by delimiting them wi
 include::example$ManagingConnections.csx[tag=multinodeconnect,indent=0]
 ----
 
-TIP: You don't need to include the address of every node in the cluster.
+TIP: You do not need to include the address of every node in the cluster.
 The client fetches the full address list from the first node it is able to contact.
 
 [#connection-strings]
@@ -423,7 +423,7 @@ Or more fully:
 
 [source,csharp]
 ----
-include::example$ClusterExample.cs[tag=waitUntilReady,indent=0]
+include::example$ClusterExample.csx[tag=waitUntilReady,indent=0]
 ----
 
 If you are working at the _Bucket_ level, then the https://docs.couchbase.com/sdk-api/couchbase-net-client/html/M_Couchbase_IBucket_WaitUntilReadyAsync.htm[Bucket-level `waitUntilReady`] does the same as the Cluster-level version,
@@ -431,7 +431,7 @@ _plus_ it waits for the K-V (data) sockets to be ready.
 
 [source,csharp]
 ----
-include::example$ClusterExample.cs[tag=waitUntilReadyBucket,indent=0]
+include::example$ClusterExample.csx[tag=waitUntilReadyBucket,indent=0]
 ----
 
 Other timeout issues may occur when using the SDK located geographically separately from the Couchbase Server cluster -- this is xref:project-docs:compatibility#network-requirements[not recommended].

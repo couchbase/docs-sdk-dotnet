@@ -3,7 +3,7 @@
 //      dotnet script ErrorHandling.csx
 //
 
-#r "nuget: CouchbaseNetClient, 3.3.1"
+#r "nuget: CouchbaseNetClient, 3.4.8"
 
 using System;
 using System.Threading.Tasks;
@@ -21,21 +21,26 @@ public class ErrorHandling
     public async Task ExampleAsync()
     {
          var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "Administrator", "password");
-         var bucket = await cluster.BucketAsync("default");
+         var bucket = await cluster.BucketAsync("travel-sample");
          var collection = bucket.DefaultCollection(); 
 
         {
             Console.WriteLine("[readonly]");
+            try {
             // tag::readonly[]
             var queryResult = await cluster.QueryAsync<dynamic>("SELECT * FROM `travel-sample`", new QueryOptions().Readonly(true));
 
             var analyticsResult = await cluster.AnalyticsQueryAsync<dynamic>("SELECT * FROM `travel-sample`.inventory.airport",
             new AnalyticsOptions().Readonly(true));
-             // end::readonly[]
+            // end::readonly[]
+            } catch (Couchbase.ServiceNotAvailableException) {
+                Console.WriteLine("Analytics not enabled");
+            }
         }
 
         {
             Console.WriteLine("[getfetch]");
+            try {
             // tag::getfetch[]
             // This will raise a `CouchbaseException` and propagate it
             var result = await collection.GetAsync("my-document-id");
@@ -47,6 +52,9 @@ public class ErrorHandling
                 throw new Exception("Couchbase lookup failed", ex);
             }
             // end::getfetch[]
+            } catch (CouchbaseException) {
+                Console.WriteLine("[getfetch] failed sucessfully");
+            }
         }
 
         {
@@ -92,7 +100,7 @@ public class ErrorHandling
             Console.WriteLine("[customgrequest]");
             IRetryStrategy myCustomStrategy = null;
             // tag::customreq[]
-            await collection.GetAsync("doc-id", new GetOptions().RetryStrategy(myCustomStrategy));
+            await collection.GetAsync("docid", new GetOptions().RetryStrategy(myCustomStrategy));
             // end::customreq[]
         }
     }

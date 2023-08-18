@@ -85,7 +85,7 @@ Here we want to use https://docs.microsoft.com/en-us/dotnet/api/system.text.json
 
 [source,csharp]
 ----
-include::example$Transcoding.cs[tag=raw-json-encode,indent=0]
+include::example$Transcoding.csx[tag=raw-json-encode,indent=0]
 ----
 
 Since Gson has already done the serialization work, we don't want to use the default `JsonTranscoder`, as this will run the provided String needlessly through `DefaultSerializer` (Jackson).
@@ -96,7 +96,7 @@ Gson can then be used for the deserialization.
 
 [source,csharp]
 ----
-include::example$Transcoding.cs[tag=raw-json-decode,indent=0]
+include::example$Transcoding.csx[tag=raw-json-decode,indent=0]
 ----
 
 == Non-JSON Transcoders
@@ -137,7 +137,7 @@ Here’s an example of using the `RawStringTranscoder`:
 
 [source,csharp]
 ----
-include::example$Transcoding.cs[tag=string,indent=0]
+include::example$Transcoding.csx[tag=string,indent=0]
 ----
 
 === RawBinaryTranscoder
@@ -182,7 +182,7 @@ Here’s an example of using the `RawBinaryTranscoder`:
 
 [source,csharp]
 ----
-include::example$Transcoding.cs[tag=binary,indent=0]
+include::example$Transcoding.csx[tag=binary,indent=0]
 ----
 
 From version 3.2.6, the `RawBinaryTranscoder` will accept `Memory<byte>` and `ReadOnlyMemory<byte>` inputs and can return `IMemoryOwner<byte>` outputs.
@@ -190,7 +190,7 @@ Using these types may improve performance by not allocating large, temporary `by
 
 [source,csharp]
 ----
-include::example$Transcoding.cs[tag=binary-memory,indent=0]
+include::example$Transcoding.csx[tag=binary-memory,indent=0]
 ----
 
 == Custom Transcoders and Serializers
@@ -203,7 +203,7 @@ By creating a custom Gson serializer, we can avoid this.
 It’s easy to create a serializer.  Simply implement the `ITypeSerializer` interface’s three methods:
 [source,csharp]
 ----
-include::example$Transcoding.cs[tag=dotnet-serializer,indent=0]
+include::example$Transcoding.csx[tag=dotnet-serializer,indent=0]
 ----
 
 In this case, there is no need to provide a custom transcoder.
@@ -212,21 +212,21 @@ All we need to do is change the serializer, as so:
 
 [source,csharp]
 ----
-include::example$Transcoding.cs[tag=custom-encode,indent=0]
+include::example$Transcoding.csx[tag=custom-encode,indent=0]
 ----
 
 And for decoding:
 
 [source,csharp]
 ----
-include::example$Transcoding.cs[tag=custom-decode,indent=0]
+include::example$Transcoding.csx[tag=custom-decode,indent=0]
 ----
 
 Currently its not suggested that a custom JSON serializer be used globally in the Couchbase .NET SDK for anything other than K/V. This is because of streaming optimizations used in Query, FTS and Search that use JSON.NET features.
 
 [source,csharp]
 ----
-include::example$Transcoding.cs[tag=global,indent=0]
+include::example$Transcoding.csx[tag=global,indent=0]
 ----
 
 === Creating a Custom Transcoder
@@ -239,14 +239,14 @@ Start by creating a new serializer for MessagePack.  This is similar to the Gson
 
 [source,csharp]
 ----
-include::example$Transcoding.cs[tag=msgpack-serializer,indent=0]
+include::example$Transcoding.csx[tag=msgpack-serializer,indent=0]
 ----
 
 And now create a transcoder that uses the `MsgPackSerializer`, and sets the binary Common Flag when storing the data:
 
 [source,csharp]
 ----
-include::example$Transcoding.cs[tag=msgpack-transcoder,indent=0]
+include::example$Transcoding.csx[tag=msgpack-transcoder,indent=0]
 ----
 
 Note the use of `DataFormat.Binary`.  The other Common Flags that can be used are `DataFormat.Json` and `DataFormat.String`.
@@ -255,14 +255,14 @@ Create a POCO properly adjorned with the MessagePack attributes:
 
 [source,csharp]
 ----
-include::example$Transcoding.cs[tag=msg-pack-poco,indent=0]
+include::example$Transcoding.csx[tag=msg-pack-poco,indent=0]
 ----
 
 Now we can use the new transcoder to seamlessly store MessagePack data in Couchbase Server:
 
 [source,csharp]
 ----
-include::example$Transcoding.cs[tag=msgpack-encode,indent=0]
+include::example$Transcoding.csx[tag=msgpack-encode,indent=0]
 ----
 
 == Further reading

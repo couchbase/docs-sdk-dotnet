@@ -1,6 +1,6 @@
 ﻿// Run this using dotnet-script: https://github.com/filipw/dotnet-script
 //
-//      dotnet script EncryptingUsingSdk.cs
+//      dotnet script EncryptingUsingSdk.csx
 //
 
 #r "nuget: Couchbase.Extensions.Encryption, 2.0.0-dp.1"

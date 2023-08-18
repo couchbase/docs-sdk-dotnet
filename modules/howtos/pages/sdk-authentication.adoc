@@ -19,7 +19,7 @@ Our xref:hello-world:start-using-sdk.adoc[Getting Started] guide introduced basi
 
 [source,csharp]
 ----
-include::example$Auth.cs[tag=basic,indent=0]
+include::example$Auth.csx[tag=basic,indent=0]
 ----
 
 
@@ -37,7 +37,7 @@ That is, a cluster certificate has been created and installed on the server, a c
 
 [source,csharp]
 ----
-include::example$Auth.cs[tag=auth,indent=0]
+include::example$Auth.csx[tag=auth,indent=0]
 ----
 
 include::{version-common}@sdk:shared:partial$auth-overview.adoc[tag=ldap]

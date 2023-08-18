@@ -3,8 +3,7 @@
 //      dotnet script Import.csx
 //
 
-#r "nuget: CouchbaseNetClient, 3.2.5"
-
+#r "nuget: CouchbaseNetClient, 3.4.8"
 #r "nuget: CsvHelper, 27.2.1"
 
 using System.Threading.Tasks;
@@ -25,7 +24,6 @@ using Newtonsoft.Json.Linq;
 
 using System.Runtime.CompilerServices;
 
-// https://github.com/filipw/dotnet-script
 public static string GetScriptFolder([CallerFilePath] string path = null) => Path.GetDirectoryName(path);
 Directory.SetCurrentDirectory(GetScriptFolder());
 

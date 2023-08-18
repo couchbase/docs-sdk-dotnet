@@ -3,7 +3,7 @@
 //      dotnet script UserManagementExample.csx
 //
 
-#r "nuget: CouchbaseNetClient, 3.2.0"
+#r "nuget: CouchbaseNetClient, 3.4.8"
 
 using System;
 using System.Text;

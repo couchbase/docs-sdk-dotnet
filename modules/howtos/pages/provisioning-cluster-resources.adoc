@@ -7,7 +7,7 @@
 // API refs
 :bucket-api-reference: pass:q[IBucketManager -- https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.Cluster.html#Couchbase_Cluster_Buckets[`Cluster.Buckets`]]
 :user-api-reference: pass:q[IUserManager -- https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.Cluster.html#Couchbase_Cluster_Users[`Cluster.Users`]]
-:query-api-reference: pass:q[IQueryIndexManager -- https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.Cluster.html#Couchbase_Cluster_QueryIndexes[`Cluster.QueryIndexes`]]
+:query-api-reference: pass:q[ICollectionQueryIndexManager -- https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.Management.Query.ICollectionQueryIndexManager.html[`Collection.QueryIndexes`]]
 :analytics-api-reference: pass:q[IAnalyticsIndexManager -- https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.Cluster.html#Couchbase_Cluster_AnalyticsIndexes[`Cluster.AnalyticsIndexes`]]
 :search-api-reference: pass:q[ISearchIndexManager -- https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.Cluster.html#Couchbase_Cluster_SearchIndexes[`Cluster.SearchIndexes`]]
 :collection-api-reference: pass:q[ICouchbaseCollectionManager -- https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.IBucket.html#Couchbase_IBucket_Collections[`Bucket.Collections`]]
@@ -65,12 +65,12 @@ Here is the list of parameters available:
 | `NumReplicas Int32` | The number of replicas to use for the bucket. | true
 | `BucketType BucketType` | The type of the bucket, required for creation. | false
 | `EvictionPolicy EvictionPolicyType` | The type of the eviction to use for the bucket, defaults to `ValueOnly`. | true (note: changing will cause the bucket to restart causing temporary inaccessibility)
-| `MaxTTL Int32` | The default maximum time-to-live to apply to documents in the bucket. (note: This option is only available for Couchbase and Ephemeral buckets in Couchbase Enterprise Edition.) | true
-| `CompressionMode CompressionMode` | The compression mode to apply to documents in the bucket. (note: This option is only available for Couchbase and Ephemeral buckets in Couchbase Enterprise Edition.) | true
+| `MaxTTL Int32` | The default maximum time-to-live to apply to documents in the bucket. (note: This option is only available for Couchbase and Ephemeral buckets in Couchbase Server Enterprise Edition.) | true
+| `CompressionMode CompressionMode` | The compression mode to apply to documents in the bucket. (note: This option is only available for Couchbase and Ephemeral buckets in Couchbase Server Enterprise Edition.) | true
 | `ConflictResolutionType ConflictResolutionType` | The conflict resolution type to apply to conflicts on the bucket, defaults to `SequenceNumber` | false
 |====
 
-The following example creates a "hello" bucket:
+The following example creates a `hello` bucket:
 
 [source,csharp]
 ----
@@ -113,30 +113,30 @@ for further details.
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples/CollectionManager.cs[tag=create-collection-manager,indent=0]
+include::example$CollectionManager.csx[tag=create-collection-manager,indent=0]
 ----
 
 You can create a scope:
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples/CollectionManager.cs[tag=create-scope,indent=0]
+include::example$CollectionManager.csx[tag=create-scope,indent=0]
 ----
 
 You can then create a collection within that scope:
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples/CollectionManager.cs[tag=create-collection,indent=0]
+include::example$CollectionManager.csx[tag=create-collection,indent=0]
 ----
 
 Finally, you can drop unneeded collections and scopes:
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples/CollectionManager.cs[tag=drop-collection,indent=0]
+include::example$CollectionManager.csx[tag=drop-collection,indent=0]
 
-include::example$Couchbase.Examples/CollectionManager.cs[tag=drop-scope,indent=0]
+include::example$CollectionManager.csx[tag=drop-scope,indent=0]
 
 ----
 
@@ -148,7 +148,7 @@ You can create users with the appropriate RBAC programmatically:
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples/CollectionManager.cs[tag=scopeAdmin, indent=0]
+include::example$CollectionManager.csx[tag=scopeAdmin, indent=0]
 ----
 
 You can enumerate Scopes and Collections using
@@ -157,27 +157,29 @@ the `CollectionManager` and the properties of the
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples/CollectionManager.cs[tag=listing-scope-collection,indent=0]
+include::example$CollectionManager.csx[tag=listing-scope-collection,indent=0]
 ----
 
 == Index Management
 
+// TODO - DOC-11416 All SDKs need to use the new collection level API
 include::{version-common}@sdk:shared:partial$flush-info-pars.adoc[tag=index-management-intro]
 
 === QueryIndexManager
 
-The `IQueryIndexManager` interface contains the means for managing indexes used for queries.
-It can be referenced through the `Cluster.QueryIndexes` property.
+The `ICollectionQueryIndexManager` interface contains the means for managing indexes used for queries.
+It's referenced through the `Collection.QueryIndexes` property.
 
 [source,csharp]
 ----
 include::example$QueryIndexManagerExample.csx[tag=creating-index-mgr,indent=0]
 ----
 
+NOTE: The `ICollectionQueryIndexManager` can only manage indexes in the keyspace it's set on. You must create another Query Manager interface to manage indexes on a different keyspace.
+
 include::{version-common}@sdk:shared:partial$flush-info-pars.adoc[tag=query-index-manager-intro]
 
-The example below shows how to create a simple primary index, restricted to a named scope and collection, by calling the `CreatePrimaryIndexAsync()` method.
-Note that you cannot provide a named scope or collection separately, both must be set for the `IQueryIndexManager` to create an index on the relevant keyspace path. 
+The following example shows how to create a primary index, by calling the `CreatePrimaryIndexAsync()` method.
 
 .Creating a primary index
 
@@ -186,8 +188,8 @@ Note that you cannot provide a named scope or collection separately, both must b
 include::example$QueryIndexManagerExample.csx[tag=primary,indent=0]
 ----
 
-When a primary index name is not specified, the SDK will create the index as `#primary` by default.
-However, if you wish to provide a custom name, you can simply set an `IndexName` property in the `CreatePrimaryQueryIndexOptions` class.
+When a primary index name is not specified, the SDK creates the index as `#primary` by default.
+However, if you want to provide a custom name, you can set an `IndexName` property in the `CreatePrimaryQueryIndexOptions` class.
 
 You may have noticed that the example also sets the `IgnoreIfExists` boolean flag. 
 When set to `true`, this optional argument ensures that an error is not thrown if an index under the same name already exists.
@@ -202,10 +204,9 @@ include::example$QueryIndexManagerExample.csx[tag=secondary,indent=0]
 ----
 
 The `CreateIndexAsync()` method requires an index name to be provided, along with the fields to create the index on.
-Like the _primary_ index, you can restrict a _secondary_ index to a named scope and collection by passing some options.
 
-Indexes can easily take a long time to build if they contain a lot of documents.
-In these situations, it is more ideal to build indexes in the background.
+Indexes can take a long time to build if they contain a lot of documents.
+In these situations, it's ideal to build indexes in the background.
 To achieve this we can use the `Deferred` boolean option, and set it to `true`.
 
 .Deferring index creation
@@ -216,7 +217,7 @@ include::example$QueryIndexManagerExample.csx[tag=defer-indexes,indent=0]
 ----
 
 To delete a query index you can use the `DropIndexAsync()` or `DropPrimaryIndexAsync()` methods. 
-Which one you use depends on the type of query index you wish to drop from the database.
+Which one you use depends on the type of query index you want to drop from the database.
 
 .Deleting an index
 

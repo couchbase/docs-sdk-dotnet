@@ -1,9 +1,9 @@
 // Run this using dotnet-script: https://github.com/filipw/dotnet-script
 //
-//      dotnet script UserManagementExample.csx
+//      dotnet script SubDocument.csx
 //
 
-#r "nuget: CouchbaseNetClient, 3.2.0"
+#r "nuget: CouchbaseNetClient, 3.4.8"
 
 using System.Threading.Tasks;
 using Couchbase;
@@ -57,7 +57,7 @@ await _collection.UpsertAsync("customer123", document);
     );
     // #end::insert[]
 }
-
+/* Broken, reinstate when 3.4.9 releases (NCBC-3465)
 {
     Console.WriteLine("exists:");
     // #tag::exists[]
@@ -81,7 +81,7 @@ await _collection.UpsertAsync("customer123", document);
     bool exists = result.ContentAs<bool>(1);
     // #end::combine[]
 }
-
+*/
 {
     Console.WriteLine("upsert:");
     // #tag::upsert[]
@@ -168,8 +168,9 @@ await _collection.UpsertAsync("some_doc",
 {
     Console.WriteLine("counter-inc:");
     // #tag::counter-inc[]
+    ulong increment = 1;
     var result = await _collection.MutateInAsync("customer123", specs =>
-        specs.Increment("logins", 1)
+        specs.Increment("logins", increment)
     );
 
     // Counter operations return the updated count
@@ -180,10 +181,11 @@ await _collection.UpsertAsync("some_doc",
 {
     Console.WriteLine("counter-dec:");
     // #tag::counter-dec[]
+    ulong decrement = 150;
     await _collection.UpsertAsync("player432", new { gold = 1000 });
 
     var result = await _collection.MutateInAsync("player432", specs =>
-        specs.Decrement("gold", 150)
+        specs.Decrement("gold", decrement)
     );
 
     var count = result.ContentAs<long>(0);
@@ -218,8 +220,9 @@ async Task CasAsync() {
     Console.WriteLine("cas:");
     // #tag::cas[]
     var player = await _collection.GetAsync("player432");
+    ulong decrement = 150;
     await _collection.MutateInAsync("player432",
-        specs => specs.Decrement("gold", 150),
+        specs => specs.Decrement("gold", decrement),
         options => options.Cas(player.Cas)
     );
     // #end::cas[]

@@ -3,7 +3,7 @@
 //      dotnet script ProvisioningResourcesViews.csx
 //
 
-#r "nuget: CouchbaseNetClient, 3.3.0"
+#r "nuget: CouchbaseNetClient, 3.4.8"
 
 using System;
 using System.Threading.Tasks;
