@@ -93,3 +93,10 @@ load 'test_helper'
   runExample $HOWTOS_DIR UserManagementExample.csx
   assert_success
 }
+
+### Concept-docs tests
+
+@test "[concept-docs] - Collections.csx" {
+  runExample $CONCEPT_DOCS_DIR Collections.csx
+  assert_success
+}

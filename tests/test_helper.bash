@@ -3,7 +3,7 @@ setup() {
 	load 'node_modules/bats-assert/load'
 
 	HOWTOS_DIR=../modules/howtos/examples
-	PROJECT_DOCS_DIR=../modules/project-docs/examples
+	CONCEPT_DOCS_DIR=../modules/concept-docs/examples
 	HELLO_WORLD_DIR=../modules/hello-world/examples
 
 	BATS_TEST_RETRIES=3
