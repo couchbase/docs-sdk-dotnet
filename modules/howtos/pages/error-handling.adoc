@@ -9,7 +9,7 @@
 {description} 
 Learn how to keep your application available as best as possible even in the face of (transient) failures.
 
-Unfortunately, the SDK alone can't make all the decisions needed since it lacks the understanding of your application domain. 
+Unfortunately, the SDK alone cannot make all the decisions needed since it lacks the understanding of your application domain. 
 In most cases transparent retry is the best choice, but maybe sometimes you need to fail quickly and switch over to an alternate data source. 
 On this page you will learn about basic and advanced error handling mechanisms, as well as the fundamentals that hold them all together.
 

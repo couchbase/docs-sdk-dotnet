@@ -3,7 +3,7 @@
 //      dotnet script ProvisioningResourcesBuckets.csx
 //
 
-#r "nuget: CouchbaseNetClient, 3.3.0"
+#r "nuget: CouchbaseNetClient, 3.4.8"
 
 using System;
 using System.Threading.Tasks;
@@ -17,7 +17,7 @@ public class ProvisioningResourcesBuckets
     public async Task ExampleAsync()
     {
         // tag::creatingBucketMgr[]
-        var cluster = await Cluster.ConnectAsync("couchbase://localhost", "Administrator", "password");
+        var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "Administrator", "password");
         var bucketMgr = cluster.Buckets;
         // end::creatingBucketMgr[]
 
@@ -28,26 +28,27 @@ public class ProvisioningResourcesBuckets
                 new BucketSettings{
                     Name = "hello",
                     FlushEnabled = false,
-                    ReplicaIndexes = true,
-                    RamQuotaMB = 150,
-                    NumReplicas = 1,
+                    RamQuotaMB = 100,
+                    NumReplicas = 0,
                     BucketType = BucketType.Couchbase,
                     ConflictResolutionType = ConflictResolutionType.SequenceNumber
                 }
             );
             // end::createBucket[]
         }
-
         {
             Console.WriteLine("[updateBucket]");
             // tag::updateBucket[]
             var settings = await bucketMgr.GetBucketAsync("hello");
+            settings.RamQuotaMB = 100;
             settings.FlushEnabled = true;
+            settings.ConflictResolutionType = null;
 
             await bucketMgr.UpdateBucketAsync(settings);
             // end::updateBucket[]
         }
-
+        // Flushing immediately results in an "unexpected error"
+        await Task.Delay(TimeSpan.FromSeconds(1));
         {
             Console.WriteLine("[flushBucket]");
             // tag::flushBucket[]

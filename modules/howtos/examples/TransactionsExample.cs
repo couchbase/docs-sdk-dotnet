@@ -34,7 +34,7 @@ namespace Couchbase.Transactions.Examples
             // #tag::init[]
             // Initialize the Couchbase cluster
             var options = new ClusterOptions().WithCredentials("Administrator", "password");
-            var cluster = await Cluster.ConnectAsync("couchbase://localhost", options).ConfigureAwait(false);
+            var cluster = await Cluster.ConnectAsync("couchbase://your-ip", options).ConfigureAwait(false);
             var bucket = await cluster.BucketAsync("default").ConfigureAwait(false);
             var collection = await bucket.ScopeAsync("inventory").CollectionAsync("airport").ConfigureAwait(false);
 

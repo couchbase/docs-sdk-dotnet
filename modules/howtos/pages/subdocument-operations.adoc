@@ -80,7 +80,7 @@ include::example$SubDocument.csx[tag=exists,indent=0]
 ----
 
 NOTE: LookupInResult has an `Exists` method, but this should not be confused with the exists __operation__.  The `Exists` method
-is used to check if anything was returned by the server for a given operation.  The result of the exists operation should
+is used to check if anything was returned by the server for a given operation. The result of the exists operation should
 be checked with `ContentAs<bool>(index)`, as in the example.
 
 Multiple operations can be combined:

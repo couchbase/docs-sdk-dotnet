@@ -41,13 +41,13 @@ A named or positional parameter can be used in the WHERE, LIMIT or OFFSET clause
 .Positional parameter example:
 [source,csharp,indent=0]
 ----
-include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=positional]
+include::example$/N1qlQueries.csx[tag=positional]
 ----
 
 .Named parameter example:
 [source,csharp,indent=0]
 ----
-include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=namedparameter]
+include::example$/N1qlQueries.csx[tag=namedparameter]
 ----
 
 == Handling Results
@@ -56,12 +56,12 @@ In most cases your query will return more than one result, and you may be lookin
 
 [source,csharp,indent=0]
 ----
-include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=namedparameter]
+include::example$/N1qlQueries.csx[tag=namedparameter]
 ----
 
 [source,csharp,indent=0]
 ----
-include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=namedparameter2]
+include::example$/N1qlQueries.csx[tag=namedparameter2]
 ----
 
 == Query Results
@@ -72,7 +72,7 @@ A type parameter must be used with `QueryAsync`, that will specify the type of r
 
 [source,csharp,indent=0]
 ----
-include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=queryresultexample]
+include::example$/N1qlQueries.csx[tag=queryresultexample]
 ----
 
 The `QueryMetaData` object (e.g. returned from `result.MetaData`) provides insight into some basic profiling/timing information as well as information like the clientContextId.
@@ -94,7 +94,7 @@ For example, here is how you can print the executionTime of a query:
 
 [source,csharp,indent=0]
 ----
-include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=executiontime]
+include::example$/N1qlQueries.csx[tag=executiontime]
 ----
 
 == Query Options
@@ -132,7 +132,7 @@ Setting a staleness parameter for queries, with `scan_consistency`, enables a tr
 .ScanConsistency (NotBounded)
 [source,csharp,indent=0]
 ----
-include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=notbounded]
+include::example$/N1qlQueries.csx[tag=notbounded]
 ----
 
 * With Scan Consistency set to *RequestPlus*, all document changes and index updates are processed before the query is run.
@@ -141,7 +141,7 @@ Select this when consistency is always more important than performance.
 .ScanConsistency (RequestPlus)
 [source,csharp,indent=0]
 ----
-include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=requestplus]
+include::example$/N1qlQueries.csx[tag=requestplus]
 ----
 
 * For a middle ground, *AtPlus* is a "read your own write" (RYOW) option, which means it just waits for the new documents that you specify to be indexed, rather than an entire index of multiple documents.
@@ -149,7 +149,7 @@ include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=requestplus]
 .ScanConsistency (AtPlus/RYOW example)
 [source,csharp,indent=0]
 ----
-include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=atplus]
+include::example$/N1qlQueries.csx[tag=atplus]
 ----
 
 === Client Context Id
@@ -158,7 +158,7 @@ The SDK will always send a client context ID with each query, even if none is pr
 
 [source,csharp,indent=0]
 ----
-include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=clientcontextexample]
+include::example$/N1qlQueries.csx[tag=clientcontextexample]
 ----
 
 === Readonly
@@ -167,7 +167,7 @@ If the query is marked as readonly, both the server and the SDK can improve proc
 
 [source,csharp,indent=0]
 ----
-include::example$/n1ql-queries-sdk/n1ql-queries-sdk/Program.cs[tag=readonlyexample]
+include::example$/N1qlQueries.csx[tag=readonlyexample]
 ----
 
 === Custom JSON Serializer
@@ -178,7 +178,7 @@ Please see the xref:transcoders-nonjson.adoc[documentation on transcoding and se
 
 == Streaming Large Result Sets
 
-By default the .NET SDK will stream the result set from the server, where the client will start a persistent connection with the server and only read the header until the Rows are enumerated; then, each row or JSON object will be de-serialized one at a time.
+By default the .NET SDK streams the result set from the server, where the client starts a persistent connection with the server and only read the header until the Rows are enumerated; then, each row or JSON object is de-serialized one at a time.
 
 This decreases pressure on CLR Garbage Collection and helps to prevent an `OutOfMemoryException` being thrown.
 
@@ -188,12 +188,11 @@ This decreases pressure on CLR Garbage Collection and helps to prevent an `OutOf
 From version 3.0.5 of the .NET SDK, it is possible to query off the xref:7.1@server:learn:data/scopes-and-collections.adoc[`Scope` level] _with the Couchbase Server release 7.0_,
 using the `QueryOptions() {QueryContext = "namespace:bucket:scope:collection"}` method.
 
-The code snippet below shows how to run a simple query to fetch 10 random rows from travel-sample and print the results,
-the assumption is that the `airline` collection exists within a scope `us`.
+The following code snippet shows how to run a query to fetch 10 random rows from `travel-sample.inventory` and print the results.
 
 [source,csharp]
 ----
-include::example$/n1ql-queries-sdk/scope-queries-sdk/Query.cs[tag=scope]
+include::example$/ScopeQueries.csx[tag=scope]
 ----
 
 A complete list of `QueryOptions` can be found in the https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.Query.QueryOptions.html[API docs].

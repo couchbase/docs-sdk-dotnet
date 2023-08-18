@@ -1,9 +1,9 @@
 ﻿// Run this using dotnet-script: https://github.com/filipw/dotnet-script
 //
-//      dotnet script Collections.cs
+//      dotnet script Collections.csx
 //
 
-#r "nuget: CouchbaseNetClient, 3.2.0"
+#r "nuget: CouchbaseNetClient, 3.4.8"
 
 using System;
 using System.Text;
@@ -19,7 +19,7 @@ public class CollectionsExample
     public async Task ExampleAsync()
     {
         var cluster = await Cluster.ConnectAsync(
-            "couchbase://localhost",
+            "couchbase://your-ip",
             "Administrator", "password");
 
         var bucket = await cluster.BucketAsync("travel-sample");

@@ -121,7 +121,7 @@ The configuration options are passed into one of the static `Cluster.ConnectAsyn
 
 [source,csharp]
 ----
-var cluster = await Cluster.ConnectAsync("couchbase://localhost", options);
+var cluster = await Cluster.ConnectAsync("couchbase://your-ip", options);
 ----
 
 In order to free all resources associated with a cluster, simply call the `.Dispose()` method:
@@ -144,7 +144,7 @@ See xref:ref:client-settings.adoc[client configuration] for further configuratio
       MaxHttpConnections =  23
   };
 
-  config.WithConnectionString("couchbase://localhost");
+  config.WithConnectionString("couchbase://your-ip");
 
   cluster = await Cluster.ConnectAsync(config);
 ----
@@ -160,7 +160,7 @@ var config = new ClusterOptions()
     Username = "user"
 };
 
-config.WithConnectionString("couchbase://localhost?max_kv_connections=23");
+config.WithConnectionString("couchbase://your-ip?max_kv_connections=23");
 
 cluster = await Cluster.ConnectAsync(config);
 ----
@@ -179,14 +179,14 @@ This is why you can set the username and password when directly connecting:
 
 [source,csharp]
 ----
-var cluster = await Cluster.ConnectAsync("couchbase://localhost", "user", "pass");
+var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "user", "pass");
 ----
 
 This is just a shorthand for:
 
 [source,csharp]
 ----
-var cluster = await Cluster.ConnectAsync("couchbase://localhost", new ClusterOptions
+var cluster = await Cluster.ConnectAsync("couchbase://your-ip", new ClusterOptions
 {
     UserName = "user",
     Password = "pass"
@@ -197,7 +197,7 @@ Configuring TLS/SSL is done by using the "couchbases://" scheme in the connectio
 
 [source,csharp]
 ----
-var cluster = await Cluster.ConnectAsync("couchbases://localhost", new ClusterOptions
+var cluster = await Cluster.ConnectAsync("couchbases://your-ip", new ClusterOptions
 {
     UserName = "user",
     Password = "pass"
@@ -433,7 +433,7 @@ var config = new ClusterOptions()
     Logging = loggerFactory
 };
 
-config.WithConnectionString("couchbase://localhost");
+config.WithConnectionString("couchbase://your-ip");
 ----
 
 Couchbase recommends https://serilog.net/[Serilog], however, any 3rd party logging library (Log4Net and others) will work as long as it is based off Microsoft.Extensions.Logging. 

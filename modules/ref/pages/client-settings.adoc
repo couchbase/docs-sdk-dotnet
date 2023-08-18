@@ -32,7 +32,7 @@ you can also build the `Cluster Options` in a fluent way for example
 [source,csharp]
 ----
 var options = new ClusterOptions()
-  .WithConnectionString("couchbase://localhost")
+  .WithConnectionString("couchbase://locahost")
   .WithCredentials(username: "user", password: "password")
   .WithBuckets("travel-sample")
   .WithLogging(LoggerFactory.Create(builder =>

@@ -3,7 +3,7 @@
 //      dotnet script QueryIndexManagerExample.csx
 //
 
-#r "nuget: CouchbaseNetClient, 3.3.0"
+#r "nuget: CouchbaseNetClient, 3.4.8"
 
 using System;
 using System.Threading.Tasks;
@@ -18,18 +18,19 @@ public class QueryIndexManagerExample
     public async Task ExampleAsync()
     {
         // tag::creating-index-mgr[]
-        var cluster = await Cluster.ConnectAsync("couchbase://localhost", "Administrator", "password");
-        var queryIndexMgr = cluster.QueryIndexes;
+        var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "Administrator", "password");
+        var bucket = await cluster.BucketAsync("travel-sample");
+        var scope = await bucket.ScopeAsync("tenant_agent_01");
+        var collection = await scope.CollectionAsync("users");
+
+        var queryIndexMgr = collection.QueryIndexes;
         // end::creating-index-mgr[]
 
         {
             Console.WriteLine("[primary]");
             // tag::primary[]
             await queryIndexMgr.CreatePrimaryIndexAsync(
-                "travel-sample",
                 new CreatePrimaryQueryIndexOptions()
-                    .ScopeName("tenant_agent_01")
-                    .CollectionName("users")
                     // Set this if you wish to use a custom name
                     // .IndexName("custom_name")
                     .IgnoreIfExists(true)
@@ -43,12 +44,9 @@ public class QueryIndexManagerExample
             try
             {
                 await queryIndexMgr.CreateIndexAsync(
-                    "travel-sample",
                     "tenant_agent_01_users_email",
                     new[] { "preferred_email" },
                     new CreateQueryIndexOptions()
-                        .ScopeName("tenant_agent_01")
-                        .CollectionName("users")
                 );
             }
             catch (IndexExistsException)
@@ -65,30 +63,23 @@ public class QueryIndexManagerExample
             {
                 // Create a deferred index
                 await queryIndexMgr.CreateIndexAsync(
-                    "travel-sample",
                     "tenant_agent_01_users_phone",
                     new[] { "preferred_phone" },
                     new CreateQueryIndexOptions()
-                        .ScopeName("tenant_agent_01")
-                        .CollectionName("users")
                         .Deferred(true)
                 );
 
                 // Build any deferred indexes within `travel-sample`.tenant_agent_01.users
                 await queryIndexMgr.BuildDeferredIndexesAsync(
-                    "travel-sample",
                     new BuildDeferredQueryIndexOptions()
-                        .ScopeName("tenant_agent_01")
-                        .CollectionName("users")
                 );
 
                 // Wait for indexes to come online
+                TimeSpan duration = TimeSpan.FromSeconds(10);
                 await queryIndexMgr.WatchIndexesAsync(
-                    "travel-sample",
                     new[] { "tenant_agent_01_users_phone" },
+                    duration,
                     new WatchQueryIndexOptions()
-                        .ScopeName("users")
-                        .CollectionName("tenant_agent_01")
                 );
             }
             catch (IndexExistsException)
@@ -103,19 +94,13 @@ public class QueryIndexManagerExample
             // tag::drop-primary-or-secondary-index[]
             // Drop primary index
             await queryIndexMgr.DropPrimaryIndexAsync(
-                "travel-sample",
                 new DropPrimaryQueryIndexOptions()
-                    .ScopeName("tenant_agent_01")
-                    .CollectionName("users")
             );
 
             // Drop secondary index
             await queryIndexMgr.DropIndexAsync(
-                "travel-sample",
                 "tenant_agent_01_users_email",
                 new DropQueryIndexOptions()
-                    .ScopeName("tenant_agent_01")
-                    .CollectionName("users")
             );
             // end::drop-primary-or-secondary-index[]
         }

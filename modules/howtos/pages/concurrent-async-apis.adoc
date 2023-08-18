@@ -20,8 +20,8 @@ Note: All examples on this page start with initiating a Cluster object and then 
 
 [source,csharp]
 ----
-var cluster = new Cluster("couchbase://localhost", new ClusterOptions()
-                 .WithConnectionString("couchbase://localhost")
+var cluster = new Cluster("couchbase://your-ip", new ClusterOptions()
+                 .WithConnectionString("couchbase://your-ip")
                  .WithCredentials(username: "user", password: "password")
                  .WithBuckets("travel-sample")
             );

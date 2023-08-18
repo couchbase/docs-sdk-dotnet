@@ -1,6 +1,6 @@
 ﻿// Run this using dotnet-script: https://github.com/filipw/dotnet-script
 //
-//      dotnet script EncryptingUsingSdk.cs
+//      dotnet script EncryptingUsingSdk.csx
 //
 
 #r "nuget: Couchbase.Extensions.Encryption, 2.0.0-dp.1"
@@ -40,7 +40,7 @@ public class EncryptingUsingSdk
 
         var clusterOptions = new ClusterOptions()
             .WithTranscoder(encryptedTranscoder)
-            .WithConnectionString("couchbase://localhost")
+            .WithConnectionString("couchbase://your-ip")
             .WithCredentials("Administrator", "password");
 
         var cluster = await Cluster.ConnectAsync(clusterOptions);
