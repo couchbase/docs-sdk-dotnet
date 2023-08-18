@@ -83,7 +83,7 @@ You can use the following command to use the SDK container shell:
 
 [source, console]
 ----
-docker exec -it python-sdk-local /bin/bash
+docker exec -it dotnet-sdk-local /bin/bash
 ----
 
 Once within the container, run the following command to run a single test:
