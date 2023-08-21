@@ -33,9 +33,11 @@ var result = await collection.GetAsync("key1").ConfigureAwait(false);
 
 In the code above, we connect to the Couchbase server and then open a bucket. 
 Both times we disable the sychcronization context by call `ConfigureAwait(false)`. 
-Then a collection is opened using a non-async overload, finally, we perform a CRUD operation and again we disable the context. 
+Then a collection is opened using a non-async overload.
+Finally, we perform a CRUD operation, and again we disable the context. 
 This pattern should be followed throughout your Couchbase application. 
-Note that in modern ASP.NET (5+), the core lacks a default synchronization so the usage of `Task.ConfigureAwait(false)` is debatable as it adds a small amount of overhead.
+
+NOTE: In modern ASP.NET (5+) the core lacks a default synchronization. With this core, usage of `Task.ConfigureAwait(false)` is debatable as it adds a small amount of overhead.
 
 === Avoid Synchronously Awaiting Foreach Loops
 
@@ -62,7 +64,7 @@ var tasks = Enumerable.Range(1, 100).Select(i => collection.GetAsync($"key{i}"))
 var results = await Task.WhenAll(tasks).ConfigureAwait(false);
 ----
 
-When done in this manner, the keys and response will be sent and recieved in out-of-order manner: "key2, "key10", "key3"...
+When done in this manner, the keys and response will be sent and recieved out-of-order: "key2, "key10", "key3"...
 
 === Do Not Use Parallel.ForEach
 
@@ -158,18 +160,18 @@ foreach (var key in keys)
 ----
 
 In all cases this anti-pattern should be not be used and instead all Tasks should be awaited asynchronously. 
-Note that applies to `Task.WaitAll` as well; avoid doing this in your Couchbase application!
+Note that this applies to `Task.WaitAll` as well -- avoid doing this in your Couchbase application!
 
-=== Not caching the Bucket and/or Cluster objects
+=== Not Caching the Bucket and/or Cluster Objects
 
-This is possibly the worst performance killer of all; failing to properly cache and reuse the `Bucket` or `Cluster` objects. 
+This is possibly the worst performance killer of all: failing to properly cache and reuse the `Bucket` or `Cluster` objects. 
 When we open the Cluster and Bucket objects, we create long-lived socket connections between the client and the server. 
 There is cost associated with creating these connections, so we want them to be reused over and over. 
-If were opening and closing these objects, were creating and the tearing down these connections which causes latency and may cause memory pressure.
+If we're opening and closing these objects, we're creating and the tearing down these connections -- which causes latency, and may cause memory pressure.
 
 The Couchbase SDK has a complementary https://docs.couchbase.com/dotnet-sdk/current/howtos/managing-connections.html#connection-di[Dependency Injection (DI)] library that makes this trival to manage. 
 Additionally, there are other ways of doing this manually in `Start.cs`, or for legacy applications, using `Application_Start` and `Application_End` handlers in the `Global.asax` file. 
-We strongly suggest users of the SDK use the DI library approach as its the simplest annd easiest to debug.
+We strongly recommend users of the SDK use the DI library approach as its the simplest and easiest to debug.
 
 
 
@@ -181,29 +183,31 @@ However, to get the very best performance out of your application, tuning may be
 
 === Connection pools
 
-The current SDK comes with three different connection pools: The default `ChannelConnectionPool`, the older `DataFlowConnectionPool` and the `SingleConnectionPool`. 
+The current SDK comes with three different connection pools: The default `ChannelConnectionPool`, the older `DataFlowConnectionPool`, and the `SingleConnectionPool`. 
 
 In general, the default `ChannelConnectionPool` should do everything you need. 
-The pool will scale up and down depending upon the values found in `ClusterOptions.NumKvConnections` and `ClusterOptions.MaxKvConnections`. 
-The defaults for these values are `2` for the former and `5` for the latter. 
+The pool will scale up and down depending upon the values found in `ClusterOptions.NumKvConnections` (which has a default value of 2) 
+and `ClusterOptions.MaxKvConnections` (which has a default value of 5). 
 If both values are set to a number less than or equal to `1`, a `SingleConnectionPool` will be used and scaling will be disabled.
-We DO NOT suggest changing these values most cases. However, if you do, then you should perform some benchmarking to determine the effects of the change on the client and on the server. 
+We DO NOT suggest changing these values most cases. 
+However, if you do, then you should perform some benchmarking to determine the effects of the change on the client and on the server. 
 More connections does not necessarily mean better performance overall!
 
 The `SingleConnectionPool` is a very simple pool that contains exactly one connection. 
 It's useful for debugging connection related problems as it is has very few features and allows you to quickly isolate problems. 
-It may also be suitable for some applications or micro-services that need to constrain the number of active connections. However, in general, we suggest using the `ChannelConnectionPool`.
+It may also be suitable for some applications or micro-services that need to constrain the number of active connections. 
+However, in general, we suggest using the `ChannelConnectionPool`.
 As mentioned above, setting both `ClusterOptions.NumKvConnections` and `ClusterOptions.MaxKvConnections` to a number less than or equal to `1` will cause the `SingleConnectionPool` to be used.
 
-
-The `DataFlowConnectionPool` is a legacy pool and we DO NOT suggest that you use it!
+The `DataFlowConnectionPool` is a legacy pool and should not be used in new applications.
 
 === Operation Builder Pool Tuning
 
 The SDK uses an internal operation builder pool which reuses buffers when writing or reading Memcached packets while performing KV operations. 
 There are advanced settings for this builder that can be tuned for specific circumstances. 
 These settings are found in the `ClusterOptions.Tuning` property. 
-Once again, the defaults are usually sufficient; if you do change these values make sure that you benchmark before and after as they may effect CPU and RAM usage and possibly latency.
+Once again, the defaults are usually sufficient.
+If you do change these values make sure that you benchmark before and after as they may effect CPU and RAM usage, and possibly latency.
 
 ==== MaximumOperationBuilderCapacity
 
@@ -224,7 +228,7 @@ The SDK by default enables operation tracing and metrics tracking.
 It is used to generate threshold and orphan response reports which are written to the log file. 
 While these are useful tool for debugging, they do come at a cost of increased memory and CPU use. 
 Operation tracing and metrics can be disabled by setting the `ClusterOptions.TracingOptions.Enabled` flag to `false` and/or by setting the `ClusterOptions.LoggingMeterOptions.Enabled` to `false`. 
-Do not by doing so you will lose the ability to use these useful debugging tools.
+Note, by doing so you will lose the ability to use these useful debugging tools.
 
 === Logging
 
