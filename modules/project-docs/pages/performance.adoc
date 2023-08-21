@@ -64,7 +64,7 @@ var tasks = Enumerable.Range(1, 100).Select(i => collection.GetAsync($"key{i}"))
 var results = await Task.WhenAll(tasks).ConfigureAwait(false);
 ----
 
-When done in this manner, the keys and response will be sent and recieved out-of-order: "key2, "key10", "key3"...
+When done in this manner, the keys and response will be sent and received out-of-order: "key2, "key10", "key3"...
 
 === Do Not Use Parallel.ForEach
 
