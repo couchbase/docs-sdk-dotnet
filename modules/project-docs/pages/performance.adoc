@@ -165,7 +165,7 @@ Note that applies to `Task.WaitAll` as well; avoid doing this in your Couchbase 
 This is possibly the worst performance killer of all; failing to properly cache and reuse the `Bucket` or `Cluster` objects. 
 When we open the Cluster and Bucket objects, we create long-lived socket connections between the client and the server. 
 There is cost associated with creating these connections, so we want them to be reused over and over. 
-If were opening and closing these objects, were creating and the tearing down these connections which causes latency and may cause memory pressure.
+If we're opening and closing these objects, we're creating and the tearing down these connections -- which causes latency, and may cause memory pressure.
 
 The Couchbase SDK has a complementary https://docs.couchbase.com/dotnet-sdk/current/howtos/managing-connections.html#connection-di[Dependency Injection (DI)] library that makes this trival to manage. 
 Additionally, there are other ways of doing this manually in `Start.cs`, or for legacy applications, using `Application_Start` and `Application_End` handlers in the `Global.asax` file. 
