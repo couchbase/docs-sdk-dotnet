@@ -142,7 +142,7 @@ You do need to enable TLS, which can be done by simply using `couchbases://` in 
 
 [source,csharp]
 ----
-include::devguide:example$dotnet/Cloud/Cloud.csx[tag=connect,indent=0]
+include::devguide:example$dotnet/Cloud/Cloud.cs[tag=connect,indent=0]
 ----
 
 When accessing Capella from a different Wide Area Network or Availability Zone, you may experience latency issues with the default connection settings.
