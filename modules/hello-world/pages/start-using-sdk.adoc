@@ -46,13 +46,13 @@ Local Couchbase Server::
 --
 [source.try-it,csharp]
 ----
-include::example$StartUsing.cs[tags=**]
+include::example$StartUsing.csx[tags=**]
 ----
---
 
 As well as the .NET SDK (see below), and a running instance of Couchbase Server, you will need to load up the Travel Sample Bucket
 using either the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Web interface]
 or the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-cli[command line].
+--
 ====
 
 
@@ -124,7 +124,7 @@ Firstly, you will need to have a few `using` statements at the top of *Program.c
 
 [source,csharp]
 ----
-include::example$StartUsing.cs[tag=using,indent=0]
+include::example$StartUsing.csx[tag=using,indent=0]
 ----
 
 === Connect
@@ -142,7 +142,7 @@ You do need to enable TLS, which can be done by simply using `couchbases://` in 
 
 [source,csharp]
 ----
-include::devguide:example$dotnet/Cloud/Cloud.cs[tag=connect,indent=0]
+include::devguide:example$dotnet/Cloud/Cloud.csx[tag=connect,indent=0]
 ----
 
 When accessing Capella from a different Wide Area Network or Availability Zone, you may experience latency issues with the default connection settings.
@@ -157,7 +157,7 @@ Local Server Connection::
 --
 [source,csharp]
 ----
-include::example$StartUsing.cs[tag=connect,indent=0]
+include::example$StartUsing.csx[tag=connect,indent=0]
 ----
 
 For developing locally on the same machine as Couchbase Server, your URI can be `couchbase://localhost`.
@@ -169,7 +169,7 @@ Following successful authentication, add this code snippet to access your `Bucke
 
 [source,csharp]
 ----
-include::example$StartUsing.cs[tag=bucket,indent=0]
+include::example$StartUsing.csx[tag=bucket,indent=0]
 ----
 
 === Add and Retrieve Documents
@@ -188,7 +188,7 @@ To get you started the following code creates a new document in a custom scope a
 
 [source,csharp]
 ----
-include::example$StartUsing.cs[tag=upsert-get,indent=0]
+include::example$StartUsing.csx[tag=upsert-get,indent=0]
 ----
 
 === {sqlpp} Lookup
