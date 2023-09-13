@@ -61,7 +61,7 @@ Couchbase .NET SDK 3.2.7 build targets include .NET Standard 2.0, .NET Standard 
 This was chosen so .NET Full Framework 4.8 can be supported along with .NET Core 3.x and earlier and follows the suggested path for library authors as well as the latest .NET Versions.
 The goal is to use the latest and greatest .NET Core libraries available, but still allow fallback for developers still using .NET Full Framework as they progress towards .NET Standard compliance.
 
-While the older target Frameworks are still targeted, Couchbase suggests that users target .NET 6 as it provides the latest, most performant .NET version. Additionally, as Microsoft
+While the older target Frameworks are still targeted, Couchbase suggests that users target .NET 6 as it provides the latest, most performant .NET version.
 
 === Dependencies
 
