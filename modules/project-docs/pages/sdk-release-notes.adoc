@@ -8,11 +8,28 @@
 [abstract]
 {description}
 
-
 These pages cover the 3._x_ versions of the Couchbase .NET SDK.
 For release notes, download links, and installation methods for 2.7 and earlier releases of the Couchbase .NET Client,  please see the xref:2.7@dotnet-sdk::sdk-release-notes.adoc[2.x .NET Release Notes & Download Archive].
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
+
+[#version-3-4-11]
+== Version 3.4.11 (12 Sept 2023)
+
+Version 3.4.11 is the twelfth release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.11.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.11[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.11[Nuget]
+
+=== Fixed Issues
+
+*https://issues.couchbase.com/browse/NCBC-3446[NCBC-3446]: Performer not handling all transactions query options
+*https://issues.couchbase.com/browse/NCBC-3448[NCBC-3448]: IndexNotFoundException not raised when QueryIndexManager.watchIndex called with a non-existent index
+*https://issues.couchbase.com/browse/NCBC-3460[NCBC-3460]: Null reference exception when bootstrapping a Memcached bucket
+*https://issues.couchbase.com/browse/NCBC-3467[NCBC-3467]: Regression in lambda-based sub doc API due to LookupInResult changes
+
+=== New Features and Behavioral Changes
 
 
 [#version-3-4-10]
@@ -26,40 +43,24 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.4.10[Nuget]
 
 === Fixed Issues
 
-* https://issues.couchbase.com/browse/NCBC-3424[NCBC-3424]: 
-Future server versions will add an extra item to the features list returned, which effects the parsing of the body.
-This change prepares for the effects of those  flexible framing extras.
-* https://issues.couchbase.com/browse/NCBC-3445[NCBC-3445]: 
-At some point, `SubDocMultiPathFailureDeleted` was added as a special case of `SubDocMultiPathFailure`, but from an SDK point of view they should be handled them similarly.
-This change ensures that when doing a `LookupIn` against a Tombstone with `AccessDeleted` flag set, `SubDocMultiPathFailureDeleted` response status should not throw, and should be treated the same as `SubDocMultiPathFailure`.
+* https://issues.couchbase.com/browse/NCBC-3446[NCBC-3446]: Performer not handling all transactions query options
+* https://issues.couchbase.com/browse/NCBC-3448[NCBC-3448]: IndexNotFoundException not raised when QueryIndexManager.watchIndex called with a non-existent index
+* https://issues.couchbase.com/browse/NCBC-3460[NCBC-3460]: Null reference exception when bootstrapping a Memcached bucket
+* https://issues.couchbase.com/browse/NCBC-3467[NCBC-3467]: Regression in lambda-based sub doc API due to LookupInResult changes
 
 === New Features and Behavioral Changes
 
-* https://issues.couchbase.com/browse/NCBC-3423[NCBC-3423]: 
-Added `GetClusterConfigWithKnownVersion` support to Hello.
-* https://issues.couchbase.com/browse/NCBC-3425[NCBC-3425]: 
-Added a `HELLO` flag called `DedupeNotMyVbucketClustermap`.
-* https://issues.couchbase.com/browse/NCBC-3427[NCBC-3427]: 
-Added `SnappyEverywhere` flag support, in preparation for the .NET SDK supporting Compression.
-* https://issues.couchbase.com/browse/NCBC-3428[NCBC-3428]: 
-Added `ClustermapChangeNotificationBrief` flag support to subscribe to configuration notifications, where available.
-* https://issues.couchbase.com/browse/NCBC-3429[NCBC-3429]: 
-Added support for Duplex mode flag to Hello, for Unordered Execution.
-* https://issues.couchbase.com/browse/NCBC-3430[NCBC-3430]: 
-Added `ClustermapChangeNotification` flag support.
-// I think the below was closed with no fix necessary - let me know if I'm wrong and it should be uncommented.
-// * https://issues.couchbase.com/browse/NCBC-3278[NCBC-3278]: 
-// Improve error message when Uri is null when creating scope
-* https://issues.couchbase.com/browse/NCBC-3421[NCBC-3421]: 
-Deserializing K/V operations with the `DefaultSerializer` was allocating an excessive number of buffers for each operation.
-This change introduces a reusable pool of text readers which reads directly from the memory buffer without stream-related overhead or intermediate buffers.
-This results in a performance gain and a significant reduction in heap allocations when deserializing from a memory buffer.
-* https://issues.couchbase.com/browse/NCBC-3432[NCBC-3432]: 
-Added additional logging at the IO level to capture more details of exceptions thrown when sockets are opened.
-* https://issues.couchbase.com/browse/NCBC-3438[NCBC-3438]: 
-Several of the listed dependencies for the .NET 6 target were unnecessary, as those packages are now included in the .NET framework and we're not targeting a higher version. 
-We have removed these NuGet dependencies for the .NET 6 Target, which will reduce restore time and size for consumers.
-
+* https://issues.couchbase.com/browse/NCBC-3449[NCBC-3449]: LookupIn NullReferenceException when using a Transcoder
+* https://issues.couchbase.com/browse/NCBC-3456[NCBC-3456]: Subdoc LookupIn with AccessDeleted(true) throws SubdocExceptionException
+* https://issues.couchbase.com/browse/NCBC-3466[NCBC-3466]: FIT: Performer using default transcoder cannot get raw content
+* https://issues.couchbase.com/browse/NCBC-3482[NCBC-3482]: Enable FF by default
+* https://issues.couchbase.com/browse/NCBC-3130[NCBC-3130]: Use System.Text.Json to build/serialize in orphan reporting
+* https://issues.couchbase.com/browse/NCBC-3402[NCBC-3402]: Improve trimming support for internal DI
+* https://issues.couchbase.com/browse/NCBC-3404[NCBC-3404]: Use System.Text.Json for Eventing Management
+* https://issues.couchbase.com/browse/NCBC-3405[NCBC-3405]: Add trimming annotations to LoggingMeter
+* https://issues.couchbase.com/browse/NCBC-3420[NCBC-3420]: Use System.Text.Json for query plans
+* https://issues.couchbase.com/browse/NCBC-3453[NCBC-3453]: Reduce Default HTTP Idle Timeout
+* https://issues.couchbase.com/browse/NCBC-3471[NCBC-3471]: Make Couchbase.Extensions.DependencyInjection trim and AOT-compatible
 
 [#version-3-4-9]
 == Version 3.4.9 (20 July 2023)
