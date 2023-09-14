@@ -2,6 +2,7 @@
 :description: Release notes and download archive for the Couchbase .NET Client.
 :page-topic-type: project doc
 :page-aliases: relnotes-dotnet-sdk
+:page-toclevels: 2
 :page-partial:
 
 // tag::all[]
@@ -1878,7 +1879,7 @@ Share ServerFeatures on IConnection
 Make synchronous Analytics query methods obsolete
 
 
-= Version 3.0.6 (13 October 2020)
+=== Version 3.0.6 (13 October 2020)
 Version 3.0.6 is the seventh release of the 3.0 series, bringing enhancements and bugfixes over the last stable release.
 
 
@@ -1934,7 +1935,7 @@ Geopolygon search support.
 Add Options To Use FTS Hints (Flex Index).
 
 
-= Version 3.0.5 (1 September 2020)
+=== Version 3.0.5 (1 September 2020)
 
 Version 3.0.5 is the sixth release of the 3.0 series, bringing enhancements and bugfixes over the last stable release.
 
@@ -1979,7 +1980,7 @@ Add N1QL Support for Collections
 Enhance User Management for Collections/RBAC
 
 
-= Version 3.0.4 (5 August 2020)
+=== Version 3.0.4 (5 August 2020)
 
 Version 3.0.4 is the fifth release of the 3.0 series, bringing enhancements and bugfixes over the last stable release.
 
@@ -2029,7 +2030,7 @@ Add PublicKey to AssemblyInfo for DI when building release packages
 When signing make friend assemblies use public key
 
 
-= Version 3.0.3 (14 July 2020)
+=== Version 3.0.3 (14 July 2020)
 
 Version 3.0.3 is the fourth release of the 3.0 series, bringing enhancements and bugfixes over the last stable release.
 
@@ -2091,7 +2092,7 @@ Misc SDK improvements for Transactions
 Allow registration of custom services
 
 
-= Version 3.0.2 (20 June 2020)
+=== Version 3.0.2 (20 June 2020)
 
 Version 3.0.2 is the third release of the 3.0 series, bringing enhancements and bugfixes over the last stable release.
 
@@ -2201,7 +2202,7 @@ Implement OpenTelemetry Stub in CouchbaseNetClient
 Remove existing OpenTracing dependency
 
 
-= Version 3.0.1 (13 May 2020)
+=== Version 3.0.1 (13 May 2020)
 
 Version 3.0.1 is the second release of the 3.0 series, bringing enhancements and bugfixes over the last stable release.
 
@@ -2280,7 +2281,7 @@ Log warning when TCPKeepAlive cannot be enabled
 Fix TCPKeepAlive to work on non Windows Platform
 
 
-= Version 3.0.0 (31 March 2020)
+=== Version 3.0.0 (31 March 2020)
 
 This is the first GA release of the third generation .NET SDK.
 
@@ -2584,10 +2585,10 @@ Route nodes into service specific CouchbaseNodeCollections
 Reduce heap allocations calling BucketAsync
 
 
-== Pre-releases
+=== Pre-releases
 
 Numerous _Alpha_ and _Beta_ releases were made in the run-up to the 3.0 release, and although unsupported, the release notes and download links are retained for archive purposes xref:3.0-pre-release-notes.adoc[here].
-// https://docs.couchbase.com/dotnet-sdk/current/project-docs/3.0-pre-release-notes.html
+// https://docs-archive.couchbase.com/dotnet-sdk/3.0/project-docs/3.0-pre-release-notes.html
 // Full link once 3.0 goes to archive
 
 == Older Releases
