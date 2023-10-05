@@ -24,6 +24,35 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+[#version-3-4-12]
+=== Version 3.4.12 (04 Oct 2023)
+
+Version 3.4.12 is the thirteenth release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.12.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.12[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.12[Nuget]
+
+==== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3490[NCBC-3490]:MutateIn doesn&#39;t throw CasMismatchException
+* https://issues.couchbase.com/browse/NCBC-3493[NCBC-3493]:When private link is enabled all VBuckets map to the same node and NMVB
+* https://issues.couchbase.com/browse/NCBC-3496[NCBC-3496]:Make WaitUntilReady use the cluster map and not ServiceType enum by default
+* https://issues.couchbase.com/browse/NCBC-3455[NCBC-3455]:SDK does not throw DocumentUnretrievableException in LookupInAnyReplica
+* https://issues.couchbase.com/browse/NCBC-3465[NCBC-3465]:Exist specs in LookupInResults do not return ContentAs
+* https://issues.couchbase.com/browse/NCBC-3473[NCBC-3473]:GetInAnyReplica might fail when it should be successful + throw DocumentUnretrievable
+* https://issues.couchbase.com/browse/NCBC-3484[NCBC-3484]:LookupIn(Any/All)Replica do not execute against primary vBucket
+* https://issues.couchbase.com/browse/NCBC-3485[NCBC-3485]:LookupInAnyReplica might fail when they should be successful
+* https://issues.couchbase.com/browse/NCBC-3486[NCBC-3486]:LookupIn(Any/All)Replicas do not actually send to replica VBuckets
+
+==== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-3494[NCBC-3494]:Add client-side check for TooManySpecs in LookupIn
+* https://issues.couchbase.com/browse/NCBC-3387[NCBC-3387]:Remove Internal keword from ICollectionQueryIndexManager
+* https://issues.couchbase.com/browse/NCBC-3479[NCBC-3479]:Add trimming and AOT annotations to Analytics and Search clients
+* https://issues.couchbase.com/browse/NCBC-3492[NCBC-3492]:Update Config When 0xd Response is Received
+* https://issues.couchbase.com/browse/NCBC-3495[NCBC-3495]:Move LookupInAllReplicasAsync and LookupInAnyReplicaAsync into ICouchbaseCollection
+* https://issues.couchbase.com/browse/NCBC-3497[NCBC-3497]:Add additional DEBUG logging ConnectionFactory.CreateAndConnectAsync for TLS
 
 
 [#version-3-4-11]
