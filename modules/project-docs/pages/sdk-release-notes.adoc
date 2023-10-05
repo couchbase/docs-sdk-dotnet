@@ -25,6 +25,53 @@ All patch releases for each dot minor release should be API compatible, and safe
 any changes to expected behavior are noted in the release notes that follow.
 
 
+[#version-3-4-12]
+=== Version 3.4.12 (04 Oct 2023)
+
+Version 3.4.12 is the thirteenth release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.12.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.12[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.12[Nuget]
+
+==== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3490[NCBC-3490]:
+When a request includes a CAS, `MutateIn` should now throw a `CasMismatch` exception if the status is `KeyExists`.
+Otherwise, for `KeyExists`, it will continue to throw `DocumentExistsException`.
+* https://issues.couchbase.com/browse/NCBC-3493[NCBC-3493]:
+When a Private Link is enabled, the SDK was not properly using the provided config and all of the VBuckets were mapped to the same node.
+This could cause a recurring `KvNotMyVBucket`, which would eventually become an `AmbiguousTimeoutException` thrown to the user.
+This behavior has now been fixed --
+changes have been made so that `NetworkResolution` is propagated to `BucketConfig`, duplicate nodes not added to nodes list, and entries in `LookupDictionary` are only made for nodes with actual ports.
+* https://issues.couchbase.com/browse/NCBC-3496[NCBC-3496]:
+`WaitUntilReady` should now use the cluster map and not the `ServiceType` enum by default -- removing spurious error messages about services which are not being used.
+* https://issues.couchbase.com/browse/NCBC-3455[NCBC-3455]:
+During a `MultiLookup`, the SDK should now correctly throw `DocumentUnretrievableException` in `LookupInAnyReplica`, for key not found.
+* https://issues.couchbase.com/browse/NCBC-3465[NCBC-3465]:
+Exist specs in `LookupInResults` was not returning `ContentAs` -- 
+it now returns bool Exist value serialized as `T` when calling `LookupinResult.ContentAs<T>()`, as per RFC.
+* https://issues.couchbase.com/browse/NCBC-3473[NCBC-3473]:
+`GetInAnyReplica` could fail when it should have been successful, throwing `DocumentUnretrievable` --
+it should now return the first _successful_ operation (unless all fail).
+* https://issues.couchbase.com/browse/NCBC-3484[NCBC-3484], https://issues.couchbase.com/browse/NCBC-3485[NCBC-3485], https://issues.couchbase.com/browse/NCBC-3486[NCBC-3486]:
+Several bugs in LookupInAny and LookupInAllReplicas have been fixed.
+
+==== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-3494[NCBC-3494]:
+Added a client-side check for `TooManySpecs` in `LookupIn`.
+* https://issues.couchbase.com/browse/NCBC-3387[NCBC-3387]:
+Removed internal keword from `ICollectionQueryIndexManager`, facilitatiing better testing.
+* https://issues.couchbase.com/browse/NCBC-3479[NCBC-3479]:
+Added trimming and AOT annotations to Analytics and Search clients.
+* https://issues.couchbase.com/browse/NCBC-3492[NCBC-3492]:
+When an `EConfigOnly (0xd)` response is received, the SDK assumes that this _may_ mean a stale config, and so fetches a new config and publishes it for processing.
+* https://issues.couchbase.com/browse/NCBC-3495[NCBC-3495]:
+Moved `LookupInAllReplicasAsync` and `LookupInAnyReplicaAsync` into `ICouchbaseCollection`.
+* https://issues.couchbase.com/browse/NCBC-3497[NCBC-3497]:
+Added additional DEBUG logging `ConnectionFactory.CreateAndConnectAsync`, to aid TLS troubleshooting.
+
 
 [#version-3-4-11]
 === Version 3.4.11 (12 Sept 2023)
