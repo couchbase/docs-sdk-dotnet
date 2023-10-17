@@ -8,7 +8,7 @@ include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 In response to increasing volumes of data being sent over the wire, Couchbase Data Platform now provides data compression between the SDK and Couchbase Server.
-However, stable Snappy support is not yet available in .NET.
+However, stable Snappy support is not yet available in the .NET platform.
 
 
 
@@ -16,3 +16,18 @@ Couchbase Server (in the Enterprise Edition) stores documents in compressed form
 As the Snappy compression library is not available for .NET, the server will automatically uncompress any compressed documents before sending them to the .NET client.
 
 If compression is set to _active_ on the server, documents will be stored there in compressed form, even though the .NET client has sent them uncompressed, thus saving storage space (but not network bandwidth).
+
+
+== Community-Supported Snappy Library
+
+Whilst there is no official candidate for Snappy compression in the .NET platform, with several https://google.github.io/snappy/[unsupported choices available], the community has produced a promising option in https://github.com/brantburnett/Snappier[Snappier].
+And since xref:project-docs:sdk-release-notes.adoc#version-3-4-10[.NET SDK 3.4.10], the .NET SDK has been able to work with external Snappy libraries as the setting for the Server flag `SnappyEverywhere` is now supported.
+
+See the https://github.com/brantburnett/Snappier[Snappier GitHub page] for information on installing the external Snappier library, or get it from https://www.nuget.org/packages/Snappier[NuGet].
+
+CAUTION: Community-contributed Snappy libraries are not currently supported in production -- they are linked here for you to test out performance, in the run-up to an oficially-supported solution.
+
+
+== Additional Information
+
+Learn more about Snappy Compression with Couchbase Server xref:3.4@java-sdk:concept-docs:compression.adoc[here].
