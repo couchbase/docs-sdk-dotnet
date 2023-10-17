@@ -31,6 +31,10 @@ or replace _travel-sample_ with a different Bucket name to build an index on a d
 NOTE: If you are using _travel-sample_, it comes with a primary index already created.
 
 
+Note that building indexes is covered in more detail on the xref:concept-docs:n1ql-query.adoc#index-building[Query concept page] --
+and in the https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.Management.Query.CreateQueryIndexOptions.html[API Reference].
+
+
 == Parameterized Queries
 
 Parameters allow you to specify variable constraints for an otherwise constant query. Parameterization is also a good defense against link:https://owasp.org/www-community/attacks/SQL_Injection[SQL injection].
