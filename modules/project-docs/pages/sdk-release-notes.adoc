@@ -25,6 +25,65 @@ All patch releases for each dot minor release should be API compatible, and safe
 any changes to expected behavior are noted in the release notes that follow.
 
 
+[#version-3-4-13]
+=== Version 3.4.13 (09 Nov 2023)
+
+Version 3.4.13 is the fourteenth release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.13.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.13[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.13[Nuget]
+
+==== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3397[NCBC-3397]: 
+`IOperation.Elapsed` was not correctly counting duration between retries -- 
+the stopwatch field of `IOperation/OperationBase` is stopped in `HandleOperationCompleted()` and never re-started.
+This has now been fixed, and the `Elapsed` field of `OperationBase` now correctly increments with the stopwatch time after each retry cycle.
+* https://issues.couchbase.com/browse/NCBC-3498[NCBC-3498]: 
+Added code documentation to `PersistentList` as the internals use reference comparisons, but there is no guarantee that internally the document might be reloaded by the database.
+The documention instructs users to override the `Object.Equals` method on their POCOs so that that values of the objects will be compared and not the objects' reference.
+* https://issues.couchbase.com/browse/NCBC-3510[NCBC-3510]: 
+Fixed a regression in Config Push Notification / Faster Failover performance.
+Config Push notifications are now handled by a single thread per node in a LIFO manner, and skip out of date push notifications,
+as well as providing more logging around config updates to help troubleshoot in the future.
+Additionally, `GetClusterConfig` asks for the old version, not the pushed version. 
+* https://issues.couchbase.com/browse/NCBC-3526[NCBC-3526]: 
+The Search Service's `NumericRangeQuery`'s `MaxInclusive` property was defaulting to `false`.
+It now defaults to `true`, in line with the https://github.com/couchbaselabs/sdk-rfcs/blob/master/rfc/0052-sdk3-full-text-search.md#numericrangequery[rfc].
+* https://issues.couchbase.com/browse/NCBC-3543[NCBC-3543]: 
+`DefaultSerializer` will now correctly handle Unicode surrogate pairs on buffer boundaries.
+
+==== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-3472[NCBC-3472]: 
+Support added to bucket settings for xref:7.2@server:learn:data/change-history.adoc#understanding-change-history[change history] feature.
+* https://issues.couchbase.com/browse/NCBC-3502[NCBC-3502], https://issues.couchbase.com/browse/NCBC-3506[NCBC-3506]: 
+Merging `couchbase-net-stellar` into `couchbase-net-client`, for upcoming Cloud Native Gateway support.
+* https://issues.couchbase.com/browse/NCBC-3481[NCBC-3481]: 
+The legacy `Enum.GetValues(Type)` overload is not AOT-compatible.
+Added conditional compilation to use the Enum.GetValues<TEnum>() overload on .NET 6 and later.
+* https://issues.couchbase.com/browse/NCBC-3487[NCBC-3487]: 
+Reduced reliance on `SerializeWithFallback`, which is incompatible with trimming and `NativeAOT`.
+* https://issues.couchbase.com/browse/NCBC-3488[NCBC-3488]: 
+Delaying creation of `CollectionQueryIndexManager`, which will allow it to be left off the DI container, and trimmed out of the output executable if unused.
+* https://issues.couchbase.com/browse/NCBC-3489[NCBC-3489]: 
+Implemented an in-flight operation limit to provide backpressure.
+The previous design allowed a single connection from the connection pool to collect a large number of in-flight operations, rather than ensuring a more even spread of operations across connections in the pool.
+This potentially allowed small operation may be blocked waiting for large operation to pass over the network socket.
+A more even spread of operations doesn't guarantee this will be the case, but does make it more likely.
+* https://issues.couchbase.com/browse/NCBC-3508[NCBC-3508]: 
+Support HTTP response streaming in legacy .NET runtimes
+** .NET 4 consumers may opt-in to HTTP response streaming so long as they ensure they properly dispose of any returned `XXXResult` objects rather than leaving them dangling and potentially causing a connection leak.
+If they do choose this behavior then `System.IOException` cases previously addressed by https://issues.couchbase.com/browse/NCBC-3433[NCBC-3433] should not occur due to the new pattern for disposing of `HttpClient`.
+** .NET 6 and newer consumers may now choose to opt-out of HTTP response streaming if desired.
+* https://issues.couchbase.com/browse/NCBC-3539[NCBC-3539]: 
+`System.Text.Json` is now used to deserialize document expiry -- for improved performance and compatiblity with trimming and `NativeAOT`.
+* https://issues.couchbase.com/browse/NCBC-3545[NCBC-3545]: 
+Fixes a regression introduced in 3.4.12 where a `ClusterNode` might be disposed and then reused, which causes an exception to be raised.
+This issue is raised if the cluster is configured to use Alternate Addressing, but not DNS-SRV.
+
+
 [#version-3-4-12]
 === Version 3.4.12 (04 Oct 2023)
 
