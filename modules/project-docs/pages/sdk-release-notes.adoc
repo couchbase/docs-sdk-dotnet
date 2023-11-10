@@ -24,6 +24,35 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+[#version-3-4-13]
+=== Version 3.4.13 (09 Nov 2023)
+
+Version 3.4.13 is the fourteenth release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.13.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.13[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.13[Nuget]
+
+==== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3397[NCBC-3397]: IOperation.Elapsed does not correctly count duration between retries
+* https://issues.couchbase.com/browse/NCBC-3498[NCBC-3498]: Data Structures: Remove from List not removing item
+* https://issues.couchbase.com/browse/NCBC-3510[NCBC-3510]: Regression in config map update recovery time from node failure
+* https://issues.couchbase.com/browse/NCBC-3526[NCBC-3526]: FTS: NumericRangeQuery&#39;s MaxInclusive property defaults to false
+* https://issues.couchbase.com/browse/NCBC-3543[NCBC-3543]: DefaultSerializer may fail when it encounters Unicode surrogate pairs on buffer boundaries
+
+==== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-3472[NCBC-3472]: Support bucket settings for &#39;no dedup&#39; feature
+* https://issues.couchbase.com/browse/NCBC-3502[NCBC-3502]: Protostellar: Move couchbase-net-stellar into couchbase-net-client (pathfinding)
+* https://issues.couchbase.com/browse/NCBC-3506[NCBC-3506]: Make Couchbase-Stellar compile locally
+* https://issues.couchbase.com/browse/NCBC-3481[NCBC-3481]: Use AOT-compatible Enum.GetValues
+* https://issues.couchbase.com/browse/NCBC-3487[NCBC-3487]: Reduce reliance on SerializeWithFallback
+* https://issues.couchbase.com/browse/NCBC-3488[NCBC-3488]: Delay creation of CollectionQueryIndexManager
+* https://issues.couchbase.com/browse/NCBC-3489[NCBC-3489]: Implement an in-flight operation limit to provide backpressure
+* https://issues.couchbase.com/browse/NCBC-3508[NCBC-3508]: Support HTTP response streaming in legacy .NET runtimes
+* https://issues.couchbase.com/browse/NCBC-3539[NCBC-3539]: Use System.Text.Json to deserialize document expiry
+* https://issues.couchbase.com/browse/NCBC-3545[NCBC-3545]: Node prematurely disposed in 3.4.12
 
 [#version-3-4-12]
 === Version 3.4.12 (04 Oct 2023)
