@@ -44,8 +44,6 @@ This has now been fixed, and the `Elapsed` field of `OperationBase` now correctl
 Added code documentation to `PersistentList` as the internals use reference comparisons, but there is no guarantee that internally the document might be reloaded by the database.
 The documention instructs users to override the `Object.Equals` method on their POCOs so that that values of the objects will be compared and not the objects' reference.
 * https://issues.couchbase.com/browse/NCBC-3510[NCBC-3510]: 
-Regression in config map update recovery time from node failure
-
 Fixed a regression in Config Push Notification / Faster Failover performance.
 Config Push notifications are now handled by a single thread per node in a LIFO manner, and skip out of date push notifications,
 as well as providing more logging around config updates to help troubleshoot in the future.
