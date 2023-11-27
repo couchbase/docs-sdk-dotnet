@@ -1,4 +1,4 @@
-= Release Notes
+= SDK Release Notes
 :description: Release notes and download archive for the Couchbase .NET Client.
 :page-topic-type: project doc
 :page-aliases: relnotes-dotnet-sdk
