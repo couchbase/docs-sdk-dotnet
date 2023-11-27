@@ -23,7 +23,9 @@ The information in this page is only needed if the application has an advanced u
 == Default Behaviour
 The `ClusterOptions` contains a global transcoder and serializer, which by default are  `JsonTranscoder` and `DefaultSerializer`.
 
-`DefaultSerializer` uses the high-performance JSON library https://github.com/JamesNK/Newtonsoft.Json[JSON.NET] for serializing and deserializing byte arrays to and from concrete objects.
+`DefaultSerializer` uses the flexible JSON library https://github.com/JamesNK/Newtonsoft.Json[JSON.NET] for serializing and deserializing byte arrays to and from concrete objects.
+
+`SystemTextJsonSerializer` uses the more modern, high-performance, but also more strict `System.Text.Json` serializer instead.
 
 On sending data to Couchbase, `JsonTranscoder` will send Objects to its serializer (`DefaultSerializer` by default) to convert into a `byte[]`.
 The serialized bytes are then sent to the Couchbase Server, along with a Common Flag of JSON.
@@ -88,11 +90,11 @@ Here we want to use https://docs.microsoft.com/en-us/dotnet/api/system.text.json
 include::example$Transcoding.csx[tag=raw-json-encode,indent=0]
 ----
 
-Since Gson has already done the serialization work, we don't want to use the default `JsonTranscoder`, as this will run the provided String needlessly through `DefaultSerializer` (Jackson).
+Since System.Text.Json has already done the serialization work, we don't want to use the default `JsonTranscoder`, as this will run the provided String needlessly through `DefaultSerializer` (JSON.NET).
 Instead, RawJsonTranscoder is used, which just passes through the serialized bytes, and stores them in Couchbase with the JSON Common Flag set.
 
-Similarly, the same transcoder is used on reading the document, so the raw bytes can be retrieved in a String without going through `DefaultSerializer` (Jackson).
-Gson can then be used for the deserialization.
+Similarly, the same transcoder is used on reading the document, so the raw bytes can be retrieved in a String without going through `DefaultSerializer` (JSON.NET).
+System.Text.Json can then be used for the deserialization.
 
 [source,csharp]
 ----
@@ -197,8 +199,8 @@ include::example$Transcoding.csx[tag=binary-memory,indent=0]
 More advanced transcoding needs can be accomplished if the application implements their own transcoders and serializers.
 
 === Creating a Custom Serializer
-We saw above one example of using Google Gson with the `RawJsonTranscoder`, but it requires the application to explicitly serialize and deserialize objects each time.
-By creating a custom Gson serializer, we can avoid this.
+We saw above one example of using System.Text.Json with the `RawJsonTranscoder`, but it requires the application to explicitly serialize and deserialize objects each time.
+By creating a custom JSON serializer, we can avoid this.
 
 It’s easy to create a serializer.  Simply implement the `ITypeSerializer` interface’s three methods:
 [source,csharp]
@@ -222,8 +224,9 @@ And for decoding:
 include::example$Transcoding.csx[tag=custom-decode,indent=0]
 ----
 
-Currently its not suggested that a custom JSON serializer be used globally in the Couchbase .NET SDK for anything other than K/V. This is because of streaming optimizations used in Query, FTS and Search that use JSON.NET features.
-
+Currently its not suggested that a custom JSON serializer be used globally in the Couchbase .NET SDK for anything other than K/V.
+This is because of streaming optimizations used in Query, FTS and Search that use JSON.NET features.
+These internals are gradually being migrated to the `SystemTextJsonSerializer` for improved performance.
 [source,csharp]
 ----
 include::example$Transcoding.csx[tag=global,indent=0]
@@ -235,7 +238,7 @@ MessagePack is a compact binary data representation, so it should be stored with
 The Common Flag is chosen by the transcoder, and none of the existing transcoders matches our needs (`RawBinaryTranscoder` does set the binary flag, but it passes data through directly rather than using a serializer).
 So we need to write one.
 
-Start by creating a new serializer for MessagePack.  This is similar to the GsonSerializer example above:
+Start by creating a new serializer for MessagePack.  This is similar to the custom JSON Serializer example above:
 
 [source,csharp]
 ----
