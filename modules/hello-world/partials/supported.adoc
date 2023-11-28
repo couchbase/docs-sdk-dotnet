@@ -3,5 +3,5 @@ Currently, that includes https://dotnet.microsoft.com/en-us/platform/support/pol
 The https://docs.microsoft.com/en-us/dotnet/standard/net-standard[.NET Standard documentation] and
 https://dotnet.microsoft.com/platform/dotnet-standard#versions[.NET Standard version chart] may be useful to help understand other available options.
 
-Couchbase strongly recommends using the latest LTS version of .NET that's officially supported by both Microsoft and Couchbase.
+Couchbase strongly recommends using the https://versionsof.net/[latest LTS version of .NET that's officially supported] by both Microsoft and Couchbase.
 Other .NET implementations may work, but aren't tested, and are outside the scope of technical support. 
