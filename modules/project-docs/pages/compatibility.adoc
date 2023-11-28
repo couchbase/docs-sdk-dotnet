@@ -142,19 +142,23 @@ include::hello-world:partial$supported.adoc[]
 | *✖*
 | *✖*
 
-///
-| .NET 8.0 (Long-Term Support)
-| *✖*
-| *✖*
-| *✔* From 3.4.14
-///
-
 | .NET Framework 4.6.2+
 | *✔*
 | *✔*
 | *✔*
 
 |===
+
+
+
+///
+// To add after 3.4.14 release:
+| .NET 8.0 (Long-Term Support)
+| *✖*
+| *✖*
+| *✔* From 3.4.14
+///
+
 
 
 
