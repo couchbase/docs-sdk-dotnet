@@ -223,7 +223,9 @@ The .NET SDK bundles Capella’s standard root certificate by default.
 This means you don’t need any additional configuration to enable TLS -- simply use `couchbases://` in your connection string.
 
 NOTE: Capella's root certificate is *not* signed by a well known CA (Certificate Authority).
-However, as the certificate is bundled with the SDK, it is trusted by default.
+However, as the certificate is bundled with the SDK when using .NET 6.0 or later, it is trusted by default.
+.NET Framework clients will have to add it to the Windows certificate store.
+
 
 === Couchbase Server
 
