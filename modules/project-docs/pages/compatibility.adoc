@@ -133,7 +133,7 @@ include::hello-world:partial$supported.adoc[]
 |===
 | | SDK 3.0 - 3.3 | SDK 3.4  | SDK 3.5
 
-| .NET 6.0 (Recommended, Long-Term Support)
+| .NET 6.0 (Long-Term Support)
 | *✔*
 | *✔*
 | *✔*
@@ -142,6 +142,11 @@ include::hello-world:partial$supported.adoc[]
 | *✖*
 | *✖*
 | *✖*
+
+| .NET 8.0 (Recommended, Long-Term Support)
+| *✖*
+| *✔* From 3.4.14
+| *✔*
 
 | .NET Framework 4.6.2+
 | *✔*
