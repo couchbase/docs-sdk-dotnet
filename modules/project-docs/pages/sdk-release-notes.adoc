@@ -24,18 +24,21 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+
 [#version-3-4-14]
 === Version 3.4.14 (18 Jan 2024)
 
-Version 3.4.14 is the fourteenth release of the 3.4 series.
+Version 3.4.14 is the fifteenth release of the 3.4 series.
 
 https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.14.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.14[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.4.14[Nuget]
 
 ==== Fixed Issues
-* https://issues.couchbase.com/browse/NCBC-3434[NCBC-3434]:Regression: 
-WaitUntilReady no longer detects state properly
+* https://issues.couchbase.com/browse/NCBC-3434[NCBC-3434]:
+A regression introduced in a recent release prevented `WaitUntilReady` from pining nodes --
+this has been fixed, and `WaitUntilReady` now correctly detects state.
+// The rest of these issues need editing to make them consistent, and helpful to customers - but I'm out of time. :-/
 * https://issues.couchbase.com/browse/NCBC-3503[NCBC-3503]:
 ClusterVersionProvider.GetVersionAsync may fail if nodes have no ManagementUri
 * https://issues.couchbase.com/browse/NCBC-3523[NCBC-3523]:
@@ -97,6 +100,7 @@ Make fallback usage of DefaultSerializer trimmable
 Remove internal transcoder dependencies on DefaultSerializer
 * https://issues.couchbase.com/browse/NCBC-3521[NCBC-3521]:
 Protostellar - Clean up and improve current implementation
+
 
 [#version-3-4-13]
 === Version 3.4.13 (09 Nov 2023)
