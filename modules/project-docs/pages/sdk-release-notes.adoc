@@ -25,6 +25,83 @@ All patch releases for each dot minor release should be API compatible, and safe
 any changes to expected behavior are noted in the release notes that follow.
 
 
+[#version-3-4-14]
+=== Version 3.4.14 (18 Jan 2024)
+
+Version 3.4.14 is the fifteenth release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.14.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.14[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.14[Nuget]
+
+==== Fixed Issues
+* https://issues.couchbase.com/browse/NCBC-3434[NCBC-3434]:
+A regression introduced in a recent release prevented `WaitUntilReady` from pining nodes --
+this has been fixed, and `WaitUntilReady` now correctly detects state.
+// The rest of these issues need editing to make them consistent, and helpful to customers - but I'm out of time. :-/
+* https://issues.couchbase.com/browse/NCBC-3503[NCBC-3503]:
+ClusterVersionProvider.GetVersionAsync may fail if nodes have no ManagementUri
+* https://issues.couchbase.com/browse/NCBC-3523[NCBC-3523]:
+Protostellar: Implement Search Admin Service
+* https://issues.couchbase.com/browse/NCBC-3524[NCBC-3524]:
+Protostellar: Implement Query Admin Service
+* https://issues.couchbase.com/browse/NCBC-3575[NCBC-3575]:
+Couchbase.ConnectAsync hangs forever if incorrect connect string
+* https://issues.couchbase.com/browse/NCBC-3588[NCBC-3588]:
+Fix binary compatible issue with 3.4.13 and lower and 3.4.14-rc3
+* https://issues.couchbase.com/browse/NCBC-3590[NCBC-3590]:
+Performing sub-doc SetDoc on the entire document should still use the transcoder
+
+==== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-3501[NCBC-3501]:
+Protostellarc - Merge couchbase-net-stellar into couchbase-net-client/couchbase
+* https://issues.couchbase.com/browse/NCBC-3548[NCBC-3548]:
+Refactor StellarClient into ProtoCluster (and rename to StellarCluster)
+* https://issues.couchbase.com/browse/NCBC-3509[NCBC-3509]:
+Protostella - Support final connection scheme
+* https://issues.couchbase.com/browse/NCBC-3514[NCBC-3514]:
+Remove sub-module dependencies and replace with files similar to Java
+* https://issues.couchbase.com/browse/NCBC-3520[NCBC-3520]:
+Protostellar - Update BucketManager
+* https://issues.couchbase.com/browse/NCBC-3525[NCBC-3525]:
+Protostella - Add Protostellar testing project
+* https://issues.couchbase.com/browse/NCBC-3527[NCBC-3527]:
+Refactor Couchbase.Stellar namespaces
+* https://issues.couchbase.com/browse/NCBC-3528[NCBC-3528]:
+Include generated gRPC files from Protostellar in Couchbase.Stellar
+* https://issues.couchbase.com/browse/NCBC-3529[NCBC-3529]:
+Create shim for connecting to a CNG or on-premise CB cluster
+* https://issues.couchbase.com/browse/NCBC-3530[NCBC-3530]:
+Make the ConnectionString class accept &quot;couchbase2&quot; schema
+* https://issues.couchbase.com/browse/NCBC-3532[NCBC-3532]:
+Add AsReadOnly record to Index APIs options
+* https://issues.couchbase.com/browse/NCBC-3536[NCBC-3536]:
+Merge Couchbase.Stellar.CombinationTests into couchbase-net-client repo
+* https://issues.couchbase.com/browse/NCBC-3537[NCBC-3537]:
+Add readme.txt to Couchbase.CodeGen
+* https://issues.couchbase.com/browse/NCBC-3538[NCBC-3538]:
+Achieve 300ms recovery time in Config Push
+* https://issues.couchbase.com/browse/NCBC-3540[NCBC-3540]:
+Make Protostellar run with FIT
+* https://issues.couchbase.com/browse/NCBC-3541[NCBC-3541]:
+Add AsReadOnly record to Bucket Management APIs options
+* https://issues.couchbase.com/browse/NCBC-3551[NCBC-3551]:
+Add AsReadOnly record to Collection Management APIs options
+* https://issues.couchbase.com/browse/NCBC-3552[NCBC-3552]:
+Document SSL/TLS connecting with Capella on .NET Framework
+* https://issues.couchbase.com/browse/NCBC-3568[NCBC-3568]:
+Add AsReadOnly Record to GetAllScopesOptions
+* https://issues.couchbase.com/browse/NCBC-3584[NCBC-3584]:
+Add FIT Support for DocumentNotLocked
+* https://issues.couchbase.com/browse/NCBC-3516[NCBC-3516]:
+Make fallback usage of DefaultSerializer trimmable
+* https://issues.couchbase.com/browse/NCBC-3518[NCBC-3518]:
+Remove internal transcoder dependencies on DefaultSerializer
+* https://issues.couchbase.com/browse/NCBC-3521[NCBC-3521]:
+Protostellar - Clean up and improve current implementation
+
+
 [#version-3-4-13]
 === Version 3.4.13 (09 Nov 2023)
 
