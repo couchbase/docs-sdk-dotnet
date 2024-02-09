@@ -24,6 +24,7 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+
 [#version-3-4-15]
 === Version 3.4.15 (09 Feb 2024)
 
@@ -34,14 +35,23 @@ https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.15[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.4.15[Nuget]
 
 ==== Fixed Issues
-* https://issues.couchbase.com/browse/NCBC-3599[NCBC-3599]: Fix SDK bugs related to Nullability of Increment, Decrement, and related options.
-* https://issues.couchbase.com/browse/NCBC-3565[NCBC-3565]: Add error handling for "index does not exist" query error
-* https://issues.couchbase.com/browse/NCBC-3635[NCBC-3635]: GetAnyReplica: AggregateException field is now accessible when DocumentUnretrievableException is thrown
+
+* https://issues.couchbase.com/browse/NCBC-3599[NCBC-3599]: 
+Fixed SDK bugs related to Nullability of Increment, Decrement, and related options.
+* https://issues.couchbase.com/browse/NCBC-3565[NCBC-3565]: 
+Added error handling for "index does not exist" query error.
+* https://issues.couchbase.com/browse/NCBC-3635[NCBC-3635]: 
+`GetAnyReplica: AggregateException` field is now accessible when `DocumentUnretrievableException` is thrown.
 
 ==== New Features and Behavioral Changes
-* https://issues.couchbase.com/browse/NCBC-3579[NCBC-3579]: Support DocumentNotLocked exception when collection.Unlock() is called on a document that is not locked.
-* https://issues.couchbase.com/browse/NCBC-3606[NCBC-3606]: SDK Support for Scoped Search Indexes
-* https://issues.couchbase.com/browse/NCBC-3596[NCBC-3596]: Support for maxTTL value of -1 for collection "no expiry"
+
+* https://issues.couchbase.com/browse/NCBC-3579[NCBC-3579]: 
+Support `DocumentNotLocked` exception when `collection.Unlock()` is called on a document that is not locked.
+* https://issues.couchbase.com/browse/NCBC-3606[NCBC-3606]: 
+Added SDK Support for Scoped Search Indexes.
+* https://issues.couchbase.com/browse/NCBC-3596[NCBC-3596]: 
+Support added for `maxTTL` value of -1, for collection "no expiry".
+
 
 [#version-3-4-14]
 === Version 3.4.14 (18 Jan 2024)
@@ -53,6 +63,7 @@ https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.14[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.4.14[Nuget]
 
 ==== Fixed Issues
+
 * https://issues.couchbase.com/browse/NCBC-3434[NCBC-3434]:
 A regression introduced in a recent release prevented `WaitUntilReady` from pinging nodes --
 this has been fixed, and `WaitUntilReady` now correctly detects state.
