@@ -40,8 +40,6 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.4.15[Nuget]
 Fixed SDK bugs related to Nullability of Increment, Decrement, and related options.
 * https://issues.couchbase.com/browse/NCBC-3565[NCBC-3565]: 
 Added error handling for "index does not exist" query error.
-* https://issues.couchbase.com/browse/NCBC-3635[NCBC-3635]: 
-`GetAnyReplica: AggregateException` field is now accessible when `DocumentUnretrievableException` is thrown.
 
 ==== New Features and Behavioral Changes
 
