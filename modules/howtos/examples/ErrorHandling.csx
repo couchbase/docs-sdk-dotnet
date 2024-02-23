@@ -43,11 +43,11 @@ public class ErrorHandling
             try {
             // tag::getfetch[]
             // This will raise a `CouchbaseException` and propagate it
-            using var result = await collection.GetAsync("my-document-id");
+            using var result1 = await collection.GetAsync("my-document-id");
 
             // Rethrow with a custom exception type
             try {
-               using var result1 =  await collection.GetAsync("my-document-id");
+               using var result2 =  await collection.GetAsync("my-document-id");
             } catch (CouchbaseException ex) {
                 throw new Exception("Couchbase lookup failed", ex);
             }
