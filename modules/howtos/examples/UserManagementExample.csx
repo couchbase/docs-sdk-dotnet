@@ -99,7 +99,7 @@ public class UserManagementExample
             Console.WriteLine("Primary index already exists!");
         }
 
-        var returnedAirline10doc = await collection.GetAsync("airline_10");
+        using var returnedAirline10doc = await collection.GetAsync("airline_10");
 
         await collection.UpsertAsync(
             "airline_11", new {
@@ -112,7 +112,7 @@ public class UserManagementExample
             }
         );
 
-        var returnedAirline11Doc = await collection.GetAsync("airline_11");
+        using var returnedAirline11Doc = await collection.GetAsync("airline_11");
         Console.WriteLine($"get -> { returnedAirline11Doc.ContentAs<dynamic>() }");
 
         var result = await userCluster.QueryAsync<dynamic>(

@@ -35,7 +35,7 @@ namespace Couchbase.Net.DevGuide
 
         private async Task RunTest()
         {
-            var getResult = await collection.GetAsync("airline_5209").ConfigureAwait(false);
+            using var getResult = await collection.GetAsync("airline_5209").ConfigureAwait(false);
             var docContent = getResult.ContentAs<dynamic>();
             Console.WriteLine($"The airline is {docContent.name}.");
 

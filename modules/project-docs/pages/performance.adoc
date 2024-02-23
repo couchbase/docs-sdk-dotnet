@@ -11,6 +11,19 @@ Learn how to keep get the best performance from your application.
 
 == Coding Best Practices
 
+=== Always call Dispose on GetAsync, LookupInAsync, etc
+
+GetAsync and other retrieval operations return a class the implements the IDisposable interface. 
+It is important that on these result types, Dispose() is called so that the buffer that has between
+"rented" that handles the response is returned back to its pool.
+
+[source,csharp]
+----
+using var result = await collection.GetAsync("key1");
+----
+
+This applies to GetAsync, LookupInAsync, GetAndLockAsync, GetAndTouchAsync, GetAnyReplicaAsync, and GetAllReplicasAsync.
+
 === Avoid Running Tasks on the "Captured Context"
 
 When a Task is waited, the continuation may occur on the same thread which created the Task. 
