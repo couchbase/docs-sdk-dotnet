@@ -47,7 +47,7 @@ public class ErrorHandling
 
             // Rethrow with a custom exception type
             try {
-               using var result =  await collection.GetAsync("my-document-id");
+               using var result1 =  await collection.GetAsync("my-document-id");
             } catch (CouchbaseException ex) {
                 throw new Exception("Couchbase lookup failed", ex);
             }
