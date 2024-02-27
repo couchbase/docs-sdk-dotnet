@@ -40,7 +40,7 @@ await _collection.UpsertAsync("customer123", document);
 {
     Console.WriteLine("get:");
     // #tag::get[]
-    var result = await _collection.LookupInAsync("customer123", specs =>
+    using var result = await _collection.LookupInAsync("customer123", specs =>
         specs.Get("addresses.delivery.country")
     );
 
@@ -219,7 +219,7 @@ await Concurrent();
 async Task CasAsync() {
     Console.WriteLine("cas:");
     // #tag::cas[]
-    var player = await _collection.GetAsync("player432");
+    using var player = await _collection.GetAsync("player432");
     ulong decrement = 150;
     await _collection.MutateInAsync("player432",
         specs => specs.Decrement("gold", decrement),

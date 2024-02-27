@@ -32,7 +32,7 @@ namespace Couchbase.Net.DevGuide
             Console.WriteLine("Before awaiting GetDocumentAsync on thread {0}.",
                 Thread.CurrentThread.ManagedThreadId);
 
-            var doc = await Bucket.DefaultCollection().GetAsync(id).ConfigureAwait(false);
+            using var doc = await Bucket.DefaultCollection().GetAsync(id).ConfigureAwait(false);
 
             Console.WriteLine("After awaiting GetDocumentAsync on thread {0}.",
                 Thread.CurrentThread.ManagedThreadId);

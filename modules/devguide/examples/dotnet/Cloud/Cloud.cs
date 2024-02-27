@@ -1,10 +1,16 @@
 ﻿using System;
-// #tag::using[]
 using System.Threading.Tasks;
-using Couchbase;
+
+namespace Couchbase.Net.DevGuide.Cloud;
 // #end::using[]
 
-await new CloudExample().Main();
+public class Progam
+{
+    public static async Task Main(string[] args)
+    {
+        await new CloudExample().Main();
+    }
+}
 
 class CloudExample
 {
@@ -44,7 +50,7 @@ class CloudExample
         // #tag::upsert-get[]
         // Upsert Document
         var upsertResult = await collection.UpsertAsync("my-document-key", new { Name = "Ted", Age = 31 });
-        var getResult = await collection.GetAsync("my-document-key");
+        using var getResult = await collection.GetAsync("my-document-key");
 
         Console.WriteLine(getResult.ContentAs<dynamic>());
         // #end::upsert-get[]
