@@ -3,8 +3,7 @@
 :navtitle: Release Notes
 :page-topic-type: project-doc
 :page-aliases: relnotes-dotnet-sdk
+:page-toclevels: 2
 :page-partial:
 
-// tag::all[]
 include::3.4@dotnet-sdk:project-docs:page$sdk-release-notes.adoc[tag=all]
-// end::all[]
