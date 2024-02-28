@@ -82,7 +82,7 @@
 * xref:ref:travel-app-data-model.adoc[Travel Sample Data Model]
 
 .Project Docs
-* xref:project-docs:sdk-release-notes.adoc[Release Notes]
+* xref:project-docs:sdk-release-notes.adoc#net-sdk-3-3-releases[Release Notes]
 * xref:project-docs:distributed-transactions-dotnet-release-notes.adoc[Transactions Release Notes]
 * xref:project-docs:compatibility.adoc[Compatibility]
  ** xref:project-docs:migrating-sdk-code-to-3.n.adoc[Migrating to SDK 3 API]
