@@ -3,5 +3,6 @@
 :page-topic-type: project-doc
 :page-aliases: relnotes-dotnet-sdk
 :page-partial:
+:page-toclevels: 2
 
-include::3.4@dotnet-sdk:project-docs:page$sdk-release-notes.adoc[tag=all]
+include::3.2@dotnet-sdk:project-docs:page$sdk-release-notes.adoc[tag=all]
