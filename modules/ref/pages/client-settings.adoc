@@ -160,6 +160,90 @@ Default:  `false`
 +
 A Boolean value that specifies whether the certificate revocation list is checked during authentication.
 
+Name: *With Credentials*::
+Cluster Option: `WithCredentials(string, string)`
++
+Default: none
++
+Applies the credentials for authentication. Note that this is the same as setting the `UserName` and `Password` properties.
+
+Name: *Enabled SSL Protocols*::
+ClusterOption: `EnabledSslProtocols(SslProtocols)`
++
+Default: `TLS1.2` and `TLS1.3` for .NET6 and greater; `TLS1.2` for earlier .NET version.
++
+Defines the possible TLS protocols to use. The underlying OS will always pick the highest supported version.
+
+Name: *Enabled TLS Cipher Suites*::
++
+Default:`EnabledTlsCipherSuites(TlsCipherSuite)`
++
+List of enabled TLS Cipher Suites. If not set, will use default .NET Cipher Suites defined by the OS. Supported by .NET 3.1 or greater.
+
+Name: *Force IP As Target Host*::
+ClusterOption: ForceIpAsTargetHost(boolean)
++
+Default: true
++
+If `ForceIpAsTargetHost` is true, send the IP as the target host during TLS authentication. If `ForceIpAsTargetHost` is false,
+then mimic the default SDK2 behavior; the hostname or IP as defined by the server will be sent as the target host during TLS authentication.
+
+Name: *Key Value Remote Certificate Validation*::
+ClusterOption: `KvCertificateCallbackValidation(RemoteCertificateValidationCallback)`
++
+Default: `null` - if `null` and certificate authentication is enabled this value will be populated internally by the default callback validation.
++
+The default RemoteCertificateValidationCallback called by .NET to validate the TLS/SSL certificates being used for
+HTTP services (Query, FTS, Analytics, etc). If this method returns `true`, then the certificate will be accepted.
+While it can be handy to simply return `true` for development against self-signed certificates,
+such a shortcut should never be used against a public-facing or production system.
+
+Name: *HTTP Remote Certificate Validation*::
+ClusterOption: `KvCertificateCallbackValidation(RemoteCertificateValidationCallback)`
++
+Default: `null` - if `null` and certificate authentication is enabled this value will be populated internally by the default callback validation.
++
+The default `RemoteCertificateValidationCallback` called by .NET to validate the TLS/SSL certificates being used for
+Key/Value operations. If this method returns `true`, then the certificate will be accepted.
+
+Name: *With X509 Certificate Factory::
+ClusterOption: `WithX509CertificateFactory(ICertificateFactory)`
++
+Default: `nul`l - if `null` it will be set internally by the default `CertificateFactory`.
++
+Gets or sets the `ICertificateFactory` to provide client certificates during TLS authentication. Will set
+the `TlsEnabled` flag to true if called.
+
+Name: *X509 Certificate Factory::
+ClusterOption: `X509CertificateFactory(ICertificateFactory)`
++
+Default: `null` - if `null` it will be set internally by the default `CertificateFactory`.
++
+Gets or sets the `ICertificateFactory` to provide client certificates during TLS authentication. 
+
+Name: *Key Value Ignore Remote Certificate Name Mismatch*::
+ClusterOption: `KvIgnoreRemoteCertificateNameMismatch(boolean)`
++
+Default: `false`
++
+Ignore CertificateNameMismatch and CertificateChainMismatch for Key/Value operations, since they happen together. Intended for development purposes only.
+Does *NOT* affect anything other than the name mismatch, such as an untrusted root or an expired certificate.
+
+Name: *HTTP Ignore Remote Certificate Name Mismatch*::
+ClusterOption: HttpIgnoreRemoteCertificateNameMismatch(boolean)
++
+Default: `false`
++
+Ignore CertificateNameMismatch and CertificateChainMismatch for HTTP services (Query, FTS, Analytics, etc), since they happen together. 
+Intended for development purposes only. Does *NOT* affect anything other than the name mismatch, such as an untrusted root or an expired certificate.
+
+Name: *EnableCertificateRevocation*::
+ClusterOption: EnableCertificateRevocation
++
+Default: `false`
++
+
+ A `System.Boolean` value that specifies whether the certificate revocation list is checked during authentication.
 
 == I/O Options
 
@@ -249,6 +333,148 @@ Default:  `2.5s`
 
 The interval at which the client fetches cluster topology information in order to proactively detect changes.
 `EnableConfigPolling` should be set to true to leverage this setting.
+
+Name: *Enable Expect 100-Continue*::
+ClusterOption: `EnableExpect100Continue(boolean)`
++
+Default:`false`
++
+
+Gets or sets a value that indicates if the Expect header for an HTTP request contains Continue.
+
+Name: *DNS Revolver*::
+Cluster Option: `DnsResolver(IDnsResolver)`
++
+Default: `DnsClientDnsResolver`
++
+
+Provide a custom `IDnsResolver` for DNS SRV resolution.
+
+=== Bootstrapping Options
+
+Bootrapping is the initial process of the client connecting to a server cluster.
+
+Name: *Bootstrap Poll Interval*::
+ClusterOption: `BootstrapPollInterval(TimeSpan)`
++
+Default: `2.5s`
++
+
+Used for checking that the SDK has bootstrapped and potentially retrying if not.  
+
+Name: *Bootstrap HTTP TLS Port*::
+ClusterOption: `BootstrapHttpPortTls(int)`
++
+Default: `18091`
++
+
+Port used for TLS HTTP bootstrapping fallback if other bootstrap methods are not available. Do not change unless the Couchbase server default ports have be changed.
+
+Name: *Bootstrap HTTP Port*::
+ClusterOption: `BootstrapHttpPort(int)`
++
+Default: `8091`
++
+
+Port used for HTTP bootstrapping fallback if other bootstrap methods are not available. Do not change unless the Couchbase server default ports have be changed.
+
+=== Compression Options
+
+Name: *With Compression Algorithm*::
+Cluster Option:`WithCompressionAlgorithm(ICompressionAlgorithm)`
++
+Default: `null`
++
+
+Provide a custom `ICompressionAlgorithm` for key/value body compression.
+
+Name: *Compression*::
+Cluster Option: Compression(boolean)
++
+Default: `true` - Ignored if no compression is supplied via `WithCompressionAlogrithm`
++
+
+Enables compression for key/value operations.
+
+Name: *Compression Minimum Size*::
+Cluster Option:`CompressionMinSize(int)`
++
+Default: 32
++
+
+If compression is enabled, the minimum document size considered for compression (in bytes).
+Documents smaller than this size are always sent to the server uncompressed.
+
+Name: *Compression Minimum Ratio*::
+Cluster Option: `CompressionMinRatio(float)`
++
+Default: `0.83f`
++
+
+If compression is enabled, the minimum compression ratio to accept when sending documents to the server.
+Documents which don't achieve this compression ratio are sent to the server uncompressed.
++
+1.0 means no compression was achieved. A value of 0.75 would result in documents which compress to at least
+75% of their original size to be transmitted compressed. The default is 0.83 (83%).
++
+
+=== Performance Tuning Options
+
+Performance tuning options under the `ClusterOptions.Tuning` property. This section is volatile and may change in future releases.
+
+
+Name: *Maximum Operation Builder Capacity*::
+Cluster Option:`MaximumOperationBuilderCapacity(int)`
++
+Default: `1MB`
++
+
+Maximum size of a buffer used for building key/value operations to be sent to the server
+which will be retained for reuse. Buffers larger than this value will be disposed. If your
+application is consistently sending mutation operations larger than this value, increasing
+the value may improve performance at the cost of RAM utilization.
+
+Name: *Maximum Retained Operation Builders*::
+Cluster Option: `MaximumRetainedOperationBuilders(int)`
++
+Default: `Processor Count * 4`
++
+
+Maximum number of buffers used for building key/value operations to be sent to the server
+which will be retained for reuse. If your application has a very high degree of parallelism
+(for example, a very large number of data nodes), increasing this number may improve
+performance at the cost of RAM utilization. Defaults to the 4 times the number of logical CPUs.
+
+Name: *Maximum In Flight Operations Per Connection*::
+Cluster Option:`MaximumInFlightOperationsPerConnection(int)`
++
+Default: `8`
++
+
+Maximum number of operations which may be sent and still awaiting a response from the server
+per connection. This value may need tuning on high latency connections or based on average
+operation response size. Defaults to 8 operations per connection.
++
+Note that this is not directly limiting the total number of in-flight operations, each bucket
+and each node gets a dedicated pool of connections that scale based on the minimum and
+maximum pool size. This limit is per connection.
++
+
+Name: *Stream HTTP Response Bodies*::
+Cluster Option: `StreamHttpResponseBodies(boolean)`
++
+Default: `true` if .NET Standard 2.1 or .NET 6 or greater, otherwise `false`.
++
+
+If enabled, HTTP responses such as query responses will be streamed after response headers
+are received rather than waiting for the entire response body to be received. This default
+to `true` on modern .NET runtimes and `false` on .NET 4.x.
++
+When enabled it becomes more important to call `IDisposable.Dispose` on result objects
+such as `IQueryResult{T}` and `IAnalyticsResult{T}`to ensure the underlying
+HTTP connection is released. This is especially true on .NET 4.x where failure to dispose may cause
+issues with connection pool exhaustion.
++
 
 === Circuit Breaker Options
 
@@ -405,6 +631,30 @@ Default: `75s`
 The management timeout is used on all cluster management APIs (BucketManager, UserManager, CollectionManager, QueryIndexManager, etc.) if not overridden by a custom timeout.
 The default is quite high because some operations (such as flushing a bucket, for example) might take a long time.
 
+Name: *Config Updating Timeout*::
+ClusterOption: `ConfigUpdatingTimeout(TimeSpan)`
++
+Default: `15s`
++
+
+The time to wait for a bucket re-configuration to take place after receiving a new cluster map config.
+
+Name: *Key Value Connect Timeout*::
+ClusterOption:`KvConnectTimeout(TimeSpan)`
++
+Default: `10s`
++
+description
+
+The time to wait while attempting to connect to a node’s KV service via a socket. Initial connection, reconnecting, node added, etc.
+
+Name: *Key Value Range Scan Timeout*::
+ClusterOption:`KvScanTimeout(TimeSpan)`
++
+Default: `75s`
++
+
+The time to wait before timing out a KV Range Scan.
 
 == General Options
 
@@ -472,6 +722,17 @@ var clusterOptions = new ClusterOptions();
   });
 ----
 
+Name: *Key Value Send Queue Capacity*::
+Cluster Option:`KvSendQueueCapacity(uint)`
++
+Default: `1024`
++
+
+Gets or sets the maximum number of operations that will be queued for processing per node.
+If this value is exceeded, any additional operations will be put into the retry loop.
+
+decription
+
 // section on wide area network support
 
 include::{version-common}@sdk:shared:partial$client-settings-wide-network.adoc[]
@@ -521,3 +782,6 @@ This profile changes the default timeouts.
 | `ManagementTimeout`
 | 75s
 |===
+
+
+
