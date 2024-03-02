@@ -147,11 +147,9 @@ Cluster Option: `IgnoreRemoteCertificateNameMismatch(boolean)`
 +
 Default: `false`
 +
-If TLS is enabled via `EnableTls`, setting this to true will disable hostname validation when authenticating
-connections to Couchbase Server.
-This is typically done in test or development environments where a domain name (FQDN) has not been specified
-for the bootstrap server's URI, and the IP address is use to validate the certificate, which will fail with a
-`RemoteCertificateNameMismatch` error.
+If TLS is enabled via `EnableTls`, setting this to true will disable hostname validation when authenticating connections to Couchbase Server.
+This is typically done in test or development environments where a domain name (FQDN) has not been specified for the bootstrap server's URI,
+and the IP address is use to validate the certificate, which will fail with a `RemoteCertificateNameMismatch` error.
 
 Name: *Enable Certificate Revocation*::
 Cluster Option: `EnableCertificateRevocation(boolean)`
@@ -165,36 +163,41 @@ Cluster Option: `WithCredentials(string, string)`
 +
 Default: none
 +
-Applies the credentials for authentication. Note that this is the same as setting the `UserName` and `Password` properties.
+Applies the credentials for authentication.
+Note that this is the same as setting the `UserName` and `Password` properties.
 
 Name: *Enabled SSL Protocols*::
 ClusterOption: `EnabledSslProtocols(SslProtocols)`
 +
 Default: `TLS1.2` and `TLS1.3` for .NET6 and greater; `TLS1.2` for earlier .NET version.
 +
-Defines the possible TLS protocols to use. The underlying OS will always pick the highest supported version.
+Defines the possible TLS protocols to use.
+The underlying OS will always pick the highest supported version.
 
 Name: *Enabled TLS Cipher Suites*::
 +
-Default:`EnabledTlsCipherSuites(TlsCipherSuite)`
+Default: `EnabledTlsCipherSuites(TlsCipherSuite)`
 +
-List of enabled TLS Cipher Suites. If not set, will use default .NET Cipher Suites defined by the OS. Supported by .NET 3.1 or greater.
+List of enabled TLS Cipher Suites.
+If not set, will use default .NET Cipher Suites defined by the OS.
+Supported by .NET 3.1 or greater.
 
 Name: *Force IP As Target Host*::
-ClusterOption: ForceIpAsTargetHost(boolean)
+ClusterOption: `ForceIpAsTargetHost(boolean)`
 +
 Default: true
 +
-If `ForceIpAsTargetHost` is true, send the IP as the target host during TLS authentication. If `ForceIpAsTargetHost` is false,
-then mimic the default SDK2 behavior; the hostname or IP as defined by the server will be sent as the target host during TLS authentication.
+If `ForceIpAsTargetHost` is true, send the IP as the target host during TLS authentication.
+If `ForceIpAsTargetHost` is false, then mimic the default SDK2 behavior;
+the hostname or IP as defined by the server will be sent as the target host during TLS authentication.
 
 Name: *Key Value Remote Certificate Validation*::
 ClusterOption: `KvCertificateCallbackValidation(RemoteCertificateValidationCallback)`
 +
 Default: `null` - if `null` and certificate authentication is enabled this value will be populated internally by the default callback validation.
 +
-The default RemoteCertificateValidationCallback called by .NET to validate the TLS/SSL certificates being used for
-HTTP services (Query, FTS, Analytics, etc). If this method returns `true`, then the certificate will be accepted.
+The default `RemoteCertificateValidationCallback` called by .NET to validate the TLS/SSL certificates being used for HTTP services (Query, FTS, Analytics, etc).
+If this method returns `true`, then the certificate will be accepted.
 While it can be handy to simply return `true` for development against self-signed certificates,
 such a shortcut should never be used against a public-facing or production system.
 
@@ -203,16 +206,16 @@ ClusterOption: `KvCertificateCallbackValidation(RemoteCertificateValidationCallb
 +
 Default: `null` - if `null` and certificate authentication is enabled this value will be populated internally by the default callback validation.
 +
-The default `RemoteCertificateValidationCallback` called by .NET to validate the TLS/SSL certificates being used for
-Key/Value operations. If this method returns `true`, then the certificate will be accepted.
+The default `RemoteCertificateValidationCallback` called by .NET to validate the TLS/SSL certificates being used for Key/Value operations.
+If this method returns `true`, then the certificate will be accepted.
 
 Name: *With X509 Certificate Factory::
 ClusterOption: `WithX509CertificateFactory(ICertificateFactory)`
 +
 Default: `nul`l - if `null` it will be set internally by the default `CertificateFactory`.
 +
-Gets or sets the `ICertificateFactory` to provide client certificates during TLS authentication. Will set
-the `TlsEnabled` flag to true if called.
+Gets or sets the `ICertificateFactory` to provide client certificates during TLS authentication.
+Will set the `TlsEnabled` flag to true if called.
 
 Name: *X509 Certificate Factory::
 ClusterOption: `X509CertificateFactory(ICertificateFactory)`
@@ -226,24 +229,26 @@ ClusterOption: `KvIgnoreRemoteCertificateNameMismatch(boolean)`
 +
 Default: `false`
 +
-Ignore CertificateNameMismatch and CertificateChainMismatch for Key/Value operations, since they happen together. Intended for development purposes only.
+Ignore `CertificateNameMismatch` and `CertificateChainMismatch` for Key/Value operations, since they happen together.
+Intended for development purposes only.
 Does *NOT* affect anything other than the name mismatch, such as an untrusted root or an expired certificate.
 
 Name: *HTTP Ignore Remote Certificate Name Mismatch*::
-ClusterOption: HttpIgnoreRemoteCertificateNameMismatch(boolean)
+ClusterOption: `HttpIgnoreRemoteCertificateNameMismatch(boolean)`
 +
 Default: `false`
 +
-Ignore CertificateNameMismatch and CertificateChainMismatch for HTTP services (Query, FTS, Analytics, etc), since they happen together. 
-Intended for development purposes only. Does *NOT* affect anything other than the name mismatch, such as an untrusted root or an expired certificate.
+Ignore `CertificateNameMismatch` and `CertificateChainMismatch` for HTTP services (Query, FTS, Analytics, etc), since they happen together. 
+Intended for development purposes only.
+Does *NOT* affect anything other than the name mismatch, such as an untrusted root or an expired certificate.
 
 Name: *EnableCertificateRevocation*::
-ClusterOption: EnableCertificateRevocation
+ClusterOption: `EnableCertificateRevocation`
 +
 Default: `false`
 +
 
- A `System.Boolean` value that specifies whether the certificate revocation list is checked during authentication.
+A `System.Boolean` value that specifies whether the certificate revocation list is checked during authentication.
 
 == I/O Options
 
@@ -315,6 +320,7 @@ Name: *Max HTTP Endpoints per Service per Node*::
 Cluster Option: `MaxHttpConnections(int)`
 +
 Default:  `5`
++
 
 Each service (except the Key/Value service) has a separate dynamically sized pool of HTTP connections for issuing requests.
 This setting puts an upper bound on the number of HTTP connections in each pool.
@@ -323,6 +329,7 @@ Name: *Enable Config Poll*::
 Cluster Option: `EnableConfigPolling(boolean)`
 +
 Default:  `true`
++
 
 Enables Configuration `heartbeat` checks.
 
@@ -340,7 +347,7 @@ ClusterOption: `EnableExpect100Continue(boolean)`
 Default:`false`
 +
 
-Gets or sets a value that indicates if the Expect header for an HTTP request contains Continue.
+Gets or sets a value that indicates if the `Expect` header for an HTTP request contains `Continue`.
 
 Name: *DNS Revolver*::
 Cluster Option: `DnsResolver(IDnsResolver)`
@@ -368,7 +375,8 @@ ClusterOption: `BootstrapHttpPortTls(int)`
 Default: `18091`
 +
 
-Port used for TLS HTTP bootstrapping fallback if other bootstrap methods are not available. Do not change unless the Couchbase server default ports have be changed.
+Port used for TLS HTTP bootstrapping fallback if other bootstrap methods are not available.
+Do not change unless the Couchbase server default ports have be changed.
 
 Name: *Bootstrap HTTP Port*::
 ClusterOption: `BootstrapHttpPort(int)`
@@ -376,7 +384,8 @@ ClusterOption: `BootstrapHttpPort(int)`
 Default: `8091`
 +
 
-Port used for HTTP bootstrapping fallback if other bootstrap methods are not available. Do not change unless the Couchbase server default ports have be changed.
+Port used for HTTP bootstrapping fallback if other bootstrap methods are not available.
+Do not change unless the Couchbase server default ports have be changed.
 
 === Compression Options
 
@@ -415,8 +424,9 @@ If compression is enabled, the minimum compression ratio to accept when sending 
 Documents which don't achieve this compression ratio are sent to the server uncompressed.
 +
 1.0 means no compression was achieved. A value of 0.75 would result in documents which compress to at least
-75% of their original size to be transmitted compressed. The default is 0.83 (83%).
-+
+75% of their original size to be transmitted compressed.
+The default is 0.83 (83%).
+
 
 === Performance Tuning Options
 
@@ -424,15 +434,14 @@ Performance tuning options under the `ClusterOptions.Tuning` property. This sect
 
 
 Name: *Maximum Operation Builder Capacity*::
-Cluster Option:`MaximumOperationBuilderCapacity(int)`
+Cluster Option: `MaximumOperationBuilderCapacity(int)`
 +
 Default: `1MB`
 +
 
-Maximum size of a buffer used for building key/value operations to be sent to the server
-which will be retained for reuse. Buffers larger than this value will be disposed. If your
-application is consistently sending mutation operations larger than this value, increasing
-the value may improve performance at the cost of RAM utilization.
+Maximum size of a buffer used for building key/value operations to be sent to the server which will be retained for reuse.
+Buffers larger than this value will be disposed.
+If your application is consistently sending mutation operations larger than this value, increasing the value may improve performance at the cost of RAM utilization.
 
 Name: *Maximum Retained Operation Builders*::
 Cluster Option: `MaximumRetainedOperationBuilders(int)`
@@ -440,25 +449,25 @@ Cluster Option: `MaximumRetainedOperationBuilders(int)`
 Default: `Processor Count * 4`
 +
 
-Maximum number of buffers used for building key/value operations to be sent to the server
-which will be retained for reuse. If your application has a very high degree of parallelism
-(for example, a very large number of data nodes), increasing this number may improve
-performance at the cost of RAM utilization. Defaults to the 4 times the number of logical CPUs.
+Maximum number of buffers used for building key/value operations to be sent to the server which will be retained for reuse.
+If your application has a very high degree of parallelism (for example, a very large number of data nodes),
+increasing this number may improve performance at the cost of RAM utilization.
+Defaults to 4 times the number of logical CPUs.
 
 Name: *Maximum In Flight Operations Per Connection*::
-Cluster Option:`MaximumInFlightOperationsPerConnection(int)`
+Cluster Option: `MaximumInFlightOperationsPerConnection(int)`
 +
 Default: `8`
 +
 
-Maximum number of operations which may be sent and still awaiting a response from the server
-per connection. This value may need tuning on high latency connections or based on average
-operation response size. Defaults to 8 operations per connection.
+Maximum number of operations which may be sent and still awaiting a response from the server per connection.
+This value may need tuning on high latency connections or based on average operation response size.
+Defaults to 8 operations per connection.
 +
-Note that this is not directly limiting the total number of in-flight operations, each bucket
-and each node gets a dedicated pool of connections that scale based on the minimum and
-maximum pool size. This limit is per connection.
-+
+Note that this is not directly limiting the total number of in-flight operations,
+each bucket and each node gets a dedicated pool of connections that scale based on the minimum and maximum pool size.
+This limit is per connection.
+
 
 Name: *Stream HTTP Response Bodies*::
 Cluster Option: `StreamHttpResponseBodies(boolean)`
@@ -466,15 +475,12 @@ Cluster Option: `StreamHttpResponseBodies(boolean)`
 Default: `true` if .NET Standard 2.1 or .NET 6 or greater, otherwise `false`.
 +
 
-If enabled, HTTP responses such as query responses will be streamed after response headers
-are received rather than waiting for the entire response body to be received. This default
-to `true` on modern .NET runtimes and `false` on .NET 4.x.
+If enabled, HTTP responses such as query responses will be streamed after response headers are received rather than waiting for the entire response body to be received.
+This default to `true` on modern .NET runtimes and `false` on .NET 4.x.
 +
-When enabled it becomes more important to call `IDisposable.Dispose` on result objects
-such as `IQueryResult{T}` and `IAnalyticsResult{T}`to ensure the underlying
-HTTP connection is released. This is especially true on .NET 4.x where failure to dispose may cause
-issues with connection pool exhaustion.
-+
+When enabled it becomes more important to call `IDisposable.Dispose` on result objects such as `IQueryResult{T}` and `IAnalyticsResult{T}` to ensure the underlying HTTP connection is released.
+This is especially true on .NET 4.x where failure to dispose may cause issues with connection pool exhaustion.
+
 
 === Circuit Breaker Options
 
@@ -484,7 +490,8 @@ When a circuit is closed, requests are sent to the server as normal.
 If too many requests fail within a certain time window, the breaker opens the circuit, preventing requests from going through.
 
 When a circuit is open, any requests to the service immediately fail without the client even talking to the server.
-After a "sleep delay" elapses, the next request is allowed to go through the to the server. This trial request is called a "canary."
+After a "sleep delay" elapses, the next request is allowed to go through the to the server.
+This trial request is called a "canary."
 
 Each service has an associated circuit breaker which may be configured independently of the others.
 The `IoConfig` builder has methods for configuring the circuit breakers of each service.
@@ -640,21 +647,24 @@ Default: `15s`
 The time to wait for a bucket re-configuration to take place after receiving a new cluster map config.
 
 Name: *Key Value Connect Timeout*::
-ClusterOption:`KvConnectTimeout(TimeSpan)`
+ClusterOption: `KvConnectTimeout(TimeSpan)`
 +
 Default: `10s`
 +
 description
 
-The time to wait while attempting to connect to a node’s KV service via a socket. Initial connection, reconnecting, node added, etc.
+The time to wait while attempting to connect to a node’s KV service via a socket.
+Initial connection, reconnecting, node added, etc.
 
 Name: *Key Value Range Scan Timeout*::
-ClusterOption:`KvScanTimeout(TimeSpan)`
+ClusterOption: `KvScanTimeout(TimeSpan)`
 +
 Default: `75s`
 +
 
 The time to wait before timing out a KV Range Scan.
+
+
 
 == General Options
 
@@ -723,7 +733,7 @@ var clusterOptions = new ClusterOptions();
 ----
 
 Name: *Key Value Send Queue Capacity*::
-Cluster Option:`KvSendQueueCapacity(uint)`
+Cluster Option: `KvSendQueueCapacity(uint)`
 +
 Default: `1024`
 +
@@ -731,11 +741,12 @@ Default: `1024`
 Gets or sets the maximum number of operations that will be queued for processing per node.
 If this value is exceeded, any additional operations will be put into the retry loop.
 
-decription
+
 
 // section on wide area network support
 
 include::{version-common}@sdk:shared:partial$client-settings-wide-network.adoc[]
+
 
 == Configuration Profiles
 
