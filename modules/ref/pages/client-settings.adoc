@@ -7,7 +7,10 @@
 include::project-docs:partial$attributes.adoc[]
 
 [abstract]
-{description} You can configure the client programmatically using JSON config files, Environmental variables settings,  XML based configuration such has app.config or web.config files.
+{description}
+
+You can configure the client programmatically using JSON config files, Environmental variables settings,  XML-based configuration such as `app.config`, or `web.config` files.
+
 
 == Configuration Basics
 
@@ -25,9 +28,9 @@ var options = new ClusterOptions
 ----
 
 
-.Fluent Configuration
+=== Fluent Configuration
 
-you can also build the `Cluster Options` in a fluent way for example
+You can also build the `Cluster Options` in a fluent way, for example:
 
 [source,csharp]
 ----
@@ -56,14 +59,13 @@ Or by using one of the static `Cluster.Connect(...)` methods:
 var cluster = Cluster.Connect("couchbase://localhost", options);
 ----
 
-[#dotnet-json-configuration]
+
 == JSON Configuration
 
 In support of .NET Core, the client can now be configured using JSON config files.
 
-NOTE: JSON configuration is only supported for versions of the SDK 2.3.0 and greater running on .NET Core 1.0 or greater.
-
-Below is an example of how `appsettings.json` can be coded for cluster options, note the key `ClusterOptions` is simply a name of an object and can be anything you may want it to be.
+Below is an example of how `appsettings.json` can be coded for cluster options.
+Note, the key `ClusterOptions` is simply a name of an object and can be anything you may want it to be.
 
 [source,csharp]
 ----
@@ -93,7 +95,7 @@ var settings = Configuration.GetSection("ClusterOptions");
 services.Configure<ClusterOptions>(settings);
 ----
 
-The options can now be made accessible through any services as below,
+The options can now be made accessible through any services as below:
 
 [source,csharp]
 ----
@@ -104,10 +106,12 @@ public CustomService ( IOptions<ClusterOptions> clusterOptions)
 ----
 The "travel-sample" bucket is opened using any of the overridden defaults.
 
+
 == Configuration Options
 
-The following tables cover all possible configuration options and explain their usage and default values.
-The tables categorize the options into groups for bootstrapping, timeout, reliability, performance, and advanced options.
+The following listing covers all possible configuration options and explains their usage and default values.
+Options are categorized into groups by usage.
+
 
 == Security Options
 
@@ -249,6 +253,7 @@ Default: `false`
 +
 
 A `System.Boolean` value that specifies whether the certificate revocation list is checked during authentication.
+
 
 == I/O Options
 
@@ -793,6 +798,3 @@ This profile changes the default timeouts.
 | `ManagementTimeout`
 | 75s
 |===
-
-
-
