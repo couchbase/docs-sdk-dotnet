@@ -266,14 +266,14 @@ Couchbase Server 7.6 and later support Sub-Doc lookup from replicas.
 
 The `collection.lookupInAnyReplica()` method returns the first response -- from active or replica:
 
-[source,java]
+[source,csharp]
 ----
 include::example$Couchbase.Examples.KV/SubDocument/Program.cs[tag=lookup-in-any-replica,indent=0]
 ----
 
 The `collection.LookupInAllReplicas()` fetches all available replicas (and the active copy), and returns all responses.
 
-[source,java]
+[source,csharp]
 ----
 include::example$Couchbase.Examples.KV/SubDocument/Program.cs[tag=lookup-in-all-replicas,indent=0]
 ----
