@@ -1,17 +1,13 @@
-﻿using System.Xml.Schema;
-using Couchbase;
+﻿using Couchbase;
 using Couchbase.Core.Exceptions;
 using Couchbase.KeyValue;
-using Couchbase.Protostellar.Query.V1;
 using Couchbase.Search;
 using Couchbase.Search.Queries.Compound;
 using Couchbase.Search.Queries.Range;
 using Couchbase.Search.Queries.Simple;
 using Couchbase.Search.Queries.Vector;
-using DnsClient.Internal;
 using Serilog;
 using Serilog.Extensions.Logging;
-using SearchIndex = Couchbase.Management.Search.SearchIndex;
 
 Serilog.Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
