@@ -231,7 +231,7 @@ If your application does many scans at once, or requires low latency results, we
 Here's an example of a KV range scan that gets all documents in a collection:
 
 .KV Range Scan for all documents in a collection
-[source,java]
+[source,csharp]
 ----
 include::example$Couchbase.Examples.KV/RangeScan/RangeScan/Program.cs[tag=rangeScanAllDocuments,indent=0]
 ----
@@ -252,7 +252,7 @@ If you use this document naming scheme, you can use a prefix range scan to get a
 For example, to get all documents associated with user "alice", you would write:
 
 .KV Range Scan for all documents in a collection whose IDs start with "alice::"
-[source,java]
+[source,csharp]
 ----
 include::example$Couchbase.Examples.KV/RangeScan/RangeScan/Program.cs[tag=rangeScanPrefix,indent=0]
 ----
@@ -264,7 +264,7 @@ include::example$Couchbase.Examples.KV/RangeScan/RangeScan/Program.cs[tag=rangeS
 If you want to get random documents from a collection, use a sample scan.
 
 .KV Range Scan for 100 random documents
-[source,java]
+[source,csharp]
 ----
 include::example$Couchbase.Examples.KV/RangeScan/RangeScan/Program.cs[tag=rangeScanSample,indent=0]
 ----
@@ -276,7 +276,7 @@ include::example$Couchbase.Examples.KV/RangeScan/RangeScan/Program.cs[tag=rangeS
 If you only want the document IDs, set the `idsOnly` option to true, like this:
 
 .KV Range Scan for all document IDs in a collection
-[source,java]
+[source,csharp]
 ----
 include::example$Couchbase.Examples.KV/RangeScan/RangeScan/Program.cs[tag=rangeScanAllDocumentIds,indent=0]
 ----
