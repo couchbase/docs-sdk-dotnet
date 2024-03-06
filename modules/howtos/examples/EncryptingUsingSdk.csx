@@ -69,7 +69,7 @@ public class EncryptingUsingSdk
             .ConfigureAwait(false);
 
         // tag::encrypting_using_sdk_4[]
-        var getResult1 = await collection.GetAsync(id, options => options.Transcoder(encryptedTranscoder))
+        using var getResult1 = await collection.GetAsync(id, options => options.Transcoder(encryptedTranscoder))
             .ConfigureAwait(false);
 
         var encrypted = getResult1.ContentAs<JObject>();
@@ -77,7 +77,7 @@ public class EncryptingUsingSdk
         // end::encrypting_using_sdk_4[]
 
         // tag::encrypting_using_sdk_5[]
-        var getResult2 = await collection.GetAsync(id, options => options.Transcoder(encryptedTranscoder))
+        using var getResult2 = await collection.GetAsync(id, options => options.Transcoder(encryptedTranscoder))
             .ConfigureAwait(false);
 
         var readItBack = getResult2.ContentAs<Employee>();

@@ -109,7 +109,7 @@ public class KvOperations
             // tag::get[]
             var previousResult = await collection.UpsertAsync("string-key", "string value");
 
-            var result = await collection.GetAsync("string-key");
+            using var result = await collection.GetAsync("string-key");
             var content = result.ContentAs<String>();
             // end::get[]
         }

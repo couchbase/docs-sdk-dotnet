@@ -43,11 +43,11 @@ public class ErrorHandling
             try {
             // tag::getfetch[]
             // This will raise a `CouchbaseException` and propagate it
-            var result = await collection.GetAsync("my-document-id");
+            using var result1 = await collection.GetAsync("my-document-id");
 
             // Rethrow with a custom exception type
             try {
-                await collection.GetAsync("my-document-id");
+               using var result2 =  await collection.GetAsync("my-document-id");
             } catch (CouchbaseException ex) {
                 throw new Exception("Couchbase lookup failed", ex);
             }
@@ -61,7 +61,7 @@ public class ErrorHandling
             Console.WriteLine("[getcatch]");
             // tag::getcatch[]
             try {
-                await collection.GetAsync("my-document-id");
+                using var result = await collection.GetAsync("my-document-id");
             } catch (DocumentNotFoundException) {
                 await collection.InsertAsync("my-document-id", new {my ="value"});
             } catch (CouchbaseException ex) {
@@ -100,7 +100,7 @@ public class ErrorHandling
             Console.WriteLine("[customgrequest]");
             IRetryStrategy myCustomStrategy = null;
             // tag::customreq[]
-            await collection.GetAsync("docid", new GetOptions().RetryStrategy(myCustomStrategy));
+            using var result = await collection.GetAsync("docid", new GetOptions().RetryStrategy(myCustomStrategy));
             // end::customreq[]
         }
     }

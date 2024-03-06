@@ -28,7 +28,7 @@ namespace Couchbase.Net.DevGuide
             await Task.WhenAll(tasksWithoutCas).ConfigureAwait(false);
 
             // Check if the actual result is 1000 as expected
-            var result = await Bucket.DefaultCollection().GetAsync(key).ConfigureAwait(false);
+            using var result = await Bucket.DefaultCollection().GetAsync(key).ConfigureAwait(false);
             Console.WriteLine("Expected number = 1000, actual number = " + result.ContentAs<Data>().Number);
 
             // Set the initial number value back to 0
@@ -39,7 +39,7 @@ namespace Couchbase.Net.DevGuide
             await Task.WhenAll(tasksWithCas).ConfigureAwait(false);
 
             // Check if the actual result is 1000 as expected
-            var result2 = await Bucket.DefaultCollection().GetAsync(key).ConfigureAwait(false);
+            using var result2 = await Bucket.DefaultCollection().GetAsync(key).ConfigureAwait(false);
             Console.WriteLine("Expected number = 1000, actual number = " + result2.ContentAs<Data>().Number);
         }
 
