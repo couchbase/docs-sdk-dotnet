@@ -44,7 +44,7 @@ namespace net3
             });
 
             // Load the Document and print it
-            var getResult = await collection.GetAsync("king_arthur");
+            using var getResult = await collection.GetAsync("king_arthur");
             Console.WriteLine(getResult.ContentAs<dynamic>());
 
             // Perform a N1QL Query

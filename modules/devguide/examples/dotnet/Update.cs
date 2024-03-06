@@ -46,7 +46,7 @@ namespace Couchbase.Net.DevGuide
 
 
             // Check that the data was updated
-            var newDocument = await collection.GetAsync(key).ConfigureAwait(false);
+            using var newDocument = await collection.GetAsync(key).ConfigureAwait(false);
             Console.WriteLine("Got: " + newDocument.ContentAs<Data>());
         }
 

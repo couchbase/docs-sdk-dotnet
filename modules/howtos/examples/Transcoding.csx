@@ -40,7 +40,7 @@ public class Transcoding
         // #end::raw-json-encode[]
 
         // #tag::raw-json-decode[]
-        var rawJsonDecodeResult =
+        using var rawJsonDecodeResult =
             await collection.GetAsync("john-smith", options => options.Transcoder(new RawJsonTranscoder()));
 
         var returnedJson = rawJsonDecodeResult.ContentAs<byte[]>();
@@ -58,7 +58,7 @@ public class Transcoding
             });
 
 
-        var stringResult = await collection.GetAsync(docId, options => options.Transcoder(new RawStringTranscoder()));
+        using var stringResult = await collection.GetAsync(docId, options => options.Transcoder(new RawStringTranscoder()));
 
         var returnedString = stringResult.ContentAs<string>();
         // #end::string[]
@@ -70,7 +70,7 @@ public class Transcoding
 
         await collection.UpsertAsync(docId, strBytes, options => options.Transcoder(new RawBinaryTranscoder()));
 
-        var binaryResult = await collection.GetAsync(docId, options => options.Transcoder(new RawBinaryTranscoder()));
+        using var binaryResult = await collection.GetAsync(docId, options => options.Transcoder(new RawBinaryTranscoder()));
 
         var returnedBinary = binaryResult.ContentAs<byte[]>();
         // #end::binary[]
@@ -84,7 +84,7 @@ public class Transcoding
 
         await collection.UpsertAsync(docId, bytes, options => options.Transcoder(new RawBinaryTranscoder()));
 
-        var binaryMemoryResult = await collection.GetAsync(docId, options => options.Transcoder(new RawBinaryTranscoder()));
+       using var binaryMemoryResult = await collection.GetAsync(docId, options => options.Transcoder(new RawBinaryTranscoder()));
 
         // Be sure to dispose of the IMemoryOwner<byte> when done, typically via a using statement
         using var binary = binaryMemoryResult.ContentAs<IMemoryOwner<byte>>();
@@ -106,7 +106,7 @@ public class Transcoding
 
         // #tag::custom-decode[]
 
-        var customDecodeResult = await collection.GetAsync("john-smith", options => options.Transcoder(transcoder));
+        using var customDecodeResult = await collection.GetAsync("john-smith", options => options.Transcoder(transcoder));
         var returnedUser = customDecodeResult.ContentAs<User>();
         // #end::custom-decode[]
 
@@ -137,7 +137,7 @@ public class Transcoding
 
         // #tag::msgpack-decode[]
 
-        var msgpackResult = await collection.GetAsync("john-smith", options => options.Transcoder(msgpackTranscoder));
+        using var msgpackResult = await collection.GetAsync("john-smith", options => options.Transcoder(msgpackTranscoder));
         var msgpackReturnedUser = msgpackResult.ContentAs<User2>();
         // #end::msgpack-decode[]
     }

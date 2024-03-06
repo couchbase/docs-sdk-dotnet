@@ -25,7 +25,7 @@ namespace Couchbase.Net.DevGuide
                 // Get non-existent document.
                 // Note that it's enough to check the Status property,
                 // We're only checking all three to show they exist.
-                await collection.GetAsync(key).ConfigureAwait(false);
+               using var result = await collection.GetAsync(key).ConfigureAwait(false);
             }
             catch (DocumentNotFoundException)
             {
@@ -36,14 +36,14 @@ namespace Couchbase.Net.DevGuide
             await collection.UpsertAsync(key, "Hello Couchbase!").ConfigureAwait(false);
 
             // Get a string value
-            var nonDocResult = await collection.GetAsync(key).ConfigureAwait(false);
+            using var nonDocResult = await collection.GetAsync(key).ConfigureAwait(false);
             Console.WriteLine("Found: " + nonDocResult.ContentAs<string>());
 
             // Prepare a JSON document value
             await collection.UpsertAsync(key, data).ConfigureAwait(false);
 
             // Get a JSON document string value
-            var docResult = await collection.GetAsync(key).ConfigureAwait(false);
+            using var docResult = await collection.GetAsync(key).ConfigureAwait(false);
             Console.WriteLine("Found: " + docResult.ContentAs<Data>());
         }
 

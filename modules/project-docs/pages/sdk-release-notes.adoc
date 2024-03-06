@@ -25,6 +25,71 @@ All patch releases for each dot minor release should be API compatible, and safe
 any changes to expected behavior are noted in the release notes that follow.
 
 
+[#version-3-4-15]
+=== Version 3.4.15 (09 Feb 2024)
+
+Version 3.4.15 is the sixteenth release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.15.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.15[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.15[Nuget]
+
+==== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3599[NCBC-3599]: 
+Fixed SDK bugs related to Nullability of Increment, Decrement, and related options.
+* https://issues.couchbase.com/browse/NCBC-3565[NCBC-3565]: 
+Added error handling for "index does not exist" query error.
+
+==== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-3579[NCBC-3579]: 
+Support `DocumentNotLocked` exception when `collection.Unlock()` is called on a document that is not locked.
+* https://issues.couchbase.com/browse/NCBC-3606[NCBC-3606]: 
+Added SDK Support for Scoped Search Indexes.
+* https://issues.couchbase.com/browse/NCBC-3596[NCBC-3596]: 
+Support added for `maxTTL` value of -1, for collection "no expiry".
+
+
+[#version-3-4-14]
+=== Version 3.4.14 (18 Jan 2024)
+
+Version 3.4.14 is the fifteenth release of the 3.4 series.
+
+https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.14.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.14[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.4.14[Nuget]
+
+==== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3434[NCBC-3434]:
+A regression introduced in a recent release prevented `WaitUntilReady` from pinging nodes --
+this has been fixed, and `WaitUntilReady` now correctly detects state.
+// The rest of these issues need editing to make them consistent, and helpful to customers - but I'm out of time. :-/
+* https://issues.couchbase.com/browse/NCBC-3503[NCBC-3503]:
+There was a possibility of `ClusterVersionProvider.GetVersionAsync` failing, if nodes have no `ManagementUri`, owing to randomized node order.
+This has been fixed, and `GetRandomManagementUri()` should never now throw `NullReferenceException`.
+
+==== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-3530[NCBC-3530]:
+Made the `ConnectionString` class now accept `couchbase2` schema.
+* https://issues.couchbase.com/browse/NCBC-3532[NCBC-3532]:
+Added `AsReadOnly` record to Index APIs options.
+* https://issues.couchbase.com/browse/NCBC-3538[NCBC-3538]:
+Improved recovery time in Config Push to 300ms.
+* https://issues.couchbase.com/browse/NCBC-3541[NCBC-3541]:
+Added `AsReadOnly` record to Bucket Management APIs options.
+* https://issues.couchbase.com/browse/NCBC-3551[NCBC-3551]:
+Added `AsReadOnly` record to Collection Management APIs options.
+* https://issues.couchbase.com/browse/NCBC-3568[NCBC-3568]:
+Added `AsReadOnly` Record to GetAllScopesOptions.
+* https://issues.couchbase.com/browse/NCBC-3516[NCBC-3516]:
+Made fallback usage of `DefaultSerializer` trimmable.
+* https://issues.couchbase.com/browse/NCBC-3518[NCBC-3518]:
+Removed internal transcoder dependencies on `DefaultSerializer`.
+
+
 [#version-3-4-13]
 === Version 3.4.13 (09 Nov 2023)
 
@@ -431,7 +496,7 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.4.4[Nuget]
 * https://issues.couchbase.com/browse/NCBC-3340[NCBC-3340]: 
 When an op timed out, the socket connection was closed and then recreated.
 With a large number of unexpected timeouts, many sockets could be left in `TIME_WAIT`.
-Making `ChannelConnectionProcessor` reuse connections after timeout shoeld reduce the number of file descripters and local ports left open.
+Making `ChannelConnectionProcessor` reuse connections after timeout should reduce the number of file descripters and local ports left open.
 * https://issues.couchbase.com/browse/NCBC-3356[NCBC-3356]: 
 Cluster level `query_context`, which is not supported by Server versions earlier than 7.0, has been removed for these versions.
 * https://issues.couchbase.com/browse/NCBC-3343[NCBC-3343]: 

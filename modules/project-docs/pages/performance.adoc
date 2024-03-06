@@ -11,6 +11,18 @@ Learn how to keep get the best performance from your application.
 
 == Coding Best Practices
 
+=== Always call Dispose on GetAsync, LookupInAsync, etc.
+
+`GetAsync` and other retrieval operations return a class the implements the `IDisposable` interface. 
+It is important that on these result types, `Dispose()` is called so that the buffer that has between "rented" that handles the response is returned back to its pool.
+
+[source,csharp]
+----
+using var result = await collection.GetAsync("key1");
+----
+
+This applies to `GetAsync`, `LookupInAsync`, `GetAndLockAsync`, `GetAndTouchAsync`, `GetAnyReplicaAsync`, and `GetAllReplicasAsync`.
+
 === Avoid Running Tasks on the "Captured Context"
 
 When a Task is waited, the continuation may occur on the same thread which created the Task. 
@@ -37,7 +49,8 @@ Then a collection is opened using a non-async overload.
 Finally, we perform a CRUD operation, and again we disable the context. 
 This pattern should be followed throughout your Couchbase application. 
 
-NOTE: In modern ASP.NET (5+) the core lacks a default synchronization. With this core, usage of `Task.ConfigureAwait(false)` is debatable as it adds a small amount of overhead.
+NOTE: In modern ASP.NET (5+), the core lacks a default synchronization. 
+With this core, usage of `Task.ConfigureAwait(false)` is debatable as it adds a small amount of overhead.
 
 === Avoid Synchronously Awaiting Foreach Loops
 
@@ -75,7 +88,9 @@ You are better off batching and awaiting `Task.WhenAll` so that blocking does no
 
 === Do Use Parallel.ForEachAsync
 
-In the latest .NET Framework Versions (6+), there is a https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.parallel.foreachasync?view=net-6.0[special method] that allows you to control the amount of parallelism for scheduled asynchronous work:
+In the latest .NET Framework Versions (6+), there is a 
+https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.parallel.foreachasync?view=net-6.0[special method]
+that allows you to control the amount of parallelism for scheduled asynchronous work:
 
 [source,csharp]
 ----
@@ -89,7 +104,8 @@ await Parallel.ForEachAsync(keys, async (key, cancellationToken) => {
 #endif
 ----
 
-You can tune this by changing the batch size and the https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.paralleloptions?view=net-6.0[parallel options]; there is no universal best practice here as it depends on a number of factors.
+You can tune this by changing the batch size and the https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.paralleloptions?view=net-6.0[parallel options];
+there is no universal best practice here as it depends on a number of factors.
 
 === Use Batching
 
@@ -121,7 +137,8 @@ This is a trival example as partitioning keys may be very domain specific, but i
 
 === Avoid Sync over Async Antipattern
 
-The Couchbase .NET SDK was designed for asynchronous the entire way down; however, at the application layer you can still block and wait for each operation. 
+The Couchbase .NET SDK was designed for asynchronous the entire way down;
+however, at the application layer you can still block and wait for each operation. 
 Doing this is an antipattern and may cause deadlocks, and most definitly will degrade performance. 
 Here is an example of _sync_ over _async_:
 
@@ -169,8 +186,11 @@ When we open the Cluster and Bucket objects, we create long-lived socket connect
 There is cost associated with creating these connections, so we want them to be reused over and over. 
 If we're opening and closing these objects, we're creating and the tearing down these connections -- which causes latency, and may cause memory pressure.
 
-The Couchbase SDK has a complementary https://docs.couchbase.com/dotnet-sdk/current/howtos/managing-connections.html#connection-di[Dependency Injection (DI)] library that makes this trival to manage. 
-Additionally, there are other ways of doing this manually in `Start.cs`, or for legacy applications, using `Application_Start` and `Application_End` handlers in the `Global.asax` file. 
+The Couchbase SDK has a complementary 
+https://docs.couchbase.com/dotnet-sdk/current/howtos/managing-connections.html#connection-di[Dependency Injection (DI)]
+library that makes this trival to manage. 
+Additionally, there are other ways of doing this manually in `Start.cs`, or for legacy applications, 
+using `Application_Start` and `Application_End` handlers in the `Global.asax` file. 
 We strongly recommend users of the SDK use the DI library approach as its the simplest and easiest to debug.
 
 
@@ -197,7 +217,8 @@ The `SingleConnectionPool` is a very simple pool that contains exactly one conne
 It's useful for debugging connection related problems as it is has very few features and allows you to quickly isolate problems. 
 It may also be suitable for some applications or micro-services that need to constrain the number of active connections. 
 However, in general, we suggest using the `ChannelConnectionPool`.
-As mentioned above, setting both `ClusterOptions.NumKvConnections` and `ClusterOptions.MaxKvConnections` to a number less than or equal to `1` will cause the `SingleConnectionPool` to be used.
+As mentioned above,
+setting both `ClusterOptions.NumKvConnections` and `ClusterOptions.MaxKvConnections` to a number less than or equal to `1` will cause the `SingleConnectionPool` to be used.
 
 The `DataFlowConnectionPool` is a legacy pool and should not be used in new applications.
 
@@ -219,7 +240,8 @@ Defaults to 1MiB.
 ==== MaximumRetainedOperationBuilders
 
 Maximum number of buffers used for building key-value operations to be sent to the server which will be retained for reuse. 
-If your application has a very high degree of parallelism (for example, a very large number of data nodes), increasing this number may improve performance at the cost of RAM utilization. 
+If your application has a very high degree of parallelism (for example, a very large number of data nodes),
+increasing this number may improve performance at the cost of RAM utilization. 
 Defaults to the 4 times the number of logical CPUs.
 
 === Operation Tracing and Metrics
@@ -227,7 +249,8 @@ Defaults to the 4 times the number of logical CPUs.
 The SDK by default enables operation tracing and metrics tracking. 
 It is used to generate threshold and orphan response reports which are written to the log file. 
 While these are useful tool for debugging, they do come at a cost of increased memory and CPU use. 
-Operation tracing and metrics can be disabled by setting the `ClusterOptions.TracingOptions.Enabled` flag to `false` and/or by setting the `ClusterOptions.LoggingMeterOptions.Enabled` to `false`. 
+Operation tracing and metrics can be disabled by setting the `ClusterOptions.TracingOptions.Enabled` flag to `false`
+and/or by setting the `ClusterOptions.LoggingMeterOptions.Enabled` to `false`. 
 Note, by doing so you will lose the ability to use these useful debugging tools.
 
 === Logging
