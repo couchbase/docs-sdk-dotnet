@@ -48,6 +48,7 @@ The Couchbase .NET SDK is fully compatible with Couchbase Capella, our fully-hos
 To make development easier, the SDK includes the Capella client certificate ready installed for .NET 6.0 and later clients.
 However, for clients using .NET Framework, the Capella certificate must be manually installed in the local machine's certificate store, as the API necessary for in-memory certificates isn't available under the legacy framework.
 
+
 include::{version-common}@sdk:shared:partial$capella.adoc[tag=cloud]
 
 
@@ -130,9 +131,9 @@ include::hello-world:partial$supported.adoc[]
 [#table_sdk_versions]
 [cols="40,20,25,20"]
 |===
-| | SDK 3.0 - 3.2 | SDK 3.3  | SDK 3.4
+| | SDK 3.0 - 3.3 | SDK 3.4  | SDK 3.5
 
-| .NET 6.0 (Recommended, Long-Term Support)
+| .NET 6.0 (Long-Term Support)
 | *✔*
 | *✔*
 | *✔*
@@ -142,23 +143,24 @@ include::hello-world:partial$supported.adoc[]
 | *✖*
 | *✖*
 
+| .NET 8.0 (Recommended, Long-Term Support)
+| *✖*
+| *✔* From 3.4.14
+| *✔*
+
 | .NET Framework 4.6.2+
 | *✔*
 | *✔*
 | *✔*
 
+| .NET 8.0 (Long-Term Support)
+| *✖*
+| *✔* From 3.4.14
+| *✔*
 |===
 
 
-
-////
-// To add after 3.4.14 release:
-| .NET 8.0 (Long-Term Support)
-| *✖*
-| *✖*
-| *✔* From 3.4.14
-////
-
+// TODO - any outstanding improvements touched upon in https://github.com/couchbase/docs-sdk-dotnet/pull/310 
 
 
 
