@@ -117,3 +117,4 @@ You can find the module directory variables in `test_helper.bash`.
 The test name is `"[<module>] - <code_file>"`. 
 The name can be anything, but this standard format allows you to carry out single tests, as described in the preceding section.
 For more information about creating tests, see the https://bats-core.readthedocs.io/en/stable/writing-tests.html[bats documentation].
+////
