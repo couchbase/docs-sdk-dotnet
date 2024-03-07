@@ -1,129 +1,24 @@
 = Compatibility
-:description: Features available in different SDK versions, and compatibility between Server and SDK. \
+:description: Platform compatibility, and features available in different SDK versions, and compatibility between Server and SDK. \
 Plus notes on Cloud, networks, and AWS Lambda.
 :page-aliases: ROOT:overview,ROOT:compatibility-versions-features,compatibility-versions-features
-:page-toclevels: 2
-:page-topic-type: reference
+:page-toclevels: 3
+:table-caption!:
 
-include::partial$attributes.adoc[]
 
 [abstract]
 {description}
 
 
-== Couchbase Version/SDK Version Matrix
-
-Couchbase SDKs are tested against a variety of different environments to ensure both backward and forward compatibility with different versions of Couchbase Server.
-The matrix below denotes the version of Couchbase Server, the version of the .NET SDK and whether the SDK is:
-
-* ✖ *Unsupported*: This combination is not tested, and is not within the scope of technical support if you have purchased a support agreement.
-* ◎ *Compatible*: This combination has been tested previously, and should be compatible.
-This combination is not recommended by our technical support organization.
-It is best to upgrade either the SDK or the Couchbase version you are using.
-* ✔ *Supported*: This combination is subject to ongoing quality assurance, and is fully supported by our technical support organization.
-
-.Recommended SDK per Server Version Matrix
-[#table_sdk_versions]
-[cols="40,20,25,20"]
-|===
-| | SDK 3.0, 3.1 | SDK 3.2 | SDK 3.3, 3.4
-
-| *Server 6.6*
-| *✔*
-| *✔*
-| *✔*
-
-| *Server 7.0 - 7.2*
-| *◎*
-| *✔*
-| *✔*
-|===
-
-Note the https://www.couchbase.com/support-policy[End of Life dates^] for Couchbase Server and SDK versions.
-See the notes there for Support details.
-
-=== Capella Compatibility
-
-The Couchbase .NET SDK is fully compatible with Couchbase Capella, our fully-hosted database-as-a-service.
-To make development easier, the SDK includes the Capella client certificate ready installed for .NET 6.0 and later clients.
-However, for clients using .NET Framework, the Capella certificate must be manually installed in the local machine's certificate store, as the API necessary for in-memory certificates isn't available under the legacy framework.
-
-
-include::{version-common}@sdk:shared:partial$capella.adoc[tag=cloud]
+The Couchbase .NET SDK is compatible with https://docs.microsoft.com/en-us/dotnet/standard/net-standard[.NET Standard] 2.0 and .NET Standard 2.1, via the currently supported Microsoft .NET SDKs.
 
 
 == Platform Compatibility
 
-Microsoft's CLR eliminates many of the compatibility problems found in other languages, but occasional problems can be caused by the underlying Operating System (OS).
-The Couchbase .NET SDK is tested and supported on the following platforms:
-
-****
-[discrete]
-=== GNU/Linux
-
-* Amazon Linux 2.
-* Red Hat Enterprise Linux 7 & 8;
-* CentOS 7 & 8.
-* Ubuntu (LTS): 16.04 (_Xenial_), 18.04 (_Bionic_), 20.04 (_Focal_), & 22.04 (_Jammy_).
-* Debian 9 (_Stretch_) & 10 (_Buster_).
-* Alpine Linux
-
-[discrete]
-=== Microsoft Windows
-
-Microsoft Windows 10 / All LTS releases from Windows Server 2016.
-
-[discrete]
-=== Mac OS X
-
-The current and previous two releases of OS X.
-At time of writing (October 2022): 13 (Ventura), 12 (Monterey), and 11 (Big Sur).
-M1 ARM  architecture is fully supported in the .NET SDK as of .NET 6.0.
-****
-
-Although installable or compilable on many other platforms, we cannot provide support for untested combinations.
-
-=== ARM Processor Support
-
-AWS Amazon Graviton2, Apple M1 ARM processors, and ARMv8 on Ubuntu 20.04 (from SDK 3.4).
 
 
-== Couchbase New Feature Availability Matrix
 
-.Couchbase Server and SDK Supported Version Matrix
-[.table-merge-cells]
-[cols="7,5,6,5"]
-|===
-| | Server 6.6 | Server 7.0 | Server 7.1 - 7.2
-
-| Enhanced Durability
-3+| All SDK versions
-
-| Durable Writes
-3+| Since 3.0
-
-| Analytics
-3+| Since 2.7
-
-| Distributed ACID Transactions
-3+| Since 3.0 & Server 6.6footnote:[3.1.4 or more recent required for 1.0.0GA; preferably, use the latest SDK release.]
-
-| Collections
-| Developer Preview in 6.6, SDK 3.0
-2+| Since 3.0.1
-
-| Scope-Level {sqlpp} (formerly N1QL) Queries & all Collections features
-| Not Supported
-2+| Since SDK 3.2.0
-
-| Field Level Encryption v2
-3+| Since SDK 3.1.3footnote:[Field Level Encryption distributed as separate library.]
-
-| Request Tracing
-3+| Since SDK 3.0.3
-|===
-
-== .NET Framework Version Compatibility [[dotnet-compatibility]]
+=== .NET Framework Version Compatibility [[dotnet-compatibility]]
 
 include::hello-world:partial$supported.adoc[]
 
@@ -160,14 +55,178 @@ include::hello-world:partial$supported.adoc[]
 |===
 
 
-// TODO - any outstanding improvements touched upon in https://github.com/couchbase/docs-sdk-dotnet/pull/310 
+
+
+=== OS Compatibility
+
+In general, the Common Language Runtime (CLR) eliminates concerns about underlying OS compatibility, 
+and the Couchbase .NET SDK can be expected to run on all of the Operating Systems supported by xref:{version-server}@server:install:install-platforms.adoc[Couchbase Server].
+
+The {name-sdk} is tested and supported on the following OSs and platforms:
+
+****
+[discrete]
+=== GNU/Linux
+
+* Amazon Linux 2 & AL2023.
+* Red Hat Enterprise Linux 8 & 9;
+* Oracle Linux 8 & 9.
+* Ubuntu (LTS) 20.04 (_Focal_) & 22.04 (_Jammy_).
+* Debian 10 (_Buster_), 11 (_Bullseye_), and Debian 12 (_Bookworm_).
+* SUSE Enterprise Linux 12 & 15
+* Alpine Linux 3.18 (_Oracle JDK only_).
+// -- but see <<alpine-linux-compatibility, workaround note below>>.
+
+[discrete]
+=== Microsoft Windows
+
+* Microsoft Windows 10 & 11;
+* Windows Server 2019 & 2022.
+
+[discrete]
+=== Mac OS X
+
+The current and previous two releases of OS X.
+At time of writing (March 2024): 14 (Sonoma), 13 (Ventura), and 12 (Monterey).
+M1 ARM  architecture is fully supported in the Scala SDK.
+
+[discrete]
+=== ARM Processor Support
+
+AWS Amazon Graviton2, Apple M1 ARM processors, and ARMv8 on Ubuntu 20.04+ (from SDK 1.4).
+****
+
+The .NET SDK should also be expected to run on other commonly-available GNU/Linux distributions which support an appropriate ..NET Standard, but not all combinations can be tested -- notable exceptions are listed below.
+
+////
+==== Alpine Linux Compatibility
+
+The https://netty.io[Netty] I/O library used by our JVM SDKs supports native optimizations to achieve higher throughput and lower latency 
+-- which the SDK enables by default. 
+Those modules are compiled against `glibc` and Alpine Linux uses `musl` instead --
+so the {name-sdk} is unable to complete bootstrapping on this platform.
+
+Because Alpine Linux does not have the `glibc` support needed,
+we highly recommend that you seek an alternative distribution where possible. 
+If that is not a option, then a possible workaround that can be applied is as follows:
+
+* Disable the native IO:
++
+[source,toml]
+====
+ClusterEnvironment env = ClusterEnvironment.builder().ioEnvironment(IoEnvironment.enableNativeIo(false)).build();
+====
+
+* Disable it in Netty itself via the following system property:
+`-Dcom.couchbase.client.core.deps.io.netty.transport.noNative=true`
+
+The downside of these workarounds is potentially reduced performance, which can be determined through benchmarking and profiling.
+////
 
 
 
+// Network Requirements
 include::{version-common}@sdk:shared:partial$network-requirements.adoc[]
+
+
+
+
+
+
+== Couchbase Server Compatibility
+
+
+Couchbase SDKs are tested against a variety of different environments to ensure both backward and forward compatibility with different versions of Couchbase Server.
+
+=== Couchbase Version/SDK Version Matrix
+
+The matrix below denotes the version of Couchbase Server, the version of the Scala SDK and whether the SDK is:
+
+* ✖ *Unsupported*: This combination is not tested, and is not within the scope of technical support if you have purchased a support agreement.
+* ◎ *Compatible*: This combination has been tested previously, and should be compatible.
+This combination is not recommended by our technical support organization.
+It is best to upgrade either the SDK or the Couchbase version you are using.
+* ✔ *Supported*: This combination is subject to ongoing quality assurance, and is fully supported by our technical support organization.
+
+.Recommended SDK per Server Version Matrix
+[#table_sdk_versions]
+|===
+| | 3.3 | 3.4 | 3.5
+
+| *Server 7.0 - 7.2*
+| *✔*
+| *✔*
+| *✔*
+
+| *Server 7.6*
+| *✔*
+| *✔*
+| *✔*
+|===
+
+Note the https://www.couchbase.com/support-policy[End of Life dates^] for Couchbase Server and SDK versions.
+See the notes there for Support details.
+
+=== Capella Compatibility
+
+The Couchbase Scala SDK is fully compatible with Couchbase Capella, our fully-hosted database-as-a-service.
+To make development easier, the SDK includes the Capella client certificate ready installed.
+
+include::{version-common}@sdk:shared:partial$capella.adoc[tag=cloud]
+
+
+=== Couchbase New Feature Availability Matrix
+
+.Couchbase Server and SDK Supported Version Matrix
+[.table-merge-cells]
+[cols="7,6,6,6"]
+|===
+| | Server 7.0 & 7.1 | Server 7.2 | Server 7.6
+
+| Enhanced Durability
+3+| All SDK versions
+
+| Durable Writes
+3+| Since 3.0
+
+| Analytics
+3+| Since 2.7
+
+| Collections
+3+| Since 3.0.1
+
+| Scope-Level {sqlpp} (formerly N1QL) Queries & all Collections features
+3+| Since SDK 3.2.0
+
+| Request Tracing
+3+| Since SDK 3.0.3
+
+| Cloud Native Gateway
+3+| Not Supported
+// 2+| From SDK 3.5.0 (with xref:operator::overview.adoc[Couchbase Autonomous Operator] 2.6.1+)
+
+| Vector Search
+2+| N/A
+| From SDK 3.5.0
+|===
+
+
+
+=== API Version
+
+include::{version-common}@sdk:shared:partial$api-version.adoc[tag=api-version]
+
+
+
+
+== SDK API Stability
+
+
+=== Interface Stability
 
 include::{version-common}@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
 
-include::{version-common}@sdk:shared:partial$api-version.adoc[tag=api-version]
+
+=== Older SDK Versions
 
 include::{version-common}@sdk:shared:partial$archive.adoc[tag=link]
