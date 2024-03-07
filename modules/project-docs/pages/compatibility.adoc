@@ -47,11 +47,6 @@ include::hello-world:partial$supported.adoc[]
 | *✔*
 | *✔*
 | *✔*
-
-| .NET 8.0 (Long-Term Support)
-| *✖*
-| *✔* From 3.4.14
-| *✔*
 |===
 
 
