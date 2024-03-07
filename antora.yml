@@ -11,7 +11,7 @@ asciidoc:
     sdk_dot_minor: 3.5
     sdk_dot_major: 3.x
     version-server: '7.2'
-    version-common: '7.2'
+    version-common: '7.5'
     name_platform: '.NET'
     name-sdk: '.NET SDK'
     sdk_api: '3.5'
