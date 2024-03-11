@@ -15,7 +15,6 @@ For release notes, download links, and installation methods for 2.7 and earlier 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
 
-
 [#latest-release]
 == .NET SDK 3.5 Releases
 
@@ -24,14 +23,95 @@ All patch releases for each dot minor release should be API compatible, and safe
 any changes to expected behavior are noted in the release notes that follow.
 
 
-
-=== Version 3.5.0 (00 Mar 2024)
+=== Version 3.5.0 (11 Mar 2024)
 
 Version 3.5.0 is the first release of the 3.5 series.
 
+https://packages.couchbase.com/clients/net/3.5/Couchbase-Net-Client-3.5.0.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.5.0[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.5.0[Nuget]
 
+==== Fixed Issues
 
+* https://issues.couchbase.com/browse/NCBC-2901[NCBC-2901]: 
+LoggingMeter prints wrong percentiles
+* https://issues.couchbase.com/browse/NCBC-3058[NCBC-3058]: 
+App.Metrics usage is very inefficient
+* https://issues.couchbase.com/browse/NCBC-3314[NCBC-3314]: 
+SubdocExceptionException should be SubdocException
+* https://issues.couchbase.com/browse/NCBC-3336[NCBC-3336]: 
+QueryIndex missing get collectionName
+* https://issues.couchbase.com/browse/NCBC-3564[NCBC-3564]: 
+No error is thrown if the Cluster and/or Bucket auth fails
+* https://issues.couchbase.com/browse/NCBC-3604[NCBC-3604]: 
+FTS: TermRangeQuery does not have a Term parameter
+* https://issues.couchbase.com/browse/NCBC-3612[NCBC-3612]: 
+FIT KV: LookupInMixed returns result instead of exception
+* https://issues.couchbase.com/browse/NCBC-3624[NCBC-3624]: 
+Dotnet raises a CouchbaseException instead of the expected InvalidArgumentException when the value of k &lt; 1 in vector search query options
+* https://issues.couchbase.com/browse/NCBC-3633[NCBC-3633]: 
+FIT KV: SubdocMutationTest - Full Document using &quot;&quot; throws InvalidArgument
+* https://issues.couchbase.com/browse/NCBC-3635[NCBC-3635]: 
+GetAnyReplica: AggregateException field is not accessible 
+* https://issues.couchbase.com/browse/NCBC-3637[NCBC-3637]: 
+FIT KV: RangeScan &quot;ObjectDisposedException&quot;
+* https://issues.couchbase.com/browse/NCBC-3645[NCBC-3645]: 
+LookupIn path too long is returning System error rather than Couchbase error
+* https://issues.couchbase.com/browse/NCBC-3646[NCBC-3646]: 
+LookupIn replicas not available tests failing on servers without support
+* https://issues.couchbase.com/browse/NCBC-3649[NCBC-3649]: 
+Every operation response allocates a temporary heap array the size of the response
+* https://issues.couchbase.com/browse/NCBC-3657[NCBC-3657]: 
+FIT KV: Subdoc Get with empty path throws instead of returning full document
+* https://issues.couchbase.com/browse/NCBC-3661[NCBC-3661]: 
+Ensure NRE not thrown when node does not support mgmt
+* https://issues.couchbase.com/browse/NCBC-3664[NCBC-3664]: 
+FIT KV: SDK sets the expiry of a GetResult when is is 0
+* https://issues.couchbase.com/browse/NCBC-3666[NCBC-3666]: 
+FIT KV: Get test with too long ID fails
+* https://issues.couchbase.com/browse/NCBC-3676[NCBC-3676]: 
+Make StellarQueryRequest read metadata first after sending query
+* https://issues.couchbase.com/browse/NCBC-3679[NCBC-3679]: 
+DebuggerDisplay:nq should be DebuggerDisplay,nq
+* https://issues.couchbase.com/browse/NCBC-3686[NCBC-3686]: 
+FIT Vector Search: Sending 0 elements doesn&#39;t throw InvalidArgumentException
+* https://issues.couchbase.com/browse/NCBC-3696[NCBC-3696]: 
+Bad URI for scoped indexes in SearchIndexManager
+* https://issues.couchbase.com/browse/NCBC-3701[NCBC-3701]: 
+VectorSearch missing API overloads according to RFC.
+* https://issues.couchbase.com/browse/NCBC-3705[NCBC-3705]: 
+fix spelling error in ClusterOptions code comments
+* https://issues.couchbase.com/browse/NCBC-3709[NCBC-3709]: 
+Metrics are timed separately for each retry
 
+==== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-3673[NCBC-3673]: 
+FeatureNotAvailable if new search capabilities aren&#39;t available
+* https://issues.couchbase.com/browse/NCBC-3620[NCBC-3620]: 
+Remove uneeded async and awaits from PS
+* https://issues.couchbase.com/browse/NCBC-3617[NCBC-3617]: 
+ConnectionString refactoring for Stellar and &quotcouchbase2://&quot; scheme
+* https://issues.couchbase.com/browse/NCBC-3667[NCBC-3667]: 
+Retry when retry-now is returned by the server
+* https://issues.couchbase.com/browse/NCBC-3671[NCBC-3671]: 
+FIT Management: Implement SearchIndexManagement 
+* https://issues.couchbase.com/browse/NCBC-3648[NCBC-3648]: 
+Improve Large Operation Response Memory Handling
+* https://issues.couchbase.com/browse/NCBC-3554[NCBC-3554]: 
+NetStellar: Add Retry handling
+* https://issues.couchbase.com/browse/NCBC-3597[NCBC-3597]: 
+Remove Couchbase.Stellar and Couchbase.NetClient proj
+* https://issues.couchbase.com/browse/NCBC-3601[NCBC-3601]: 
+Toggle between Cluster and StellarCluster based on schema
+* https://issues.couchbase.com/browse/NCBC-3602[NCBC-3602]: 
+CAS value cannot be zero
+* https://issues.couchbase.com/browse/NCBC-3655[NCBC-3655]: 
+Add StellarQueryClient so the failed queries can be retried
+* https://issues.couchbase.com/browse/NCBC-3670[NCBC-3670]: 
+Remove InvalidArgument fail-fast for LookupinAnyReplica
+* https://issues.couchbase.com/browse/NCBC-3672[NCBC-3672]: 
+FIT Vector Search: All tests fail 
 
 
 == .NET SDK 3.4 Releases
