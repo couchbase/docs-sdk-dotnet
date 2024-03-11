@@ -15,7 +15,6 @@ For release notes, download links, and installation methods for 2.7 and earlier 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
 
-
 [#latest-release]
 == .NET SDK 3.5 Releases
 
@@ -24,14 +23,104 @@ All patch releases for each dot minor release should be API compatible, and safe
 any changes to expected behavior are noted in the release notes that follow.
 
 
-
-=== Version 3.5.0 (00 Mar 2024)
+=== Version 3.5.0 (11 Mar 2024)
 
 Version 3.5.0 is the first release of the 3.5 series.
 
+https://packages.couchbase.com/clients/net/3.5/Couchbase-Net-Client-3.5.0.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.5.0[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.5.0[Nuget]
+
+==== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-2901[NCBC-2901]: 
+Fixed the percentiles printed by `LoggingMeter` to comply with the RFC.
+* https://issues.couchbase.com/browse/NCBC-3058[NCBC-3058]: 
+Eliminated the `App.Metrics` dependency and implemented a better approach for tracking logging meter histograms.
+* https://issues.couchbase.com/browse/NCBC-3314[NCBC-3314]: 
+Renamed `SubdocExceptionException` to `SubdocException`.
+* https://issues.couchbase.com/browse/NCBC-3336[NCBC-3336]: 
+Made it possible to get a `collection_id` from a `QueryIndex` object. 
+Fixed the creation of named primary indexes. 
+Added a conditional field to `QueryIndex`.
+* https://issues.couchbase.com/browse/NCBC-3564[NCBC-3564]: 
+No error is thrown if the cluster or the bucket authorization fails.
+* https://issues.couchbase.com/browse/NCBC-3604[NCBC-3604]: 
+Removed `Term` field from `TermRangeQuery`.
+* https://issues.couchbase.com/browse/NCBC-3612[NCBC-3612]: 
+Added an exception handling when calling `ContentAs` on an `Exist` spec.
+* https://issues.couchbase.com/browse/NCBC-3624[NCBC-3624]: 
+When the vector search query options have a value of `k < 1`, .NET throws a `CouchbaseException` instead of the expected `InvalidArgumentException`.
+* https://issues.couchbase.com/browse/NCBC-3633[NCBC-3633]: 
+`SubdocMutation Replace/Remove` uses `OpCode.Set` and `OpCode.Delete` when an empty path is passed.
+* https://issues.couchbase.com/browse/NCBC-3635[NCBC-3635]: 
+Added a `ReadOnlyCollection<Exception>` public backing field to contain the inner exceptions of the `AggregateException` field.
+* https://issues.couchbase.com/browse/NCBC-3637[NCBC-3637]: 
+Updated `AsyncStreamState` to handle all responses enumerated in the RFC for `RangeScan`.
+* https://issues.couchbase.com/browse/NCBC-3645[NCBC-3645]: 
+Fixed error thrown against maximum allowed path length.
+* https://issues.couchbase.com/browse/NCBC-3646[NCBC-3646]: 
+`LookupInAnyReplica` and `LookupInAllReplicas` now throw a `FeatureNotAvailable` error on servers that do not support `subdoc.ReplicaRead`.
+* https://issues.couchbase.com/browse/NCBC-3649[NCBC-3649]: 
+Index now updates directly into the response body to prevent unnecessary heap application or memory copy.
+* https://issues.couchbase.com/browse/NCBC-3657[NCBC-3657]: 
+`LookupInSpec.Get()` now returns `GetFull` when the given path is empty.
+* https://issues.couchbase.com/browse/NCBC-3661[NCBC-3661]: 
+Ensures that a node with the management service is selected so that `NullReferenceException` is not thrown.
+* https://issues.couchbase.com/browse/NCBC-3664[NCBC-3664]: 
+Set the expiry of `GetResult` to `DateTime.MaxValue` when the `secondsUntilExpiry` returned spec is 0.
+* https://issues.couchbase.com/browse/NCBC-3666[NCBC-3666]: 
+Added a backing field for `Key` in `OperationBase`. 
+Added a `byte[] EncodedKey` field to automatically encode and check the size of the `Key` when creating an operation.
+* https://issues.couchbase.com/browse/NCBC-3676[NCBC-3676]: 
+Enumeration now uses the `RetryHandler` to read ahead. 
+It then caches the results and enumerates them first if they are successful.
+* https://issues.couchbase.com/browse/NCBC-3679[NCBC-3679]: 
+Fixed a bug in `QueryErrorContext` where the `DebuggerDisplay` message had an invalid value of `:ns` instead of `,ns`.
+* https://issues.couchbase.com/browse/NCBC-3686[NCBC-3686]: 
+Throws an exception before sending the request if no vectors are provided.
+* https://issues.couchbase.com/browse/NCBC-3696[NCBC-3696]: 
+Fixed a bug in `SearchIndexManager` for scoped indexes.
+* https://issues.couchbase.com/browse/NCBC-3701[NCBC-3701]: 
+Added missing API overloads to comply with the RFC.
+* https://issues.couchbase.com/browse/NCBC-3705[NCBC-3705]: 
+Fixed spelling error in `ClusterOptions` code comments.
+* https://issues.couchbase.com/browse/NCBC-3709[NCBC-3709]: 
+Updated KV operation metrics to post a single duration for each operation, instead of one duration for each individual retry.
+The operation count no longer includes retries.
 
 
+==== New Features and Behavioral Changes
 
+* https://issues.couchbase.com/browse/NCBC-3673[NCBC-3673]: 
+If the server does not support vector search or `ScopedSearchIndexes`, a `FeatureNotAvailable` error is thrown.
+* https://issues.couchbase.com/browse/NCBC-3620[NCBC-3620]: 
+Removed unused imports and unnecessary full qualified namespaces.
+Moved local functions under the return keyword. 
+Made constants private.
+Updated local functions from camel case to pascal case.
+* https://issues.couchbase.com/browse/NCBC-3617[NCBC-3617]: 
+Added protostellar support for a new scheme for connecting to the gateway.
+* https://issues.couchbase.com/browse/NCBC-3667[NCBC-3667]: 
+If the SDK receives a `retry-now` response, it retries the operation.
+* https://issues.couchbase.com/browse/NCBC-3671[NCBC-3671]: 
+If the server cannot find the given index, it throws an `IndexNotFoundException` error.
+* https://issues.couchbase.com/browse/NCBC-3648[NCBC-3648]: 
+Improved the memory handling of large operation responses.
+* https://issues.couchbase.com/browse/NCBC-3554[NCBC-3554]: 
+Added retry handling to protostellar.
+* https://issues.couchbase.com/browse/NCBC-3597[NCBC-3597]: 
+Removed `Couchbase.Stellar` and `Couchbase.NetClient` from `Couchbase.csproj`.
+* https://issues.couchbase.com/browse/NCBC-3601[NCBC-3601]: 
+Added toggling between a `StellarCluster` creation and a regular `Cluster` creation based on the schema detected when `Cluster.ConnectAsync` is called.
+* https://issues.couchbase.com/browse/NCBC-3602[NCBC-3602]: 
+Fixed a bug where an error is thrown if a CAS of zero is sent to CNG or protostellar.
+* https://issues.couchbase.com/browse/NCBC-3655[NCBC-3655]: 
+Added `StellarQueryClient` so that failed queries can be retried.
+* https://issues.couchbase.com/browse/NCBC-3670[NCBC-3670]: 
+Removed `InvalidArgument` fail-fast for `LookupinAnyReplica`.
+* https://issues.couchbase.com/browse/NCBC-3672[NCBC-3672]: 
+Fixed failing vector search tests.
 
 
 == .NET SDK 3.4 Releases
