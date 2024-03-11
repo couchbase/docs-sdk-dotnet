@@ -34,84 +34,93 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.5.0[Nuget]
 ==== Fixed Issues
 
 * https://issues.couchbase.com/browse/NCBC-2901[NCBC-2901]: 
-LoggingMeter prints wrong percentiles
+Fixed the percentiles printed by `LoggingMeter` to comply with the RFC.
 * https://issues.couchbase.com/browse/NCBC-3058[NCBC-3058]: 
-App.Metrics usage is very inefficient
+Eliminated the `App.Metrics` dependency and implemented a better approach for tracking logging meter histograms.
 * https://issues.couchbase.com/browse/NCBC-3314[NCBC-3314]: 
-SubdocExceptionException should be SubdocException
+Renamed `SubdocExceptionException` to `SubdocException`.
 * https://issues.couchbase.com/browse/NCBC-3336[NCBC-3336]: 
-QueryIndex missing get collectionName
+Made it possible to get a `collection_id` from a `QueryIndex` object. 
+Fixed the creation of named primary indexes. 
+Added a conditional field to `QueryIndex`.
 * https://issues.couchbase.com/browse/NCBC-3564[NCBC-3564]: 
-No error is thrown if the Cluster and/or Bucket auth fails
+No error is thrown if the cluster or the bucket authorization fails.
 * https://issues.couchbase.com/browse/NCBC-3604[NCBC-3604]: 
-FTS: TermRangeQuery does not have a Term parameter
+Removed `Term` field from `TermRangeQuery`.
 * https://issues.couchbase.com/browse/NCBC-3612[NCBC-3612]: 
-FIT KV: LookupInMixed returns result instead of exception
+Added an exception handling when calling `ContentAs` on an `Exist` spec.
 * https://issues.couchbase.com/browse/NCBC-3624[NCBC-3624]: 
-Dotnet raises a CouchbaseException instead of the expected InvalidArgumentException when the value of k &lt; 1 in vector search query options
+When the vector search query options have a value of `k < 1`, .NET throws a `CouchbaseException` instead of the expected `InvalidArgumentException`.
 * https://issues.couchbase.com/browse/NCBC-3633[NCBC-3633]: 
-FIT KV: SubdocMutationTest - Full Document using &quot;&quot; throws InvalidArgument
+`SubdocMutation Replace/Remove` uses `OpCode.Set` and `OpCode.Delete` when an empty path is passed.
 * https://issues.couchbase.com/browse/NCBC-3635[NCBC-3635]: 
-GetAnyReplica: AggregateException field is not accessible 
+Added a `ReadOnlyCollection<Exception>` public backing field to contain the inner exceptions of the `AggregateException` field.
 * https://issues.couchbase.com/browse/NCBC-3637[NCBC-3637]: 
-FIT KV: RangeScan &quot;ObjectDisposedException&quot;
+Updated `AsyncStreamState` to handle all responses enumerated in the RFC for `RangeScan`.
 * https://issues.couchbase.com/browse/NCBC-3645[NCBC-3645]: 
-LookupIn path too long is returning System error rather than Couchbase error
+Fixed error thrown against maximum allowed path length.
 * https://issues.couchbase.com/browse/NCBC-3646[NCBC-3646]: 
-LookupIn replicas not available tests failing on servers without support
+`LookupInAnyReplica` and `LookupInAllReplicas` now throw a `FeatureNotAvailable` error on servers that do not support `subdoc.ReplicaRead`.
 * https://issues.couchbase.com/browse/NCBC-3649[NCBC-3649]: 
-Every operation response allocates a temporary heap array the size of the response
+Index now updates directly into the response body to prevent unnecessary heap application or memory copy.
 * https://issues.couchbase.com/browse/NCBC-3657[NCBC-3657]: 
-FIT KV: Subdoc Get with empty path throws instead of returning full document
+`LookupInSpec.Get()` now returns `GetFull` when the given path is empty.
 * https://issues.couchbase.com/browse/NCBC-3661[NCBC-3661]: 
-Ensure NRE not thrown when node does not support mgmt
+Ensures that a node with the management service is selected so that `NullReferenceException` is not thrown.
 * https://issues.couchbase.com/browse/NCBC-3664[NCBC-3664]: 
-FIT KV: SDK sets the expiry of a GetResult when is is 0
+Set the expiry of `GetResult` to `DateTime.MaxValue` when the `secondsUntilExpiry` returned spec is 0.
 * https://issues.couchbase.com/browse/NCBC-3666[NCBC-3666]: 
-FIT KV: Get test with too long ID fails
+Added a backing field for `Key` in `OperationBase`. 
+Added a `byte[] EncodedKey` field to automatically encode and check the size of the `Key` when creating an operation.
 * https://issues.couchbase.com/browse/NCBC-3676[NCBC-3676]: 
-Make StellarQueryRequest read metadata first after sending query
+Enumeration now uses the `RetryHandler` to read ahead. 
+It then caches the results and enumerates them first if they are successful.
 * https://issues.couchbase.com/browse/NCBC-3679[NCBC-3679]: 
-DebuggerDisplay:nq should be DebuggerDisplay,nq
+Fixed a bug in `QueryErrorContext` where the `DebuggerDisplay` message had an invalid value of `:ns` instead of `,ns`.
 * https://issues.couchbase.com/browse/NCBC-3686[NCBC-3686]: 
-FIT Vector Search: Sending 0 elements doesn&#39;t throw InvalidArgumentException
+Throws an exception before sending the request if no vectors are provided.
 * https://issues.couchbase.com/browse/NCBC-3696[NCBC-3696]: 
-Bad URI for scoped indexes in SearchIndexManager
+Fixed a bug in `SearchIndexManager` for scoped indexes.
 * https://issues.couchbase.com/browse/NCBC-3701[NCBC-3701]: 
-VectorSearch missing API overloads according to RFC.
+Added missing API overloads to comply with the RFC.
 * https://issues.couchbase.com/browse/NCBC-3705[NCBC-3705]: 
-fix spelling error in ClusterOptions code comments
+Fixed spelling error in `ClusterOptions` code comments.
 * https://issues.couchbase.com/browse/NCBC-3709[NCBC-3709]: 
-Metrics are timed separately for each retry
+Updated KV operation metrics to post a single duration for each operation, instead of one duration for each individual retry.
+The operation count no longer includes retries.
+
 
 ==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/NCBC-3673[NCBC-3673]: 
-FeatureNotAvailable if new search capabilities aren&#39;t available
+If the server does not support vector search or `ScopedSearchIndexes`, a `FeatureNotAvailable` error is thrown.
 * https://issues.couchbase.com/browse/NCBC-3620[NCBC-3620]: 
-Remove uneeded async and awaits from PS
+Removed unused imports and unnecessary full qualified namespaces.
+Moved local functions under the return keyword. 
+Made constants private.
+Updated local functions from camel case to pascal case.
 * https://issues.couchbase.com/browse/NCBC-3617[NCBC-3617]: 
-ConnectionString refactoring for Stellar and &quotcouchbase2://&quot; scheme
+Added protostellar support for a new scheme for connecting to the gateway.
 * https://issues.couchbase.com/browse/NCBC-3667[NCBC-3667]: 
-Retry when retry-now is returned by the server
+If the SDK receives a `retry-now` response, it retries the operation.
 * https://issues.couchbase.com/browse/NCBC-3671[NCBC-3671]: 
-FIT Management: Implement SearchIndexManagement 
+If the server cannot find the given index, it throws an `IndexNotFoundException` error.
 * https://issues.couchbase.com/browse/NCBC-3648[NCBC-3648]: 
-Improve Large Operation Response Memory Handling
+Improved the memory handling of large operation responses.
 * https://issues.couchbase.com/browse/NCBC-3554[NCBC-3554]: 
-NetStellar: Add Retry handling
+Added retry handling to protostellar.
 * https://issues.couchbase.com/browse/NCBC-3597[NCBC-3597]: 
-Remove Couchbase.Stellar and Couchbase.NetClient proj
+Removed `Couchbase.Stellar` and `Couchbase.NetClient` from `Couchbase.csproj`.
 * https://issues.couchbase.com/browse/NCBC-3601[NCBC-3601]: 
-Toggle between Cluster and StellarCluster based on schema
+Added toggling between a `StellarCluster` creation and a regular `Cluster` creation based on the schema detected when `Cluster.ConnectAsync` is called.
 * https://issues.couchbase.com/browse/NCBC-3602[NCBC-3602]: 
-CAS value cannot be zero
+Fixed a bug where an error is thrown if a CAS of zero is sent to CNG or protostellar.
 * https://issues.couchbase.com/browse/NCBC-3655[NCBC-3655]: 
-Add StellarQueryClient so the failed queries can be retried
+Added `StellarQueryClient` so that failed queries can be retried.
 * https://issues.couchbase.com/browse/NCBC-3670[NCBC-3670]: 
-Remove InvalidArgument fail-fast for LookupinAnyReplica
+Removed `InvalidArgument` fail-fast for `LookupinAnyReplica`.
 * https://issues.couchbase.com/browse/NCBC-3672[NCBC-3672]: 
-FIT Vector Search: All tests fail 
+Fixed failing vector search tests.
 
 
 == .NET SDK 3.4 Releases
