@@ -1,10 +1,10 @@
-= Couchbase .NET SDK 3.4
+= Couchbase .NET SDK 3.5
 :page-layout: landing-page-top-level-sdk
 :page-role: tiles
 :!sectids:
 :page-aliases: ROOT:dotnet-sdk.sdoc
 
-= Couchbase .NET SDK 3.4
+= Couchbase .NET SDK 3.5
 
 [source,csharp]
 ----
