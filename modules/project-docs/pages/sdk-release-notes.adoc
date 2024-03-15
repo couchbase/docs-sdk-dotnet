@@ -357,6 +357,8 @@ The changes also help application start up speed in non-AOT cases.
 [#version-3-4-10]
 === Version 3.4.10 (03 Aug 2023)
 
+*Note:* v3.4.10 has been deprecated - do not use - use 3.4.11 or greater. Details can be found https://issues.couchbase.com/browse/NCBC-3724[here].
+
 Version 3.4.10 is the eleventh release of the 3.4 series.
 
 https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.10.zip[Download] |
