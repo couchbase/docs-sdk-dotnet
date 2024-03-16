@@ -357,7 +357,9 @@ The changes also help application start up speed in non-AOT cases.
 [#version-3-4-10]
 === Version 3.4.10 (03 Aug 2023)
 
-*Note:* v3.4.10 has been deprecated - do not use - use 3.4.11 or greater. Details can be found https://issues.couchbase.com/browse/NCBC-3724[here].
+WARNING: v3.4.10 is incompatible with Server 7.6 and later -- do not use.
+This version of the SDK has been deprecated; use 3.4.11 or greater.
+Details can be found in https://issues.couchbase.com/browse/NCBC-3724[NCBC-3724].
 
 Version 3.4.10 is the eleventh release of the 3.4 series.
 
