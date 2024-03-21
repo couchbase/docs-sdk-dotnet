@@ -134,6 +134,26 @@ https://packages.couchbase.com/clients/net/3.4/Couchbase-Net-Client-3.4.15.zip[D
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.4.15[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.4.15[Nuget]
 
+==== Known Issues
+
+* https://issues.couchbase.com/browse/NCBC-3716[NCBC-3716]:
+If you are using Capella or Server versions 7.6.0, we strongly encourage you to upgrade to SDK v3.5.1+.
+While this version will continue be compatible and supported with server 7.6.0, you may encounter timeout exceptions during rebalances under KV high workload.
+A workaround is to disable fast failover.
+You can disable fast failover by setting `EnablePushConfig` to false in the `ExperimentalOptions` of the `ClusterOptions`:
+
++
+[source,csharp]
+----
+var options = new ClusterOptions
+{
+    ConnectionString = "localhost"
+    UserName = "Administrator",
+    Password = "password",
+};
+options.Experiments.EnablePushConfig = false;
+----
+
 ==== Fixed Issues
 
 * https://issues.couchbase.com/browse/NCBC-3599[NCBC-3599]: 
