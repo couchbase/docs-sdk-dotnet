@@ -22,6 +22,72 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+=== Version 3.5.1 (16 Apr 2024)
+
+Version 3.5.1 is the second release of the 3.5 series.
+
+https://packages.couchbase.com/clients/net/3.5/Couchbase-Net-Client-3.5.1.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.5.1[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.5.1[Nuget]
+
+==== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3690[NCBC-3690]: 
+FIT Management: Implement Scoped Search Index Management
+* https://issues.couchbase.com/browse/NCBC-3699[NCBC-3699]: 
+FIT Query: QueryOptionTest failures
+* https://issues.couchbase.com/browse/NCBC-3700[NCBC-3700]: 
+FIT KV: New Subdoc errors
+* https://issues.couchbase.com/browse/NCBC-3703[NCBC-3703]: 
+FIT Stellar: InvalidArgument and DocumentTooDeep not handled
+* https://issues.couchbase.com/browse/NCBC-3716[NCBC-3716]: 
+KV throughput against Trinity drops during rebalances
+* https://issues.couchbase.com/browse/NCBC-3720[NCBC-3720]: 
+ClusterChangeMapNotification reported in logs and errors instead of KV ops
+* https://issues.couchbase.com/browse/NCBC-3721[NCBC-3721]: 
+Cannot build Cluster with LoggingMeter disabled
+* https://issues.couchbase.com/browse/NCBC-3724[NCBC-3724]: 
+Cannot bootstrap .NET SDK v3.4.10 against server v7.6.0
+* https://issues.couchbase.com/browse/NCBC-3725[NCBC-3725]: 
+ConfigPushHandler doesn&#39;t degrade gracefully under massive config push spam
+* https://issues.couchbase.com/browse/NCBC-3727[NCBC-3727]:
+When ClustermapChangeNotification enabled do not re-bootstrap
+* https://issues.couchbase.com/browse/NCBC-3732[NCBC-3732]: 
+ConfigPushHandler skipping all clustermap revisions
+* https://issues.couchbase.com/browse/NCBC-3734[NCBC-3734]: 
+NRE causes configs to be skipped while scaling up or down
+* https://issues.couchbase.com/browse/NCBC-3737[NCBC-3737]: 
+KvNotMyBucket retried with old config.
+* https://issues.couchbase.com/browse/NCBC-3742[NCBC-3742]: 
+Reduce push config spam in ConfigPushHandler
+* https://issues.couchbase.com/browse/NCBC-3747[NCBC-3747]: 
+Corrupted cluster map configuration when notification received from Server 7.2
+* https://issues.couchbase.com/browse/NCBC-3752[NCBC-3752]: 
+Race condition:  KeyMapper is updated out of sync with CurrentConfig
+* https://issues.couchbase.com/browse/NCBC-3753[NCBC-3753]: 
+Only publish a config if its a higher revision than current
+* https://issues.couchbase.com/browse/NCBC-3749[NCBC-3749]: 
+Log the ConfigVersion used by an operation throughout the SDK
+* https://issues.couchbase.com/browse/NCBC-3723[NCBC-3723]:
+ NullReferenceException in ConfigPushHandler
+* https://issues.couchbase.com/browse/NCBC-3740[NCBC-3740]: 
+In Faster Failover mode, NotMyVBucket always result in a GetClusterMap request
+* https://issues.couchbase.com/browse/NCBC-3722[NCBC-3722]: 
+Error processing cluster map rev#1935:System.IndexOutOfRangeException: Index was outside the bounds of the array.
+* https://issues.couchbase.com/browse/NCBC-3719[NCBC-3719]: 
+Unlock should handle Locked status for CasMismatch
+
+
+==== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-3739[NCBC-3739]: 
+Don't queue GetConfigMap operations
+* https://issues.couchbase.com/browse/NCBC-3744[NCBC-3744]: 
+Move ConfigPushHandler from ClusterNode to CouchbaseBucket
+* https://issues.couchbase.com/browse/NCBC-3748[NCBC-3748]: 
+Track count/s of ClusterMapChangeNotification
+* https://issues.couchbase.com/browse/NCBC-3751[NCBC-3751]: 
+Reduce DEBUG spam in logging
 
 === Version 3.5.0 (11 Mar 2024)
 
