@@ -33,65 +33,80 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.5.1[Nuget]
 ==== Fixed Issues
 
 * https://issues.couchbase.com/browse/NCBC-3690[NCBC-3690]: 
-FIT Management: Implement Scoped Search Index Management
+FIT Management: Implement Scoped Search Index Management.
 * https://issues.couchbase.com/browse/NCBC-3699[NCBC-3699]: 
-FIT Query: QueryOptionTest failures
+FIT Query: QueryOptionTest failures fixed.
 * https://issues.couchbase.com/browse/NCBC-3700[NCBC-3700]: 
-FIT KV: New Subdoc errors
+FIT KV: New Subdoc errors fixed.
 * https://issues.couchbase.com/browse/NCBC-3703[NCBC-3703]: 
-FIT Stellar: InvalidArgument and DocumentTooDeep not handled
+FIT Stellar: InvalidArgument and DocumentTooDeep now handled.
 * https://issues.couchbase.com/browse/NCBC-3716[NCBC-3716]: 
-KV throughput against Trinity drops during rebalances
+Fixed a regression in KV throughput against Trinity during rebalances.
 * https://issues.couchbase.com/browse/NCBC-3720[NCBC-3720]: 
-ClusterChangeMapNotification reported in logs and errors instead of KV ops
+`ClusterChangeMapNotification` was reported in logs and errors in place of KV ops -- this has been fixed, and `SET/Upsert` is now correctly reported.
 * https://issues.couchbase.com/browse/NCBC-3721[NCBC-3721]: 
-Cannot build Cluster with LoggingMeter disabled
+Fixed a regression in 3.5.0 which would not allow building a Cluster with `LoggingMeter` disabled.
 * https://issues.couchbase.com/browse/NCBC-3724[NCBC-3724]: 
-Cannot bootstrap .NET SDK v3.4.10 against server v7.6.0
+Fixed a known issue with Snappier implementation in the SDK preventing bootstrap .NET with SDK v3.4.10 onwards against server v7.6.0.
 * https://issues.couchbase.com/browse/NCBC-3725[NCBC-3725]: 
-ConfigPushHandler doesn&#39;t degrade gracefully under massive config push spam
+Fixed a bug where `ConfigPushHandler` wasn't performing well under massive config push spam.
 * https://issues.couchbase.com/browse/NCBC-3727[NCBC-3727]:
-When ClustermapChangeNotification enabled do not re-bootstrap
+When Faster Failover with ClustermapChangeNotification is enabled, 
+config polling was short circuited, causing the SDK to rebootstrap because it thinks that it cannot connect to the cluster with the current nodes list.
+This behavior has been fixed.
 * https://issues.couchbase.com/browse/NCBC-3732[NCBC-3732]: 
-ConfigPushHandler skipping all clustermap revisions
+Fixed logic bug that was causing the `ConfigPushHandler` to skip all new clustermap config revision.
 * https://issues.couchbase.com/browse/NCBC-3734[NCBC-3734]: 
-NRE causes configs to be skipped while scaling up or down
+The NRE was causing config revisions to be skipped which meant retries for `NotMyVBucket` were happening multiple times using the same config revision.
 * https://issues.couchbase.com/browse/NCBC-3737[NCBC-3737]: 
-KvNotMyBucket retried with old config.
+`KvNotMyBucket` retried with old config.
 * https://issues.couchbase.com/browse/NCBC-3742[NCBC-3742]: 
-Reduce push config spam in ConfigPushHandler
+Reduced push config spam in ConfigPushHandler.
 * https://issues.couchbase.com/browse/NCBC-3747[NCBC-3747]: 
-Corrupted cluster map configuration when notification received from Server 7.2
+When CB Server 7.2 sends a cluster map changed notification, it is sent with a JSON body containing the new map. 
+After deserializing, we were not replacing `$HOST` with the correct values,
+causing the in-memory map to become corrupt and subsequent operations to timeout.
+This has been fixed, and now after deserializing a pushed notification with a cluster map the SDK replaces `$HOST` with the endpoint,
+and applies any overridden network resolution settings.
+This matches the behavior when we receive a `BucketConfig` back from an explicit request.
 * https://issues.couchbase.com/browse/NCBC-3752[NCBC-3752]: 
-Race condition:  KeyMapper is updated out of sync with CurrentConfig
+Fixed a race condition affecting `KeyMapper` being updated out of sync with `CurrentConfig`.
 * https://issues.couchbase.com/browse/NCBC-3753[NCBC-3753]: 
-Only publish a config if its a higher revision than current
+The SDK will now only publish a config if it's a higher revision than the current one.
 * https://issues.couchbase.com/browse/NCBC-3749[NCBC-3749]: 
-Log the ConfigVersion used by an operation throughout the SDK
+Log the `ConfigVersion` used by an operation throughout the SDK.
 * https://issues.couchbase.com/browse/NCBC-3723[NCBC-3723]:
- NullReferenceException in ConfigPushHandler
+Fixed a `NullReferenceException` in `ConfigPushHandler`, 
+which meant the code could jump to the error handling and log/exit instead of processing the config.
 * https://issues.couchbase.com/browse/NCBC-3740[NCBC-3740]: 
-In Faster Failover mode, NotMyVBucket always result in a GetClusterMap request
+When Faster Failover is available, a `GetClusterMap` request is no longer the only response to `NotMyVBucket`.
 * https://issues.couchbase.com/browse/NCBC-3722[NCBC-3722]: 
-Error processing cluster map rev#1935:System.IndexOutOfRangeException: Index was outside the bounds of the array.
+Fixed an `IndexOutOfBounds` error processing cluster map during `ConfigUpdateAsync`.
 * https://issues.couchbase.com/browse/NCBC-3719[NCBC-3719]: 
-Unlock should handle Locked status for CasMismatch
-
+There is a bug in the server, and an Unlock operation with an invalid Cas returns `Locked` instead of `CasMismatch` status.
+The SDK now handles this as a `CasMismatch`.
 
 ==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/NCBC-3739[NCBC-3739]: 
-Don't queue GetConfigMap operations
+A `GetConfigMap` begin sent is generally a high priority because it indicates server configuration is outdated due to failover or rebalance.
+Added a method (which currently only applies to the default `ChannelConnectionPool`) 
+which allows an operation to be jumped to the front of the line to be sent.
+It randomly selects the connection from the pool to provide distribution rather than relying on the queue to distribute.
 * https://issues.couchbase.com/browse/NCBC-3744[NCBC-3744]: 
-Move ConfigPushHandler from ClusterNode to CouchbaseBucket
+Moved `ConfigPushHandler` from `ClusterNode` to `CouchbaseBucket`.
 * https://issues.couchbase.com/browse/NCBC-3748[NCBC-3748]: 
-Track count/s of ClusterMapChangeNotification
+Tracking basic metrics for `ClusterMapChangeNotification`.
 * https://issues.couchbase.com/browse/NCBC-3751[NCBC-3751]: 
-Reduce DEBUG spam in logging
+Every Scope and Collection fetch was being logged in `DEBUG` mode, adding spam to the logs and roughly doubling the log size.
+We have now hanged logging there, and also for when waiting for polling, to `TRACE`.
+for a config.
 
-=== Version 3.5.0 (11 Mar 2024)
+
+=== Version 3.5.0 (11 Mar 2024) DO NOT USE - USE 3.5.1 INSTEAD
 
 Version 3.5.0 is the first release of the 3.5 series.
+A number of regressions means that it is not recommended for use -- release notes are retained here for reference, as they apply to all subsequent releases.
 
 https://packages.couchbase.com/clients/net/3.5/Couchbase-Net-Client-3.5.0.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.5.0[API Reference] |
@@ -203,21 +218,8 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.4.15[Nuget]
 ==== Known Issues
 
 * https://issues.couchbase.com/browse/NCBC-3716[NCBC-3716]:
-If you are using Capella or Server versions 7.6.0, we strongly encourage you to upgrade to SDK v3.5.1+.
-While this version will continue be compatible and supported with server 7.6.0, you may encounter timeout exceptions during rebalances under KV high workload.
-A workaround is to disable fast failover by setting `EnablePushConfig` to false in the `ExperimentalOptions` of the `ClusterOptions`:
-
-+
-[source,csharp]
-----
-var options = new ClusterOptions
-{
-    ConnectionString = "localhost"
-    UserName = "Administrator",
-    Password = "password",
-};
-options.Experiments.EnablePushConfig = false;
-----
+If you are using Capella or Server versions 7.6.0+, we strongly encourage you to upgrade to SDK v3.5.1+.
+While this version will continue be compatible and supported with server 7.6 (and newer instances of Capella, using 7.6), you may encounter timeout exceptions during rebalances under KV high workload.
 
 ==== Fixed Issues
 
@@ -248,21 +250,8 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.4.14[Nuget]
 ==== Known Issues
 
 * https://issues.couchbase.com/browse/NCBC-3716[NCBC-3716]:
-If you are using Capella or Server versions 7.6.0, we strongly encourage you to upgrade to SDK v3.5.1+.
-While this version will continue be compatible and supported with server 7.6.0, you may encounter timeout exceptions during rebalances under KV high workload.
-A workaround is to disable fast failover by setting `EnablePushConfig` to false in the `ExperimentalOptions` of the `ClusterOptions`:
-
-+
-[source,csharp]
-----
-var options = new ClusterOptions
-{
-    ConnectionString = "localhost"
-    UserName = "Administrator",
-    Password = "password",
-};
-options.Experiments.EnablePushConfig = false;
-----
+If you are using Capella or Server versions 7.6.0+, we strongly encourage you to upgrade to SDK v3.5.1+.
+While this version will continue be compatible and supported with server 7.6 (and newer instances of Capella, using 7.6), you may encounter timeout exceptions during rebalances under KV high workload.
 
 ==== Fixed Issues
 
@@ -306,21 +295,8 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.4.13[Nuget]
 ==== Known Issues
 
 * https://issues.couchbase.com/browse/NCBC-3716[NCBC-3716]:
-If you are using Capella or Server versions 7.6.0, we strongly encourage you to upgrade to SDK v3.5.1+.
-While this version will continue be compatible and supported with server 7.6.0, you may encounter timeout exceptions during rebalances under KV high workload.
-A workaround is to disable fast failover by setting `EnablePushConfig` to false in the `ExperimentalOptions` of the `ClusterOptions`:
-
-+
-[source,csharp]
-----
-var options = new ClusterOptions
-{
-    ConnectionString = "localhost"
-    UserName = "Administrator",
-    Password = "password",
-};
-options.Experiments.EnablePushConfig = false;
-----
+If you are using Capella or Server versions 7.6.0+, we strongly encourage you to upgrade to SDK v3.5.1+.
+While this version will continue be compatible and supported with server 7.6 (and newer instances of Capella, using 7.6), you may encounter timeout exceptions during rebalances under KV high workload.
 
 ==== Fixed Issues
 
@@ -384,21 +360,8 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.4.12[Nuget]
 ==== Known Issues
 
 * https://issues.couchbase.com/browse/NCBC-3716[NCBC-3716]:
-If you are using Capella or Server versions 7.6.0, we strongly encourage you to upgrade to SDK v3.5.1+.
-While this version will continue be compatible and supported with server 7.6.0, you may encounter timeout exceptions during rebalances under KV high workload.
-A workaround is to disable fast failover by setting `EnablePushConfig` to false in the `ExperimentalOptions` of the `ClusterOptions`:
-
-+
-[source,csharp]
-----
-var options = new ClusterOptions
-{
-    ConnectionString = "localhost"
-    UserName = "Administrator",
-    Password = "password",
-};
-options.Experiments.EnablePushConfig = false;
-----
+If you are using Capella or Server versions 7.6.0+, we strongly encourage you to upgrade to SDK v3.5.1+.
+While this version will continue be compatible and supported with server 7.6 (and newer instances of Capella, using 7.6), you may encounter timeout exceptions during rebalances under KV high workload.
 
 ==== Fixed Issues
 
@@ -451,21 +414,8 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.4.11[Nuget]
 ==== Known Issues
 
 * https://issues.couchbase.com/browse/NCBC-3716[NCBC-3716]:
-If you are using Capella or Server versions 7.6.0, we strongly encourage you to upgrade to SDK v3.5.1+.
-While this version will continue be compatible and supported with server 7.6.0, you may encounter timeout exceptions during rebalances under KV high workload.
-A workaround is to disable fast failover by setting `EnablePushConfig` to false in the `ExperimentalOptions` of the `ClusterOptions`:
-
-+
-[source,csharp]
-----
-var options = new ClusterOptions
-{
-    ConnectionString = "localhost"
-    UserName = "Administrator",
-    Password = "password",
-};
-options.Experiments.EnablePushConfig = false;
-----
+If you are using Capella or Server versions 7.6.0+, we strongly encourage you to upgrade to SDK v3.5.1+.
+While this version will continue be compatible and supported with server 7.6 (and newer instances of Capella, using 7.6), you may encounter timeout exceptions during rebalances under KV high workload.
 
 ==== Fixed Issues
 
