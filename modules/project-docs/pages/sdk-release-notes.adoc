@@ -22,6 +22,7 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+
 === Version 3.5.2 (3 May 2024)
 
 Version 3.5.2 is the third release of the 3.5 series.
@@ -32,20 +33,34 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.5.2[Nuget]
 
 ==== Fixed Issues
 
-* https://issues.couchbase.com/browse/NCBC-3745[NCBC-3745]: ObjectDisposedException when fetching a config
-* https://issues.couchbase.com/browse/NCBC-3756[NCBC-3756]: Handle empty VBucketMap in server config
-* https://issues.couchbase.com/browse/NCBC-3758[NCBC-3758]: PersistentQueue does not dequeue items in original FIFO order
-* https://issues.couchbase.com/browse/NCBC-3764[NCBC-3764]: GetAnyReplica / TaskHelpers.WhenAnySuccessful can potentially cause deadlocks using .NET Framework
-* https://issues.couchbase.com/browse/NCBC-3769[NCBC-3769]: SDK fails to adapt to new cluster topology if only a port changed
-* https://issues.couchbase.com/browse/NCBC-3772[NCBC-3772]: Cluster config maps are reaching BucketBase.CurrentConfig, affecting scope/collection capabilities
+* https://issues.couchbase.com/browse/NCBC-3745[NCBC-3745]:
+`MultiplexingConnection` will throw a `SocketNotAvailableException` if disposed.
+* https://issues.couchbase.com/browse/NCBC-3756[NCBC-3756]:
+Handle empty `VBucketMap` in server config.
+* https://issues.couchbase.com/browse/NCBC-3758[NCBC-3758]:
+Fixed regression where `PersistentQueue` was not dequeueing items in original FIFO order.
+* https://issues.couchbase.com/browse/NCBC-3764[NCBC-3764]:
+Fixed issue where `GetAnyReplica` / `TaskHelpers.WhenAnySuccessful` could potentially cause deadlocks using the .NET Framework.
+* https://issues.couchbase.com/browse/NCBC-3769[NCBC-3769]:
+SDK will now adapt to new cluster topology if only a port has changed (as in some Alternate Address configurations).
+* https://issues.couchbase.com/browse/NCBC-3772[NCBC-3772]:
+Fixed a regression where configs were being applied to buckets they did not belong to, including cluster-level config.
 
 ==== New Features and Behavioral Changes
 
-* https://issues.couchbase.com/browse/NCBC-1622[NCBC-1622]: Add Snappy Compression Feature to the SDK
-* https://issues.couchbase.com/browse/NCBC-3738[NCBC-3738]: Support for scoped eventing functions
-* https://issues.couchbase.com/browse/NCBC-3746[NCBC-3746]: Apply performance optimizations to ArrayExtensions
-* https://issues.couchbase.com/browse/NCBC-3759[NCBC-3759]: Capture ExceptionDispatchInfo at time the exception is caught
-* https://issues.couchbase.com/browse/NCBC-3770[NCBC-3770]: Reduce the amount of DEBUG logging around Config Push
+* https://issues.couchbase.com/browse/NCBC-1622[NCBC-1622]:
+Snappy Compression -- using the Snappier library -- is now merged into the main SDK.
+* https://issues.couchbase.com/browse/NCBC-3738[NCBC-3738]:
+Support added for scoped eventing functions.
+* https://issues.couchbase.com/browse/NCBC-3746[NCBC-3746]:
+Performance optimizations added to `ArrayExtensions`.
+* https://issues.couchbase.com/browse/NCBC-3759[NCBC-3759]:
+`ExceptionDispatchInfo` was being used to capture and rethrow the `Exception` stack trace at the time the exception was originally caught.
+`ClusterContext` bootstrap is now used to track per-node bootstrap errors, using `ExceptionDispatchInfo` instead of `Exception`. 
+This may result in more accurate stack traces now or in future runtimes.
+* https://issues.couchbase.com/browse/NCBC-3770[NCBC-3770]:
+Reduced the amount of `DEBUG` logging around Config Push -- the additional information is now logged at `TRACE` level.
+
 
 === Version 3.5.1 (16 Apr 2024)
 
