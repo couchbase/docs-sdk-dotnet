@@ -261,6 +261,18 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.4.15[Nuget]
 If you are using Capella or Server versions 7.6.0+, we strongly encourage you to upgrade to SDK v3.5.1+.
 While this version will continue be compatible and supported with server 7.6 (and newer instances of Capella, using 7.6), you may encounter timeout exceptions during rebalances under KV high workload.
 
+==== Breaking Changes 
+* https://issues.couchbase.com/browse/NCBC-3599[NCBC-3599]: 
+The `initial` parameter of Increment and Decrement operations is now unset by default. This means the SDK will throw a `DocumentNotFoundException` upon calling Increment or Decrement with a non-existing key without providing an initial value. 
+
+
+Example:
+
+* `await collection.Binary.IncrementAsync("thisKeyDoesNotExist").ConfigureAwait(false);` -> Now throws `DocumentNotFoundException`
+
+* `await collection.Binary.IncrementAsync("thisKeyDoesNotExist", options => options.Initial(0)).ConfigureAwait(false);` -> Creates the document with counter at 0
+
+
 ==== Fixed Issues
 
 * https://issues.couchbase.com/browse/NCBC-3599[NCBC-3599]: 
