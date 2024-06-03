@@ -10,29 +10,46 @@ include::project-docs:partial$attributes.adoc[]
 
 
 
-Full Text Search or FTS allows you to create, manage, and query full text indexes on JSON documents stored in Couchbase buckets.
-It uses natural language processing for querying documents, provides relevance scoring on the results of your queries, and has fast indexes for querying a wide range of possible text searches.
-Some of the supported query types include simple queries like Match and Term queries; range queries like Date Range and Numeric Range; and compound queries for conjunctions, disjunctions, and/or boolean queries.
+Full Text Search or FTS allows you to create, manage and query full text indexes on JSON documents stored in Couchbase buckets.
+It uses natural language processing for indexing and querying documents, provides relevance scoring on the results of your queries and has fast indexes for querying a wide range of possible text searches.
+
+Some of the supported query-types include simple queries like Match and Term queries, range queries like Date Range and Numeric Range and compound queries for conjunctions, disjunctions and/or boolean queries.
+
+The Full Text Search service also supports vector search from Couchbase Server 7.6 onwards.
+
 The .NET SDK exposes an API for performing FTS queries which abstracts some of the complexity of using the underlying REST API.
 
+== Getting Started
+
+After familiarizing yourself with how to create and query a Search index in the UI you can query it from the SDK. 
+
+There are two APIs for querying search: `cluster.searchQuery()`, and `cluster.search()`.
+Both are also available at the Scope level.
+
+The former API supports FTS queries (`SearchQuery`), while the latter additionally supports the `VectorSearch` added in 7.6.
+Most of this documentation will focus on the former API, as the latter is in @Stability.Volatile status.
+
+We will perform an FTS query here - see the <<vector search>> section for examples of that.
 
 // As of Couchbase Server 6.5, FTS...
 
 == Examples
 
-Search queries are executed at Cluster level (not bucket or collection).
+Search queries are executed at Cluster level.
+As of Couchbase Server 7.6, they can also be executed at the Scope level.
+
 Here is a simple MatchQuery that looks for the text “swanky” using a defined index:
 
 [source,csharp]
 ----
-var result = cluster.SearchQuery(
-    "travel-sample-index-hotel-description",
-    new MatchQuery("swanky"),
-    options => {
-        options.WithLimit(10);
-    }
-);
+// as a cluster-level search
+include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=clusterFtsSearch,indent=0]
+
+// as a scope-level search
+include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=scopedFtsSearch,indent=0]
 ----
+
+
 
 All simple query types are created in the same manner, some have additional properties, which can be seen in common query type descriptions.
 Couchbase FTS's xref:7.1@server:fts:fts-query-types.adoc[range of query types] enable powerful searching using multiple options, to ensure results are just within the range wanted.
@@ -40,27 +57,14 @@ Here is a date range query that looks for dates between 1st January 2021 and 31s
 
 [source,csharp]
 ----
-var result = cluster.SearchQuery(
-    "index-name",
-    new DateRangeQuery()
-        .Start(DateTime.Parse("2021-01-01"), true) // final parameter is if the range is inclusive
-        .End(DateTime.Parse("2021-02-01"), false),
-    options => options.Limit(10)
-);
+include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=scopedDateSearch,indent=0]
 ----
 
 A conjunction query contains multiple child queries; its result documents must satisfy all of the child queries:
 
 [source,csharp]
 ----
-var result = cluster.SearchQuery(
-    "index-name",
-    new ConjunctionQuery(
-        new DateRangeQuery()
-            .Start(DateTime.Parse("2021-01-01"), true)
-            .Start(DateTime.Parse("2021-02-01"), false),
-        new MatchQuery("Swanky")
-);
+include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=scopedConjunctionSearch,indent=0]
 ----
 
 == Working with Results
@@ -74,23 +78,13 @@ such as success total hits and how long the query took to execute in the cluster
 [source,csharp]
 .Iterating hits
 ----
-foreach (var hit in result.Hits)
-{
-    string documentId = hit.Id;
-    double score = hit.Score;
-    ...
-}
+include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=scopedEnumerateHits,indent=0]
 ----
 
 [source,csharp]
 .Iterating facets
 ----
-foreach (var facet in result.Facets)
-{
-    var name = facet.Name;
-    var total = facet.Total;
-    ...
-}
+include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=scopedEnumerateFacets,indent=0]
 ----
 
 
@@ -101,11 +95,60 @@ FTS allows `RequestPlus` queries -- _Read-Your-Own_Writes (RYOW)_ consistency, e
 
 [source,csharp]
 ----
-var result = cluster.SearchQuery(
-    "travel-sample-index-hotel-description",
-    new MatchQuery("swanky"),
-    options => {
-        options.WithConsistency(ScanConsistency.RequestPlus);
-    }
-);
+
+include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=scopedConsistentWithSearch,indent=0]
+----
+
+== Scoped vs Global Indexes
+The FTS APIs exist at both the `Cluster` and `Scope` levels.
+
+This is because FTS supports, as of Couchbase Server 7.6, a new form of "scoped index" in addition to the traditional "global index".
+
+It's important to use the `Cluster.SearchAsync()` for global indexes, and `Scope.SearchAsync()` for scoped indexes.
+(`Cluster.SearchQueryAsync()` is still available for compatibility with earlier versions of the SDK)
+
+== Vector Search
+As of Couchbase Server 7.6, the FTS service supports vector search in additional to traditional full text search queries.
+// todo link to the server docs when available
+
+==== Single vector query
+In this first example we are performing a single vector query:
+[source,csharp]
+----
+include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=scopedVector1,indent=0]
+----
+
+Let's break this down.
+We create a `SearchRequest`, which can contain a traditional FTS query `SearchQuery` and/or the new `VectorSearch`.
+Here we are just using the latter.
+
+The `VectorSearch` allows us to perform one or more `VectorQuery` s.
+
+The `VectorQuery` itself takes the name of the document field that contains embedded vectors ("vector_field" here), plus actual vector query in the form of a `float[]`.
+
+(Note that Couchbase itself is not involved in generating the vectors, and these will come from an external source such as an embeddings API.)
+
+Finally we execute the `SearchRequest` against the FTS index "travel-vector-index", which has previously been setup to vector index the "vector_field" field.
+
+This happens to be a scoped index so we are using `scope.SearchAsync()`.
+If it was a global index we would use `cluster.SearchAsync()` instead - see <<Scoped vs Global Indexes>>.
+
+It returns the same `SearchResult` detailed earlier.
+
+==== Multiple vector queries
+You can run multiple vector queries together:
+
+[source,csharp]
+----
+include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=scopedVector2,indent=0]
+----
+
+How the results are combined (ANDed or ORed) can be controlled with `VectorSearchOptions().WithVectorQueryCombination()`.
+
+==== Combining FTS and vector queries
+You can combine a traditional FTS query with vector queries:
+
+[source,casharp]
+----
+include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=scopedVectorWithFts,indent=0]
 ----

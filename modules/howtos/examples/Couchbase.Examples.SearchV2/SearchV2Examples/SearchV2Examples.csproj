@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+<!-- uncomment this and comment out the ProjectReference to use the NuGet package instead -->
+<!--
+  <PackageReference Include="CouchbaseNetClient" Version="3.5.0" />
+-->
+      <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
+      <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <!-- assume couchbase-net-client is checked out at the same level as docs-sdk-dotnet -->
+      <ProjectReference Include="..\..\..\..\..\..\couchbase-net-client\src\Couchbase\Couchbase.csproj" />
+    </ItemGroup>
+
+</Project>
