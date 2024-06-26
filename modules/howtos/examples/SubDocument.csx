@@ -3,7 +3,7 @@
 //      dotnet script SubDocument.csx
 //
 
-#r "nuget: CouchbaseNetClient, 3.4.8"
+#r "nuget: CouchbaseNetClient, 3.5.0"
 
 using System.Threading.Tasks;
 using Couchbase;
