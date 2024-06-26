@@ -125,8 +125,3 @@ Since xref:project-docs:sdk-release-notes.adoc#version-3-4-10[.NET SDK 3.4.10], 
 
 Install Snappier with the https://github.com/couchbaselabs/Couchbase.Extensions[.NET Couchbase.Extensions] Library,
 // See the https://github.com/brantburnett/Snappier[Snappier GitHub page] for information on installing the external Snappier library, or get it from https://www.nuget.org/packages/Snappier[NuGet].
-
-
-== Additional Information
-
-Learn more about Snappy Compression with Couchbase Server xref:3.4@java-sdk:concept-docs:compression.adoc[here].
