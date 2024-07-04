@@ -22,16 +22,42 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+=== Version 3.6.1 (3 July 2024)
+
+Version 3.6.1 is a hotfix release 
+
+https://packages.couchbase.com/clients/net/3.6/Couchbase-Net-Client-3.6.1.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.6.1[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.6.1[Nuget]
+
 
 === Version 3.6.0 (13 June 2024)
 
-Version 3.6.0 is the first release of the 3.5 series.
+Version 3.6.0 is the first release of the 3.6 series.
+It is a minor version update to note the release of SDK API 3.6 features.
 
-https://packages.couchbase.com/clients/net/3.6/Couchbase-Net-Client-3.5.0.zip[Download] |
+https://packages.couchbase.com/clients/net/3.6/Couchbase-Net-Client-3.6.0.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.6.0[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.6.0[Nuget]
 
+==== Known Issues
+
+* There is an edge case that can cause high CPU usage against Couchbase Server 7.6 and later.  Users are advised to upgrade to 3.6.1.
+
 ==== Fixed Issues
+
+* https://issues.couchbase.com/browse/NCBC-3572[NCBC-3572]: Default CancellationTokens start at option creation instead of when requests are sent
+* https://issues.couchbase.com/browse/NCBC-3760[NCBC-3760]: Passing an X509CertificateFactory breaks Http services (Auth failure)
+* https://issues.couchbase.com/browse/NCBC-3768[NCBC-3768]: Search: Boolean search queries parameter validation, DisjunctionQuery default value sending
+* https://issues.couchbase.com/browse/NCBC-3775[NCBC-3775]: Query: Throw IndexExistsException when appropriate
+* https://issues.couchbase.com/browse/NCBC-3794[NCBC-3794]: Infinite loop in ConfigPushHandler
+
+==== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/NCBC-3788[NCBC-3788]: Support for base64 encoded vector types
+* https://issues.couchbase.com/browse/NCBC-3797[NCBC-3797]: VectorSearch to Committed
+* https://issues.couchbase.com/browse/NCBC-3771[NCBC-3771]: Refactor RetryOrcestrator for K/V operations to be clearer
+* https://issues.couchbase.com/browse/NCBC-3792[NCBC-3792]: Optimize for larger InFlightOperationSet for high latency connections
 
 
 
@@ -45,6 +71,8 @@ Version 3.5.2 is the third release of the 3.5 series.
 https://packages.couchbase.com/clients/net/3.5/Couchbase-Net-Client-3.5.2.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.5.2[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.5.2[Nuget]
+
+NOTE: Due to https://issues.couchbase.com/browse/NCBC-3794[NCBC-3794], it is recommended that all customers using Server 7.6 or later upgrade to SDK 3.6.1 or later immediately.
 
 ==== Fixed Issues
 
