@@ -3,6 +3,7 @@
 :page-topic-type: howto
 :page-aliases: ROOT:managing-connections,howtos:multi-network,ROOT:connecting,ROOT:connection-advanced,ROOT:cluster-helper
 :page-toclevels: 2
+:api-bucket-link: https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.IBucket.html#Couchbase_IBucket_WaitUntilReadyAsync_TimeSpan_Couchbase_Diagnostics_WaitUntilReadyOptions_
 
 include::project-docs:partial$attributes.adoc[]
 
@@ -427,7 +428,7 @@ Or more fully:
 include::example$ClusterExample.csx[tag=waitUntilReady,indent=0]
 ----
 
-If you are working at the _Bucket_ level, then the https://docs.couchbase.com/sdk-api/couchbase-net-client/html/M_Couchbase_IBucket_WaitUntilReadyAsync.htm[Bucket-level `waitUntilReady`] does the same as the Cluster-level version,
+If you are working at the _Bucket_ level, then the {api-bucket-link}[Bucket-level `waitUntilReady`] does the same as the Cluster-level version,
 _plus_ it waits for the K-V (data) sockets to be ready.
 
 [source,csharp]
