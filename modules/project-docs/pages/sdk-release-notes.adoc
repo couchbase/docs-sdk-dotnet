@@ -145,7 +145,14 @@ Microsoft disclosed a CVE affecting their System.Text.Json (STJ) library on the 
 
 * https://github.com/advisories/GHSA-hh2w-p6rv-4g7w[Microsoft CVE on GitHub]
 
-* https://issues.couchbase.com/browse/NCBC-3817[NCBC-3817]: Upgrade System.Text.Json to patched version.
+* https://issues.couchbase.com/browse/NCBC-3817[NCBC-3817]:
+Upgrade `System.Text.Json` to patched version.
+
+This release also backports fixes brought to `ConfigPushHandler` in releases 3.6.0 and 3.6.1:
+
+* https://issues.couchbase.com/browse/NCBC-3811[NCBC-3811]:
+Backports ConfigPushHandler fixes to 3.5 branch
+(See also https://issues.couchbase.com/browse/NCBC-3791[NCBC-3791], https://issues.couchbase.com/browse/NCBC-3794[NCBC-3794]).
 
 
 === Version 3.5.2 (3 May 2024)
@@ -156,7 +163,7 @@ https://packages.couchbase.com/clients/net/3.5/Couchbase-Net-Client-3.5.2.zip[Do
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.5.2[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.5.2[Nuget]
 
-NOTE: Owing to https://issues.couchbase.com/browse/NCBC-3794[NCBC-3794], it is recommended that all customers using Server 7.6 or later upgrade to SDK 3.6.1 or later immediately.
+NOTE: Owing to https://issues.couchbase.com/browse/NCBC-3794[NCBC-3794], it is recommended that all customers using Server 7.6 or later upgrade to SDK 3.5.3, or SDK 3.6.2 or later, immediately.
 
 
 ==== Fixed Issues
