@@ -217,7 +217,7 @@ include::example$QueryIndexManagerExample.csx[tag=defer-indexes,indent=0]
 ----
 
 To delete a query index you can use the `DropIndexAsync()` or `DropPrimaryIndexAsync()` methods. 
-Which one you use depends on the type of query index you want to drop from the database.
+Which one you use depends on the type of query index you want to drop from the cluster.
 
 .Deleting an index
 
