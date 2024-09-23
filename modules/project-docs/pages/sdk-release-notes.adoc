@@ -22,10 +22,62 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+=== Version 3.6.3 (19 September 2024)
+
+Version 3.6.3 is a hotfix release.
+Some NuGet packages were upgraded as a result of high impact security issues, https://jira.issues.couchbase.com/browse/NCBC-3839[NCBC-3839].
+These should not impact any users of CouchbaseNetClient, as they are backward compatible updates.
+However, if you find an incompatibility, you can add a direct reference to the old version of those packages as a dependency in your own project.
+
+https://packages.couchbase.com/clients/net/3.6/Couchbase-Net-Client-3.6.3.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.6.3[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.6.3[Nuget]
+
+
+==== Fixed Issues
+
+* https://jira.issues.couchbase.com/browse/NCBC-3863[NCBC-3863]:
+Performance problems and timeouts fixes during rebalance when the cluster contains non-KV nodes.
+
+* https://jira.issues.couchbase.com/browse/NCBC-3832[NCBC-3832]:
+Query timeout set to exceed 100 seconds is now respected.
+
+* https://jira.issues.couchbase.com/browse/NCBC-3818[NCBC-3818]:
+`QueryErrorContext` `Statement` parameter is now set properly.
+
+https://jira.issues.couchbase.com/browse/NCBC-3842[NCBC-3842]:
+Newtonsoft deserializing UTF8 surrogate pairs fixed for exceptions and buffer overflow.
+
+https://jira.issues.couchbase.com/browse/NCBC-3849[NCBC-3849]:
+Orphaned responses now sent to metrics for untraced operations.
+
+https://jira.issues.couchbase.com/browse/NCBC-3850[NCBC-3850]:
+Timeouts now recorded to metrics in `ClusterNode.ExecuteOp`.
+
+https://jira.issues.couchbase.com/browse/NCBC-3852[NCBC-3852]:
+`TryReadMutationToken` header length check.
+
+https://jira.issues.couchbase.com/browse/NCBC-3854[NCBC-3854]:
+Improvements made for `LightweightStopwatch` unit test.
+
+https://jira.issues.couchbase.com/browse/NCBC-3876[NCBC-3876]:
+`CancellationTokenSource` is not disposed when returned to pool on legacy frameworks.
+
+==== Improvements
+
+* https://jira.issues.couchbase.com/browse/NCBC-3839[NCBC-3839]:
+Updated packages based on BlackDuck scan.
+
+* https://jira.issues.couchbase.com/browse/NCBC-3710[NCBC-3710]:
+Included operation outcome tag in operation metrics.
+
+* https://jira.issues.couchbase.com/browse/NCBC-3837[NCBC-3837]:
+Provide easy configuration to exclude duplicative metrics from `OpenTelemetry`.
+
 
 === Version 3.6.2 (22 July 2024)
 
-Version 3.6.2 is a hotfix releases.
+Version 3.6.2 is a hotfix release.
 Microsoft disclosed a CVE affecting their `System.Text.Json` (STJ) library on the 9th of July, 2024. 
 This release upgrades STJ to the patched version in our SDK.
 
@@ -112,7 +164,7 @@ Removed infinite loop in `ConfigPushHandler`, which was causing high CPU usage.
 ==== New Feature
 
 * https://issues.couchbase.com/browse/NCBC-3788[NCBC-3788]:
-Support addid for base64 encoded vector types.
+Support added for base64 encoded vector types.
 
 ==== Improvements
 
