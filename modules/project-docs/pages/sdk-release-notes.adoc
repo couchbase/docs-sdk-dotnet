@@ -45,22 +45,22 @@ Query timeout set to exceed 100 seconds is now respected.
 * https://jira.issues.couchbase.com/browse/NCBC-3818[NCBC-3818]:
 `QueryErrorContext` `Statement` parameter is now set properly.
 
-https://jira.issues.couchbase.com/browse/NCBC-3842[NCBC-3842]:
+* https://jira.issues.couchbase.com/browse/NCBC-3842[NCBC-3842]:
 Newtonsoft deserializing UTF8 surrogate pairs fixed for exceptions and buffer overflow.
 
-https://jira.issues.couchbase.com/browse/NCBC-3849[NCBC-3849]:
+* https://jira.issues.couchbase.com/browse/NCBC-3849[NCBC-3849]:
 Orphaned responses now sent to metrics for untraced operations.
 
-https://jira.issues.couchbase.com/browse/NCBC-3850[NCBC-3850]:
+* https://jira.issues.couchbase.com/browse/NCBC-3850[NCBC-3850]:
 Timeouts now recorded to metrics in `ClusterNode.ExecuteOp`.
 
-https://jira.issues.couchbase.com/browse/NCBC-3852[NCBC-3852]:
+* https://jira.issues.couchbase.com/browse/NCBC-3852[NCBC-3852]:
 `TryReadMutationToken` header length check.
 
-https://jira.issues.couchbase.com/browse/NCBC-3854[NCBC-3854]:
+* https://jira.issues.couchbase.com/browse/NCBC-3854[NCBC-3854]:
 Improvements made for `LightweightStopwatch` unit test.
 
-https://jira.issues.couchbase.com/browse/NCBC-3876[NCBC-3876]:
+* https://jira.issues.couchbase.com/browse/NCBC-3876[NCBC-3876]:
 `CancellationTokenSource` is not disposed when returned to pool on legacy frameworks.
 
 ==== Improvements
