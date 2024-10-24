@@ -22,6 +22,8 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+
+
 === Version 3.6.3 (19 September 2024)
 
 Version 3.6.3 is a hotfix release.
@@ -87,6 +89,8 @@ https://packages.couchbase.com/clients/net/3.6/Couchbase-Net-Client-3.6.2.zip[Do
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.6.2[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.6.2[Nuget]
 
+NOTE: Owing to issues with `ConfigPushHandler`, it is recommended that all customers using Server 7.6 or later upgrade to SDK 3.6.3 or later.
+
 ==== Fixed Issues
 
 * https://issues.couchbase.com/browse/NCBC-3817[NCBC-3817]: 
@@ -111,6 +115,8 @@ Version 3.6.1 is a hotfix release.
 https://packages.couchbase.com/clients/net/3.6/Couchbase-Net-Client-3.6.1.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.6.1[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.6.1[Nuget]
+
+NOTE: Owing to issues with `ConfigPushHandler`, it is recommended that all customers using Server 7.6 or later upgrade to SDK 3.6.3 or later.
 
 ==== Fixed Issues
 
@@ -140,7 +146,7 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.6.0[Nuget]
 ==== Known Issues
 
 * There is an edge case that can cause high CPU usage against Couchbase Server 7.6 and later.
-Users are advised to upgrade to 3.6.1.
+Users are advised to upgrade to 3.6.3 or later.
 
 ==== Fixed Issues
 
@@ -182,6 +188,18 @@ Updated `VectorSearch`'s InterfaceStability to Committed.
 
 == .NET SDK 3.5 Releases
 
+// 3.5.5 ???????
+//
+// === Version 3.5.5 (11 Odtober 2024)
+//
+// WANTED: Release notes
+
+
+// 3.5.4
+// something along the lines of
+// Version 3.5.4 suffered from a build error, and is replaced with 3.5.5
+// ?
+
 
 === Version 3.5.3 (23 July 2024)
 
@@ -190,6 +208,8 @@ Version 3.5.3 is the fourth release of the 3.5 series.
 https://packages.couchbase.com/clients/net/3.5/Couchbase-Net-Client-3.5.3.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.5.3[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.5.3[Nuget]
+
+NOTE: Owing to issues with `ConfigPushHandler`, it is recommended that all customers using Server 7.6 or later upgrade to SDK 3.5.5, or SDK 3.6.3 or later.
 
 ==== Fixed Issues
 
@@ -215,7 +235,7 @@ https://packages.couchbase.com/clients/net/3.5/Couchbase-Net-Client-3.5.2.zip[Do
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.5.2[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.5.2[Nuget]
 
-NOTE: Owing to https://issues.couchbase.com/browse/NCBC-3794[NCBC-3794], it is recommended that all customers using Server 7.6 or later upgrade to SDK 3.5.3, or SDK 3.6.2 or later, immediately.
+NOTE: Owing to issues with `ConfigPushHandler`, it is recommended that all customers using Server 7.6 or later upgrade to SDK 3.5.5, or SDK 3.6.3 or later.
 
 
 ==== Fixed Issues
@@ -256,6 +276,8 @@ Version 3.5.1 is the second release of the 3.5 series.
 https://packages.couchbase.com/clients/net/3.5/Couchbase-Net-Client-3.5.1.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.5.1[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.5.1[Nuget]
+
+NOTE: Owing to issues with `ConfigPushHandler`, it is recommended that all customers using Server 7.6 or later upgrade to SDK 3.5.5, or SDK 3.6.3 or later.
 
 ==== Fixed Issues
 
