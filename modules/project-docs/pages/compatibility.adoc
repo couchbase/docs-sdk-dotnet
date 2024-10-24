@@ -162,9 +162,9 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 | *✔*
 |===
 
-<1> If you are on SDK versions 3.4.11 - 3.4.15, we strongly encourage you to upgrade to .NET SDK v3.5.1+.
+<1> If you are on SDK versions 3.4.11 - 3.4.15, we strongly encourage you to upgrade to .NET SDK v3.5.5+ or 3.6.3+.
 While these versions will continue be compatible and supported with server 7.6.0, you may encounter timeout exceptions during rebalances under KV high workload.
-3.6.1+ is recommended for Server 7.6.0+ --
+3.6.3+ is recommended for Server 7.6.0+ --
 more information is on the xref:sdk-release-notes.adoc[Release Notes page].
 
 Note the https://www.couchbase.com/support-policy[End of Life dates^] for Couchbase Server and SDK versions.
