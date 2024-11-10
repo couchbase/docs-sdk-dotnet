@@ -22,6 +22,45 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+
+
+
+=== Version 3.6.4 (8 November 2024)
+
+https://packages.couchbase.com/clients/net/3.6/Couchbase-Net-Client-3.6.4.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.6.4[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.6.4[Nuget]
+
+
+==== Fixed Issues
+
+https://couchbasecloud.atlassian.net/browse/NCBC-3840[NCBC-3840]:
+[Rider IDE] `:nq` is not a valid format specifier notice now correctly uses Debugger Display reference.
+
+https://couchbasecloud.atlassian.net/browse/NCBC-3878[NCBC-3878]:
+Randomized seed order of hosts enabled in the Connection string
++
+NOTE: Random seed order must be enabled with `?random_seed_nodes=true` in the connection string.
+This will be the default in a future release.
+
+https://couchbasecloud.atlassian.net/browse/NCBC-3879[NCBC-3879]:
+.NET SDK was setting span attributes directly on the operation's span, rather than on the despatch span.
+Attributes have now been added to the `DispatchSpan` for Query and KV operations,
+but not removed from the operation's span in order not to break user queries that target those specific traces.
++
+*DEPRECATION NOTICE*: In 3.7.0, these attributes should be removed from the operation's span.
+
+https://couchbasecloud.atlassian.net/browse/NCBC-3883[NCBC-3883]:
+Updated `System.Text.Json` dependency, owing to a security vulnerability.
+
+
+==== Improvements
+
+https://couchbasecloud.atlassian.net/browse/NCBC-3851[NCBC-3851]:
+More Contextual labels have been added to metrics, as part of improvements to the observability spec.
+
+
+
 === Version 3.6.3 (19 September 2024)
 
 Version 3.6.3 is a hotfix release.
