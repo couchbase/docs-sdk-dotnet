@@ -1,0 +1,24 @@
+= 3^rd^ Party Integrations
+:description: The Couchbase .NET SDK is often used with unofficial and third party tools and applications to integrate into broader language and platform ecosystems, and across data lakes in heterogeneous environments.
+:page-topic-type: project-doc
+
+[abstract]
+
+{description}
+
+
+include::{version-common}@sdk:shared:partial$integrations.adoc[tag=intro]
+
+
+include::{version-common}@sdk:shared:partial$integrations.adoc[tag=official]
+
+
+
+include::{version-common}@sdk:shared:partial$integrations.adoc[tag=important]
+
+Linq2Couchbase creates a lightweight ORM/ODM for querying Couchbase buckets using LINQ as the lingua-franca between your application and Couchbase Server using Couchbase's {sqlpp} for JSON documents.
+It also provides a write API for performing CRUD operations on JSON documents.
+
+* https://www.nuget.org/packages/Linq2Couchbase
+
+include::{version-common}@sdk:shared:partial$integrations.adoc[tag=other]
