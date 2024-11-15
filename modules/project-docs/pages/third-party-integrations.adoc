@@ -10,7 +10,7 @@
 include::{version-common}@sdk:shared:partial$integrations.adoc[tag=intro]
 
 
-include::{version-common}@sdk:shared:partial$integrations.adoc[tag=official]
+// include::{version-common}@sdk:shared:partial$integrations.adoc[tag=official]
 
 
 
@@ -21,4 +21,4 @@ It also provides a write API for performing CRUD operations on JSON documents.
 
 * https://www.nuget.org/packages/Linq2Couchbase
 
-include::{version-common}@sdk:shared:partial$integrations.adoc[tag=other]
+// include::{version-common}@sdk:shared:partial$integrations.adoc[tag=other]
