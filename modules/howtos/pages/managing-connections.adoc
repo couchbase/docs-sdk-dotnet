@@ -384,13 +384,13 @@ E.....@.@.............+....Z.'yZ..#........
 
 
 
-include::{version-common}@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
+// == DNS SRV Bootstrapping
+// DNS-SRV
 
+include::{version-common}@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv-rev]
 
-== DNS SRV Bootstrapping
-
-DNS SRV bootstrapping is available in the .NET SDK from version 2.1.0.
-In order to make the SDK actually use the SRV records, you just need to pass in the host name from your records (here example.com):
+DNS SRV bootstrapping is enabled by default in the {name-sdk}.
+In order to make the SDK use the SRV records, you need to pass in the hostname from your records (here `example.com`):
 
 [source,csharp]
 ----
