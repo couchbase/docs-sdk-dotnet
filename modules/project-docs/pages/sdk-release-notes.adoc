@@ -23,7 +23,46 @@ All patch releases for each dot minor release should be API compatible, and safe
 any changes to expected behavior are noted in the release notes that follow.
 
 
+=== Version 3.6.5 (17 January 2025)
 
+https://packages.couchbase.com/clients/net/3.6/Couchbase-Net-Client-3.6.5.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.6.5[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.6.5[Nuget]
+
+
+==== Fixed Issues
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3906[NCBC-3906]:
+Missing ConfigureAwait False in AttemptContext causes build error in VS17.12
+
+==== Improvements
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3920[NCBC-3920]:
+Rename Couchbase.Integrated.Transactions to Couchbase.Client.Transactions.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3919[NCBC-3919]:
+TXNN - Final refactor to match initial commit.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3916[NCBC-3916]:
+TXNN-130 - ExtThreadSafety implementation, SDK-side.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3915[NCBC-3915]:
+TXNN - Allow TransactionConfig to configured via ClusterOptions.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3914[NCBC-3914]:
+TXNN - Add extension flags for Integration, Thread Safe, and fix Integration name.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3913[NCBC-3913]:
+TXNN - Refactor Cleaner and surrounding code.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3912[NCBC-3912]:
+Rename parameter to Error CTOR from "err" to "cause".
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3897[NCBC-3897]:
+Add PreferReturns support for LookupIn, for internal use.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3845[NCBC-3845]:
+Add ReadOnlySequence and IBufferWriter support to ITypeSerializer.
 
 === Version 3.6.4 (8 November 2024)
 
