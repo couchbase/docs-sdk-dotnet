@@ -33,36 +33,36 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.6.5[Nuget]
 ==== Fixed Issues
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-3906[NCBC-3906]:
-Missing ConfigureAwait False in AttemptContext causes build error in VS17.12
+A missing `ConfigureAwait False` in `AttemptContext` was causing a build error.
+This has now been fixed.
 
 ==== Improvements
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-3920[NCBC-3920]:
-Rename Couchbase.Integrated.Transactions to Couchbase.Client.Transactions.
+Renamed `Couchbase.Integrated.Transactions` to `Couchbase.Client.Transactions`.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-3919[NCBC-3919]:
-TXNN - Final refactor to match initial commit.
+A final refactor of the transactions integration to match the initial commit for `ExtThreadSafety`, `ExtSdkIntegration`, and others.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-3916[NCBC-3916]:
-TXNN-130 - ExtThreadSafety implementation, SDK-side.
+`ExtThreadSafety` implementation into integrated transactions library.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-3915[NCBC-3915]:
-TXNN - Allow TransactionConfig to configured via ClusterOptions.
-
-* https://couchbasecloud.atlassian.net/browse/NCBC-3914[NCBC-3914]:
-TXNN - Add extension flags for Integration, Thread Safe, and fix Integration name.
+Allow `TransactionConfig` to configured via `ClusterOptions`.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-3913[NCBC-3913]:
 TXNN - Refactor Cleaner and surrounding code.
+Improvements and bug fixes to the `Cleaner` for transactions.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-3912[NCBC-3912]:
-Rename parameter to Error CTOR from "err" to "cause".
+Renamed parameter to Error Constructor from `err` to `cause`.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-3897[NCBC-3897]:
-Add PreferReturns support for LookupIn, for internal use.
+Added `PreferReturns` support for `LookupIn`, for internal use, to improve subdoc performance for transactions.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-3845[NCBC-3845]:
-Add ReadOnlySequence and IBufferWriter support to ITypeSerializer.
+Added `ReadOnlySequence` and `IBufferWriter` support to `ITypeSerializer`.
+
 
 === Version 3.6.4 (8 November 2024)
 
