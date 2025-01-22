@@ -62,7 +62,7 @@ clusterOptions.WithCompressionAlgorithm(myCompressionImplementation);
 ====
 Even when compression is turned `Off` server-side, Couchbase Server will decompress documents in memory, and store them recompressed on disk (using Snappy) xref:7.1@server:learn:buckets-memory-and-storage/compression.adoc#compression-modes[see server compression docs].
 
-It is therefore not recommended to implement a different compression algorithm than Snappy as this may very well cause data corruption.
+It is therefore not recommended to implement a different compression algorithm from Snappy as this may very well cause data corruption.
 ====
 
 == Limits
