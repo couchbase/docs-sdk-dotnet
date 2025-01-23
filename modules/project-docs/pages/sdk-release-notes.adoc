@@ -51,7 +51,6 @@ A final refactor of the transactions integration to match the initial commit for
 Allow `TransactionConfig` to configured via `ClusterOptions`.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-3913[NCBC-3913]:
-TXNN - Refactor Cleaner and surrounding code.
 Improvements and bug fixes to the `Cleaner` for transactions.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-3912[NCBC-3912]:
