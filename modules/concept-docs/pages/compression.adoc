@@ -1,5 +1,6 @@
 = Compression
 :description: In response to increasing volumes of data being sent over the wire, Couchbase Data Platform provides data compression between the SDK and Couchbase Server.
+:page-toclevels: 2
 :page-topic-type: concept
 :page-edition: Enterprise Edition
 :page-aliases:ROOT:compression-intro,compression-intro
@@ -9,28 +10,33 @@ include::project-docs:partial$attributes.adoc[]
 [abstract]
 {description}
 
-[Note]
+[NOTE]
 ====
-From version 3.5.2, the .NET SDK enables compression by default using https://www.nuget.org/packages/Snappier[Snappier], a performance-focused C# port of https://github.com/google/snappy[Snappy]. This was previously opt-in only via installing the corresponding https://www.nuget.org/packages/Couchbase.Extensions.Compression.Snappier/1.0.0-beta.1[Couchbase.Extensions] package.
+From version 3.5.2, the .NET SDK provides compression by using https://www.nuget.org/packages/Snappier[Snappier], a performance-focused C# port of https://github.com/google/snappy[Snappy].
+This was previously opt-in only via installing the corresponding https://www.nuget.org/packages/Couchbase.Extensions.Compression.Snappier/1.0.0-beta.1[Couchbase.Extensions] package.
 ====
 
 == Overview
 
 Documents may already be stored compressed with Snappy on the server.
 New documents may be passed from client applications to the server in compressed form, saving around 40% in bandwidth (depending on the document content and size), and also transmission time.
-These operations take place automatically, after the SDK negotiates the capability with the server, and do not require any changes on the client side.
+Register a Snappy plugin for the SDK to use compression for requests and responses, using the `WithSnappyCompression()` extension method,
+then these operations take place automatically after the SDK negotiates the capability with the server.
 
-For SDKs with Snappy compression enabled, documents will be automatically compressed if compression is not turned `Off` in xref:7.1@server:learn:buckets-memory-and-storage/compression.adoc#compression-modes[Couchbase Server] (see xref:#minimum-size[below]).
-Instructions to disable compression can be found at xref:#threshold[the bottom of the page].
+For SDKs with Snappy compression enabled, documents will be automatically compressed if compression is not turned `Off` in xref:{version-server}@server:learn:buckets-memory-and-storage/compression.adoc#compression-modes[Couchbase Server] (see xref:#minimum-size[below]).
 
-== Usage and customization
-Starting with .NET SDK v3.5.2, Snappier compression is enabled by default in the ClusterOptions.
-You can disable compression or customize certain settings, both via ClusterOptions or Connection String parameters:
 
-[source,dotnet]
+== Usage and Customization
+
+Starting with .NET SDK v3.5.2, Snappier compression is enabled in the `ClusterOptions` using the `WithSnappyCompression()` extension method.
+
+You can disable compression or customize certain settings, both via `ClusterOptions` or Connection String parameters:
+
+[source,csharp]
 ----
 // ConnectionString parameters
-var connectionString = "couchbase://localhost:8091?compression=true&compression_min_size=512&compression_min_ratio=0.82";
+var connectionString = "couchbases://cb.<your-endpoint>.cloud.couchbase.com:18091?compression=true&compression_min_size=512&compression_min_ratio=0.82";
+// for development on local cluster, use: couchbase://localhost:8091
 
 // ClusterOptions parameters
 var clusterOptions = new ClusterOptions
@@ -38,7 +44,7 @@ var clusterOptions = new ClusterOptions
     Compression = true,
     CompressionMinRatio = 0.82f, // Float value between 1 and 0.
     CompressionMinSize = 512 // Integer value represented in bytes.
-};
+}.WithSnappyCompression();
 
 // Connect 
 clusterOptions.WithConnectionString(connectionString);
@@ -49,26 +55,29 @@ var cluster = await Cluster.ConnectAsync(clusterOptions).ConfigureAwait(false);
 
 Please refer to the https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.ClusterOptions.html#Couchbase_ClusterOptions_Compression[API Documentation] for details on `CompressionMinRatio` and `CompressionMinSize`.
 
-== **Advanced**: Bring Your Own Compression
-You can provide the SDK with your own implementation of Snappy compression/decompression by implementing the `ICompressionAlgorithm` interface, and passing it through your ClusterOptions with:
-[source,dotnet]
+=== Advanced: Bring Your Own Compression
+
+You can provide the SDK with your own implementation of Snappy compression/decompression by implementing the `ICompressionAlgorithm` interface, and passing it through your `ClusterOptions` with:
+
+[source,csharp]
 ----
 clusterOptions.WithCompressionAlgorithm(myCompressionImplementation);
 
 // See Couchbase.Compression.Snappier.Internal.SnappierCompression for details on how Snappier implements the interface.
 ----
 
-[Note]
+[CAUTION]
 ====
-Even when compression is turned `Off` server-side, Couchbase Server will decompress documents in memory, and store them recompressed on disk (using Snappy) xref:7.1@server:learn:buckets-memory-and-storage/compression.adoc#compression-modes[see server compression docs].
+Even when compression is turned `Off` server-side, Couchbase Server will decompress documents in memory, and store them recompressed on disk (using Snappy) xref:{version-server}@server:learn:buckets-memory-and-storage/compression.adoc#compression-modes[see server compression docs].
 
-It is therefore not recommended to implement a different compression algorithm than Snappy as this may very well cause data corruption.
+It is therefore not recommended to implement a different compression algorithm from Snappy as this may very well cause data corruption.
 ====
+
 
 == Limits
 
 The document must be below 20MiB in size in both compressed and uncompressed form.
-Compression is only available in the Enterprise Edition of Couchbase Data Platform.
+Compression is available in Couchbase Capella, and in the Enterprise Edition of self-managed Couchbase Server.
 
 [TIP]
 ====
@@ -81,9 +90,10 @@ A compressed doument of just under 20MB, which is greater than 20,971,520 bytes 
 Therefore, where necessary, enforce document size limits in your application on _uncompressed_ documents.
 ====
 
+
 == Operating Modes (Server-side)
 
-The three modes in which compression can be used, "off", "passive" and "active", are configured per bucket in the configuration settings on the cluster.
+The three modes in which compression can be used -- "off", "passive", and "active" -- are configured per bucket in the configuration settings on the cluster.
 
 .Compression Operating Modes
 [#compression-operating-modes]
@@ -123,5 +133,5 @@ https://github.com/brantburnett/Snappier[Snappier] is
 integrated with the https://github.com/couchbaselabs/Couchbase.Extensions[.NET Couchbase.Extensions Library].
 Since xref:project-docs:sdk-release-notes.adoc#version-3-4-10[.NET SDK 3.4.10], the .NET SDK has been able to work with external Snappy libraries as the setting for the Server flag `SnappyEverywhere` is now supported.
 
-Install Snappier with the https://github.com/couchbaselabs/Couchbase.Extensions[.NET Couchbase.Extensions] Library,
+Install Snappier with the https://github.com/couchbaselabs/Couchbase.Extensions[.NET Couchbase.Extensions] Library.
 // See the https://github.com/brantburnett/Snappier[Snappier GitHub page] for information on installing the external Snappier library, or get it from https://www.nuget.org/packages/Snappier[NuGet].
