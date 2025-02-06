@@ -1,4 +1,5 @@
 = Using Couchbase Transactions
+:reftext: Transactions from the .NET SDK
 :description: A practical guide to using Couchbase's distributed ACID transactions, via the .NET SDK.
 :page-topic-type: howto
 :page-aliases: acid-transactions
