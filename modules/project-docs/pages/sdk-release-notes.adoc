@@ -35,6 +35,8 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.6.6[Nuget]
 * https://couchbasecloud.atlassian.net/browse/NCBC-3885[NCBC-3885]:
 System certificate store should continue to be used in default TLS/SSL configuration.
 
+* https://jira.issues.couchbase.com/browse/NCBC-3964[NCBC-3964]: Fixed issue where queries were not evenly distributed amongst Query Nodes.
+
 ==== Improvements
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-3945[NCBC-3945]:
