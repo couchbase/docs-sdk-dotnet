@@ -43,17 +43,6 @@ If the transaction is not retried then it will throw a `{transaction-failed}`.
 include::howtos:example$TransactionsExample.cs[tag=rollback-cause,indent=0]
 ----
 
-The transaction can also be explicitly rolled back:
-
-[source,csharp]
-----
-include::howtos:example$TransactionsExample.cs[tag=rollback,indent=0]
-----
-
-In this case, if `ctx.RollbackAsync()` is reached, then the transaction will be regarded as successfully rolled back and no `{transaction-failed}` will be thrown.
-
-After a transaction is rolled back, it cannot be committed, no further operations are allowed on it, and the SDK will not try to automatically commit it at the end of the code block.
-
 == Transaction Operations
 
 include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tags=query;!integrated-sdk-begin-transaction]

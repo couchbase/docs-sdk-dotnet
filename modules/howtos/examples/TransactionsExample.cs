@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Couchbase.KeyValue;
 using Couchbase.Query;
-using Couchbase.Transactions.Config;
-using Couchbase.Transactions.Error;
+using Couchbase.Client.Transactions;
+using Couchbase.Client.Transactions.Config;
+using Couchbase.Client.Transactions.Error;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
@@ -32,14 +33,12 @@ namespace Couchbase.Transactions.Examples
         static async Task Main(string[] args)
         {
             // #tag::init[]
-            // Initialize the Couchbase cluster
-            var options = new ClusterOptions().WithCredentials("Administrator", "password");
-            var cluster = await Cluster.ConnectAsync("couchbase://your-ip", options).ConfigureAwait(false);
+            
             var bucket = await cluster.BucketAsync("default").ConfigureAwait(false);
             var collection = await bucket.ScopeAsync("inventory").CollectionAsync("airport").ConfigureAwait(false);
 
-            // Create the single Transactions object
-            var transactions = Transactions.Create(cluster, TransactionConfigBuilder.Create());
+            // Use the cluster's Transactions object
+            var transactions = cluster.Transactions;
             // #end::init[]
 
             using var program = new Program(cluster, bucket, collection, transactions);
@@ -48,50 +47,71 @@ namespace Couchbase.Transactions.Examples
             Console.WriteLine("Hello World!");
         }
 
-        void Config()
+        static async void Config()
         {
             // #tag::config[]
-            var transactions = Transactions.Create(_cluster,
-                TransactionConfigBuilder.Create()
-                    .DurabilityLevel(DurabilityLevel.PersistToMajority)
-                    .Build());
+            var transactionsConfig = TransactionsConfigBuilder.Create()
+                .DurabilityLevel(DurabilityLevel.PersistToMajority)
+                .Build();
+            var options = new ClusterOptions()
+            {
+                UserName = "Administrator",
+                Password = "Administrator",
+                TransactionsConfig = transactionsConfig,
+            };
+            var cluster = await Cluster.ConnectAsync("couchbase://your-ip", options).ConfigureAwait(false);
             // #end::config[]
         }
-
-        void ConfigExpired()
+        static async void ConfigExpired()
         {
             // #tag::config-expiration[]
-            Transactions transactions = Transactions.Create(_cluster, TransactionConfigBuilder.Create()
+            var transactionsConfig = TransactionsConfigBuilder.Create()
                 .ExpirationTime(TimeSpan.FromSeconds(120))
-                .Build());
+                .Build();
+            var options = new ClusterOptions()
+            {
+                UserName = "Administrator",
+                Password = "Administrator",
+                TransactionsConfig = transactionsConfig,
+            };
+            var cluster = await Cluster.ConnectAsync("couchbase://your-ip", options).ConfigureAwait(false);
+            // the transactions associated with this cluster will now expire in 120 seconds.
+            var transactions = cluster.Transactions;
             // #end::config-expiration[]
         }
 
-        void ConfigCleanup(byte[] encoded)
+        static async void ConfigCleanup(byte[] encoded)
         {
             // #tag::config-cleanup[]
-            Transactions transactions = Transactions.Create(_cluster, TransactionConfigBuilder.Create()
+            var cleanupConfig = TransactionCleanupConfigBuilder.Create()
                 .CleanupClientAttempts(false)
                 .CleanupLostAttempts(false)
                 .CleanupWindow(TimeSpan.FromSeconds(120))
-                .Build());
+                .Build();
+            var transactionsConfig =
+                TransactionsConfigBuilder.Create()
+                    .CleanupConfig(cleanupConfig).Build();
+            var options = new ClusterOptions()
+            {
+                UserName = "Administrator",
+                Password = "Administrator",
+                TransactionsConfig = transactionsConfig,
+            };
+            var cluster = await Cluster.ConnectAsync("couchbase://your-ip", options).ConfigureAwait(false);
             // #end::config-cleanup[]
         }
-
         async Task CreateSimpleAsync()
         {
-            var doc1Content = new { };
-            var doc2Content = new { };
-
             // tag::create-simple[]
+            var doc1Content = new {content = "some doc1 content" };
+            var doc2Content = new {content = "some doc2 content" };
+
             await _transactions.RunAsync(async (ctx) =>
             {
                 await ctx.InsertAsync(_collection, "doc-1", doc1Content).ConfigureAwait(false);
 
                 var doc2 = await ctx.GetAsync(_collection, "doc-2").ConfigureAwait(false);
                 await ctx.ReplaceAsync(doc2, doc2Content).ConfigureAwait(false);
-
-                await ctx.CommitAsync().ConfigureAwait(false);
             }).ConfigureAwait(false);
             // end::create-simple[]
         }
@@ -109,9 +129,7 @@ namespace Couchbase.Transactions.Examples
 
                     // ... Your transaction logic here ...
 
-                    // This call is optional - if you leave it off, the transaction
-                    // will be committed anyway.
-                    await ctx.CommitAsync().ConfigureAwait(false);
+                   // the transaction is automatically committed when complete. 
                 }).ConfigureAwait(false);
             }
             catch (TransactionCommitAmbiguousException e)
@@ -154,9 +172,6 @@ namespace Couchbase.Transactions.Examples
                     var docC = await ctx.GetAsync(_collection, "doc-c").ConfigureAwait(false);
                     await ctx.RemoveAsync(docC).ConfigureAwait(false);
 
-                    // This call is optional - if you leave it off, the transaction
-                    // will be committed anyway.
-                    await ctx.CommitAsync().ConfigureAwait(false);
                 }).ConfigureAwait(false);
             }
             catch (TransactionCommitAmbiguousException e)
@@ -334,33 +349,33 @@ namespace Couchbase.Transactions.Examples
 
         private async Task Rollback()
         {
-            const int costOfItem = 10;
             // #tag::rollback[]
+            const int costOfItem = 10;
             await _transactions.RunAsync(async (ctx) => {
                 var customer = await ctx.GetAsync(_collection, "customer-name").ConfigureAwait(false);
 
                 if (customer.ContentAs<dynamic>().balance < costOfItem)
                 {
-                    await ctx.RollbackAsync().ConfigureAwait(false);
+                    // Throw anything here and we rollback automatically
+                    throw new InvalidOperationException("balance is less than customer-name");
                 }
                 // else continue transaction
+                //...
             }).ConfigureAwait(false);
             // #end::rollback[]
         }
-
+        // tag::rollback-cause[]
         public class BalanceInsufficientException : Exception { }
-
+        const int CostOfItem = 10;
         private async Task RollbackCause()
         {
-            const int costOfItem = 10;
-            // tag::rollback-cause[]
             try
             {
                 await _transactions.RunAsync(async ctx =>
                 {
                     var customer = await ctx.GetAsync(_collection, "customer-name").ConfigureAwait(false);
 
-                    if (customer.ContentAs<dynamic>().balance < costOfItem) throw new BalanceInsufficientException();
+                    if (customer.ContentAs<dynamic>()?.balance < CostOfItem) throw new BalanceInsufficientException();
                     // else continue transaction
                 }).ConfigureAwait(false);
             }
@@ -376,8 +391,9 @@ namespace Couchbase.Transactions.Examples
                 Console.Error.WriteLine("Transaction did not reach commit point");
             }
 
-            // end::rollback-cause[]
         }
+        // end::rollback-cause[]
+
 
         async Task CompleteErrorHandling()
         {
@@ -464,9 +480,16 @@ namespace Couchbase.Transactions.Examples
             var loggerFactory = provider.GetService<ILoggerFactory>();
             var logger = loggerFactory.CreateLogger<Program>();
 
-            //create the transactions object and add the ILoggerFactory
-            var transactions = Transactions.Create(_cluster,
-                TransactionConfigBuilder.Create().LoggerFactory(loggerFactory));
+            // create the cluster, passing in the ILoggerFactory for the transactions to use
+            var transactionsConfig =
+                TransactionsConfigBuilder.Create().LoggerFactory(loggerFactory).Build();
+        
+            var options = new ClusterOptions()
+            {
+                TransactionsConfig = transactionsConfig,
+            };
+            var cluster = await Cluster.ConnectAsync("couchbase://your-ip", options).ConfigureAwait(false);
+            var transactions = cluster.Transactions;
             try
             {
                 var result = await transactions.RunAsync(async ctx => {
@@ -477,7 +500,7 @@ namespace Couchbase.Transactions.Examples
             {
                 // The transaction may or may not have reached commit point
                 logger.LogInformation("Transaction returned TransactionCommitAmbiguous and" +
-                            " may have succeeded, logs:");
+                                      " may have succeeded, logs:");
                 Console.Error.WriteLine(err);
             }
             catch (TransactionFailedException err)
@@ -486,14 +509,14 @@ namespace Couchbase.Transactions.Examples
                 logger.LogInformation("Transaction failed with TransactionFailed, logs:");
                 Console.Error.WriteLine(err);
             }
-            // #end::full-logging[]
-        }
+        } 
+        // #end::full-logging[]
 
         async Task QueryExamples()
         {
             // this isn't meant to run, merely to compile correctly.
             ICluster cluster = null;
-            var transactions = Transactions.Create(cluster);
+            var transactions = cluster.Transactions;
             {
                 // tag::queryExamplesSelect[]
                 var st = "SELECT * FROM `travel-sample`.inventory.hotel WHERE country = $1";
@@ -513,7 +536,7 @@ namespace Couchbase.Transactions.Examples
                 // tag::queryExamplesSelectScope[]
                 IBucket travelSample = await cluster.BucketAsync("travel-sample");
                 IScope inventory = travelSample.Scope("inventory");
-
+                
                 var transactionResult = await transactions.RunAsync(async ctx =>
                 {
                     var st = "SELECT * FROM `travel-sample`.inventory.hotel WHERE country = $1";
@@ -668,9 +691,25 @@ namespace Couchbase.Transactions.Examples
             {
                 // tag::custom-metadata[]
                 // Replace with your own metadata collection.
-                ICouchbaseCollection metadataCollection = null;
-                Transactions transactionsWithCustomMetadataCollection = Transactions.Create(cluster,
-                        TransactionConfigBuilder.Create().MetadataCollection(metadataCollection));
+
+                // define a Keyspace to use for transaction metadata
+                var metadataCollection = new Keyspace("bucket", "scope", "collection");
+                
+                // now configure the cluster to use it in transactions.
+                var transactionsConfig = TransactionsConfigBuilder.Create()
+                    .MetadataCollection(metadataCollection)
+                    .Build();
+                var options = new ClusterOptions()
+                {
+                    UserName = "Administrator",
+                    Password = "Administrator",
+                    TransactionsConfig = transactionsConfig,
+                };
+                var cluster = await Cluster.ConnectAsync("couchbase://your-ip", options).ConfigureAwait(false);
+                
+                // now all transactions using the Transactions in this cluster will use the
+                // specified keyspace for the metadata.
+                var transactionsWithCustomMetadataCollection = cluster.Transactions;
                 // end::custom-metadata[]
             }
         }

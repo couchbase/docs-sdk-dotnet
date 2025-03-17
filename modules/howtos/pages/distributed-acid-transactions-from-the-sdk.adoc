@@ -44,55 +44,10 @@ Refer to the xref:{version-server}@server:learn:security/roles.adoc[Roles] page 
 
 include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=requirements]
 
-// TODO: Remove this once the SDK uses integrated transactions, instead of the library.
-=== Transactions Library
-
-Couchbase transactions require no additional components or services to be configured.
-Simply add the transactions library into your project.
-Version `1.1.0` was released October 29th, 2021. +
-See the xref:project-docs:distributed-transactions-dotnet-release-notes.adoc[Release Notes] for the latest version.
-
-.Installation
-[{tabs}]
-====
-NuGet::
-+
---
-With NuGet this can be accomplished by using the NuGet Package Manager in your IDE:
-
-----
-PM > Install-Package Couchbase.Transactions -Version 1.1.0
-----
---
-
-CLI::
-+
---
-You can also install the library with the dotnet CLI.
-
-[source,console]
-----
-$ dotnet add package Couchbase.Transactions --version 1.1.0
-----
---
-
-.csproj file::
-+
---
-If you're using a .csproj file, add this `PackageReference`:
-
-[source,xml]
-----
-<PackageReference Include="Couchbase.Transactions" Version="1.1.0" />
-----
---
-====
-// End TODO
 
 == Creating a Transaction
 
-// TODO: Remove this once the SDK uses integrated transactions, instead of the library.
-The starting point is the `Transactions` object.
+The starting point is the `Transactions` object, which is a property of the `Cluster`.
 It is very important that an application ensures that only one of these is created per cluster, as it performs automated background clean-up processes that should not be duplicated.
 In a dependency injection context, this instance should be injected as a singleton.
 
@@ -118,6 +73,9 @@ The asynchronous API allows you to use the thread pool, which can help you scale
 However, operations inside an individual transaction should be kept in-order and executed using `await` immediately.
 Do not use fire-and-forget tasks under any circumstances.
 ====
+
+// TODO: need an example of some async transaction things (like multiple get/replace 
+//   operations) to show what we mean by the above.
 
 include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=creating-error]
 
