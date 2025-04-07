@@ -30,14 +30,14 @@ https://docs.couchbase.com/sdk-api/couchbase-net-client-3.7.0[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.7.0[Nuget]
 
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-3932[NCBC-3932]:
 Prevented maximum buffer size exceeded when fetching large datasets with Query.
 * https://couchbasecloud.atlassian.net/browse/NCBC-3978[NCBC-3978]:
 Resolved Query Error Deserialization with `Custom System.Text.Json` Options.
 
-=== Improvements
+==== Improvements
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-3975[NCBC-3975]:
 Clarified error message for server version where `RangeScan` is unsupported.
@@ -50,7 +50,7 @@ Upgraded `Snappier` compression library to version `1.2.0`.
 * https://couchbasecloud.atlassian.net/browse/NCBC-3945[NCBC-3945]:
 Enabled Value-Based Equality for `ScopeSpec` and `CollectionSpec`.
 
-=== New Features
+==== New Features
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-3902[NCBC-3902]:
 Introduced `TryLookupIn` for graceful handling of `NOT_FOUND`.
