@@ -16,6 +16,46 @@ The full installation instructions that were previously on this page can now be 
 
 
 [#latest-release]
+== .NET SDK 3.7 Releases
+
+We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
+All patch releases for each dot minor release should be API compatible, and safe to upgrade;
+any changes to expected behavior are noted in the release notes that follow.
+
+
+=== Version 3.7.0 (7 April 2025)
+
+https://packages.couchbase.com/clients/net/3.6/Couchbase-Net-Client-3.7.0.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.7.0[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.7.0[Nuget]
+
+
+=== Fixed Issues
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3932[NCBC-3932]:
+Prevented maximum buffer size exceeded when fetching large datasets with Query
+* https://couchbasecloud.atlassian.net/browse/NCBC-3978[NCBC-3978]:
+Resolved Query Error Deserialization with Custom System.Text.Json Options
+
+=== Improvements
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3975[NCBC-3975]:
+Clarified error message for server version where RangeScan is unsupported
+* https://couchbasecloud.atlassian.net/browse/NCBC-3899[NCBC-3899]:
+Improved RetryHandler signaling in ChannelConnectionPool
+* https://couchbasecloud.atlassian.net/browse/NCBC-3976[NCBC-3976]:
+Adjusted default values for RangeScan batch configuration
+* https://couchbasecloud.atlassian.net/browse/NCBC-3946[NCBC-3946]:
+Upgraded Snappier compression library to version 1.2.0
+* https://couchbasecloud.atlassian.net/browse/NCBC-3945[NCBC-3945]:
+Enabled Value-Based Equality for ScopeSpec and CollectionSpec
+
+=== New Features
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3902[NCBC-3902]:
+Introduced `TryLookupIn` for graceful handling of NOT_FOUND
+
+
 == .NET SDK 3.6 Releases
 
 We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
