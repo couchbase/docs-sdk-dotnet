@@ -83,7 +83,7 @@ The {name-sdk} is tested and supported on the following OSs and platforms:
 === Mac OS X
 
 The current and previous two releases of OS X.
-At time of writing (July 2024): 14 (Sonoma), 13 (Ventura), and 12 (Monterey).
+At time of writing (April 2025): 15 (Sequoia), 14 (Sonoma), and 13 (Ventura).
 M1 ARM  architecture is fully supported in the Scala SDK.
 
 [discrete]
