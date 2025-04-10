@@ -769,32 +769,5 @@ A `wan-development` configuration profile can be used to modify client settings 
 This profile changes the default timeouts.
 
 
-.Profile Settings
-[cols="1,1"]
-|===
-| Setting | Value
-
-| `KvConnectTimeout`
-| 10s
-
-| `KvTimeout`
-| 2.5s
-
-| `KvDurabilityTimeout`
-| 10s
-
-| `ViewTimeout`
-| 75s
-
-| `QueryTimeout`
-| 75s
-
-| `AnalyticsTimeout`
-| 75s
-
-| `SearchTimeout`
-| 75s
-
-| `ManagementTimeout`
-| 75s
-|===
+// table - WAN profile timeouts
+include::7.6@sdk:shared:partial$client-settings-wan-profile.adoc[tag=profile-values]
