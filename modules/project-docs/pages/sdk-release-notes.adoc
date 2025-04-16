@@ -4,4 +4,4 @@
 :page-toclevels: 2
 :page-partial:
 
-include::3.6@dotnet-sdk:project-docs:page$sdk-release-notes.adoc[tag=all]
+include::3.7@dotnet-sdk:project-docs:page$sdk-release-notes.adoc[tag=all]
