@@ -3355,4 +3355,7 @@ Numerous _Alpha_ and _Beta_ releases were made in the run-up to the 3.0 release,
 == Older Releases
 
 Although https://www.couchbase.com/support-policy/enterprise-software[no longer supported], documentation for older releases continues to be available in our https://docs-archive.couchbase.com/home/index.html[docs archive].
+
+Distributed ACID Transactions, now incorporated within the .NET SDK, was previously available as a separate library.
+Release notes for the legacy transactions library can be found in the https://docs-archive.couchbase.com/dotnet-sdk/3.3/project-docs/distributed-transactions-dotnet-release-notes.html[docs archive].
 // end::all[]
