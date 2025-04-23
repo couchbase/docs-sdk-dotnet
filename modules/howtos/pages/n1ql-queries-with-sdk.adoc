@@ -125,6 +125,7 @@ The query service provides an array of options to customize your query. The foll
 | `ScanCap(int)` | Specifies a maximum cap on the query scan size.
 | `ScanConsistency(QueryScanConsistency)` | Sets a different scan consistency for this query (NotBounded/RequestPlus). See "Scan Consistency" section below for more details.
 | `Serializer` | Allows setting a different serializer (`ITypeSerializer`) for the deserialization of the rows.
+| `StreamResults(bool)` | If using .NET < 5.0, set this to `true` to stream large (>2Gb) results
 |====
 
 === Scan Consistency
@@ -185,6 +186,11 @@ Please see the xref:transcoders-nonjson.adoc[documentation on transcoding and se
 By default the .NET SDK streams the result set from the server, where the client starts a persistent connection with the server and only read the header until the Rows are enumerated; then, each row or JSON object is de-serialized one at a time.
 
 This decreases pressure on CLR Garbage Collection and helps to prevent an `OutOfMemoryException` being thrown.
+
+NOTE: In .NET < 5.0, you will need to set `QueryOptions.StreamResults(true)`, which allows
+for streaming of results > 2Gb. If you do this, you must also be sure to call
+`Dispose()` on the QueryResult object to prevent leaking HTTP connections. In later versions
+of .NET, this is not necessary and the option isn't necessary.
 
 
 == Querying at Scope Level
