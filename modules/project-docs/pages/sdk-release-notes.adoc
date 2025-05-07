@@ -22,6 +22,30 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+=== Version 3.7.1 (7 May 2025)
+
+https://packages.couchbase.com/clients/net/3.7/Couchbase-Net-Client-3.7.1.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.7.1[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.7.1[Nuget]
+
+==== Fixed Issues
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4002[NCBC-4002]:
+  Fix an issue specific to .NET Framework when streaming HTTP results larger than 2GB, causing an OOM error (`Cannot write more bytes to the buffer than the configured maximum buffer size`).
+
+==== Improvements
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3992[NCBC-3992]:
+  `KvIgnoreRemoteCertificateNameMismatch = true` no longer allows other `RemoteCertificateChainErrors`.
+* https://couchbasecloud.atlassian.net/browse/NCBC-4006[NCBC-4006]:
+  Improvements on error handling in the Transactions API.
+* https://couchbasecloud.atlassian.net/browse/NCBC-4010[NCBC-4010]:
+  More improvements on error handling in the Transactions API.
+
+==== New Features
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4005[NCBC-4005]:
+  Implement ExtParallelUnstaging in the integrated Transactions API.
 
 === Version 3.7.0 (7 April 2025)
 
