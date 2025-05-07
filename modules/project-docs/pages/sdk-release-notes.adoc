@@ -31,21 +31,20 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.7.1[Nuget]
 ==== Fixed Issues
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4002[NCBC-4002]:
-  Fix an issue specific to .NET Framework when streaming HTTP results larger than 2GB, causing an OOM error (`Cannot write more bytes to the buffer than the configured maximum buffer size`).
+  Fixed an issue specific to .NET Framework when streaming HTTP results larger than 2GB, causing an OOM error (`Cannot write more bytes to the buffer than the configured maximum buffer size`).
 
 ==== Improvements
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-3992[NCBC-3992]:
-  `KvIgnoreRemoteCertificateNameMismatch = true` no longer allows other `RemoteCertificateChainErrors`.
-* https://couchbasecloud.atlassian.net/browse/NCBC-4006[NCBC-4006]:
+  `KvIgnoreRemoteCertificateNameMismatch = true` was allowing `RemoteCertificateChainErrors`.
+  Further validation has been added, and this no longer occurs.
+* https://couchbasecloud.atlassian.net/browse/NCBC-4006[NCBC-4006], https://couchbasecloud.atlassian.net/browse/NCBC-4010[NCBC-4010]:
   Improvements on error handling in the Transactions API.
-* https://couchbasecloud.atlassian.net/browse/NCBC-4010[NCBC-4010]:
-  More improvements on error handling in the Transactions API.
 
 ==== New Features
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4005[NCBC-4005]:
-  Implement ExtParallelUnstaging in the integrated Transactions API.
+  Implemented `ExtParallelUnstaging` in the integrated Transactions API.
 
 === Version 3.7.0 (7 April 2025)
 
