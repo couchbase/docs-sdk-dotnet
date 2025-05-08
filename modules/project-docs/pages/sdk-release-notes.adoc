@@ -36,7 +36,7 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.7.1[Nuget]
 ==== Improvements
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-3992[NCBC-3992]:
-  `KvIgnoreRemoteCertificateNameMismatch = true` was allowing `RemoteCertificateChainErrors`.
+  `KvIgnoreRemoteCertificateNameMismatch = true` was clearing other `RemoteCertificateChainErrors`.
   Further validation has been added, and this no longer occurs.
 * https://couchbasecloud.atlassian.net/browse/NCBC-4006[NCBC-4006], https://couchbasecloud.atlassian.net/browse/NCBC-4010[NCBC-4010]:
   Improvements on error handling in the Transactions API.
