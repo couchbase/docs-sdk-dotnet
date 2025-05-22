@@ -227,7 +227,8 @@ you need to set `ClusterOptions.ForceIpAsTargetHost` to `false` for the above to
 === Couchbase Capella
 
 The .NET SDK bundles Capella’s standard root certificate by default.
-This means you don’t need any additional configuration to enable TLS -- simply use `couchbases://` in your connection string.
+This means you don’t need any additional configuration to enable TLS -- simply use `couchbases://` in your connection string
+(but see the *IMPORTANT* notice, above, if you are running SDK 3.7.1 or earlier).
 
 NOTE: Capella's root certificate is *not* signed by a well known CA (Certificate Authority).
 However, as the certificate is bundled with the SDK when using .NET 6.0 or later, it is trusted by default.
