@@ -22,6 +22,10 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+
+// NB for 3.7.2, uncomment the comment in the 3.7.1 improvement.
+
+
 === Version 3.7.1 (7 May 2025)
 
 https://packages.couchbase.com/clients/net/3.7/Couchbase-Net-Client-3.7.1.zip[Download] |
@@ -38,6 +42,9 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.7.1[Nuget]
 * https://couchbasecloud.atlassian.net/browse/NCBC-3992[NCBC-3992]:
   `KvIgnoreRemoteCertificateNameMismatch = true` was clearing other `RemoteCertificateChainErrors`.
   Further validation has been added, and this no longer occurs.
++  
+IMPORTANT: For use with SSL and certificates which contain the hostname (versus an IP address), with SDK 3.7.1, set `ForceIpAsTargetHost = false` as a `ClusterOption`.
+// (This is the default setting from release 3.7.2)
 * https://couchbasecloud.atlassian.net/browse/NCBC-4006[NCBC-4006], https://couchbasecloud.atlassian.net/browse/NCBC-4010[NCBC-4010]:
   Improvements on error handling in the Transactions API.
 
