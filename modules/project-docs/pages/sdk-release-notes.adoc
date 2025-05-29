@@ -23,7 +23,6 @@ All patch releases for each dot minor release should be API compatible, and safe
 any changes to expected behavior are noted in the release notes that follow.
 
 
-// NB for 3.7.2, uncomment the comment in the 3.7.1 improvement.
 
 === Version 3.7.2
 
@@ -35,27 +34,29 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.7.2[Nuget]
 ==== Fixed Issues
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4027[NCBC-4027]:
-  `ForceIpAsTargetHost` is now `false` by default.
+`ForceIpAsTargetHost` is now `false` by default.
+This is in line with most production needs, and will prevent hostname verification failing (since TLS certificates are tied to the hostname).  
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-3715[NCBC-3715]:
-  Stellar: Subdoc Mutation Array now handles `removeBrackets` bool properly.
+Stellar: Subdoc Mutation Array now handles `removeBrackets` bool properly.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4017[NCBC-4017]:
-  `ReplaceAsync` CAS field is now properly set on the operation.
+`ReplaceAsync` CAS field is now properly set on the operation.
 
 ==== Improvements
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4026[NCBC-4026]:
-  Upgraded `Grpc.Net.Client` and other related Grpc dependencies due to https://nvd.nist.gov/vuln/detail/CVE-2023-32731[CVE-2023-32731] (https://osv.dev/vulnerability/GHSA-cfgp-2977-2fmm[GHSA-cfgp-2977-2fmm])
+Upgraded `Grpc.Net.Client` and other related `Grpc` dependencies,
+owing to https://nvd.nist.gov/vuln/detail/CVE-2023-32731[CVE-2023-32731] (https://osv.dev/vulnerability/GHSA-cfgp-2977-2fmm[GHSA-cfgp-2977-2fmm])
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4008[NCBC-4008]:
-  Stellar: Some new `BucketSettings` fields have been added to the request.
+Stellar: Some new `BucketSettings` fields have been added to the request.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4016[NCBC-4016]:
-  Stellar: Passing `null` content for `Insert`, `Replace` and `Upsert` now throws `InvalidArgumentException`.
+Stellar: Passing `null` content for `Insert`, `Replace`, or `Upsert` now throws `InvalidArgumentException`.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4025[NCBC-4025]:
-  `Append` and `Prepend` now write the CAS field to the operation.
+`Append` and `Prepend` now write the CAS field to the operation.
 
 
 === Version 3.7.1 (7 May 2025)
@@ -75,7 +76,9 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.7.1[Nuget]
   `KvIgnoreRemoteCertificateNameMismatch = true` was clearing other `RemoteCertificateChainErrors`.
   Further validation has been added, and this no longer occurs.
 +  
-IMPORTANT: For use with SSL and certificates which contain the hostname (versus an IP address), with SDK 3.7.1, set `ForceIpAsTargetHost = false` as a `ClusterOption`.
+IMPORTANT: For use with SSL and certificates which contain the hostname (versus an IP address), with SDK 3.7.1, set `ForceIpAsTargetHost = false` as a `ClusterOption`
+(this is the default setting from release 3.7.2).
+
 * https://couchbasecloud.atlassian.net/browse/NCBC-4006[NCBC-4006], https://couchbasecloud.atlassian.net/browse/NCBC-4010[NCBC-4010]:
   Improvements on error handling in the Transactions API.
 
