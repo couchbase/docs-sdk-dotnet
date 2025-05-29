@@ -38,7 +38,7 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.7.2[Nuget]
 This is in line with most production needs, and will prevent hostname verification failing (since TLS certificates are tied to the hostname).  
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-3715[NCBC-3715]:
-Stellar: Subdoc Mutation Array now handles `removeBrackets` bool properly.
+For Cloud Native Gateway [CNG]: Subdoc Mutation Array now handles `removeBrackets` bool properly.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4017[NCBC-4017]:
 `ReplaceAsync` CAS field is now properly set on the operation.
@@ -50,10 +50,10 @@ Upgraded `Grpc.Net.Client` and other related `Grpc` dependencies,
 owing to https://nvd.nist.gov/vuln/detail/CVE-2023-32731[CVE-2023-32731] (https://osv.dev/vulnerability/GHSA-cfgp-2977-2fmm[GHSA-cfgp-2977-2fmm])
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4008[NCBC-4008]:
-Stellar: Some new `BucketSettings` fields have been added to the request.
+CNG: Some new `BucketSettings` fields have been added to the request.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4016[NCBC-4016]:
-Stellar: Passing `null` content for `Insert`, `Replace`, or `Upsert` now throws `InvalidArgumentException`.
+CNG: Passing `null` content for `Insert`, `Replace`, or `Upsert` now throws `InvalidArgumentException`.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4025[NCBC-4025]:
 `Append` and `Prepend` now write the CAS field to the operation.
