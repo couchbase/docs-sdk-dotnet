@@ -6,6 +6,7 @@ using Couchbase.Search.Queries.Compound;
 using Couchbase.Search.Queries.Range;
 using Couchbase.Search.Queries.Simple;
 using Couchbase.Search.Queries.Vector;
+using Couchbase.Query;
 using Serilog;
 using Serilog.Extensions.Logging;
 
@@ -116,13 +117,11 @@ async Task ScopedConjunctionSearch(IScope scope)
 async Task ScopedConsistentWithSearch(IScope scope)
 {
     // tag::scopedConsistentWithSearch[]
-    var searchResult = await scope.SearchAsync("index-hotel-description",
-        SearchRequest.Create(
-            new MatchQuery("swanky")
-        ), new SearchOptions()
-            .Limit(10)
-            .ScanConsistency(SearchScanConsistency.RequestPlus)
-        );
+    var mutationResult =  await collection.UpsertAsync("key",new {description = "swanky"});
+    var mutationState = MutationState.From(mutationResult);
+
+    var searchResult = cluster.SearchQueryAsync("travel-sample-index",new QueryStringQuery("swanky"),
+                new SearchOptions().ConsistentWith(mutationState));
     // end::scopedConsistentWithSearch[]
     foreach (var row in searchResult)
     {
