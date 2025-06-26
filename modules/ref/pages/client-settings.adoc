@@ -307,7 +307,7 @@ NOTE: This setting only propagates to the OS on Linux when the epoll transport i
 On all other platforms, the OS-configured time is used (and you need to tune it there if you want to override the default interval).
 
 Name: *Key/Value Endpoints per Node*::
-Cluster Option: https://docs.couchbase.com/sdk-api/couchbase-net-client/html/P_Couchbase_ClusterOptions_NumKvConnections.htm[`NumKvConnections(int)`]
+Cluster Option: https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.ClusterOptions.html#Couchbase_ClusterOptions_NumKvConnections[`NumKvConnections(int)`]
 +
 Default:  `2`
 +
@@ -320,6 +320,14 @@ This might be especially helpful if you need to push large documents through it.
 // The recommendation is keeping it at 1 unless there is other evidence.
 +
 NOTE: xref:concept-docs:durability-replication-failure-considerations.adoc#synchronous-writes[Durable Write] operations with Couchbase Server 6.5 and above require up to 16 kvEndpoints per node, for most efficient operation, unless the environment dictates something a little lower.
+
+Name: *Max Key/Value Endpoints per Node*::
+Cluster Option: https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.ClusterOptions.html#Couchbase_ClusterOptions_MaxKvConnections[`MaxKvConnections(int)`]
++
+Default: `5`
++
+
+The maximum number of KV connections per Node. It is recommended to keep it relatively low and only increase it if profiling clearly shows a bottleneck, as a higher maxmimum may put more strain on the server and harm performance.
 
 Name: *Max HTTP Endpoints per Service per Node*::
 Cluster Option: `MaxHttpConnections(int)`
