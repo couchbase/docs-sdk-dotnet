@@ -61,6 +61,11 @@ or the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#instal
 include::partial$supported.adoc[]
 See the xref:project-docs:compatibility.adoc#dotnet-compatibility[Compatibility] section for more details.
 
+NOTE: Capella's root certificate is *not* signed by a well known CA (Certificate Authority).
+However, as the certificate is bundled with the SDK when using .NET 6.0 or later, it is trusted by default.
+.NET Framework clients will have to add it to the Windows certificate store.
+
+
 === Quick Installation
 
 The quickest way to get up and running is with NuGet, from the Package Manager Console,  within your project:
