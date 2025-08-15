@@ -39,8 +39,6 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.8.0[Nuget]
 
 == .NET SDK 3.7 Releases
 
-
-
 === Version 3.7.2
 
 https://packages.couchbase.com/clients/net/3.7/Couchbase-Net-Client-3.7.2.zip[Download] |
