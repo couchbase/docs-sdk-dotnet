@@ -36,7 +36,7 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.8.0[Nuget]
 Added logic to ensure a disposed `ChannelConnectionPool` is not reused.
 
 * https://jira.issues.couchbase.com/browse/NCBC-4032[NCBC-4032]:
-Fixed serialization issues in Transactions when mixing System.Text.Json and Newtonsoft.Json.
+Fixed serialization issues in Transactions when mixing `System.Text.Json` and `Newtonsoft.Json`.
 
 ==== New Features
 
@@ -47,7 +47,7 @@ Fixed serialization issues in Transactions when mixing System.Text.Json and Newt
 Added support for Zone-Aware read from replica to Collection API.
 
 * https://jira.issues.couchbase.com/browse/NCBC-3999[NCBC-3999]:
-Added `GetReplicaFromPreferredServerGroup` to Transactions API
+Added `GetReplicaFromPreferredServerGroup` to Transactions API.
 
 * https://jira.issues.couchbase.com/browse/NCBC-3956[NCBC-3956]:
 Added support for Enhanced Read Committed Isolation to Transactions API.
