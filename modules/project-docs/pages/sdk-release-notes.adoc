@@ -23,7 +23,7 @@ All patch releases for each dot minor release should be API compatible, and safe
 any changes to expected behavior are noted in the release notes that follow.
 
 
-=== Version 3.8.0 (?? August 2025)
+=== Version 3.8.0 (20 August 2025)
 
 https://packages.couchbase.com/clients/net/3.6/Couchbase-Net-Client-3.8.0.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.8.0[API Reference] |
@@ -32,9 +32,63 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.8.0[Nuget]
 
 ==== Fixed Issues
 
+* https://couchbasecloud.atlassian.net/browse/NCBC-3900[NCBC-3900]:
+Added logic to ensure a disposed `ChannelConnectionPool` is not reused.
 
+* https://jira.issues.couchbase.com/browse/NCBC-4032[NCBC-4032]:
+Fixed serialization issues in Transactions when mixing System.Text.Json and Newtonsoft.Json.
 
+==== New Features
 
+* https://couchbasecloud.atlassian.net/browse/NCBC-3961[NCBC-3961]:
+`BucketSettings` now supports VBucket number configuration.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3998[NCBC-3998]:
+Added support for Zone-Aware read from replica to Collection API.
+
+* https://jira.issues.couchbase.com/browse/NCBC-3999[NCBC-3999]:
+Added `GetReplicaFromPreferredServerGroup` to Transactions API
+
+* https://jira.issues.couchbase.com/browse/NCBC-3956[NCBC-3956]:
+Added support for Enhanced Read Committed Isolation to Transactions API.
+
+* https://jira.issues.couchbase.com/browse/NCBC-3778[NCBC-3778]:
+Added support for Binary objects in Transactions.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4018[NCBC-4018]:
+Stellar client: Implemented Binary Collection KV API.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3896[NCBC-3896]:
+Added SDK telemetry collection in Server.
+
+==== Improvements
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3846[NCBC-3846]:
+Sealed internal classes for devirtualization performance gains.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3847[NCBC-3847]:
+Optimized reading of operation response lengths.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3848[NCBC-3848]:
+Used bit blitting to improve performance when reading response headers.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3861[NCBC-3861]:
+Improved `CancellationTokenPairSource` performance using pooling.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3904[NCBC-3904]:
+Improved `OperationBuilder` performance using `IBufferWriter<byte>`.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3905[NCBC-3905]:
+Used `TimeProvider` to improve unit test run times.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3908[NCBC-3908]:
+Documentation no longer shows `RequestPlus` being used as a `SearchOptions` value.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3962[NCBC-3962]:
+Improved SDK error messages for account lock/unlock.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4034[NCBC-4034]:
+The operational SDK now prevents querying the Analytics service from Enterprise Analytics clusters.
 
 
 == .NET SDK 3.7 Releases
