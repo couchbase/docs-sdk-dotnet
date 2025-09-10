@@ -170,7 +170,7 @@ async Task ScopedVectorQuery(IScope scope)
     float[] preGeneratedVectors = new[] { 0.001f, 0.002f, 0.003f };
     //tag::scopedVector1[]
     var searchRequest = SearchRequest.Create(
-        VectorSearch.Create(new VectorQuery("vector_field", preGeneratedVectors))
+        VectorSearch.Create(new VectorQuery("vector_field").WithVector(preGeneratedVectors))
     );
     
     var searchResult = scope.SearchAsync("travel-vector-index", searchRequest, new SearchOptions());
