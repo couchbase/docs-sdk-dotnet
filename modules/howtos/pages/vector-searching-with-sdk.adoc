@@ -50,40 +50,45 @@ Here is the xref:server:vector-index:hyperscale-vector-index.adoc#query-example[
 wrapped inside the {name-sdk} Query API.
 
 .Hyperscale Index Example
-[source,python]
+[source,csharp]
 ----
-  result = cluster.query(
-  "SELECT d.id, d.question, d.wanted_similar_color_from_search, " +
-  "  ARRAY_CONCAT( " +
+var result = await cluster.QueryAsync<JsonElement>(
+    "SELECT d.id, d.question, d.wanted_similar_color_from_search, " +
+    "  ARRAY_CONCAT( " +
     "d.couchbase_search_query.knn[0].vector[0:4], " +
     "['...'] " +
-  ") AS vector " +
-  "FROM `vector-sample`.`color`.`rgb-questions` AS d " +
-  "WHERE d.id = '#87CEEB';",
-  QueryOptions(metrics=True)
-
-    for row in result.rows():
-        print(f"Found match: {row}")
+    ") AS vector " +
+    "FROM `vector-sample`.`color`.`rgb-questions` AS d " +
+    "WHERE d.id = '#87CEEB';",
+    options => options.Metrics(true)
+).ConfigureAwait(false);
+        
+await foreach (var row in result.Rows)
+{
+    Console.WriteLine(row);
+}
 ----
 
 Parameterizing the query, as with xref:sqlpp-queries-with-sdk.adoc#parameterized-queries[regular queries], will allow the reuse of the xref:server:n1ql:n1ql-intro/queriesandresults.adoc#prepare-stmts[Query Plan].
 This can be more efficient, unless you are doing a lot of optimization to your query.
 
 .Parameterized Vector Query
-[source,python]
+[source,csharp]
 ----
-  result = cluster.query(
-         "SELECT d.id, d.question, d.wanted_similar_color_from_search, " +
-         "  ARRAY_CONCAT( " +
-           "d.couchbase_search_query.knn[0].vector[0:4], " +
-           "['...'] " +
-         ") AS vector " +
-      "FROM `vector-sample`.`color`.`rgb-questions` AS d " +
-  	"WHERE d.id = $id;",
-  QueryOptions(named_parameters={'id': '#87CEEB'})
+var result = await cluster.QueryAsync<JsonElement>(
+    "SELECT d.id, d.question, d.wanted_similar_color_from_search, " +
+    "  ARRAY_CONCAT( " +
+    "d.couchbase_search_query.knn[0].vector[0:4], " +
+    "['...'] " +
+    ") AS vector " +
+    "FROM `vector-sample`.`color`.`rgb-questions` AS d " +
+    "WHERE d.id = $id;",
+    options => options.Parameter("id", "#87CEEB")).ConfigureAwait(false);
 
-    for row in result.rows():
-        print(f"Found match: {row}")
+await foreach (var row in result.Rows)
+{
+    Console.WriteLine(row);
+}
 ----
 
 
@@ -137,26 +142,30 @@ Then it executes the vector query on the intermediate result to get the final re
 
 [source,csharp]
 ----
-var filterQuery = new MatchQuery("some_field");
+var filterQuery = new MatchQuery("some_match");
 var vectorQuery = VectorQuery.Create(
     vectorFieldName: "vector_field",
     vector: [0.01f, 0.02f, 0.03f], // Pre-generated vectors
     new VectorQueryOptions().WithFilter(filterQuery));
 
 var searchRequest = new SearchRequest(
-    SearchQuery: new MatchQuery("some_field"),
+    SearchQuery: new MatchQuery("some_match"),
     VectorSearch: VectorSearch.Create(vectorQuery)
 );
 ----
 
 If no prefilter is specified, the server executes the vector query on all indexed documents.
-////
+
 .Simple Match
-[source,python]
+[source,csharp]
 ----
-VectorQuery.create(field_name, vector, num_candidates=num_candidates, prefilter=MatchQuery('primary', field='color_wheel_pos'))
+var query = VectorQuery.Create(field_name, vector, new VectorQueryOptions
+{
+    Filter = new MatchQuery("primary").Field("color_wheel_pos"),
+    NumCandidates = numCandidates
+});
 ----
-////
+
 
 ////
 The prefilter can be any Search Query --
