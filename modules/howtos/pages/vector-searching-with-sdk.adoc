@@ -155,7 +155,7 @@ var searchRequest = new SearchRequest(
 ----
 
 If no prefilter is specified, the server executes the vector query on all indexed documents.
-////
+
 .Simple Match
 [source,csharp]
 ----
@@ -165,7 +165,7 @@ var query = VectorQuery.Create(field_name, vector, new VectorQueryOptions
     NumCandidates = numCandidates
 });
 ----
-////
+
 
 ////
 The prefilter can be any Search Query --
