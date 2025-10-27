@@ -101,3 +101,47 @@ Note that we suggest .NET Core or .NET 5.0 over using SDK3 in .NET Full Framewor
 //== Logging in an ASP.NET Core application
 
 //== Logging with Serilog one-liner logging
+
+
+
+
+
+////
+== Log Redaction
+Redacting logs is a two-stage process.
+If you want to redact client logs (for example before handing them off to the Couchbase Support team) you first need to enable log redaction in your application.
+This is done through the https://docs.couchbase.com/sdk-api/couchbase-python-client/couchbase_api/options.html#clusteroptions[`ClusterOptions`], setting `log_redaction` to `True`.
+Once the SDK writes the logs with the tags to a file, you can then use the
+xref:{version-server}@server:cli:cbcli/cblogredaction.adoc[`cblogredaction` tool] to obfuscate the log.
+* You may wish to read more on Log Redaction
+xref:{version-server}@server:manage:manage-logging/manage-logging.adoc#understanding_redaction[in the Server docs].
+////
+
+
+
+== SDK Telemetry from the Server
+
+In addition to Tracing and other metrics, and client logging, SDK telemetry is also sent to the Server -- available from 8.0, and in new Capella Operational clusters -- for ingestion with other Prometheus metrics.
+Capella Operatioal exposes these metrics through the UI.
+
+For self-managed Server, collection can be disabled and enabled through the REST API:
+
+[source,console]
+----
+curl --user Administrator:password http://172.17.0.2:8091/settings/appTelemetry -d enabled=true
+----
+
+And the Prometheus-format metrics fetched with:
+
+[source,console]
+----
+curl --user Administrator:password http://172.17.0.2:8091/metrics
+----
+
+There may be advantages to collecting information this way,
+but note that metrics are collected per node,
+and a central Prometheus instance should be set to collect all metrics so that information is not lost in case of a sudden failover.
+
+Also note that if the cluster is behind a load balancer, the collected metrics may not accurately record the actual correct node with which the SDK interacts.
+
+
