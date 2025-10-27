@@ -195,7 +195,7 @@ You can combine a traditional FTS query with vector queries:
 [source,csharp]
 ----
 include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=scopedVectorWithFts,indent=0]
-
+----
 
 
 // integrations??
