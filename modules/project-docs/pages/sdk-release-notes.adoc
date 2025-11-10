@@ -22,6 +22,29 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+== Version 3.8.1 (10 November 2025)
+
+https://packages.couchbase.com/clients/net/3.6/Couchbase-Net-Client-3.8.1.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.8.1[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.8.1[Nuget]
+
+==== Fixed Issues
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3898[NCBC-3898]
+Cluster.Dispose safely ensures disposed ChannelConnectionPool objects cannot be re-used
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4053[NCBC-4053]
+`accessedDeleted` should be sent when using `ReadPreference`
+
+https://couchbasecloud.atlassian.net/browse/NCBC-4078[NCBC-4078]
+`BucketManager.GetBucketAsync` now throws an `ArgumentNullException` instead of `JsonException` if `bucketName` is null
+
+
+==== New Feature
+
+[NCBC-3996](https://couchbasecloud.atlassian.net/browse/NCBC-3996) 
+Added support for FTS Pre-Filters using Vector Search
+
 
 === Version 3.8.0 (20 August 2025)
 
