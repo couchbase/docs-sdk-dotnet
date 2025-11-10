@@ -36,13 +36,13 @@ Cluster.Dispose safely ensures disposed ChannelConnectionPool objects cannot be 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4053[NCBC-4053]
 `accessedDeleted` should be sent when using `ReadPreference`
 
-https://couchbasecloud.atlassian.net/browse/NCBC-4078[NCBC-4078]
+* https://couchbasecloud.atlassian.net/browse/NCBC-4078[NCBC-4078]
 `BucketManager.GetBucketAsync` now throws an `ArgumentNullException` instead of `JsonException` if `bucketName` is null
 
 
 ==== New Feature
 
-[NCBC-3996](https://couchbasecloud.atlassian.net/browse/NCBC-3996) 
+* [NCBC-3996](https://couchbasecloud.atlassian.net/browse/NCBC-3996) 
 Added support for FTS Pre-Filters using Vector Search
 
 
