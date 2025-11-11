@@ -24,7 +24,7 @@ any changes to expected behavior are noted in the release notes that follow.
 
 == Version 3.8.1 (10 November 2025)
 
-https://packages.couchbase.com/clients/net/3.6/Couchbase-Net-Client-3.8.1.zip[Download] |
+https://packages.couchbase.com/clients/net/3.8/Couchbase-Net-Client-3.8.1.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.8.1[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.8.1[Nuget]
 
@@ -48,7 +48,7 @@ Added support for FTS Pre-Filters using Vector Search
 
 === Version 3.8.0 (20 August 2025)
 
-https://packages.couchbase.com/clients/net/3.6/Couchbase-Net-Client-3.8.0.zip[Download] |
+https://packages.couchbase.com/clients/net/3.8/Couchbase-Net-Client-3.8.0.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.8.0[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.8.0[Nuget]
 
