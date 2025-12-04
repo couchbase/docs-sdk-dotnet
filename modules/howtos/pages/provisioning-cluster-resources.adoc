@@ -17,7 +17,6 @@
 :upsertDesignDocument: pass:q[`UpsertDesignDocumentAsync` method]
 :getDesignDocument: pass:q[`GetDesignDocumentAsync`]
 
-include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 {description}
@@ -26,6 +25,9 @@ Common use cases are outlined here, less common use cases are covered in the htt
 include::{version-common}@sdk:shared:partial$flush-info-pars.adoc[tag=management-intro]
 
 The .NET SDK also comes with some convenience functionality for common Couchbase management requests.
+
+include::{version-common}@sdk:shared:partial$provisioning-clusters.adoc[tag=not-capella]
+
 
 Management operations in the SDK may be performed through several interfaces depending on the object:
 
