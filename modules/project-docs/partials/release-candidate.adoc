@@ -5,6 +5,7 @@ The API interface is stable, but could change for bug fixes during the final tes
 New features could be added.
 
 This Developer Preview is being made available for those who want early access to the .NET SDK working with .NET 10.
+It is not supported for use in production environments.
 
 // Documentation is incomplete, subject to change, and could contain broken links.
 ====
