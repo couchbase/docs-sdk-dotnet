@@ -47,7 +47,7 @@ The Couchbase Capella free tier version comes with the Travel Sample Bucket, and
 Local Couchbase Server::
 +
 --
-[source.try-it,csharp]
+[source,csharp]
 ----
 include::example$StartUsing.csx[tags=**]
 ----
