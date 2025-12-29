@@ -5,7 +5,6 @@
 :page-pagination: full
 :page-topic-type: tutorial
 
-include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 {description}
@@ -46,12 +45,12 @@ Local Couchbase Server::
 --
 [source,csharp]
 ----
-include::example$StartUsing.csx[tags=**]
+include::example$StartUsing.cs[tags=**]
 ----
 
 As well as the .NET SDK (see below), and a running instance of Couchbase Server, you will need to load up the Travel Sample Bucket
-using either the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Web interface]
-or the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-cli[command line].
+using either the xref:7.2@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Web interface]
+or the xref:7.2@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-cli[command line].
 --
 ====
 
@@ -129,7 +128,7 @@ Firstly, you will need to have a few `using` statements at the top of *Program.c
 
 [source,csharp]
 ----
-include::example$StartUsing.csx[tag=using,indent=0]
+include::example$StartUsing.cs[tag=using,indent=0]
 ----
 
 === Connect
@@ -162,7 +161,7 @@ Local Server Connection::
 --
 [source,csharp]
 ----
-include::example$StartUsing.csx[tag=connect,indent=0]
+include::example$StartUsing.cs[tag=connect,indent=0]
 ----
 
 For developing locally on the same machine as Couchbase Server, your URI can be `couchbase://localhost`.
@@ -174,7 +173,7 @@ Following successful authentication, add this code snippet to access your `Bucke
 
 [source,csharp]
 ----
-include::example$StartUsing.csx[tag=bucket,indent=0]
+include::example$StartUsing.cs[tag=bucket,indent=0]
 ----
 
 === Add and Retrieve Documents
@@ -193,7 +192,7 @@ To get you started the following code creates a new document in a custom scope a
 
 [source,csharp]
 ----
-include::example$StartUsing.csx[tag=upsert-get,indent=0]
+include::example$StartUsing.cs[tag=upsert-get,indent=0]
 ----
 
 === {sqlpp} Lookup
