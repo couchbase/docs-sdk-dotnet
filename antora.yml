@@ -6,7 +6,6 @@ nav:
 - modules/ROOT/nav.adoc
 asciidoc:
   attributes:
-    page-status: Developer Preview - 3.9.0 RC1
     server_version: '8.0'
     sdk_current_version: '3.9.0'
     sdk_dot_minor: 3.9
