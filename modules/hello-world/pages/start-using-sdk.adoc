@@ -3,9 +3,7 @@
 :page-aliases: ROOT:getting-started,ROOT:start-using,ROOT:hello-couchbase,ROOT:start-using-sdk
 :page-toclevels: 2
 :page-pagination: full
-:page-topic-type: tutorial
 
-include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 {description}
