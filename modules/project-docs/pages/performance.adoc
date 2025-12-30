@@ -82,7 +82,7 @@ When done in this manner, the keys and response will be sent and received out-of
 === Do Not Use Parallel.ForEach
 
 The Couchbase SDKs, being IO-bound, are intended to be used in an asynchronous fashion. 
-On the other hand, `Parallel.ForEach`` is intended for CPU-bound computations and maximizes the available cores in your CPU. 
+On the other hand, `Parallel.ForEach` is intended for CPU-bound computations and maximizes the available cores in your CPU. 
 Combining the IO-Bound SDK with CPU-Bound `Parallel.ForEach` is a bad choice. 
 You are better off batching and awaiting `Task.WhenAll` so that blocking does not occur.
 
