@@ -198,7 +198,7 @@ A network timeout can be set with the optional `TouchOptions()`, in the same fas
 include::example$KvOperations.csx[tag=touchwithtimeout,indent=0]
 ----
 
-include::{version-server}@sdk:shared:partial$documents.adoc[tag=exp-note]
+include::{version-common}@sdk:shared:partial$documents.adoc[tag=exp-note]
 
 IMPORTANT: If you are using the overloads that take `IDocument`, note that the `IDocument.Expiry` property assumes ms (milli-seconds), and is converted to seconds before being sent to the server.
 All other overloads take a `TimeSpan` or an `uint`, and assume an expiry in seconds
@@ -239,7 +239,7 @@ include::example$KvOperations.csx[tag=binarydecrementwithoptions,indent=0]
 
 TIP: Setting the document expiry time only works when a document is created, and it is not possible to update the expiry time of an existing counter document with the Increment method -- to do this during an increment, use with the `Touch()` method.
 
-include::{version-server}@sdk:shared:partial$atomic.adoc[tag=xdcr]
+include::{version-common}@sdk:shared:partial$atomic.adoc[tag=xdcr]
 
 
 == Scoped KV Operations
