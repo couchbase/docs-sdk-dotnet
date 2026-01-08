@@ -62,7 +62,7 @@ include::example$KvOperations.csx[tag=replacewithcas,indent=0]
 Expiration sets an explicit time to live (TTL) for a document.
 We'll discuss modifying `Expiration` in more details xref:#expiration-ttl[below].
 For a discussion of item (Document) _vs_ Bucket expiration, see the
-xref:7.1@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-ttl[Expiration Overview page].
+xref:{version-server}@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-ttl[Expiration Overview page].
 
 [source,csharp]
 ----
@@ -198,12 +198,12 @@ A network timeout can be set with the optional `TouchOptions()`, in the same fas
 include::example$KvOperations.csx[tag=touchwithtimeout,indent=0]
 ----
 
-include::{version-common}@sdk:shared:partial$documents.adoc[tag=exp-note]
+include::{version-server}@sdk:shared:partial$documents.adoc[tag=exp-note]
 
 IMPORTANT: If you are using the overloads that take `IDocument`, note that the `IDocument.Expiry` property assumes ms (milli-seconds), and is converted to seconds before being sent to the server.
 All other overloads take a `TimeSpan` or an `uint`, and assume an expiry in seconds
 A time of zero will set the document to never expire
-(a negative number will set expiry to immediate -- creating a xref:7.1@server:learn:buckets-memory-and-storage/storage.adoc#tombstones[tombstone]).
+(a negative number will set expiry to immediate -- creating a xref:{version-server}@server:learn:buckets-memory-and-storage/storage.adoc#tombstones[tombstone]).
 Values above 0ms but below 1000ms are rounded up to one second before being sent to the server -- _if you are using .NET SDK 3.0.4 or later_.
 
 
@@ -239,12 +239,12 @@ include::example$KvOperations.csx[tag=binarydecrementwithoptions,indent=0]
 
 TIP: Setting the document expiry time only works when a document is created, and it is not possible to update the expiry time of an existing counter document with the Increment method -- to do this during an increment, use with the `Touch()` method.
 
-include::{version-common}@sdk:shared:partial$atomic.adoc[tag=xdcr]
+include::{version-server}@sdk:shared:partial$atomic.adoc[tag=xdcr]
 
 
 == Scoped KV Operations
 
-It is possible to perform scoped key value operations on named xref:7.1@server:learn:data/scopes-and-collections.adoc[`Collections`] with _Couchbase Server release 7.0_ onwards.
+It is possible to perform scoped key value operations on named xref:{version-server}@server:learn:data/scopes-and-collections.adoc[`Collections`] with _Couchbase Server release 7.0_ onwards.
 
 Here is an example showing an upsert in the `users` collection, which lives in the `travel-sample.tenant_agent_00` keyspace:
 

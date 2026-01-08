@@ -195,7 +195,7 @@ of .NET, this is not necessary and the option isn't necessary.
 
 == Querying at Scope Level
 
-From version 3.0.5 of the .NET SDK, it is possible to query off the xref:7.1@server:learn:data/scopes-and-collections.adoc[`Scope` level] _with the Couchbase Server release 7.0_,
+From version 3.0.5 of the .NET SDK, it is possible to query off the xref:{version-server}@server:learn:data/scopes-and-collections.adoc[`Scope` level] _with the Couchbase Server release 7.0_ onwards,
 using the `QueryOptions() {QueryContext = "namespace:bucket:scope:collection"}` method.
 
 The following code snippet shows how to run a query to fetch 10 random rows from `travel-sample.inventory` and print the results.
@@ -214,8 +214,8 @@ NOTE: {sqlpp} is not the only query option in Couchbase.
 Be sure to check that xref:concept-docs:data-services.adoc[your use case fits your selection of query service].
 
 * For a deeper dive into {sqlpp} from the SDK, refer to our xref:concept-docs:n1ql-query.adoc[{sqlpp} SDK concept doc].
-* The xref:7.1@server:n1ql:n1ql-language-reference/index.adoc[Server doc {sqlpp} intro] introduces a complete guide to the {sqlpp} language, including all of the latest additions.
+* The xref:{version-server}@server:n1ql:n1ql-language-reference/index.adoc[Server doc {sqlpp} intro] introduces a complete guide to the {sqlpp} language, including all of the latest additions.
 * The http://query.pub.couchbase.com/tutorial/#1[{sqlpp} interactive tutorial] is a good introduction to the basics of {sqlpp} use.
-* For scaling up queries, be sure to xref:7.1@server:learn:services-and-indexes/indexes/index-replication.adoc[read up on Indexes].
+* For scaling up queries, be sure to xref:{version-server}@server:learn:services-and-indexes/indexes/index-replication.adoc[read up on Indexes].
 * The Query Service is for operational queries; for analytical workloads, read more on xref:concept-docs:http-services.adoc#long-running-queries-big-data[when to choose Analytics].
 
