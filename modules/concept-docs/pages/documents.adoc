@@ -2,6 +2,7 @@
 :description: Couchbase supports CRUD operations, various data structures, and binary documents.
 :page-topic-type: concept
 :page-aliases: ROOT:documents,ROOT:documents-basics,ROOT:documents-atomic
+:page-toclevels: 2
 :link-with-underscores: https://docs.couchbase.com/sdk-api/couchbase-net-client/html/T_Couchbase_KeyValue_IBinaryCollection.htm
 
 
