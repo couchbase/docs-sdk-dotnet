@@ -25,6 +25,11 @@ The SDK is written in C#, and some of its idiomatic patterns reflect that choice
 
 {empty} +
 
+NOTE: Owing to https://issues.couchbase.com/browse/NCBC-3794[NCBC-3794], it is recommended that all customers using Server 7.6 or later upgrade to SDK 3.5.3, or SDK 3.6.2 or later, immediately.
+
+{empty} +
+
+
 == icon:database[] Using Your Database
 
 How-to guides and tutorials to help you start your development journey with Couchbase and the .NET SDK.
