@@ -6,14 +6,14 @@ nav:
 - modules/ROOT/nav.adoc
 asciidoc:
   attributes:
-    server_version: '8.0'
+    server_version: '8.0.1'
     sdk_current_version: '3.9.0'
     sdk_dot_minor: 3.9
     sdk_dot_major: 3.x
     version-server: '8.0'
-    version-common: '8.0'
+    version-common: '8.0.1'
     name_platform: '.NET'
     name-sdk: '.NET SDK'
-    sdk_api: '3.8'
+    sdk_api: '3.9'
     sdk-api-link: https://docs.couchbase.com/sdk-api/couchbase-net-client/
     sdk-gh-link: https://github.com/couchbase/couchbase-net-client/

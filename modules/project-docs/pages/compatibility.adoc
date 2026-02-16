@@ -68,8 +68,6 @@ include::hello-world:partial$supported.adoc[]
 |===
 
 
-
-
 === OS Compatibility
 
 In general, the Common Language Runtime (CLR) eliminates concerns about underlying OS compatibility, 

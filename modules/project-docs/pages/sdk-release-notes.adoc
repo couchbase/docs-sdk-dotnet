@@ -30,9 +30,18 @@ include::project-docs:partial$release-candidate.adoc[]
 === Version 3.9.0 RC1 (xxxxx December 2025)
 
 
+=== Version 3.9.0 (??? February 2026)
+
+https://packages.couchbase.com/clients/net/3.9/Couchbase-Net-Client-3.9.0.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.9.0[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.9.0[Nuget]
+
+
+
 
 
 == .NET SDK 3.8 Releases
+
 
 === Version 3.8.1 (10 November 2025)
 
