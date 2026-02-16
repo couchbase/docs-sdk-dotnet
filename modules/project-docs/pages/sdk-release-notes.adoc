@@ -8,6 +8,8 @@
 [abstract]
 {description}
 
+include::project-docs:partial$release-candidate.adoc[]
+
 
 These pages cover the 3._x_ versions of the Couchbase .NET SDK.
 For release notes, download links, and installation methods for 2.7 and earlier releases of the Couchbase .NET Client,  please see the https://docs-archive.couchbase.com/dotnet-sdk/2.7/sdk-release-notes.html[2.x .NET Release Notes & Download Archive].
@@ -22,6 +24,10 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+include::project-docs:partial$release-candidate.adoc[]
+
+
+=== Version 3.9.0 RC1 (xxxxx December 2025)
 
 
 === Version 3.9.0 (??? February 2026)
