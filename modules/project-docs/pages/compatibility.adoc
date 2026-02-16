@@ -23,13 +23,13 @@ The Couchbase .NET SDK is compatible with https://docs.microsoft.com/en-us/dotne
 include::hello-world:partial$supported.adoc[]
 
 .Recommended .NET Versions per SDK
-[#table_sdk_versions]
-[cols="40,28,20,20"]
+[#table_sdk_versions][cols="40,23,20,20,20"]
 |===
-| | SDK 3.5, 3.6 | SDK 3.7 | SDK 3.8
+| | SDK 3.5, 3.6 | SDK 3.7 | SDK 3.8 | SDK 3.9
 
 | .NET 6.0 (Long-Term Support)
 | *✔*
+| *✖*
 | *✖*
 | *✖*
 
@@ -37,9 +37,11 @@ include::hello-world:partial$supported.adoc[]
 | *✖*
 | *✖*
 | *✖*
+| *✖*
 
-| .NET 8.0 (Recommended, Long-Term Support)
+| .NET 8.0
 | *✔* 
+| *✔*
 | *✔*
 | *✔*
 
@@ -47,19 +49,20 @@ include::hello-world:partial$supported.adoc[]
 | *✖*
 | *✖*
 | *✖*
+| *✖*
+
+| .NET 10.0 (Recommended, Long-Term Support)
+| *✖*
+| *✖*
+| *✖*
+| *✔*
 
 | .NET Framework 4.6.2+
 | *✔*
 | *✔*
 | *✔*
+| *✔*
 |===
-
-////
-| .NET 10.0
-| *✖*
-| *✖*
-| *✔*  From 3.8.2
-////
 
 
 === OS Compatibility
@@ -157,7 +160,7 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 .Recommended SDK per Server Version Matrix
 [#table_sdk_versions]
 |===
-| | 3.4 | 3.5 | 3.6 - 3.7 | 3.8
+| | 3.4 | 3.5 | 3.6 - 3.7 | 3.8 - 3.9
 
 | *Server 7.0 - 7.2*
 | *✔*
