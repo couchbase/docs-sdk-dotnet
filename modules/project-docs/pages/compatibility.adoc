@@ -9,8 +9,6 @@ Plus notes on Cloud, networks, and AWS Lambda.
 [abstract]
 {description}
 
-include::project-docs:partial$release-candidate.adoc[]
-
 
 The Couchbase .NET SDK is compatible with https://docs.microsoft.com/en-us/dotnet/standard/net-standard[.NET Standard] 2.0 and .NET Standard 2.1, via the currently supported Microsoft .NET SDKs.
 
