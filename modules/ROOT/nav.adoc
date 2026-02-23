@@ -38,7 +38,7 @@
 * xref:howtos:error-handling.adoc[]
 * xref:howtos:collecting-information-and-logging.adoc[]
 * xref:howtos:health-check.adoc[]
-* Observability
+** xref:concept-docs:response-time-observability.adoc[Observability]
 ** xref:howtos:slow-operations-logging.adoc[]
 ** xref:howtos:observability-metrics.adoc[]
 ** xref:howtos:observability-orphan-logger.adoc[]
