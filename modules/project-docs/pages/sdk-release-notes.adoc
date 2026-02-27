@@ -26,11 +26,103 @@ any changes to expected behavior are noted in the release notes that follow.
 
 
 
-=== Version 3.9.0 (??? February 2026)
+=== Version 3.9.0 (26 February 2026)
 
 https://packages.couchbase.com/clients/net/3.9/Couchbase-Net-Client-3.9.0.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.9.0[API Reference] |
 https://www.nuget.org/packages/CouchbaseNetClient/3.9.0[Nuget]
+
+
+==== Fixed Issues
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4143[NCBC-4143]:
+Fixed an assertion issue in `MultiplexingConnection.CloseAsync`.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4135[NCBC-4135]:
+`HttpMessageHandler` is now correctly recreated when the instance changes, regardless of authenticator type.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4128[NCBC-4128]:
+Clear dead nodes after a select bucket failure.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4115[NCBC-4115]:
+Resolved NullReferenceExceptions in some cases when calling `PingAsync`.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4120[NCBC-4120]:
+Prevented Capella CA certificate disposal on .NET 10.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4104[NCBC-4104]:
+Fixed DateTime parsing for Certificate Expiration Date.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4094[NCBC-4094]:
+Operations that receive `BucketNotConnected` are now automatically retried.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4055[NCBC-4055]:
+Fixed various Lock, Unlock, and Touch issues in Stellar.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4061[NCBC-4061]:
+Fixed `QueryIndexManager` failures in Stellar.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4054[NCBC-4054]:
+Fixed hardcoded Stellar gateway port.
+
+
+==== New Features
+
+* **Protostellar**: This release introduces full support for Protostellar (the Couchbase Network Gateway). Protostellar provides a high-performance, gRPC-based gateway for Couchbase Server, offering improved scalability and simplified connectivity in cloud-native environments.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4041[NCBC-4041]:
+Added support for .NET 10 LTS.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4098[NCBC-4098]:
+Updated OpenTelemetry tags to align with the latest semantic conventions.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4112[NCBC-4112]:
+Implemented JWT (JSON Web Token) Authentication.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4116[NCBC-4116]:
+Support added for searching by cancellation of `ConnectAsync`.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4079[NCBC-4079]:
+Initial support for Expiry in the Transactions API.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4060[NCBC-4060]:
+Support for mTLS certificate refresh.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4023[NCBC-4023]:
+Support added for Transcoders in Stellar.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3996[NCBC-3996]:
+Added support for FTS-like pre-filters while performing Vector Search.
+
+
+==== Improvements
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4102[NCBC-4102]:
+Refactored the SDK to use `Authenticators` for improved security handling.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4121[NCBC-4121]:
+Upgraded all Microsoft dependencies to the latest .NET 10 versions.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4119[NCBC-4119]:
+Upgraded all 3rd party dependencies to the latest versions.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4088[NCBC-4088]:
+Reworked mTLS certificate refresh implementation to align closer with the RFC.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4090[NCBC-4090]:
+Initialized `AppTelemetryCollector` after bootstrapping.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4078[NCBC-4078]:
+Improved `BucketManager` error handling for null bucket names.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3960[NCBC-3960]:
+Added support for `accessDeleted` reads for subdocument replica reads.
+
+
+==== Deprecations
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4096[NCBC-4096]:
+Deprecated support for MapReduce Views in the SDK.
 
 
 
