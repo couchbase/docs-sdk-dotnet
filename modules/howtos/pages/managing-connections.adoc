@@ -387,6 +387,42 @@ E.....@.@.............+....Z.'yZ..#........
 
 
 
+
+== Cloud Native Gateway
+
+Couchbase's next generation connection protocol, introduced in .NET SDK 3.9 and xref:operator::concept-cloud-native-gateway.adoc[Couchbase Autonomous Operator 2.6.1], can be enabled simply by changing the connection string to `couchbase2://` but there are a few differences to be aware of, described <<#limitations,below>>.
+
+The protocol implements a gRPC-style interface between the SDK and Couchbase Server (in this case, only available in the Server running on Kubernetes or OpenShift, with a recent version of xref:operator::overview.adoc[Couchbase Autonomous Operator]).
+
+
+=== Limitations
+
+The underlying protocol will not work with certain legacy features: MapReduce Views (a deprecated Service -- 
+use xref:howtos:n1ql-queries-with-sdk.adoc[Query] instead) and 
+Memcached buckets (superseded by the improved xref:{server_version}@server:learn:buckets-memory-and-storage/buckets.adoc#bucket-types[Ephemeral Buckets]).
+
+The following are not currently implemented over the `couchbase2://` protocol:
+
+* Authentication by client certificate.
+* Multi-document ACID transactions.
+* Analytics service.
+* Health Check.
+
+And the output from these features should be seen as volatile and subject to change:
+
+* Metrics and tracing, including the ThresholdLoggingTracer, LoggingMeter, and spans output.
+
+There are some different behaviors seen with this protocol:
+
+* Some config options are unsupported -- see the xref:ref:client-settings.adoc#cloud-native-gateway[Settings page].
+* The SDK will poll the gRPC channels until they are in a good state, or return an error, or timeout while waiting -- in our standard protocol there is an option of setting `waitUntilReady()` for just certain services to become available.
+* Some error codes are more generic -- in cases where the client would not be expected to need to take specific action -- but should cause no problem, unless you have written code looking at individual strings within the error messages.
+* Although documents continue to be stored compressed by Couchbase Server, they will not be transmitted in compressed form (to and from the client) over the wire, using `couchbase2://`.
+
+
+
+
+
 // == DNS SRV Bootstrapping
 // DNS-SRV
 
