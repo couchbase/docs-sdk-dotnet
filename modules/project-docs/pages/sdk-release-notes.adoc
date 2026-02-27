@@ -68,8 +68,8 @@ Fixed hardcoded Stellar gateway port.
 
 ==== New Features
 
-* **Protostellar**: This release introduces full support for Protostellar (the Couchbase Network Gateway).
-Protostellar provides a high-performance, gRPC-based gateway for Couchbase Server, offering improved scalability and simplified connectivity in cloud-native environments.
+* **Protostellar**: This release introduces full support for Protostellar (the Cloud Native Gateway protocol).
+Protostellar provides a high-performance, gRPC-based client for Couchbase Server via CNG, offering improved scalability and simplified connectivity in cloud-native environments.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4041[NCBC-4041]:
 Added support for .NET 10 LTS.
