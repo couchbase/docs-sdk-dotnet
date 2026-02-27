@@ -45,13 +45,13 @@ Fixed an assertion issue in `MultiplexingConnection.CloseAsync`.
 Clear dead nodes after a select bucket failure.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4115[NCBC-4115]:
-Resolved NullReferenceExceptions in some cases when calling `PingAsync`.
+Resolved `NullReferenceExceptions` in some cases when calling `PingAsync`.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4120[NCBC-4120]:
 Prevented Capella CA certificate disposal on .NET 10.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4104[NCBC-4104]:
-Fixed DateTime parsing for Certificate Expiration Date.
+Fixed `DateTime` parsing for Certificate Expiration Date.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4094[NCBC-4094]:
 Operations that receive `BucketNotConnected` are now automatically retried.
@@ -68,13 +68,14 @@ Fixed hardcoded Stellar gateway port.
 
 ==== New Features
 
-* **Protostellar**: This release introduces full support for Protostellar (the Couchbase Network Gateway). Protostellar provides a high-performance, gRPC-based gateway for Couchbase Server, offering improved scalability and simplified connectivity in cloud-native environments.
+* **Protostellar**: This release introduces full support for Protostellar (the Couchbase Network Gateway).
+Protostellar provides a high-performance, gRPC-based gateway for Couchbase Server, offering improved scalability and simplified connectivity in cloud-native environments.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4041[NCBC-4041]:
 Added support for .NET 10 LTS.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4098[NCBC-4098]:
-Updated OpenTelemetry tags to align with the latest semantic conventions.
+Updated `OpenTelemetry` tags to align with the latest semantic conventions.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4112[NCBC-4112]:
 Implemented JWT (JSON Web Token) Authentication.
