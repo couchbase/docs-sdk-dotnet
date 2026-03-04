@@ -131,7 +131,7 @@ Existing connections keep using the old credentials until they are naturally rec
 == TLS Settings
 
 TLS configuration has been reorganized.
-Settings that control server certificate validation — trust anchors, name-mismatch flags, custom callbacks, protocol versions — now live in a dedicated `TlsSettings` object rather than being scattered across `ClusterOptions`.
+Settings that control server certificate validation -- trust anchors, name-mismatch flags, custom callbacks, protocol versions -- now live in a dedicated `TlsSettings` object rather than being scattered across `ClusterOptions`.
 
 === Migrating from the Old API
 
