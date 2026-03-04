@@ -28,9 +28,6 @@ You can also create and pass an authenticator directly.
 include::example$Auth.csx[tag=password-authenticator,indent=0]
 ----
 
-NOTE: The `Cluster.ConnectAsync("connStr", "user", "pass")` shorthand overload still works and is not deprecated.
-It uses `UserName`/`Password` internally, but the behavior is equivalent.
-
 === Migrating from the Old API
 
 If you were previously setting credentials via `ClusterOptions.UserName`/`Password` or `WithCredentials()`, replace them with `WithPasswordAuthentication()`.
@@ -97,7 +94,6 @@ include::example$Auth.csx[tag=cert-rotating,indent=0]
 ----
 
 When the factory detects new certificates (via its `HasUpdates` property), the SDK picks them up automatically for new KV connections and reconfigures the HTTP handler.
-You do not need to restart the cluster connection.
 
 ==== Option 2: Swap the Authenticator at Runtime
 
@@ -108,7 +104,7 @@ If you need explicit control over when certificates rotate, use `cluster.Authent
 include::example$Auth.csx[tag=cert-rotate-manual,indent=0]
 ----
 
-NOTE: The new certificate applies to all *new* connections (both KV and HTTP).
+You may experience brief disruptions to HTTP requests in-flight during the `HttpMessageHandler`'s reconfiguration.
 Existing KV connections are not closed or re-authenticated, they continue using the old certificate until they are recycled by the connection pool.
 
 == Runtime Authenticator Swapping
@@ -159,9 +155,9 @@ Previously, server CA certificates and client certificates were often mixed toge
 They are now properly separated:
 
 * **Client certificates** → `WithCertificateAuthentication()` (for mTLS)
-* **Server CA certificates** → `TlsSettings.TrustedServerCertificateFactory` (for validating the server)
+* **Server CAs** → `TlsSettings.TrustedServerCertificateFactory` 
 
-Use `WithTrustedServerCertificates()` as a shorthand when you have a collection of CA certs:
+Use `WithTrustedServerCertificates()` as a shorthand:
 
 [source,csharp]
 ----
@@ -182,15 +178,15 @@ include::example$Auth.csx[tag=trust-server-ca-factory,indent=0]
 | Property | Description | Default
 
 | `TrustedServerCertificateFactory`
-| Factory providing server CA certificates for validation. Set this when you need `CustomRootTrust` instead of the system trust store.
-| `null` (system trust store)
+| Factory providing server CA certificates for validation. Set this when you need `CustomRootTrust` in addition to the system trust store.
+| `null`
 
 | `KvIgnoreRemoteCertificateNameMismatch`
-| Ignore cert name mismatches for KV connections. **Development only**, do not use in production.
+| Ignore cert name mismatches for KV connections. 
 | `false`
 
 | `HttpIgnoreRemoteCertificateNameMismatch`
-| Ignore cert name mismatches for HTTP connections. **Development only**, do not use in production.
+| Ignore cert name mismatches for HTTP connections.
 | `false`
 
 | `KvCertificateValidationCallback`
@@ -219,7 +215,7 @@ If your server certificate uses IP SANs and your SDK is connecting by hostname (
 If you set both a new authenticator (via `With*Authentication()`) and the legacy properties (`UserName`/`Password`, `X509CertificateFactory`), the SDK resolves the effective authenticator at connect time using this order:
 
 1. **Explicit `Authenticator`** — if set via any `With*Authentication()` or `WithAuthenticator()` call, it wins. Legacy properties are ignored.
-2. **`X509CertificateFactory`** — if no explicit authenticator was set but a cert factory is configured, the SDK creates a `CertificateAuthenticator` from it.
+2. **`X509CertificateFactory`** — if no explicit authenticator was set but a cert factory is configured, the SDK creates a `CertificateAuthenticator` from it. It assume all Certificates from the factory are client certs.
 3. **`UserName` / `Password`** — if neither of the above is set but `UserName` is non-empty, the SDK creates a `PasswordAuthenticator`.
 4. **None** — throws `InvalidConfigurationException` at connect time.
 
