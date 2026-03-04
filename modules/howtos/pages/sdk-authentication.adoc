@@ -135,7 +135,7 @@ Settings that control server certificate validation -- trust anchors, name-misma
 
 === Migrating from the Old API
 
-The old properties on `ClusterOptions` (`KvIgnoreRemoteCertificateNameMismatch`, `HttpIgnoreRemoteCertificateMismatch`, `KvCertificateCallbackValidation`, `HttpCertificateCallbackValidation`, `EnabledSslProtocols`) are still functional — they delegate to `TlsSettings` internally — but are marked `[Obsolete]`.
+The old properties on `ClusterOptions` (`KvIgnoreRemoteCertificateNameMismatch`, `HttpIgnoreRemoteCertificateMismatch`, `KvCertificateCallbackValidation`, `HttpCertificateCallbackValidation`, `EnabledSslProtocols`) are still functional -- they delegate to `TlsSettings` internally -- but are marked `[Obsolete]`.
 
 [source,csharp]
 ----
