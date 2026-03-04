@@ -10,34 +10,266 @@ include::project-docs:partial$attributes.adoc[]
 {description}
 
 
-Our xref:hello-world:start-using-sdk.adoc[Getting Started] guide covered the basics for authorizing against a Couchbase cluster, but you may need to use alternative authentication methods such as Certification.
+== Password Authentication
 
-
-== RBAC
-
-Our xref:hello-world:start-using-sdk.adoc[Getting Started] guide introduced basic authentication against a Couchbase cluster:
+The most common way to connect.
+Uses SASL (PLAIN over TLS, or SCRAM-SHA1 without TLS) for Key-Value operations, and HTTP Basic auth for Query, Search, Analytics, and management services.
 
 [source,csharp]
 ----
-include::example$Auth.csx[tag=basic,indent=0]
+include::example$Auth.csx[tag=password,indent=0]
 ----
 
+Under the hood, `WithPasswordAuthentication` creates a `PasswordAuthenticator` and sets it through `options`.
+You can also create and pass an authenticator directly.
+
+[source,csharp]
+----
+include::example$Auth.csx[tag=password-authenticator,indent=0]
+----
+
+=== Migrating from the Old API
+
+If you were previously setting credentials via `ClusterOptions.UserName`/`Password` or `WithCredentials()`, replace them with `WithPasswordAuthentication()`.
+The old properties still work but are marked `[Obsolete]`.
+
+[source,csharp]
+----
+include::example$Auth.csx[tag=password-before,indent=0]
+----
+
+becomes:
+
+[source,csharp]
+----
+include::example$Auth.csx[tag=password-after,indent=0]
+----
+
+
+== Certificate Authentication (mTLS)
+
+For mutual TLS (mTLS), the server verifies the client's identity via an X.509 certificate presented during the TLS handshake.
+
+The SDK uses `CertificateAuthenticator` to hold the client certificate factory.
+
+[source,csharp]
+----
+include::example$Auth.csx[tag=cert,indent=0]
+----
+
+`WithCertificateAuthentication()` automatically sets `EnableTls = true`.
+
+IMPORTANT: Only provide *client* certificates to `CertificateAuthenticator`.
+If you previously bundled server CA certificates alongside client certificates in `X509CertificateFactory`, those should now go into `TlsSettings.TrustedServerCertificateFactory`.
+See <<tls-settings,TLS Settings>> below.
+
+=== Migrating from the Old API
+
+Replace `WithX509CertificateFactory()` with `WithCertificateAuthentication()`:
+
+[source,csharp]
+----
+include::example$Auth.csx[tag=cert-before,indent=0]
+----
+
+becomes:
+
+[source,csharp]
+----
+include::example$Auth.csx[tag=cert-after,indent=0]
+----
+
+
+=== Rotating Certificates
+
+In environments where client certificates rotate periodically, you have two options.
+
+==== Option 1: RotatingCertificateFactory
+
+`RotatingCertificateFactory` wraps another factory and polls for new certificates on a configurable interval:
+
+[source,csharp]
+----
+include::example$Auth.csx[tag=cert-rotating,indent=0]
+----
+
+When the factory detects new certificates (via its `HasUpdates` property), the SDK picks them up automatically for new KV connections and reconfigures the HTTP handler.
+
+==== Option 2: Swap the Authenticator at Runtime
+
+If you need explicit control over when certificates rotate, use `cluster.Authenticator()` to swap in a new `CertificateAuthenticator` while the cluster is live:
+
+[source,csharp]
+----
+include::example$Auth.csx[tag=cert-rotate-manual,indent=0]
+----
+
+You may experience brief disruptions to HTTP requests in-flight during the `HttpMessageHandler`'s reconfiguration.
+Existing KV connections are not closed or re-authenticated, they continue using the old certificate until they are recycled by the connection pool.
+
+== Runtime Authenticator Swapping
+
+`cluster.Authenticator(newAuthenticator)` replaces the active authenticator on a live cluster without tearing down the connection.
+This is the mechanism for credential and certificate rotation.
+
+[source,csharp]
+----
+include::example$Auth.csx[tag=swap-authenticator,indent=0]
+----
+
+=== Constraints
+
+* **You cannot switch authenticator types at runtime.**
+If you connected with a `PasswordAuthenticator`, you must continue swapping `PasswordAuthenticator` instances.
+Attempting to switch to `CertificateAuthenticator` (or vice versa) throws `InvalidArgumentException`.
+
+* **For `PasswordAuthenticator` and `CertificateAuthenticator`:** new credentials apply to new connections only.
+Existing connections keep using the old credentials until they are naturally recycled.
+
+
+[#tls-settings]
+== TLS Settings
+
+TLS configuration has been reorganized.
+Settings that control server certificate validation -- trust anchors, name-mismatch flags, custom callbacks, protocol versions -- now live in a dedicated `TlsSettings` object rather than being scattered across `ClusterOptions`.
+
+=== Migrating from the Old API
+
+The old properties on `ClusterOptions` (`KvIgnoreRemoteCertificateNameMismatch`, `HttpIgnoreRemoteCertificateMismatch`, `KvCertificateCallbackValidation`, `HttpCertificateCallbackValidation`, `EnabledSslProtocols`) are still functional -- they delegate to `TlsSettings` internally -- but are marked `[Obsolete]`.
+
+[source,csharp]
+----
+include::example$Auth.csx[tag=tls-before,indent=0]
+----
+
+becomes:
+
+[source,csharp]
+----
+include::example$Auth.csx[tag=tls-after,indent=0]
+----
+
+=== Trusting Custom Server CA Certificates
+
+Previously, server CA certificates and client certificates were often mixed together in `X509CertificateFactory`.
+They are now properly separated:
+
+* **Client certificates** → `WithCertificateAuthentication()` (for mTLS)
+* **Server CAs** → `TlsSettings.TrustedServerCertificateFactory` 
+
+Use `WithTrustedServerCertificates()` as a shorthand:
+
+[source,csharp]
+----
+include::example$Auth.csx[tag=trust-server-ca,indent=0]
+----
+
+Or configure the factory directly inside `WithTlsSettings()`:
+
+[source,csharp]
+----
+include::example$Auth.csx[tag=trust-server-ca-factory,indent=0]
+----
+
+=== TlsSettings Properties Reference
+
+[options="header",cols="2,4,1"]
+|===
+| Property | Description | Default
+
+| `TrustedServerCertificateFactory`
+| Factory providing server CA certificates for validation. Set this when you need `CustomRootTrust` in addition to the system trust store.
+| `null`
+
+| `KvIgnoreRemoteCertificateNameMismatch`
+| Ignore cert name mismatches for KV connections. 
+| `false`
+
+| `HttpIgnoreRemoteCertificateNameMismatch`
+| Ignore cert name mismatches for HTTP connections.
+| `false`
+
+| `KvCertificateValidationCallback`
+| Custom callback for KV server certificate validation. Receives the standard .NET `RemoteCertificateValidationCallback` signature.
+| `null`
+
+| `HttpCertificateValidationCallback`
+| Custom callback for HTTP server certificate validation.
+| `null`
+
+| `EnabledSslProtocols`
+| Allowed SSL/TLS protocol versions.
+| TLS 1.2, TLS 1.3
+
+| `EnableCertificateRevocation`
+| Check certificate revocation lists (CRL) during validation.
+| `false`
+|===
+
+TIP: Avoid `KvIgnoreRemoteCertificateNameMismatch` and `HttpIgnoreRemoteCertificateNameMismatch` in production.
+If your server certificate uses IP SANs and your SDK is connecting by hostname (or vice versa), fix the certificate or connection string instead of bypassing validation.
+
+
+== Legacy Precedence: Mixing Old and New APIs
+
+If you set both a new authenticator (via `With*Authentication()`) and the legacy properties (`UserName`/`Password`, `X509CertificateFactory`), the SDK resolves the effective authenticator at connect time using this order:
+
+1. **Explicit `Authenticator`** — if set via any `With*Authentication()` or `WithAuthenticator()` call, it wins. Legacy properties are ignored.
+2. **`X509CertificateFactory`** — if no explicit authenticator was set but a cert factory is configured, the SDK creates a `CertificateAuthenticator` from it. It assume all Certificates from the factory are client certs.
+3. **`UserName` / `Password`** — if neither of the above is set but `UserName` is non-empty, the SDK creates a `PasswordAuthenticator`.
+4. **None** — throws `InvalidConfigurationException` at connect time.
+
+[source,csharp]
+----
+include::example$Auth.csx[tag=precedence-warning,indent=0]
+----
+
+The simplest rule: **pick one `With*Authentication()` method and don't mix it with legacy properties.**
+Remove `UserName`/`Password`/`X509CertificateFactory` and replace them with the equivalent new call.
+
+
+== API Summary
+
+[options="header",cols="2,2"]
+|===
+| Old API | New API (3.9.0+)
+
+| `ClusterOptions.UserName` / `Password`
+| `WithPasswordAuthentication(username, password)`
+
+| `WithCredentials(username, password)`
+| `WithPasswordAuthentication(username, password)`
+
+| `X509CertificateFactory` (client certs)
+| `WithCertificateAuthentication(factory)`
+
+| `WithX509CertificateFactory(factory)`
+| `WithCertificateAuthentication(factory)`
+
+| `X509CertificateFactory` (server CAs for CustomRootTrust)
+| `TlsSettings.TrustedServerCertificateFactory` or `WithTrustedServerCertificates()`
+
+| `KvIgnoreRemoteCertificateNameMismatch`
+| `TlsSettings.KvIgnoreRemoteCertificateNameMismatch`
+
+| `HttpIgnoreRemoteCertificateMismatch`
+| `TlsSettings.HttpIgnoreRemoteCertificateNameMismatch`
+
+| `KvCertificateCallbackValidation`
+| `TlsSettings.KvCertificateValidationCallback`
+
+| `HttpCertificateCallbackValidation`
+| `TlsSettings.HttpCertificateValidationCallback`
+
+| `EnabledSslProtocols`
+| `TlsSettings.EnabledSslProtocols`
+
+| n/a
+| `cluster.Authenticator(newAuthenticator)` (runtime swap)
+|===
 
 include::{version-common}@sdk:shared:partial$auth-overview.adoc[tag=rbac]
 
 include::{version-common}@sdk:shared:partial$auth-overview.adoc[tag=cert-auth]
-
-
-== Authenticating a .NET Client by Certificate
-
-For sample procedures whereby certificates can be generated and deployed, see xref:{version-server}@server:manage:manage-security/manage-certificates.adoc[Manage Certificates].
-
-The rest of this document assumes that the processes there, or something similar, have been followed.
-That is, a cluster certificate has been created and installed on the server, a client certificate has been created, and it is stored in a keystore along with the cluster's certificate.
-
-[source,csharp]
-----
-include::example$Auth.csx[tag=auth,indent=0]
-----
 
 include::{version-common}@sdk:shared:partial$auth-overview.adoc[tag=ldap]

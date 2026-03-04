@@ -151,54 +151,79 @@ At the end of this guide you'll find a xref:#configurations-options-reference[re
 
 Since SDK 2 supports Couchbase Server clusters older than 5.0, it had to support both Role-Based access control as well as bucket-level passwords.
 The minimum cluster version supported by SDK 3 is Server 5.0, which means that only RBAC is supported.
-This is why you can set the username and password when directly connecting:
+
+==== Connecting with SDK 3.9.0 and Later
+
+SDK 3.9.0 introduces explicit authenticator objects and a consolidated TLS settings API.
+The recommended approach is to use `WithPasswordAuthentication()` or `WithCertificateAuthentication()` instead of setting properties directly on `ClusterOptions`.
+
+**Password authentication:**
 
 [source,csharp]
 ----
-var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "user", "pass");
+var options = new ClusterOptions()
+    .WithConnectionString("couchbases://your-ip")
+    .WithPasswordAuthentication("user", "pass");
+
+var cluster = await Cluster.ConnectAsync(options);
 ----
 
-This is just a shorthand for:
+The convenience overload `Cluster.ConnectAsync("connStr", "user", "pass")` still works and will create an `IAuthenticator` internally.
 
-[source,csharp]
-----
-var cluster = await Cluster.ConnectAsync("couchbase://your-ip", new ClusterOptions
-{
-    UserName = "user",
-    Password = "pass"
-});
-----
-
-Configuring TLS/SSL is done by using the "couchbases://" scheme in the connection string:
+**Certificate authentication (mTLS):**
 
 [source,csharp]
 ----
-var cluster = await Cluster.ConnectAsync("couchbases://your-ip", new ClusterOptions
-{
-    UserName = "user",
-    Password = "pass"
-});
-----
-
-You may also use this approach to configure certificate-based authentication:
-
-[source,csharp]
-----
-var cluster = await Cluster.ConnectAsync("couchbases://127.0.0.1", new ClusterOptions().
-    WithX509CertificateFactory(CertificateFactory.GetCertificatesFromStore(
+var certFactory = CertificateFactory.GetCertificatesFromStore(
     new CertificateStoreSearchCriteria
     {
         FindValue = "value",
         X509FindType = X509FindType.FindBySubjectName,
         StoreLocation = StoreLocation.CurrentUser,
         StoreName = StoreName.CertificateAuthority
-    })));
+    });
+
+var options = new ClusterOptions()
+    .WithConnectionString("couchbases://your-ip")
+    .WithCertificateAuthentication(certFactory);
+
+var cluster = await Cluster.ConnectAsync(options);
 ----
 
-Note that we are using the scheme "couchbases://" as opposed to "couchbase://" this is an indication to the SDK to use TLS/SSL encryption on the wire. Note that you can 
-also set the `ClusterOptions.EnableTls` flag as well to do this.
+`WithCertificateAuthentication()` automatically enables TLS.
+Only provide *client* certificates here; server CA certificates, if using `CustomRootTrust`, should go into `TlsSettings.TrustedServerCertificateFactory`.
 
-Please see the xref:howtos:authentication.adoc[documentation on certificate-based authentication] for detailed information on how to configure this properly.
+**TLS settings:**
+
+TLS validation options (name-mismatch flags, custom callbacks, protocol versions) have moved from `ClusterOptions` into a dedicated `TlsSettings` object:
+
+[source,csharp]
+----
+var options = new ClusterOptions()
+    .WithConnectionString("couchbases://your-ip")
+    .WithPasswordAuthentication("user", "pass")
+    .WithTlsSettings(tls =>
+    {
+        // Development only, do not use in production.
+        tls.KvIgnoreRemoteCertificateNameMismatch = true;
+        tls.HttpIgnoreRemoteCertificateNameMismatch = true;
+    });
+----
+
+The old `ClusterOptions` properties (`KvIgnoreRemoteCertificateNameMismatch`, `HttpIgnoreRemoteCertificateMismatch`, `KvCertificateCallbackValidation`, `HttpCertificateCallbackValidation`, `EnabledSslProtocols`) still delegate to `TlsSettings` internally but are marked `[Obsolete]`.
+
+==== Legacy Precedence
+
+If you mix the new `With*Authentication()` methods with the old `UserName`/`Password`/`X509CertificateFactory` properties, the SDK applies a precedence order at connect time:
+
+1. Explicit `Authenticator` (set via any `With*Authentication()` or `WithAuthenticator()`) — wins; legacy properties are ignored.
+2. `X509CertificateFactory` — if no explicit authenticator was set, the SDK wraps this in a `CertificateAuthenticator`.
+3. `UserName` / `Password` — if nothing else is set and `UserName` is non-empty, the SDK creates a `PasswordAuthenticator`.
+4. None — throws `InvalidConfigurationException` at connect time.
+
+The safest approach: pick one `With*Authentication()` method and remove any legacy credential properties.
+
+Please see the xref:howtos:sdk-authentication.adoc[Authentication how-to] for the full reference, including certificate rotation, runtime authenticator swapping, and custom server CA trust.
 
 == Connection Lifecycle
 
