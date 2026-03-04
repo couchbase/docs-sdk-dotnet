@@ -199,7 +199,7 @@ include::example$Auth.csx[tag=trust-server-ca-factory,indent=0]
 
 | `EnabledSslProtocols`
 | Allowed SSL/TLS protocol versions.
-| TLS 1.2 + TLS 1.3
+| TLS 1.2, TLS 1.3
 
 | `EnableCertificateRevocation`
 | Check certificate revocation lists (CRL) during validation.
