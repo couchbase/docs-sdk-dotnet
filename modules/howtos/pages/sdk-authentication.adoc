@@ -20,7 +20,7 @@ Uses SASL (PLAIN over TLS, or SCRAM-SHA1 without TLS) for Key-Value operations, 
 include::example$Auth.csx[tag=password,indent=0]
 ----
 
-Under the hood, `WithPasswordAuthentication` creates a `PasswordAuthenticator` and sets it on the options.
+Under the hood, `WithPasswordAuthentication` creates a `PasswordAuthenticator` and sets it through `options`.
 You can also create and pass an authenticator directly.
 
 [source,csharp]
