@@ -228,7 +228,7 @@ Which one you use depends on the type of query index you want to drop from the c
 include::example$QueryIndexManagerExample.csx[tag=drop-primary-or-secondary-index,indent=0]
 ----
 
-// * Search - note & link to FTS page & API?
+// * Search - note & link to Search page & API?
 
 == View Management
 
