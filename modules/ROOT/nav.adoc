@@ -56,7 +56,6 @@
 ** xref:concept-docs:xattr.adoc[XATTR & Virtual XATTR]
 * xref:concept-docs:errors.adoc[]
 ** xref:concept-docs:health-check.adoc[]
-** xref:concept-docs:response-time-observability.adoc[]
 * xref:concept-docs:durability-replication-failure-considerations.adoc[]
 * xref:concept-docs:encryption.adoc[Field Level Encryption]
 * xref:concept-docs:data-services.adoc[Service Selection]
