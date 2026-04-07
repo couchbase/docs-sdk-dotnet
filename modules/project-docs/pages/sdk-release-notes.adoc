@@ -1,6 +1,6 @@
 = SDK Release Notes
 :description: Release notes and download archive for the Couchbase .NET Client.
-:page-aliases: relnotes-dotnet-sdk
+:page-aliases: relnotes-dotnet-sdk.adoc
 :page-toclevels: 2
 :page-partial:
 
@@ -11,7 +11,8 @@
 
 
 These pages cover the 3._x_ versions of the Couchbase .NET SDK.
-For release notes, download links, and installation methods for 2.7 and earlier releases of the Couchbase .NET Client,  please see the https://docs-archive.couchbase.com/dotnet-sdk/2.7/sdk-release-notes.html[2.x .NET Release Notes & Download Archive].
+For release notes, download links, and installation methods for 2.7 and earlier releases of the Couchbase .NET Client,
+please see the https://docs-archive.couchbase.com/dotnet-sdk/2.7/sdk-release-notes.html[2.x .NET Release Notes & Download Archive].
 
 The full installation instructions that were previously on this page can now be found xref:sdk-full-installation.adoc[here].
 
