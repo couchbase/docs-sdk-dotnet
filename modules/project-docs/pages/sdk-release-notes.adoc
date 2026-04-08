@@ -27,6 +27,58 @@ any changes to expected behavior are noted in the release notes that follow.
 
 
 
+=== Version 3.9.1 (08 April 2026)
+
+https://packages.couchbase.com/clients/net/3.9/Couchbase-Net-Client-3.9.1.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.9.1[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.9.1[Nuget]
+
+
+==== Fixed Issues
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4192[NCBC-4192]:
+Resolved `GetErrorMap` error while bootstrapping.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4139[NCBC-4139]:
+Implemented tracing spans and metrics for the Management API.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4138[NCBC-4138]:
+Resolved several tracing issues to match the updated spec.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4180[NCBC-4180]:
+Proper staging of expiry on mutations.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4160[NCBC-4160]:
+Fixed an issue where AppTelemetry reports significantly lower metrics than it should.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4153[NCBC-4153]:
+Fixed NullReference errors during rebalance.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4151[NCBC-4151]:
+Ensured collection support is negotiated earlier in the connection process.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4146[NCBC-4146]:
+Fixed an issue where a possible null byte was prepended to keys.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4127[NCBC-4127]:
+Resolved Transaction issues with older (7.2) servers.
+
+
+==== Improvements
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4183[NCBC-4183]:
+Ensured correctness of recorded metrics and improved performance of AppTelemetry.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4165[NCBC-4165]:
+Added Snappy compression support in Stellar (also addresses NCBC-4155 and NCBC-4156).
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4181[NCBC-4181]:
+Updated packages for vulnerable `Microsoft.Bcl.Memory`.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4140[NCBC-4140]:
+Implemented Span Status and retries for tracing.
+
+
 === Version 3.9.0 (26 February 2026)
 
 https://packages.couchbase.com/clients/net/3.9/Couchbase-Net-Client-3.9.0.zip[Download] |
