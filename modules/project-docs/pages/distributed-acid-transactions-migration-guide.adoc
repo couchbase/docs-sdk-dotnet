@@ -1,18 +1,18 @@
 = Transactions Migration Guide
-:description: For those transitioning from using the Couchbase Transactions library for Java.
+:description: For those transitioning from using the Couchbase Transactions library for .NET.
 :page-toclevels: 2
 
 
 [abstract]
 {description}
 
-Couchbase transactions for Java were originally introduced as a library separate from the Couchbase Java SDK.
+Couchbase transactions for .NET were originally introduced as a library separate from the main Couchbase .NET SDK.
 
-We subsequently chose to integrate transactions directly into the SDKs with the release of Java SDK 3.3.0, to make it easier for users to get started.
+We subsequently chose to integrate transactions directly into the SDKs with the release of .NET SDK 3.3.0, to make it easier for users to get started.
 
 This document details the small changes that existing users of the legacy transactions library need to make, to migrate to the SDK-integrated version.
 
-The https://docs-archive.couchbase.com/java-sdk/3.2/project-docs/distributed-transactions-java-release-notes.html[legacy transactions library] will continue to be supported with bugfixes for some time, but new transaction features will only be added to the SDK and it is recommended that all users migrate.
+The https://docs-archive.couchbase.com/dotnet-sdk/3.2/project-docs/distributed-transactions-dotnet-release-notes.html[legacy transactions library] will continue to be supported with bugfixes for some time, but new transaction features will only be added to the SDK and it is recommended that all users migrate.
 
 == Accessing transactions
 
@@ -20,19 +20,19 @@ This is now done via a `Cluster` object.
 There is no longer any need to create a `Transactions` object.
 
 .Before
-[source,java]
+[source,csharp]
 ----
-var transactions = Transactions.create(cluster);
+var transactions = Transactions.Create(cluster);
 
-transactions.run((ctx) -> {
+await transactions.RunAsync(async (ctx) => {
     // Your transaction logic.
 });
 ----
 
 .After
-[source,java]
+[source,csharp]
 ----
-include::devguide:example$java/TransactionsMigration.java[tag=access,indent=0]
+include::howtos:example$TransactionsExample.cs[tag=init,indent=0]
 ----
 
 == Configuration
@@ -40,110 +40,95 @@ include::devguide:example$java/TransactionsMigration.java[tag=access,indent=0]
 Configuration used to be performed when creating the `Transactions` object, and is now performed when creating the `Cluster` object.
 
 .Before
-[source,java]
+[source,csharp]
 ----
-var transactions =
-  Transactions.create(cluster,
-    TransactionConfigBuilder.
-      .durabilityLevel(TransactionDurabilityLevel.MAJORITY)
-      .metadataCollection(collection));
+var transactions = Transactions.Create(cluster,
+    TransactionsConfigBuilder.Create()
+      .DurabilityLevel(DurabilityLevel.PersistToMajority)
+      .Build());
 ----
 
 .After
-[source,java]
+[source,csharp]
 ----
-include::devguide:example$java/TransactionsMigration.java[tag=config,indent=0]
+include::howtos:example$TransactionsExample.cs[tag=config,indent=0]
 ----
 
 A few details of configuration change:
 
-* `TransactionsConfig::metadataCollection` takes a `TransactionKeyspace` instead of a `Collection` (since a `Collection` cannot be created at this point).
-* `keyValueTimeout` has been removed from `TransactionsConfig` and `TransactionOptions`.
+* `TransactionsConfigBuilder.MetadataCollection` takes a `Keyspace` instead of an `ICouchbaseCollection` (since a collection cannot be created at this point).
+* `KeyValueTimeout` has been removed from `TransactionsConfig` and `TransactionOptions`.
 * `TransactionDurabilityLevel` has been dropped in favour of using the SDK's `DurabilityLevel`.
-* `TransactionOptions` now allows a `metadataCollection` parameter.
-
-And certain classes have been renamed to be compliant with the Java SDK:
-
-[options="header"]
-|===
-|Before|After|
-|`TransactionConfigBuilder`|`TransactionsConfig`|
-|`TransactionQueryConfigBuilder`|`TransactionsQueryConfig`|
-|`SingleQueryTransactionConfigBuilder`|`SingleQueryTransactionOptions`|
-|`PerTransactionConfigBuilder`|`TransactionOptions`|
-|===
+* `TransactionOptions` now allows a `MetadataCollection` parameter.
 
 === Cleanup configuration
 
 Cleanup configuration options have been encapsulated into their own class:
 
 .Before
-[source,java]
+[source,csharp]
 ----
-var transactions =
-  Transactions.create(cluster,
-    TransactionConfigBuilder.create()
-      .cleanupClientAttempts(false)
-      .cleanupLostAttempts(false)
-      .cleanupWindow(Duration.ofSeconds(30)));
+var transactions = Transactions.Create(cluster,
+    TransactionsConfigBuilder.Create()
+      .CleanupConfig(TransactionCleanupConfigBuilder.Create()
+        .CleanupClientAttempts(false)
+        .CleanupLostAttempts(false)
+        .CleanupWindow(TimeSpan.FromSeconds(30))
+        .Build())
+      .Build());
 ----
 
 .After
-[source,java]
+[source,csharp]
 ----
-include::devguide:example$java/TransactionsMigration.java[tag=config-cleanup,indent=0]
+include::howtos:example$TransactionsExample.cs[tag=config-cleanup,indent=0]
 ----
 
 == Lambda
 
-`ctx.commit()` has been removed, as it is redundant: commit automatically happens when the lambda successfully reaches the end.
+`ctx.CommitAsync()` has been removed from the public API, as it is redundant: commit automatically happens when the lambda successfully reaches the end.
 
-`ctx.rollback()` has been removed, as it too is redundant: the application can throw any exception from the lambda to trigger a rollback.
-
-`ctx.getOptional()` has been replaced with `ctx.get()` throwing a `DocumentExistsException`.
-This may be caught, allowing the transaction to continue.
+`ctx.RollbackAsync()` has been removed from the public API, as it too is redundant: the application can throw any exception from the lambda to trigger a rollback.
 
 == Package changes
 
-All classes have changed packages to be compatible with the Java SDK conventions.
+All classes have changed namespaces to be compatible with the .NET SDK conventions.
 
-The simplest way to convert many of the classes to their new locations is to search for `import com.couchbase.transactions.` and replace it with `import com.couchbase.client.java.transactions.`.
+The simplest way to convert many of the classes to their new locations is to search for `using Couchbase.Transactions;` and replace it with `using Couchbase.Client.Transactions;`.
 
 Some additional manual conversion after this may be required.
 
 == Single query transactions
 
-These are now integrated with the existing SDK `QueryOptions`.
+These are now integrated with the transactions object on the cluster.
 
 .Before
-[source,java]
+[source,csharp]
 ----
-SingleQueryTransactionResult sqr = transactions.query("INSERT...");
+SingleQueryTransactionResult sqr = await transactions.QueryAsync<dynamic>("INSERT...");
 ----
 
 .After
-[source,java]
+[source,csharp]
 ----
-include::devguide:example$java/TransactionsMigration.java[tag=single-query,indent=0]
+include::howtos:example$TransactionsExample.cs[tag=querySingle,indent=0]
 ----
 
 Or with configuration:
 
-
 .Before
-[source,java]
+[source,csharp]
 ----
-SingleQueryTransactionResult sqr = transactions.query("INSERT...",
-  SingleQueryTransactionConfigBuilder.create()
-    .durabilityLevel(TransactionDurabilityLevel.MAJORITY));
-
-QueryResult qr = sqr.queryResult();
+SingleQueryTransactionResult sqr = await transactions.QueryAsync<dynamic>("INSERT...",
+  SingleQueryTransactionConfigBuilder.Create()
+    // configure timeouts, durability etc
+);
 ----
 
 .After
-[source,java]
+[source,csharp]
 ----
-include::devguide:example$java/TransactionsMigration.java[tag=single-query-config,indent=0]
+include::howtos:example$TransactionsExample.cs[tag=querySingleConfigured,indent=0]
 ----
 
 == Cleanup
@@ -154,35 +139,25 @@ Previously, lost cleanup would look for expired transactions on the default coll
 Unless a metadata collection was specified, in which case only that collection would be cleaned up.
 
 Now, cleanup is dynamic.
-As transactions are run, the collection where metadata is created for that collection, is added to what we call the 'cleanup set'.
+As transactions are run, the collection where metadata is created for that transaction, is added to what we call the 'cleanup set'.
 This is just the set of collections where cleanup, for this application, is looking for expired transactions.
 
 The intent has always been that users without complex requirements should never need to think about or configure transaction cleanup, and this new dynamic cleanup allows us to be closer still to that goal.
 
 == Naming
 
-All exceptions and events have been renamed to be compliant with the SDK.
-For example, `TransactionFailed` is now `TransactionFailedException`, and `TransactionCleanupAttempt` is now `TransactionCleanupAttemptEvent`.
+Exceptions and events have been renamed, if needed, to be compliant with the SDK.
 
 == Logging
 
-`TransactionFailedException` now exposes the logs directly, rather than containing a nested `TransactionResult`.
+Failure logging remains largely the same, but note that `TransactionFailedException` contains a `Result` property which exposes the transaction `Logs`.
 
-.Before
-[source,java]
+[source,csharp]
 ----
-catch (TransactionFailedException err) {
-    err.result().log().logs().forEach(msg -> logger.warning(msg.toString()));
-}
-----
-
-.After
-[source,java]
-----
-include::devguide:example$java/TransactionsMigration.java[tag=log,indent=0]
+include::howtos:example$TransactionsExample.cs[tag=logging,indent=0]
 ----
 
 == Further Reading
 
 * There's plenty of explanation about how Transactions work in Couchbase in our xref:{version-server}@server:learn:data/transactions.adoc[Transactions documentation].
-* The xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Java SDK transactions documentation].
+* The xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[.NET SDK transactions documentation].
