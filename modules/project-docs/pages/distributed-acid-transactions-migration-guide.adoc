@@ -8,11 +8,11 @@
 
 Couchbase transactions for .NET were originally introduced as a library separate from the main Couchbase .NET SDK.
 
-We subsequently chose to integrate transactions directly into the SDKs with the release of .NET SDK 3.3.0, to make it easier for users to get started.
+We subsequently chose to integrate transactions directly into the SDKs with the release of .NET SDK 3.2.8, to make it easier for users to get started.
 
 This document details the small changes that existing users of the legacy transactions library need to make, to migrate to the SDK-integrated version.
 
-The https://docs-archive.couchbase.com/dotnet-sdk/3.2/project-docs/distributed-transactions-dotnet-release-notes.html[legacy transactions library] will continue to be supported with bugfixes for some time, but new transaction features will only be added to the SDK and it is recommended that all users migrate.
+The https://docs-archive.couchbase.com/dotnet-sdk/3.4/project-docs/distributed-transactions-dotnet-release-notes.html[legacy transactions library] will continue to be supported with bugfixes for some time, but new transaction features will only be added to the SDK and it is recommended that all users migrate.
 
 == Accessing transactions
 
