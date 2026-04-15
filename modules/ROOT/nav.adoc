@@ -79,6 +79,7 @@
 * xref:project-docs:sdk-release-notes.adoc[Release Notes]
 * xref:project-docs:compatibility.adoc[]
 ** xref:project-docs:migrating-sdk-code-to-3.n.adoc[]
+*** xref:project-docs:distributed-acid-transactions-migration-guide.adoc[]
 ** xref:howtos:working-with-collections.adoc[Working with Collections]
 ** xref:project-docs:third-party-integrations.adoc[]
 * xref:project-docs:sdk-full-installation.adoc[]
