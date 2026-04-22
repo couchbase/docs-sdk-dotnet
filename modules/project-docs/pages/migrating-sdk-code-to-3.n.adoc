@@ -1,6 +1,7 @@
 = Migrating to SDK 3 API
 :description: The 3.0 API breaks the existing 2.0 APIs in order to provide a number of improvements. \
 Collections and Scopes are introduced.
+:page-toclevels: 2
 :page-topic-type: concept
 :page-aliases: ROOT:migrate
 
@@ -775,6 +776,10 @@ if (!result.MetaData.Errors.Any()) {
 ----
 
 === Views
+
+// deprecation admonition
+include::{version-common}@sdk:shared:partial$views.adoc[tag=deprecate-sdk]
+
 
 Views have stayed at the `Bucket` level, because it does not have the concept of collections and is scoped at the bucket level on the server as well.
 The API has stayed mostly the same, the most important change is that `staleness` is unified under the `ViewConsistency` enum.
