@@ -27,6 +27,30 @@ any changes to expected behavior are noted in the release notes that follow.
 
 
 
+=== Version 3.9.2 (06 May 2026)
+
+https://packages.couchbase.com/clients/net/3.9/Couchbase-Net-Client-3.9.2.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.9.2[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.9.2[Nuget]
+
+
+==== Fixed Issues
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4195[NCBC-4195]:
+Fixed an issue where an empty `ConnectionPool` would not resize on authenticator rotation.
+
+==== Improvements
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4198[NCBC-4198]:
+Updated Snappier due to vulnerability.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4187[NCBC-4187]:
+Fixed an issue where config versions were sometimes null in logs.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4118[NCBC-4118]:
+`BucketSettings` now only emits properties that were explicitly set when creating or updating buckets, rather than always sending default values.
+
+
 === Version 3.9.1 (08 April 2026)
 
 https://packages.couchbase.com/clients/net/3.9/Couchbase-Net-Client-3.9.1.zip[Download] |
