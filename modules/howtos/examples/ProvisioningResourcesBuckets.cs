@@ -1,16 +1,10 @@
-// Run this using dotnet-script: https://github.com/filipw/dotnet-script
-//
-//      dotnet script ProvisioningResourcesBuckets.csx
-//
-
-#r "nuget: CouchbaseNetClient, 3.4.8"
-
 using System;
 using System.Threading.Tasks;
 using Couchbase;
 using Couchbase.Management.Buckets;
 
-await new ProvisioningResourcesBuckets().ExampleAsync();
+namespace Couchbase.Docs.Examples.Howtos.ProvisioningResourcesBuckets;
+
 
 public class ProvisioningResourcesBuckets
 {

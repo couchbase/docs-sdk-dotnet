@@ -1,10 +1,3 @@
-// Run this using dotnet-script: https://github.com/filipw/dotnet-script
-//
-//      dotnet script N1qlQueries.csx
-//
-
-#r "nuget: CouchbaseNetClient, 3.4.8"
-
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,21 +5,8 @@ using Couchbase;
 using Couchbase.KeyValue;
 using Couchbase.Query;
 
-var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "Administrator", "password");
-var bucket = await cluster.BucketAsync("travel-sample");
-var collection = bucket.DefaultCollection();
+namespace Couchbase.Docs.Examples.Howtos.N1qlQueries;
 
-await new N1qlQueries().PositionalParameterExample(cluster);
-await new N1qlQueries().NamedParameterExample(cluster);
-await new N1qlQueries().ScanConsistencyNotBoundedExample(cluster, collection);
-await new N1qlQueries().ScanConsistencyRequestPlusExample(cluster, collection);
-await new N1qlQueries().ScanConsistencyAtPlusExample(cluster, collection);
-await new N1qlQueries().QueryResultExample(cluster);
-await new N1qlQueries().ExecutionTimeExample(cluster);
-await new N1qlQueries().ClientContextIdExample(cluster);
-await new N1qlQueries().ReadonlyExample(cluster);
-
-await cluster.DisposeAsync();
 public class N1qlQueries
 {
     public async Task ReadonlyExample(ICluster cluster)

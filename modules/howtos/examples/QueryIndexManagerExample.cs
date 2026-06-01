@@ -1,17 +1,11 @@
-// Run this using dotnet-script: https://github.com/filipw/dotnet-script
-//
-//      dotnet script QueryIndexManagerExample.csx
-//
-
-#r "nuget: CouchbaseNetClient, 3.4.8"
-
 using System;
 using System.Threading.Tasks;
 using Couchbase;
 using Couchbase.Management.Query;
 using Couchbase.Core.Exceptions;
 
-await new QueryIndexManagerExample().ExampleAsync();
+namespace Couchbase.Docs.Examples.Howtos.QueryIndexManagerExample;
+
 
 public class QueryIndexManagerExample
 {

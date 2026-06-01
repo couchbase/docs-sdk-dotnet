@@ -1,11 +1,4 @@
-﻿// Run this using dotnet-script: https://github.com/filipw/dotnet-script
-//
-//      dotnet script Auth.csx
-//
-
-#r "nuget: CouchbaseNetClient, 3.9.0"
-
-using System;
+﻿using System;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 using System.Security.Authentication;
@@ -13,8 +6,9 @@ using System.Threading.Tasks;
 using Couchbase;
 using Couchbase.Core.IO.Authentication;
 using Couchbase.Core.IO.Authentication.X509;
+using Couchbase.Core.IO.Authentication.Authenticators;
 
-await new Auth().ExecuteAsync();
+namespace Couchbase.Docs.Examples.Howtos.Auth;
 
 public class Auth
 {
@@ -160,7 +154,7 @@ public class Auth
             newClientCerts.Add(new X509Certificate2("path/to/new-client-cert.pfx", "newCertPassword"));
 
             var newCertFactory = new PredefinedCertificateFactory(newClientCerts);
-            cluster.Authenticator(new CertificateAuthenticator(newCertFactory));
+            ((IClusterAuthenticator)cluster).Authenticator(new CertificateAuthenticator(newCertFactory));
             // end::cert-rotate-manual[]
         }
 
@@ -175,7 +169,7 @@ public class Auth
             // When credentials change, swap in a new authenticator.
             // New connections will use the updated credentials immediately;
             // existing connections continue with the old credentials until recycled.
-            cluster.Authenticator(new PasswordAuthenticator("Administrator", "newPassword"));
+            ((IClusterAuthenticator)cluster).Authenticator(new PasswordAuthenticator("Administrator", "newPassword"));
             // end::swap-authenticator[]
         }
 

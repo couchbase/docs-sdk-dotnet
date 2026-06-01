@@ -1,10 +1,3 @@
-﻿// Run this using dotnet-script: https://github.com/filipw/dotnet-script
-//
-//      dotnet script Collections.csx
-//
-
-#r "nuget: CouchbaseNetClient, 3.4.8"
-
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +5,8 @@ using Couchbase;
 using Couchbase.KeyValue;
 using Couchbase.Management.Collections;
 
-await new CollectionsExample().ExampleAsync();
+namespace Couchbase.Docs.Examples.ConceptDocs.Collections;
+
 
 public class CollectionsExample
 {

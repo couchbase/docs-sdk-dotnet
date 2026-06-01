@@ -2,9 +2,8 @@
 using System.Threading.Tasks;
 
 namespace Couchbase.Net.DevGuide.Cloud;
-// #end::using[]
 
-public class Progam
+public class Program
 {
     public static async Task Main(string[] args)
     {
@@ -16,7 +15,7 @@ class CloudExample
 {
     public async Task Main()
     {
-        // #tag::connect[]
+        // tag::connect[]
         var options = new ClusterOptions
         {
             // Update these credentials for your Capella instance
@@ -34,26 +33,26 @@ class CloudExample
             "couchbases://cb.<your-endpoint>.cloud.couchbase.com",
             options
         );
-        // #end::connect[]
+        // end::connect[]
 
-        // #tag::bucket[]
+        // tag::bucket[]
         // get a bucket reference
         var bucket = await cluster.BucketAsync("travel-sample");
-        // #end::bucket[]
+        // end::bucket[]
 
-        // #tag::collection[]
+        // tag::collection[]
         // get a user-defined collection reference
         var scope = await bucket.ScopeAsync("tenant_agent_00");
         var collection = await scope.CollectionAsync("users");
-        // #end::collection[]
+        // end::collection[]
 
-        // #tag::upsert-get[]
+        // tag::upsert-get[]
         // Upsert Document
         var upsertResult = await collection.UpsertAsync("my-document-key", new { Name = "Ted", Age = 31 });
         using var getResult = await collection.GetAsync("my-document-key");
 
         Console.WriteLine(getResult.ContentAs<dynamic>());
-        // #end::upsert-get[]
+        // end::upsert-get[]
 
         // tag::n1ql-query[]
         // Call the QueryAsync() function on the scope object and store the result.

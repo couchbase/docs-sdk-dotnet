@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Core-SDK documentation snippets (hello-world, concept-docs, and most of
+    howtos + the two referenced devguide files). Target framework and the
+    CouchbaseNetClient reference come from ../Directory.Build.props.
+
+    This is intentionally a broad "snippets" project: it carries every misc
+    dependency the referenced Core snippets need. Encryption and Transactions
+    are split out only because they pull distinct Couchbase.* packages.
+
+    Dependency drivers:
+      MessagePack ........................ Transcoding's custom serializer
+      Newtonsoft.Json .................... Analytics, several samples
+      Couchbase.Extensions.DependencyInjection  the DI / web-startup snippets
+      Microsoft.AspNetCore.App ........... DI / web-startup snippets (Controller, etc.)
+      Microsoft.Extensions.Hosting ....... WebStartupDI
+      Microsoft.Extensions.* + Serilog ... devguide ConnectionBase (base of Analytics)
+
+    Compile items (the converted .cs example files) are added in Phase 1.
+  -->
+  <ItemGroup>
+    <PackageReference Include="MessagePack" Version="3.1.6" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="Couchbase.Extensions.DependencyInjection" Version="3.9.2" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0" />
+    <!-- Pinned to match what CouchbaseNetClient 3.9.0 pulls in (avoids NU1605). -->
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <!--
+    The example .cs files live under modules/<m>/examples (Antora needs them there).
+    Non-recursive globs pick up the loose snippet files without descending into the
+    standalone-project subdirs (Couchbase.Examples.*). Encryption/Transactions files
+    are excluded here because they build in their own projects. devguide is listed
+    explicitly because most of its files are orphaned and out of scope.
+  -->
+  <ItemGroup>
+    <Compile Include="../../modules/hello-world/examples/*.cs" />
+    <Compile Include="../../modules/concept-docs/examples/*.cs" />
+    <Compile Include="../../modules/howtos/examples/*.cs"
+             Exclude="../../modules/howtos/examples/TransactionsExample.cs;../../modules/howtos/examples/EncryptingUsingSdk.cs" />
+    <Compile Include="../../modules/devguide/examples/dotnet/Analytics.cs" />
+    <Compile Include="../../modules/devguide/examples/dotnet/ConnectionBase.cs" />
+    <Compile Include="../../modules/devguide/examples/dotnet/Cloud/Cloud.cs" />
+  </ItemGroup>
+
+</Project>

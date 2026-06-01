@@ -1,16 +1,9 @@
-// Run this using dotnet-script: https://github.com/filipw/dotnet-script
-//
-//      dotnet script ClusterExample.csx
-//
-
-#r "nuget: CouchbaseNetClient, 3.4.8"
-
 using System;
 using System.Threading.Tasks;
 using Couchbase;
 
-await new ClusterExample().ExecuteAsync();
-await new ClusterExample2().ExecuteAsync();
+namespace Couchbase.Docs.Examples.Howtos.ClusterExample;
+
 
 // tag::waitUntilReady[]
 public class ClusterExample

@@ -1,0 +1,31 @@
+<Project>
+
+  <!--
+    Single source of truth for the docs code-example build harness.
+    Every project under examples-build/ inherits these settings.
+    Keep CouchbaseSdkVersion in sync with antora.yml's `sdk_current_version`.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <!-- dotnet-script (.csx) provided these by default; enabling mirrors that so the
+         converted snippets don't need System / Collections.Generic / Linq / Tasks usings. -->
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <!-- Sources live under modules/<m>/examples; each project lists them explicitly. -->
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+
+    <!-- Compile-only harness: these assemblies are never run or shipped. -->
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <IsPackable>false</IsPackable>
+
+    <CouchbaseSdkVersion>3.9.2</CouchbaseSdkVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CouchbaseNetClient" Version="$(CouchbaseSdkVersion)" />
+  </ItemGroup>
+
+</Project>

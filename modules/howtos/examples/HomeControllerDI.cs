@@ -1,13 +1,13 @@
-// Untested
-
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Couchbase.Extensions.DependencyInjection;
 
-namespace sdk_docs_dotnet_web_examples.Controllers
+// The two HomeController variants below are illustrative alternatives shown in the docs.
+// Each lives in its own child namespace so both can keep the name `HomeController`.
+namespace Couchbase.Docs.Examples.Howtos.DependencyInjection.HomeControllerNamed
 {
-    {
-    // #tag::namedbucketprovider[]
+    // tag::namedbucketprovider[]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -27,10 +27,12 @@ namespace sdk_docs_dotnet_web_examples.Controllers
             return View();
         }
     }
-    // #end::namedbucketprovider[]
-    }
-    {
-        // #tag::IMybucketprovider[]
+    // end::namedbucketprovider[]
+}
+
+namespace Couchbase.Docs.Examples.Howtos.DependencyInjection.HomeControllerMyBucket
+{
+    // tag::IMybucketprovider[]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -50,6 +52,5 @@ namespace sdk_docs_dotnet_web_examples.Controllers
             return View();
         }
     }
-        // #end::IMybucketprovider[]
-    }
+    // end::IMybucketprovider[]
 }

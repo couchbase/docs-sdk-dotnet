@@ -1,10 +1,3 @@
-// Run this using dotnet-script: https://github.com/filipw/dotnet-script
-//
-//      dotnet script ErrorHandling.csx
-//
-
-#r "nuget: CouchbaseNetClient, 3.4.8"
-
 using System;
 using System.Threading.Tasks;
 using Couchbase;
@@ -14,7 +7,8 @@ using Couchbase.Core.Exceptions.KeyValue;
 using Couchbase.Core.Retry;
 using Couchbase.KeyValue;
 
-await new ErrorHandling().ExampleAsync();
+namespace Couchbase.Docs.Examples.Howtos.ErrorHandling;
+
 
 public class ErrorHandling
 {

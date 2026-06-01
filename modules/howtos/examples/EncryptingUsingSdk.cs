@@ -1,10 +1,3 @@
-﻿// Run this using dotnet-script: https://github.com/filipw/dotnet-script
-//
-//      dotnet script EncryptingUsingSdk.csx
-//
-
-#r "nuget: Couchbase.Extensions.Encryption, 2.0.0-dp.1"
-
 using System;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -17,7 +10,8 @@ using Couchbase.Encryption.Internal;
 using Couchbase.KeyValue;
 using Newtonsoft.Json.Linq;
 
-await new EncryptingUsingSdk().ExampleAsync();
+namespace Couchbase.Docs.Examples.Howtos.EncryptingUsingSdk;
+
 
 public class EncryptingUsingSdk
 {

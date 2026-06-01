@@ -1,15 +1,9 @@
-﻿// Run this using dotnet-script: https://github.com/filipw/dotnet-script
-//
-//      dotnet script ManagingConnections.csx
-//
-
-#r "nuget: CouchbaseNetClient, 3.2.0"
-
 using System;
 using System.Threading.Tasks;
 using Couchbase;
 
-await new ManagingConnections().RunExample();
+namespace Couchbase.Docs.Examples.Howtos.ManagingConnections;
+
 
 public class ManagingConnections
 {

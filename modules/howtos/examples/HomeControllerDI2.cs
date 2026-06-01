@@ -1,13 +1,11 @@
-// Untested
-
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Couchbase.Extensions.DependencyInjection;
 
-namespace sdk_docs_dotnet_web_examples.Controllers
+namespace Couchbase.Docs.Examples.Howtos.DependencyInjection.HomeControllerCluster
 {
-    {
-    // #tag::IClusterProvider[]
+    // tag::IClusterProvider[]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -27,7 +25,5 @@ namespace sdk_docs_dotnet_web_examples.Controllers
             return View();
         }
     }
-    // #end::IClusterProvider[]
-    }
+    // end::IClusterProvider[]
 }
-

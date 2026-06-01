@@ -1,10 +1,3 @@
-﻿// Run this using dotnet-script: https://github.com/filipw/dotnet-script
-//
-//      dotnet script UserManagementExample.csx
-//
-
-#r "nuget: CouchbaseNetClient, 3.4.8"
-
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +6,8 @@ using Couchbase.Management.Users;
 using Couchbase.Management.Query;
 using Couchbase.Core.Exceptions;
 
-await new UserManagementExample().ExampleAsync();
+namespace Couchbase.Docs.Examples.Howtos.UserManagementExample;
+
 
 public class UserManagementExample
 {

@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Snippets using distributed ACID transactions (Couchbase.Transactions,
+    namespace Couchbase.Client.Transactions). Currently only
+    howtos/TransactionsExample.cs.
+
+    Compile items are added in Phase 1.
+  -->
+  <ItemGroup>
+    <!-- Couchbase.Transactions latest is 3.9.0; it works against CouchbaseNetClient 3.9.2. -->
+    <PackageReference Include="Couchbase.Transactions" Version="3.9.0" />
+    <!-- Pinned to match the version CouchbaseNetClient 3.9.0 pulls in (avoids NU1605). -->
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
+    <!-- The full-logging snippet uses builder.AddConsole() and builder.AddFile(). -->
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.1" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="../../modules/howtos/examples/TransactionsExample.cs" />
+  </ItemGroup>
+
+</Project>

@@ -1,11 +1,3 @@
-﻿// Run this using dotnet-script: https://github.com/filipw/dotnet-script
-//
-//      dotnet script Transcoding.csx
-//
-
-#r "nuget: CouchbaseNetClient, 3.4.8"
-#r "nuget: MessagePack, 2.4.35"
-
 using System;
 using System.Buffers;
 using System.IO;
@@ -19,7 +11,8 @@ using Couchbase.Core.IO.Transcoders;
 using Couchbase.KeyValue;
 using MessagePack;
 
-await new Transcoding().ExecuteAsync();
+namespace Couchbase.Docs.Examples.Howtos.Transcoding;
+
 public class Transcoding
 {
     public async Task ExecuteAsync()
@@ -29,7 +22,7 @@ public class Transcoding
         var scope = await bucket.ScopeAsync("inventory");
         var collection = await scope.CollectionAsync("default");
     
-        // #tag::raw-json-encode[]
+        // tag::raw-json-encode[]
         var userBytes = JsonSerializer.SerializeToUtf8Bytes(new User
         {
             Name = "John Smith",
@@ -37,17 +30,17 @@ public class Transcoding
         }, typeof(User));
 
         await collection.UpsertAsync("john-smith", userBytes, options => options.Transcoder(new RawJsonTranscoder()));
-        // #end::raw-json-encode[]
+        // end::raw-json-encode[]
 
-        // #tag::raw-json-decode[]
+        // tag::raw-json-decode[]
         using var rawJsonDecodeResult =
             await collection.GetAsync("john-smith", options => options.Transcoder(new RawJsonTranscoder()));
 
         var returnedJson = rawJsonDecodeResult.ContentAs<byte[]>();
         var decodedUser = JsonSerializer.Deserialize(returnedJson, typeof(User));
-        // #end::raw-json-decode[]
+        // end::raw-json-decode[]
 
-        // #tag::string[]
+        // tag::string[]
         var docId = "doc";
 
         await collection.UpsertAsync<string>(docId, "hello world",
@@ -61,10 +54,10 @@ public class Transcoding
         using var stringResult = await collection.GetAsync(docId, options => options.Transcoder(new RawStringTranscoder()));
 
         var returnedString = stringResult.ContentAs<string>();
-        // #end::string[]
+        // end::string[]
         Console.WriteLine(returnedString);
 
-        // #tag::binary[]
+        // tag::binary[]
 
         var strBytes = System.Text.Encoding.UTF8.GetBytes("hello world");
 
@@ -73,10 +66,10 @@ public class Transcoding
         using var binaryResult = await collection.GetAsync(docId, options => options.Transcoder(new RawBinaryTranscoder()));
 
         var returnedBinary = binaryResult.ContentAs<byte[]>();
-        // #end::binary[]
+        // end::binary[]
         Console.WriteLine(returnedBinary);
 
-        // #tag::binary-memory[]
+        // tag::binary-memory[]
 
         using var buffer = MemoryPool<byte>.Shared.Rent(16);
         var byteCount = System.Text.Encoding.UTF8.GetBytes("hello world", buffer.Memory.Span);
@@ -88,10 +81,10 @@ public class Transcoding
 
         // Be sure to dispose of the IMemoryOwner<byte> when done, typically via a using statement
         using var binary = binaryMemoryResult.ContentAs<IMemoryOwner<byte>>();
-        // #end::binary-memory[]
+        // end::binary-memory[]
         Console.WriteLine(System.Text.Encoding.UTF8.GetString(binary.Memory.Span));
 
-        // #tag::custom-encode[]
+        // tag::custom-encode[]
         var serializer = new DotnetJsonSerializer();
         var transcoder = new JsonTranscoder(serializer);
 
@@ -102,15 +95,15 @@ public class Transcoding
         };
 
         await collection.UpsertAsync("john-smith", user, options => options.Transcoder(transcoder));
-        // #end::custom-encode[]
+        // end::custom-encode[]
 
-        // #tag::custom-decode[]
+        // tag::custom-decode[]
 
         using var customDecodeResult = await collection.GetAsync("john-smith", options => options.Transcoder(transcoder));
         var returnedUser = customDecodeResult.ContentAs<User>();
-        // #end::custom-decode[]
+        // end::custom-decode[]
 
-        // #tag::global[]
+        // tag::global[]
         var newClusterOptions = new ClusterOptions().WithSerializer(new DotnetJsonSerializer());
         var newCluster = await Cluster.ConnectAsync("couchbase://your-ip", newClusterOptions);
 
@@ -120,9 +113,9 @@ public class Transcoding
         {
             Console.WriteLine(result);
         }
-        // #end::global[]
+        // end::global[]
 
-        // #tag::msgpack-encode[]
+        // tag::msgpack-encode[]
         var msgpackSerializer = new MsgPackSerializer();
         var msgpackTranscoder = new MsgPackTranscoder(msgpackSerializer);
 
@@ -133,13 +126,13 @@ public class Transcoding
         };
 
         await collection.UpsertAsync("john-smith", user2, options => options.Transcoder(msgpackTranscoder));
-        // #end::msgpack-encode[]
+        // end::msgpack-encode[]
 
-        // #tag::msgpack-decode[]
+        // tag::msgpack-decode[]
 
         using var msgpackResult = await collection.GetAsync("john-smith", options => options.Transcoder(msgpackTranscoder));
         var msgpackReturnedUser = msgpackResult.ContentAs<User2>();
-        // #end::msgpack-decode[]
+        // end::msgpack-decode[]
     }
 }
 
@@ -150,7 +143,7 @@ public class User
     public int Age { get; set; }
 }
 
-//#tag::msg-pack-poco
+//tag::msg-pack-poco
 [MessagePackObject]
 public class User2
 {
@@ -160,9 +153,9 @@ public class User2
     [Key(1)]
     public int Age { get; set; }
 }
-//#end::msg-pack-poco
+//end::msg-pack-poco
 
-//#tag::msgpack-serializer[]
+//tag::msgpack-serializer[]
 public class MsgPackSerializer : ITypeSerializer
 {
     public T Deserialize<T>(ReadOnlyMemory<byte> buffer)
@@ -190,9 +183,9 @@ public class MsgPackSerializer : ITypeSerializer
         return new ValueTask(MessagePackSerializer.SerializeAsync(stream, obj, null, cancellationToken));
     }
 }
-//#end::msgpack-serializer[]
+//end::msgpack-serializer[]
 
-//#tag::msgpack-transcoder[]
+//tag::msgpack-transcoder[]
 public class MsgPackTranscoder : BaseTranscoder
 {
     public MsgPackTranscoder() : this(new MsgPackSerializer())
@@ -208,7 +201,7 @@ public class MsgPackTranscoder : BaseTranscoder
     {
         var typeCode = Type.GetTypeCode(typeof(T));
         var dataFormat = DataFormat.Binary;
-        return new Flags { Compression = Compression.None, DataFormat = dataFormat, TypeCode = typeCode };
+        return new Flags { Compression = Couchbase.Core.IO.Operations.Compression.None, DataFormat = dataFormat, TypeCode = typeCode };
     }
 
     public override void Encode<T>(Stream stream, T value, Flags flags, OpCode opcode)
@@ -221,9 +214,9 @@ public class MsgPackTranscoder : BaseTranscoder
         return Serializer.Deserialize<T>(buffer);
     }
 }
-//#end::msgpack-transcoder[]
+//end::msgpack-transcoder[]
 
-//#tag::dotnet-serializer[]
+//tag::dotnet-serializer[]
 public class DotnetJsonSerializer : ITypeSerializer
 {
     public T Deserialize<T>(ReadOnlyMemory<byte> buffer)
@@ -241,7 +234,7 @@ public class DotnetJsonSerializer : ITypeSerializer
 
     public ValueTask<T> DeserializeAsync<T>(Stream stream, CancellationToken cancellationToken = default)
     {
-        return JsonSerializer.DeserializeAsync<T>(stream, null, cancellationToken);
+        return JsonSerializer.DeserializeAsync<T>(stream, (JsonSerializerOptions)null, cancellationToken);
     }
 
     public void Serialize(Stream stream, object obj)
@@ -252,7 +245,7 @@ public class DotnetJsonSerializer : ITypeSerializer
 
     public ValueTask SerializeAsync(Stream stream, object obj, CancellationToken cancellationToken = default)
     {
-        return new ValueTask(JsonSerializer.SerializeAsync(stream, obj, null, cancellationToken));
+        return new ValueTask(JsonSerializer.SerializeAsync(stream, obj, (JsonSerializerOptions)null, cancellationToken));
     }
 }
-//#end::dotnet-serializer[]
+//end::dotnet-serializer[]

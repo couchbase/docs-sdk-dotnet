@@ -1,10 +1,3 @@
-// Run this using dotnet-script: https://github.com/filipw/dotnet-script
-//
-//      dotnet script CollectionManager.csx
-//
-
-#r "nuget: CouchbaseNetClient, 3.4.8"
-
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +8,8 @@ using Couchbase.Management.Collections;
 // Stops ambiguous reference errors
 using ScopeNotFoundException = Couchbase.Core.Exceptions.ScopeNotFoundException;
 
-await new CollectionManager().ExecuteAsync();
+namespace Couchbase.Docs.Examples.Howtos.CollectionManager;
+
 public class CollectionManager
 {
     public async Task ExecuteAsync()

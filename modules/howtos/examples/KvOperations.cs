@@ -1,17 +1,11 @@
-// Run this using dotnet-script: https://github.com/filipw/dotnet-script
-//
-//      dotnet script KvOperations.csx
-//
-
-#r "nuget: CouchbaseNetClient, 3.4.8"
-
 using System;
 using System.Threading.Tasks;
 using Couchbase;
 using Couchbase.KeyValue;
 using Couchbase.Core.Exceptions.KeyValue;
 
-await new KvOperations().ExecuteAsync();
+namespace Couchbase.Docs.Examples.Howtos.KvOperations;
+
 public class KvOperations
 {
     public async Task ExecuteAsync()

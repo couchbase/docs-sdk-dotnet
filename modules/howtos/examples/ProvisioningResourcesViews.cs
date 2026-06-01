@@ -1,17 +1,11 @@
-// Run this using dotnet-script: https://github.com/filipw/dotnet-script
-//
-//      dotnet script ProvisioningResourcesViews.csx
-//
-
-#r "nuget: CouchbaseNetClient, 3.4.8"
-
 using System;
 using System.Threading.Tasks;
 using Couchbase;
 using Couchbase.Views;
 using Couchbase.Management.Views;
 
-await new ProvisioningResourcesViews().ExampleAsync();
+namespace Couchbase.Docs.Examples.Howtos.ProvisioningResourcesViews;
+
 
 public class ProvisioningResourcesViews
 {

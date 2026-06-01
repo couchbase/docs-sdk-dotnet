@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace CouchbaseDI
+namespace Couchbase.Docs.Examples.Howtos.DependencyInjection.WebStartup
 {
     public class Startup
     {
@@ -17,7 +17,7 @@ namespace CouchbaseDI
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        // #tag::configureservices[]
+        // tag::configureservices[]
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
@@ -25,10 +25,10 @@ namespace CouchbaseDI
             services.AddCouchbase(Configuration.GetSection("Couchbase"));
             services.AddCouchbaseBucket<INamedBucketProvider>("");
         }
-          // #end::configureservices[]
+          // end::configureservices[]
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        // #tag::configure[]
+        // tag::configure[]
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime applicationLifetime)
         {
             if (env.IsDevelopment())
@@ -53,6 +53,6 @@ namespace CouchbaseDI
                 }
             );
         }
-        // #end::configure[]
+        // end::configure[]
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Couchbase;
 using Couchbase.KeyValue;
 using Couchbase.Query;
 using Couchbase.Client.Transactions;
@@ -12,7 +13,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 // end::imports[]
 
-namespace Couchbase.Transactions.Examples
+namespace CouchbaseDocs.Examples.Howtos.TransactionsExample
 {
     class Program : IDisposable
     {
@@ -32,14 +33,15 @@ namespace Couchbase.Transactions.Examples
 
         static async Task Main(string[] args)
         {
-            // #tag::init[]
-            
+            // tag::init[]
+            var cluster = await Cluster.ConnectAsync("couchbase://your-ip", "Administrator", "password").ConfigureAwait(false);
             var bucket = await cluster.BucketAsync("default").ConfigureAwait(false);
-            var collection = await bucket.ScopeAsync("inventory").CollectionAsync("airport").ConfigureAwait(false);
+            var scope = await bucket.ScopeAsync("inventory").ConfigureAwait(false);
+            var collection = await scope.CollectionAsync("airport").ConfigureAwait(false);
 
             // Use the cluster's Transactions object
             var transactions = cluster.Transactions;
-            // #end::init[]
+            // end::init[]
 
             using var program = new Program(cluster, bucket, collection, transactions);
 
@@ -49,7 +51,7 @@ namespace Couchbase.Transactions.Examples
 
         static async void Config()
         {
-            // #tag::config[]
+            // tag::config[]
             var transactionsConfig = TransactionsConfigBuilder.Create()
                 .DurabilityLevel(DurabilityLevel.PersistToMajority)
                 .Build();
@@ -60,11 +62,11 @@ namespace Couchbase.Transactions.Examples
                 TransactionsConfig = transactionsConfig,
             };
             var cluster = await Cluster.ConnectAsync("couchbase://your-ip", options).ConfigureAwait(false);
-            // #end::config[]
+            // end::config[]
         }
         static async void ConfigExpired()
         {
-            // #tag::config-expiration[]
+            // tag::config-expiration[]
             var transactionsConfig = TransactionsConfigBuilder.Create()
                 .ExpirationTime(TimeSpan.FromSeconds(120))
                 .Build();
@@ -77,12 +79,12 @@ namespace Couchbase.Transactions.Examples
             var cluster = await Cluster.ConnectAsync("couchbase://your-ip", options).ConfigureAwait(false);
             // the transactions associated with this cluster will now expire in 120 seconds.
             var transactions = cluster.Transactions;
-            // #end::config-expiration[]
+            // end::config-expiration[]
         }
 
         static async void ConfigCleanup(byte[] encoded)
         {
-            // #tag::config-cleanup[]
+            // tag::config-cleanup[]
             var cleanupConfig = TransactionCleanupConfigBuilder.Create()
                 .CleanupClientAttempts(false)
                 .CleanupLostAttempts(false)
@@ -98,7 +100,7 @@ namespace Couchbase.Transactions.Examples
                 TransactionsConfig = transactionsConfig,
             };
             var cluster = await Cluster.ConnectAsync("couchbase://your-ip", options).ConfigureAwait(false);
-            // #end::config-cleanup[]
+            // end::config-cleanup[]
         }
         async Task CreateSimpleAsync()
         {
@@ -118,7 +120,7 @@ namespace Couchbase.Transactions.Examples
 
         async Task CreateAsync()
         {
-            // #tag::create[]
+            // tag::create[]
             try
             {
                 await _transactions.RunAsync(async (ctx)=>
@@ -144,12 +146,12 @@ namespace Couchbase.Transactions.Examples
                 Console.Error.WriteLine("Transaction did not reach commit point");
                 Console.Error.WriteLine(e);
             }
-            // #end::create[]
+            // end::create[]
         }
 
         async Task Examples()
         {
-            // #tag::examples[]
+            // tag::examples[]
             try
             {
                 var result = await _transactions.RunAsync(async (ctx) =>
@@ -184,34 +186,34 @@ namespace Couchbase.Transactions.Examples
                 Console.WriteLine("Transaction did not reach commit point");
                 Console.WriteLine(e);
             }
-            // #end::examples[]
+            // end::examples[]
         }
 
         private async Task InsertAsync()
         {
-            // #tag::insert[]
+            // tag::insert[]
             await _transactions.RunAsync(async ctx =>
             {
                 var insertedDoc = await ctx.InsertAsync(_collection, "docId", new { }).ConfigureAwait(false);
             }).ConfigureAwait(false);
 
-            // #end::insert[]
+            // end::insert[]
         }
 
         private async Task GetAsync()
         {
-            // #tag::get[]
+            // tag::get[]
             await _transactions.RunAsync(async ctx =>
             {
                 var docId = "a-doc";
                 var docOpt = await ctx.GetAsync(_collection, docId).ConfigureAwait(false);
             }).ConfigureAwait(false);
-            // #end::get[]
+            // end::get[]
         }
 
         private async Task GetReadOwnWritesAsync()
         {
-            // #tag::getReadOwnWrites[]
+            // tag::getReadOwnWrites[]
             await _transactions.RunAsync(async ctx =>
             {
                 var docId = "docId";
@@ -219,12 +221,12 @@ namespace Couchbase.Transactions.Examples
                 var doc = await ctx.GetAsync(_collection, docId).ConfigureAwait(false);
                 Console.WriteLine((object) doc.ContentAs<dynamic>());
             }).ConfigureAwait(false);
-            // #end::getReadOwnWrites[]
+            // end::getReadOwnWrites[]
         }
 
         async Task ReplaceAsync()
         {
-            // #tag::replace[]
+            // tag::replace[]
             await _transactions.RunAsync(async ctx =>
             {
                 var anotherDoc = await ctx.GetAsync(_collection, "anotherDoc").ConfigureAwait(false);
@@ -232,23 +234,23 @@ namespace Couchbase.Transactions.Examples
                 content.put("transactions", "are awesome");
                 _ = await ctx.ReplaceAsync(anotherDoc, content);
             }).ConfigureAwait(false);
-            // #end::replace[]
+            // end::replace[]
         }
 
         private async Task RemoveAsync()
         {
-            // #tag::remove[]
+            // tag::remove[]
             await _transactions.RunAsync(async ctx =>
             {
                 var anotherDoc = await ctx.GetAsync(_collection, "anotherDoc").ConfigureAwait(false);
                 await ctx.RemoveAsync(anotherDoc).ConfigureAwait(false);
             }).ConfigureAwait(false);
-            // #end::remove[]
+            // end::remove[]
         }
 
         private async Task CommitAsync()
         {
-            // #tag::commit[]
+            // tag::commit[]
             var result = await _transactions.RunAsync(async (ctx) =>
             {
                 var doc = await ctx.GetAsync(_collection, "anotherDoc").ConfigureAwait(false);
@@ -257,13 +259,13 @@ namespace Couchbase.Transactions.Examples
 
                 await ctx.ReplaceAsync(doc, content).ConfigureAwait(false);
             }).ConfigureAwait(false);
-            // #end::commit[]
+            // end::commit[]
         }
 
 
         public async Task PlayerHitsMonster(string actionUuid, int damage, string playerId, string monsterId)
         {
-            // #tag::full[]
+            // tag::full[]
             try
             {
                 await _transactions.RunAsync(async (ctx) =>
@@ -337,7 +339,7 @@ namespace Couchbase.Transactions.Examples
                 // So, we will just log the error
                 _logger.LogWarning("Transaction did not reach commit:{0}{1}", Environment.NewLine, e);
             }
-            // #end::full[]
+            // end::full[]
 
             _logger.LogInformation("Transaction is complete");
         }
@@ -349,7 +351,7 @@ namespace Couchbase.Transactions.Examples
 
         private async Task Rollback()
         {
-            // #tag::rollback[]
+            // tag::rollback[]
             const int costOfItem = 10;
             await _transactions.RunAsync(async (ctx) => {
                 var customer = await ctx.GetAsync(_collection, "customer-name").ConfigureAwait(false);
@@ -362,7 +364,7 @@ namespace Couchbase.Transactions.Examples
                 // else continue transaction
                 //...
             }).ConfigureAwait(false);
-            // #end::rollback[]
+            // end::rollback[]
         }
         // tag::rollback-cause[]
         public class BalanceInsufficientException : Exception { }
@@ -397,7 +399,7 @@ namespace Couchbase.Transactions.Examples
 
         async Task CompleteErrorHandling()
         {
-            // #tag::full-error-handling[]
+            // tag::full-error-handling[]
             try
             {
                 var result = await _transactions.RunAsync(async (ctx) => {
@@ -442,12 +444,14 @@ namespace Couchbase.Transactions.Examples
                 Console.Error.WriteLine("Transaction failed with TransactionFailed, logs:");
                 Console.Error.WriteLine(err);
             }
-            // #end::full-error-handling[]
+            // end::full-error-handling[]
         }
 
         async Task LogOnFailure()
         {
-            // #tag::logging[]
+            ICluster cluster = null;
+            var transactions = cluster.Transactions;
+            // tag::logging[]
             try
             {
                 var result = await transactions.RunAsync(async ctx => {
@@ -463,12 +467,12 @@ namespace Couchbase.Transactions.Examples
                     Console.Error.WriteLine(logLine);
                 }
             }
-            // #end::logging[]
+            // end::logging[]
         }
 
         async Task CompleteLogging()
         {
-            // #tag::full-logging[]
+            // tag::full-logging[]
             //Logging dependencies
             var services = new ServiceCollection();
             services.AddLogging(builder =>
@@ -510,7 +514,7 @@ namespace Couchbase.Transactions.Examples
                 Console.Error.WriteLine(err);
             }
         } 
-        // #end::full-logging[]
+        // end::full-logging[]
 
         async Task QueryExamples()
         {
@@ -658,10 +662,10 @@ namespace Couchbase.Transactions.Examples
                 // with the Builder pattern.
                 await transactions.QueryAsync<object>(bulkLoadStatement, SingleQueryTransactionConfigBuilder.Create()
                     // Single query transactions will often want to increase the default timeout
-                    .ExpirationTime(TimeSpan.FromSeconds(360)));
+                    .Timeout(TimeSpan.FromSeconds(360)));
 
                 // using the lambda style
-                await transactions.QueryAsync<object>(bulkLoadStatement, config => config.ExpirationTime(TimeSpan.FromSeconds(360)));
+                await transactions.QueryAsync<object>(bulkLoadStatement, config => config.Timeout(TimeSpan.FromSeconds(360)));
                 // end::querySingleConfigured[]
             }
 
@@ -705,11 +709,11 @@ namespace Couchbase.Transactions.Examples
                     Password = "Administrator",
                     TransactionsConfig = transactionsConfig,
                 };
-                var cluster = await Cluster.ConnectAsync("couchbase://your-ip", options).ConfigureAwait(false);
-                
+                var metadataCluster = await Cluster.ConnectAsync("couchbase://your-ip", options).ConfigureAwait(false);
+
                 // now all transactions using the Transactions in this cluster will use the
                 // specified keyspace for the metadata.
-                var transactionsWithCustomMetadataCollection = cluster.Transactions;
+                var transactionsWithCustomMetadataCollection = metadataCluster.Transactions;
                 // end::custom-metadata[]
             }
         }

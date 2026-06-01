@@ -1,15 +1,16 @@
-// Run this using dotnet-script: https://github.com/filipw/dotnet-script
-//
-//      dotnet script SubDocument.csx
-//
-
-#r "nuget: CouchbaseNetClient, 3.4.8"
-
+using System;
 using System.Threading.Tasks;
 using Couchbase;
 using Couchbase.KeyValue;
+using static System.Console;
 
-var cluster = await Cluster.ConnectAsync(
+namespace Couchbase.Docs.Examples.Howtos.SubDocument;
+
+internal static class SubDocumentExample
+{
+    static async Task Run()
+    {
+        var cluster = await Cluster.ConnectAsync(
     "couchbase://your-ip",
     "Administrator", "password");
 var bucket =  await cluster.BucketAsync("travel-sample");
@@ -39,39 +40,39 @@ await _collection.UpsertAsync("customer123", document);
 
 {
     Console.WriteLine("get:");
-    // #tag::get[]
+    // tag::get[]
     using var result = await _collection.LookupInAsync("customer123", specs =>
         specs.Get("addresses.delivery.country")
     );
 
     string country = result.ContentAs<string>(0);
     WriteLine(country);
-    // #end::get[]
+    // end::get[]
 }
 
 {
     Console.WriteLine("insert:");
-    // #tag::insert[]
+    // tag::insert[]
     await _collection.MutateInAsync("customer123", specs =>
         specs.Insert("email", "dougr96@hotmail.com")
     );
-    // #end::insert[]
+    // end::insert[]
 }
 /* Broken, reinstate when 3.4.9 releases (NCBC-3465)
 {
     Console.WriteLine("exists:");
-    // #tag::exists[]
+    // tag::exists[]
     var result = await _collection.LookupInAsync("customer123", specs =>
         specs.Exists("addresses.delivery.does_not_exist")
     );
 
     bool exists = result.ContentAs<bool>(0);
-    // #end::exists[]
+    // end::exists[]
 }
 
 {
     Console.WriteLine("combine:");
-    // #tag::combine[]
+    // tag::combine[]
     var result = await _collection.LookupInAsync("customer123", specs => {
         specs.Get("addresses.delivery.country");
         specs.Exists("addresses.delivery.does_not_exist");
@@ -79,58 +80,58 @@ await _collection.UpsertAsync("customer123", document);
 
     string country = result.ContentAs<string>(0);
     bool exists = result.ContentAs<bool>(1);
-    // #end::combine[]
+    // end::combine[]
 }
 */
 {
     Console.WriteLine("upsert:");
-    // #tag::upsert[]
+    // tag::upsert[]
     await _collection.MutateInAsync("customer123", specs =>
         specs.Upsert("email", "dougr96@hotmail.com")
     );
-    // #end::upsert[]
+    // end::upsert[]
 }
 
 {
     Console.WriteLine("multi:");
-    // #tag::multi[]
+    // tag::multi[]
     await _collection.MutateInAsync("customer123", specs => {
         specs.Remove("addresses.billing");
         specs.Replace("email", "dougr96@hotmail.com");
     });
-    // #end::multi[]
+    // end::multi[]
 }
 
 {
     Console.WriteLine("array-append:");
-    // #tag::array-append[]
+    // tag::array-append[]
     await _collection.MutateInAsync("customer123", specs =>
         specs.ArrayAppend("purchases.complete", new [] {777})
     );
     // purchases.complete is now [339, 976, 442, 666, 777]
-    // #end::array-append[]
+    // end::array-append[]
 }
 
 {
     Console.WriteLine("array-prepend:");
-    // #tag::array-prepend[]
+    // tag::array-prepend[]
     await _collection.MutateInAsync("customer123", specs =>
         specs.ArrayPrepend("purchases.abandoned", new [] {18})
     );
     // purchases.abandoned is now [18, 157, 49, 999]
-    // #end::array-prepend[]
+    // end::array-prepend[]
 }
 
 {
     Console.WriteLine("array-create:");
-    // #tag::array-create[]
+    // tag::array-create[]
     await _collection.UpsertAsync("my_array", new object[] {});
 
     await _collection.MutateInAsync("my_array", specs =>
         specs.ArrayAppend("", new [] {"some element"})
     );
     // the document my_array is now ["some element"]
-    // #end::array-create[]
+    // end::array-create[]
 }
 
 await _collection.UpsertAsync("some_doc", 
@@ -140,34 +141,34 @@ await _collection.UpsertAsync("some_doc",
 
 {
     Console.WriteLine("array-upsert:");
-    // #tag::array-upsert[]
+    // tag::array-upsert[]
     await _collection.MutateInAsync("some_doc", specs =>
         specs.ArrayAppend("some.array", new [] {"hello world"}, createPath: true)
     );
-    // #end::array-upsert[]
+    // end::array-upsert[]
 }
 
 {
     Console.WriteLine("array-unique:");
-    // #tag::array-unique[]
+    // tag::array-unique[]
     await _collection.MutateInAsync("customer123", specs =>
         specs.ArrayAddUnique("purchases.complete", 95)
     );
-    // #end::array-unique[]
+    // end::array-unique[]
 }
 
 {
     Console.WriteLine("array-insert:");
-    // #tag::array-insert[]
+    // tag::array-insert[]
     await _collection.MutateInAsync("some_doc", specs =>
         specs.ArrayInsert("some.array[1]", new[] {"cruel"})
     );
-    // #end::array-insert[]
+    // end::array-insert[]
 }
 
 {
     Console.WriteLine("counter-inc:");
-    // #tag::counter-inc[]
+    // tag::counter-inc[]
     ulong increment = 1;
     var result = await _collection.MutateInAsync("customer123", specs =>
         specs.Increment("logins", increment)
@@ -175,12 +176,12 @@ await _collection.UpsertAsync("some_doc",
 
     // Counter operations return the updated count
     var count = result.ContentAs<long>(0);
-    // #end::counter-inc[]
+    // end::counter-inc[]
 }
 
 {
     Console.WriteLine("counter-dec:");
-    // #tag::counter-dec[]
+    // tag::counter-dec[]
     ulong decrement = 150;
     await _collection.UpsertAsync("player432", new { gold = 1000 });
 
@@ -189,21 +190,21 @@ await _collection.UpsertAsync("some_doc",
     );
 
     var count = result.ContentAs<long>(0);
-    // #end::counter-dec[]
+    // end::counter-dec[]
 }
 
 {
     Console.WriteLine("create-path:");
-    // #tag::create-path[]
+    // tag::create-path[]
     await _collection.MutateInAsync("customer123", specs =>
         specs.Upsert("level_0.level_1.foo.bar.phone", new { num = "311-555-0101", ext = 16 }, createPath: true)
     );
-    // #end::create-path[]
+    // end::create-path[]
 }
 
 async Task Concurrent() {
     Console.WriteLine("concurrent:");
-    // #tag::concurrent[]
+    // tag::concurrent[]
     // thread one
     await _collection.MutateInAsync("customer123",
         specs => specs.ArrayAppend("purchases.complete", 99));
@@ -211,21 +212,23 @@ async Task Concurrent() {
     // thread two
     await _collection.MutateInAsync("customer123",
         specs => specs.ArrayAppend("purchases.abandoned", 101));
-    // #end::concurrent[]
+    // end::concurrent[]
 }
 
 await Concurrent();
     
 async Task CasAsync() {
     Console.WriteLine("cas:");
-    // #tag::cas[]
+    // tag::cas[]
     using var player = await _collection.GetAsync("player432");
     ulong decrement = 150;
     await _collection.MutateInAsync("player432",
         specs => specs.Decrement("gold", decrement),
         options => options.Cas(player.Cas)
     );
-    // #end::cas[]
+    // end::cas[]
 }
 
 await CasAsync();
+    }
+}
