@@ -235,6 +235,28 @@ smoke-tests are wanted later they can be reintroduced as an optional, separate j
 5. **Version sync** — `Directory.Build.props` `CouchbaseSdkVersion` should track
    `antora.yml`'s `sdk_current_version`. Optional: a tiny CI check asserting they match.
 
+### Phases 2–4 status — DONE
+- **Phase 2:** all 124 `example$*.csx` doc includes rewritten to `.cs`; tag references
+  validated (193 checked). 4 pre-existing broken includes documented below.
+- **Phase 3:** the 5 cross-platform sample apps retargeted to net10 + switched from a local
+  SDK source `ProjectReference` to the `CouchbaseNetClient` package, added to the solution
+  (search sample's vector-query API drift fixed). `WindowsOnly/WindowsOnly.sln` isolates the
+  full-framework log4net sample (kept in place so its includes still resolve).
+  `.github/workflows/compile-samples.yml` added (Linux/Windows/macOS + Windows-only job).
+- **Phase 4:** docker/bats live-cluster harness, old workflow, and dead build files
+  (`DevGuide`/`Cloud` projects, legacy 2.x `FieldEncryption*`) deleted. README updated.
+
+**Whole-solution build: green on net10, 0 errors.**
+
+#### Remaining follow-ups (need a human/editorial decision)
+- 4 **pre-existing** broken doc includes (tags/file that never existed): `encrypting_using_sdk_6`,
+  `encrypting_using_sdk_7`, `config_warn`, and `concept-docs:example$TransactionsExample.cs`.
+- `modules/hello-world/pages/platform-help.adoc` still describes the removed `dotnet script`
+  flow — needs an editorial rewrite.
+- `antora.yml` `sdk_current_version` is still `3.9.0` while the build pins `3.9.2`.
+- NU1902/NU1904 vulnerability advisories on some transitive packages.
+- ~20 orphaned (unreferenced) devguide `.cs` examples remain on disk — optional deletion.
+
 ### Phase 1 status — DONE (all 24 referenced examples compile on net10, 0 errors)
 - 24 referenced `.csx`/`.cs` examples converted to plain `.cs`: script headers + `#r` stripped,
   per-file namespaces (`Couchbase.Docs.Examples.<Module>.<File>`), tags normalized.
