@@ -18,13 +18,13 @@ Access a non-default collection, in the default scope, with:
 
 [source,csharp]
 ----
-include::example$Collections.csx[tag=collections_1,indent=0]
+include::example$Collections.cs[tag=collections_1,indent=0]
 ----
 
 And for a non-default scope:
 [source,charp]
 ----
-include::example$Collections.csx[tag=collections_2,indent=0]
+include::example$Collections.cs[tag=collections_2,indent=0]
 ----
 
 

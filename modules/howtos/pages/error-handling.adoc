@@ -140,7 +140,7 @@ If you are certain that you are only selecting data, you can manually tell the c
 
 [source,csharp]
 ----
-include::example$ErrorHandling.csx[tag=readonly,indent=0]
+include::example$ErrorHandling.cs[tag=readonly,indent=0]
 ----
 
 === RetryStrategy and RetryReasons
@@ -180,7 +180,7 @@ In this case you can either propagate the `CouchbaseException` up your call stac
 
 [source,csharp]
 ----
-include::example$ErrorHandling.csx[tag=getfetch,indent=0]
+include::example$ErrorHandling.cs[tag=getfetch,indent=0]
 ----
 
 A document not being present might be an indication that you need to create it. 
@@ -188,7 +188,7 @@ In this case you can catch it explicitly and handle it, while re-throwing all ot
 
 [source,csharp]
 ----
-include::example$ErrorHandling.csx[tag=getcatch,indent=0]
+include::example$ErrorHandling.cs[tag=getcatch,indent=0]
 ----
 
 Please refer to each individual method (https://docs.couchbase.com/sdk-api/couchbase-net-client/[API docs]) for more information about which exceptions are thrown on top of the `TimeoutException` and `RequestCanceledException`.
@@ -200,7 +200,7 @@ As an example, in your application you know that a particular document is only e
 
 [source,csharp]
 ----
-include::example$ErrorHandling.csx[tag=tryupsert,indent=0]
+include::example$ErrorHandling.cs[tag=tryupsert,indent=0]
 ----
 
 This code tries to upsert the document with a maximum of 10 attempts. 
@@ -215,14 +215,14 @@ A custom `RetryStrategy` can be provided both at the ClusterOptions level  (so i
 
 [source,csharp]
 ----
-include::example$ErrorHandling.csx[tag=customglobal,indent=0]
+include::example$ErrorHandling.cs[tag=customglobal,indent=0]
 ----
 
 Or it can be applied on a per-request basis:
 
 [source,csharp]
 ----
-include::example$ErrorHandling.csx[tag=customreq,indent=0]
+include::example$ErrorHandling.cs[tag=customreq,indent=0]
 ----
 
 Both approaches are valid, although we recommend for most use cases to stick with the defaults and only to override it on a per requests basis.
@@ -236,7 +236,7 @@ In practice, it should look something like this:
 
 [source,csharp]
 ----
-include::example$ErrorHandling.csx[tag=customclass,indent=0]
+include::example$ErrorHandling.cs[tag=customclass,indent=0]
 ----
 
 Importantly, do not omit the `return base.RetryAfter(request, reason);` as a fallback so that all other cases are handled for you.
@@ -245,7 +245,7 @@ Implementing a concrete example, there is a chance that you are using a `Circuit
 
 [source,csharp]
 ----
-include::example$ErrorHandling.csx[tag=failfastcircuit,indent=0]
+include::example$ErrorHandling.cs[tag=failfastcircuit,indent=0]
 ----
 
 The `RetryAction` indicates what should be done with the request: if you return a `RetryAction.NoRetry()`, the orchestrator will cancel the request, resulting in a `RequestCanceledException`. 

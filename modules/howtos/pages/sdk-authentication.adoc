@@ -17,7 +17,7 @@ Uses SASL (PLAIN over TLS, or SCRAM-SHA1 without TLS) for Key-Value operations, 
 
 [source,csharp]
 ----
-include::example$Auth.csx[tag=password,indent=0]
+include::example$Auth.cs[tag=password,indent=0]
 ----
 
 Under the hood, `WithPasswordAuthentication` creates a `PasswordAuthenticator` and sets it through `options`.
@@ -25,7 +25,7 @@ You can also create and pass an authenticator directly.
 
 [source,csharp]
 ----
-include::example$Auth.csx[tag=password-authenticator,indent=0]
+include::example$Auth.cs[tag=password-authenticator,indent=0]
 ----
 
 === Migrating from the Old API
@@ -35,14 +35,14 @@ The old properties still work but are marked `[Obsolete]`.
 
 [source,csharp]
 ----
-include::example$Auth.csx[tag=password-before,indent=0]
+include::example$Auth.cs[tag=password-before,indent=0]
 ----
 
 becomes:
 
 [source,csharp]
 ----
-include::example$Auth.csx[tag=password-after,indent=0]
+include::example$Auth.cs[tag=password-after,indent=0]
 ----
 
 
@@ -54,7 +54,7 @@ The SDK uses `CertificateAuthenticator` to hold the client certificate factory.
 
 [source,csharp]
 ----
-include::example$Auth.csx[tag=cert,indent=0]
+include::example$Auth.cs[tag=cert,indent=0]
 ----
 
 `WithCertificateAuthentication()` automatically sets `EnableTls = true`.
@@ -69,14 +69,14 @@ Replace `WithX509CertificateFactory()` with `WithCertificateAuthentication()`:
 
 [source,csharp]
 ----
-include::example$Auth.csx[tag=cert-before,indent=0]
+include::example$Auth.cs[tag=cert-before,indent=0]
 ----
 
 becomes:
 
 [source,csharp]
 ----
-include::example$Auth.csx[tag=cert-after,indent=0]
+include::example$Auth.cs[tag=cert-after,indent=0]
 ----
 
 
@@ -90,7 +90,7 @@ In environments where client certificates rotate periodically, you have two opti
 
 [source,csharp]
 ----
-include::example$Auth.csx[tag=cert-rotating,indent=0]
+include::example$Auth.cs[tag=cert-rotating,indent=0]
 ----
 
 When the factory detects new certificates (via its `HasUpdates` property), the SDK picks them up automatically for new KV connections and reconfigures the HTTP handler.
@@ -101,7 +101,7 @@ If you need explicit control over when certificates rotate, use `cluster.Authent
 
 [source,csharp]
 ----
-include::example$Auth.csx[tag=cert-rotate-manual,indent=0]
+include::example$Auth.cs[tag=cert-rotate-manual,indent=0]
 ----
 
 You may experience brief disruptions to HTTP requests in-flight during the `HttpMessageHandler`'s reconfiguration.
@@ -114,7 +114,7 @@ This is the mechanism for credential and certificate rotation.
 
 [source,csharp]
 ----
-include::example$Auth.csx[tag=swap-authenticator,indent=0]
+include::example$Auth.cs[tag=swap-authenticator,indent=0]
 ----
 
 === Constraints
@@ -139,14 +139,14 @@ The old properties on `ClusterOptions` (`KvIgnoreRemoteCertificateNameMismatch`,
 
 [source,csharp]
 ----
-include::example$Auth.csx[tag=tls-before,indent=0]
+include::example$Auth.cs[tag=tls-before,indent=0]
 ----
 
 becomes:
 
 [source,csharp]
 ----
-include::example$Auth.csx[tag=tls-after,indent=0]
+include::example$Auth.cs[tag=tls-after,indent=0]
 ----
 
 === Trusting Custom Server CA Certificates
@@ -161,14 +161,14 @@ Use `WithTrustedServerCertificates()` as a shorthand:
 
 [source,csharp]
 ----
-include::example$Auth.csx[tag=trust-server-ca,indent=0]
+include::example$Auth.cs[tag=trust-server-ca,indent=0]
 ----
 
 Or configure the factory directly inside `WithTlsSettings()`:
 
 [source,csharp]
 ----
-include::example$Auth.csx[tag=trust-server-ca-factory,indent=0]
+include::example$Auth.cs[tag=trust-server-ca-factory,indent=0]
 ----
 
 === TlsSettings Properties Reference
@@ -221,7 +221,7 @@ If you set both a new authenticator (via `With*Authentication()`) and the legacy
 
 [source,csharp]
 ----
-include::example$Auth.csx[tag=precedence-warning,indent=0]
+include::example$Auth.cs[tag=precedence-warning,indent=0]
 ----
 
 The simplest rule: **pick one `With*Authentication()` method and don't mix it with legacy properties.**

@@ -45,13 +45,13 @@ A named or positional parameter can be used in the WHERE, LIMIT or OFFSET clause
 .Positional parameter example:
 [source,csharp,indent=0]
 ----
-include::example$/N1qlQueries.csx[tag=positional]
+include::example$/N1qlQueries.cs[tag=positional]
 ----
 
 .Named parameter example:
 [source,csharp,indent=0]
 ----
-include::example$/N1qlQueries.csx[tag=namedparameter]
+include::example$/N1qlQueries.cs[tag=namedparameter]
 ----
 
 == Handling Results
@@ -60,12 +60,12 @@ In most cases your query will return more than one result, and you may be lookin
 
 [source,csharp,indent=0]
 ----
-include::example$/N1qlQueries.csx[tag=namedparameter]
+include::example$/N1qlQueries.cs[tag=namedparameter]
 ----
 
 [source,csharp,indent=0]
 ----
-include::example$/N1qlQueries.csx[tag=namedparameter2]
+include::example$/N1qlQueries.cs[tag=namedparameter2]
 ----
 
 == Query Results
@@ -76,7 +76,7 @@ A type parameter must be used with `QueryAsync`, that will specify the type of r
 
 [source,csharp,indent=0]
 ----
-include::example$/N1qlQueries.csx[tag=queryresultexample]
+include::example$/N1qlQueries.cs[tag=queryresultexample]
 ----
 
 The `QueryMetaData` object (e.g. returned from `result.MetaData`) provides insight into some basic profiling/timing information as well as information like the clientContextId.
@@ -98,7 +98,7 @@ For example, here is how you can print the executionTime of a query:
 
 [source,csharp,indent=0]
 ----
-include::example$/N1qlQueries.csx[tag=executiontime]
+include::example$/N1qlQueries.cs[tag=executiontime]
 ----
 
 == Query Options
@@ -137,7 +137,7 @@ Setting a staleness parameter for queries, with `scan_consistency`, enables a tr
 .ScanConsistency (NotBounded)
 [source,csharp,indent=0]
 ----
-include::example$/N1qlQueries.csx[tag=notbounded]
+include::example$/N1qlQueries.cs[tag=notbounded]
 ----
 
 * With Scan Consistency set to *RequestPlus*, all document changes and index updates are processed before the query is run.
@@ -146,7 +146,7 @@ Select this when consistency is always more important than performance.
 .ScanConsistency (RequestPlus)
 [source,csharp,indent=0]
 ----
-include::example$/N1qlQueries.csx[tag=requestplus]
+include::example$/N1qlQueries.cs[tag=requestplus]
 ----
 
 * For a middle ground, *AtPlus* is a "read your own write" (RYOW) option, which means it just waits for the new documents that you specify to be indexed, rather than an entire index of multiple documents.
@@ -154,7 +154,7 @@ include::example$/N1qlQueries.csx[tag=requestplus]
 .ScanConsistency (AtPlus/RYOW example)
 [source,csharp,indent=0]
 ----
-include::example$/N1qlQueries.csx[tag=atplus]
+include::example$/N1qlQueries.cs[tag=atplus]
 ----
 
 === Client Context Id
@@ -163,7 +163,7 @@ The SDK will always send a client context ID with each query, even if none is pr
 
 [source,csharp,indent=0]
 ----
-include::example$/N1qlQueries.csx[tag=clientcontextexample]
+include::example$/N1qlQueries.cs[tag=clientcontextexample]
 ----
 
 === Readonly
@@ -172,7 +172,7 @@ If the query is marked as readonly, both the server and the SDK can improve proc
 
 [source,csharp,indent=0]
 ----
-include::example$/N1qlQueries.csx[tag=readonlyexample]
+include::example$/N1qlQueries.cs[tag=readonlyexample]
 ----
 
 === Custom JSON Serializer
@@ -202,7 +202,7 @@ The following code snippet shows how to run a query to fetch 10 random rows from
 
 [source,csharp]
 ----
-include::example$/ScopeQueries.csx[tag=scope]
+include::example$/ScopeQueries.cs[tag=scope]
 ----
 
 A complete list of `QueryOptions` can be found in the https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.Query.QueryOptions.html[API docs].

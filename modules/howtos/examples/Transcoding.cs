@@ -143,7 +143,7 @@ public class User
     public int Age { get; set; }
 }
 
-//tag::msg-pack-poco
+// tag::msg-pack-poco[]
 [MessagePackObject]
 public class User2
 {
@@ -153,7 +153,7 @@ public class User2
     [Key(1)]
     public int Age { get; set; }
 }
-//end::msg-pack-poco
+// end::msg-pack-poco[]
 
 //tag::msgpack-serializer[]
 public class MsgPackSerializer : ITypeSerializer
