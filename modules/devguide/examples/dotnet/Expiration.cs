@@ -55,10 +55,5 @@ namespace Couchbase.Net.DevGuide
             var result6 = await collection.GetAsync(key).ConfigureAwait(false);
             Console.WriteLine("[{0:HH:mm:ss.fff}] Got: '{1}'!", DateTime.Now, result6.ContentAs<string>());
         }
-
-        private new static async Task Main(string[] args)
-        {
-           await new Expiration().ExecuteAsync().ConfigureAwait(false);
-        }
     }
 }

@@ -89,10 +89,5 @@ namespace Couchbase.Net.DevGuide
                 Console.WriteLine(row);
             }
         }
-
-        private new static async Task Main(string[] args)
-        {
-            await new QueryPlaceHolders().ExecuteAsync().ConfigureAwait(false);
-        }
     }
 }

@@ -15,24 +15,6 @@ namespace Couchbase.Net.DevGuide
         private ICouchbaseCollection collection;
         private ILoggerFactory loggerFactory;
 
-        private static void Main2(string[] args)
-        {
-            var inst = new Program2();
-
-            try
-            {
-                inst.Initialize().Wait();
-                inst.RunTest().Wait();
-                inst.FreeUpStuff();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"There was an exception: {ex}");
-            }
-
-            Console.WriteLine("Done.");
-        }
-
         private async Task RunTest()
         {
             using var getResult = await collection.GetAsync("airline_5209").ConfigureAwait(false);

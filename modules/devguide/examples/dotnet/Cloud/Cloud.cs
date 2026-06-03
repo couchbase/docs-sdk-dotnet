@@ -3,17 +3,9 @@ using System.Threading.Tasks;
 
 namespace Couchbase.Net.DevGuide.Cloud;
 
-public class Program
-{
-    public static async Task Main(string[] args)
-    {
-        await new CloudExample().Main();
-    }
-}
-
 class CloudExample
 {
-    public async Task Main()
+    public async Task RunAsync()
     {
         // tag::connect[]
         var options = new ClusterOptions

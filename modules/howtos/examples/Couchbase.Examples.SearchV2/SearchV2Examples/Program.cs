@@ -8,35 +8,9 @@ using Couchbase.Search.Queries.Simple;
 using Couchbase.Search.Queries.Vector;
 using Couchbase.Query;
 using Serilog;
-using Serilog.Extensions.Logging;
 
-Serilog.Log.Logger = new LoggerConfiguration()
-    .Enrich.FromLogContext()
-    .MinimumLevel.Verbose()
-    .WriteTo.Console()
-    .CreateLogger();
-
-var clusterOptions = new ClusterOptions()
+internal class SearchV2Examples
 {
-    ConnectionString = "couchbase://localhost",
-    UserName = "Administrator",
-    Password = "password",
-    EnableDnsSrvResolution = false,
-};
-
-clusterOptions = clusterOptions.WithLogging(new SerilogLoggerFactory());
-
-var exampleCluster = await Cluster.ConnectAsync(clusterOptions);
-await exampleCluster.WaitUntilReadyAsync(TimeSpan.FromSeconds(10));
-var travelSample = await exampleCluster.BucketAsync("travel-sample");
-var inventoryScope = travelSample.Scope("inventory");
-await Task.Delay(1000);
-
-await ClusterGetAllIndexes(exampleCluster);
-await ClusterSearch(exampleCluster);
-await ScopedGetAllIndexes(inventoryScope);
-await ScopedSearch(inventoryScope);
-
 async Task ScopedGetAllIndexes(IScope scope)
 {
     // tag::scopedGetAllIndexes[]
@@ -45,7 +19,7 @@ async Task ScopedGetAllIndexes(IScope scope)
     var allScopedIndexes = await searchIndexes.GetAllIndexesAsync();
     foreach (var idx in allScopedIndexes)
     {
-        Serilog.Log.Information("Search Index: {idx} in scope {scope}", idx.Name, scope.Name);
+        Serilog.Log.Information("Search Index: {Idx} in scope {Scope}", idx.Name, scope.Name);
     }
     // end::scopedGetAllIndexes[]
 }
@@ -173,7 +147,7 @@ async Task ScopedVectorQuery(IScope scope)
     var searchRequest = SearchRequest.Create(
         VectorSearch.Create(new VectorQuery("vector_field").WithVector(preGeneratedVectors))
     );
-    
+
     var searchResult = scope.SearchAsync("travel-vector-index", searchRequest, new SearchOptions());
     //end::scopedVector1[]
 }
@@ -194,19 +168,19 @@ async Task ScopedVectorQueryMultiple(IScope scope)
                 new VectorQueryOptions().WithNumCandidates(5).WithBoost(0.7f)),
             })
     );
-    
+
     // or with C# record syntax
     var searchRequest2 = SearchRequest.Create(
         new VectorSearch(new[]
             {
-                vectorQuery 
+                vectorQuery
                     with { Options = new VectorQueryOptions() { NumCandidates = 2, Boost = 0.3f } },
                 anotherVectorQuery
                     with { Options = new VectorQueryOptions() { NumCandidates = 5, Boost = 0.3f } },
             },
             Options: new VectorSearchOptions(VectorQueryCombination.And)
         ));
-    
+
     var searchResult = scope.SearchAsync("travel-vector-index", searchRequest, new SearchOptions());
     //end::scopedVector2[]
 }
@@ -220,7 +194,8 @@ async Task ScopedVectorWithFts(IScope scope)
         SearchQuery: new MatchQuery("swanky"),
         VectorSearch: VectorSearch.Create(new VectorQuery("vector_field").WithVector(preGeneratedVectors))
     );
-    
+
     var searchResult = scope.SearchAsync("travel-index", searchRequest, new SearchOptions());
     //end::scopedVectorWithFts[]
+}
 }

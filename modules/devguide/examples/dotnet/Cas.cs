@@ -85,10 +85,5 @@ namespace Couchbase.Net.DevGuide
                 } while (retries-- > 0);
             }
         }
-
-        private new static async Task Main(string[] args)
-        {
-            await new Cas().ExecuteAsync().ConfigureAwait(false);
-        }
     }
 }

@@ -19,15 +19,13 @@ namespace Couchbase.Examples.Logging.NoHost
             loggerFactory.AddFile("Logs/myapp-{Date}.txt", LogLevel.Debug);
 
             var clusterOptions = new ClusterOptions().
-                WithCredentials("Administrator", "password").
+                WithPasswordAuthentication("Administrator", "password").
                 WithLogging(loggerFactory);
 
             var cluster = Cluster.ConnectAsync("couchbase://10.112.211.101", clusterOptions).
                 GetAwaiter().
                 GetResult();
             // end::non-host[]
-
-            Console.WriteLine("Hello World!");
         }
     }
 }

@@ -57,10 +57,5 @@ namespace Couchbase.Net.DevGuide
             }
             */
         }
-
-        private new static async Task Main(string[] args)
-        {
-            await new Analytics().ExecuteAsync().ConfigureAwait(false);
-        }
     }
 }

@@ -46,10 +46,5 @@ namespace Couchbase.Net.DevGuide
             using var docResult = await collection.GetAsync(key).ConfigureAwait(false);
             Console.WriteLine("Found: " + docResult.ContentAs<Data>());
         }
-
-        private new static async Task Main(string[] args)
-        {
-            await new Retrieve().ExecuteAsync().ConfigureAwait(false);
-        }
     }
 }

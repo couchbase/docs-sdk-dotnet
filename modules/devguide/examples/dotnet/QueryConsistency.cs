@@ -64,10 +64,5 @@ namespace Couchbase.Net.DevGuide
                 await Bucket.DefaultCollection().RemoveAsync(rowId).ConfigureAwait(false);
             }
         }
-
-        private new static async Task Main(string[] args)
-        {
-            await new QueryConsistency().ExecuteAsync().ConfigureAwait(false);
-        }
     }
 }

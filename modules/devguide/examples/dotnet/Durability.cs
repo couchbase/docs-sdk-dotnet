@@ -53,10 +53,5 @@ namespace Couchbase.Net.DevGuide
             var result2 = await Bucket.DefaultCollection().UpsertAsync(key, data, options => options.Durability(PersistTo.Four, ReplicateTo.Three)).ConfigureAwait(false);
             Console.WriteLine("Doc persisted to disk!");
         }
-
-        private new static async Task Main(string[] args)
-        {
-           await new Durability().ExecuteAsync().ConfigureAwait(false);
-        }
     }
 }
