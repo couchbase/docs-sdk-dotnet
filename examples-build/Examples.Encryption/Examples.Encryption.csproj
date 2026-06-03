@@ -1,16 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <!--
-    Snippets using Field-Level Encryption (Couchbase.Extensions.Encryption).
-    Currently only howtos/EncryptingUsingSdk, which uses the 2.0 API
-    (Couchbase.Encryption.*).
-
-    NOTE: devguide/FieldEncryptionAes.cs and FieldEncryptionRsa.cs are NOT built
-    here — they are orphaned (referenced by no page) and written against the
-    legacy 2.x Couchbase SDK (Couchbase.Configuration.Client). See REFACTOR_PLAN.md.
-
-    Compile items are added in Phase 1.
-  -->
   <ItemGroup>
     <!-- The example was written against the 2.0.0-dp.1 preview API (Encrypter/Decrypter);
          the 2.0.0 stable renamed these (Encryptor/Decryptor). Pin the preview so the
