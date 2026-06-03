@@ -16,13 +16,21 @@ This repository hosts the documentation source for the Couchbase .NET SDK.
 Documentation code examples live under `modules/<module>/examples/` as plain `.cs`
 files and are pulled into the pages via Antora `include::example$…` tag regions.
 
-They are **compiled** (not run) to verify they build against the Couchbase .NET SDK:
+They are **compiled** (not run) to verify they build against the Couchbase .NET SDK.
+`examples-build/CouchbaseDocsExamples.sln` holds three small projects, grouped by the
+package an example depends on:
 
-- `examples-build/CouchbaseDocsExamples.sln` — the cross-platform examples, grouped into
-  projects by dependency (`Examples.Core`, `Examples.Encryption`, `Examples.Transactions`)
-  plus the standalone sample apps.
-- `WindowsOnly/WindowsOnly.sln` — the full-.NET-Framework log4net sample (Windows only).
-- The SDK version is pinned once in `examples-build/Directory.Build.props`.
+- `Examples.Core` — everything in the main `CouchbaseNetClient` package (KV, query,
+  search, range scan, sub-document, transactions, …).
+- `Examples.Encryption` — examples needing the separate `Couchbase.Extensions.Encryption`
+  package.
+- `Examples.Logging` — the cross-platform logging examples under
+  `modules/howtos/examples/logging/`.
+
+The Windows-only full-.NET-Framework log4net sample lives in
+`modules/howtos/examples/logging/windows/` and builds separately via
+`WindowsOnly/WindowsOnly.sln`. The SDK version is pinned once in
+`examples-build/Directory.Build.props`.
 
 `.github/workflows/compile-samples.yml` builds these on Linux, Windows and macOS for every
 pull request. To build locally: `dotnet build examples-build/CouchbaseDocsExamples.sln`.

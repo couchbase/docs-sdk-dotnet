@@ -1,6 +1,7 @@
 using Couchbase.KeyValue;
 using Couchbase.KeyValue.RangeScan;
-using Serilog;
+
+namespace RangeScan;
 
 internal static class RangeScanExamples
 {
@@ -8,7 +9,7 @@ internal static class RangeScanExamples
     {
         var collection = scope.Collection("hotel");
         // tag::rangeScanAllDocuments[]
-        IAsyncEnumerable<IScanResult> results = collection.ScanAsync(new RangeScan());
+        IAsyncEnumerable<IScanResult> results = collection.ScanAsync(new Couchbase.KeyValue.RangeScan.RangeScan());
 
         await foreach (var scanResult in results)
         {
@@ -17,7 +18,7 @@ internal static class RangeScanExamples
         }
 
         // alternate declaration
-        var scan2 = new RangeScan(from: ScanTerm.Inclusive("id001"), to: ScanTerm.Inclusive("id999"));
+        var scan2 = new Couchbase.KeyValue.RangeScan.RangeScan(from: ScanTerm.Inclusive("id001"), to: ScanTerm.Inclusive("id999"));
         // end::rangeScanAllDocuments[]
     }
 
@@ -56,7 +57,7 @@ internal static class RangeScanExamples
         var collection = scope.Collection("hotel");
         // tag::rangeScanAllDocumentIds[]
         IAsyncEnumerable<IScanResult> results = collection.ScanAsync(
-            new RangeScan(),
+            new Couchbase.KeyValue.RangeScan.RangeScan(),
             new ScanOptions().IdsOnly(true));
 
         await foreach (var scanResult in results)

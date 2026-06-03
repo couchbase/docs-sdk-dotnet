@@ -40,7 +40,7 @@ We are using a .NET Core Console Application, and simply instantiate the `ILoggi
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples.Logging.NoHost/Program.cs[tag=non-host,indent=0]
+include::example$logging/NoHost.cs[tag=non-host,indent=0]
 ----
 
 We then call `ClusterOptions.WithLogging` and pass in the `ILoggerProvider` that we instatiated, and connect to the `Cluster` as usual.
@@ -52,7 +52,7 @@ For .NET Core 3.0 and greater applications, the Generic https://docs.microsoft.c
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples.Logging.GenericHost/Program.cs[tag=generic-host,indent=0]
+include::example$logging/GenericHost.cs[tag=generic-host,indent=0]
 ----
 
 In the example above, `Host.ConfigureLogging` is called in the `CreateHostBuilder` method where we clear any previously registered logging providers (.NET registers a couple by default). 
@@ -70,28 +70,28 @@ One for a Log4Net `ILogger` implementation:
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples.Logging.FullFramework/Log4NetLogger.cs[tag=full-log4netlogger,indent=0]
+include::example$logging/windows/Log4NetLogger.cs[tag=full-log4netlogger,indent=0]
 ----
 
 Then a `Microsoft.Extensions.Logging.ILoggingProvider` implementation:
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples.Logging.FullFramework/Log4NetProvider.cs[tag=full-log4netprovider,indent=0]
+include::example$logging/windows/Log4NetProvider.cs[tag=full-log4netprovider,indent=0]
 ----
 
 And some extensions to make it easier to use:
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples.Logging.FullFramework/Log4NetExtensions.cs[tag=full-log4netextensions,indent=0]
+include::example$logging/windows/Log4NetExtensions.cs[tag=full-log4netextensions,indent=0]
 ----
 
 Finally, we put it all together:
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples.Logging.FullFramework/Program.cs[tag=full-framework,indent=0]
+include::example$logging/windows/Program.cs[tag=full-framework,indent=0]
 ----
 
 Note that we suggest .NET Core or .NET 5.0 over using SDK3 in .NET Full Framework apps, as the integration is much more difficult.

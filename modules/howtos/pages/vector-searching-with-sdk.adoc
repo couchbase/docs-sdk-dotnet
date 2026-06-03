@@ -109,7 +109,7 @@ Couchbase Server 7.6.0
 In this first example we are performing a single vector query:
 [source,csharp]
 ----
-include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=scopedVector1,indent=0]
+include::example$Search.cs[tag=scopedVector1,indent=0]
 ----
 
 Let's break this down.
@@ -196,7 +196,7 @@ You can run multiple vector queries together:
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=scopedVector2,indent=0]
+include::example$Search.cs[tag=scopedVector2,indent=0]
 ----
 
 How the results are combined (ANDed or ORed) can be controlled with `VectorSearchOptions().WithVectorQueryCombination()`.
@@ -207,7 +207,7 @@ You can combine a traditional Search query with vector queries:
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=scopedVectorWithFts,indent=0]
+include::example$Search.cs[tag=scopedVectorWithFts,indent=0]
 ----
 
 .Scoring for these hybrid search queries combines the boost multipliers to get to the final score.

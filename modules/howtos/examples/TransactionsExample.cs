@@ -10,23 +10,14 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 // end::imports[]
 
-namespace CouchbaseDocs.Examples.Howtos.TransactionsExample
-{
-    class Program : IDisposable
+namespace CouchbaseDocs.Examples.Howtos.TransactionsExample;
+    class TransactionsExample : IDisposable
     {
         private readonly Transactions _transactions;
         private readonly ICluster _cluster;
         private readonly IBucket _bucket;
         private readonly ICouchbaseCollection _collection;
-        private readonly ILogger<Program> _logger;
-
-        public Program(ICluster cluster, IBucket bucket, ICouchbaseCollection collection, Transactions transactions)
-        {
-            _cluster = cluster;
-            _bucket = bucket;
-            _collection = collection;
-            _transactions = transactions;
-        }
+        private readonly ILogger<TransactionsExample> _logger;
 
         static async Task InitializeAsync()
         {
@@ -468,7 +459,7 @@ namespace CouchbaseDocs.Examples.Howtos.TransactionsExample
             });
             await using var provider = services.BuildServiceProvider();
             var loggerFactory = provider.GetService<ILoggerFactory>();
-            var logger = loggerFactory.CreateLogger<Program>();
+            var logger = loggerFactory.CreateLogger<TransactionsExample>();
 
             // create the cluster, passing in the ILoggerFactory for the transactions to use
             var transactionsConfig =
@@ -717,4 +708,3 @@ namespace CouchbaseDocs.Examples.Howtos.TransactionsExample
             _transactions.Dispose();
         }
     }
-}

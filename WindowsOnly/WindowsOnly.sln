@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Couchbase.Examples.Logging.FullFramework", "..\modules\howtos\examples\Couchbase.Examples.Logging.FullFramework\Couchbase.Examples.Logging.FullFramework.csproj", "{FC690BFB-1C32-4090-9165-4651C4F2B31B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Couchbase.Examples.Logging.FullFramework", "..\modules\howtos\examples\logging\windows\Couchbase.Examples.Logging.FullFramework.csproj", "{FC690BFB-1C32-4090-9165-4651C4F2B31B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -43,10 +43,10 @@ Here is a simple MatchQuery that looks for the text “swanky” using a defined
 [source,csharp]
 ----
 // as a cluster-level search
-include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=clusterFtsSearch,indent=0]
+include::example$Search.cs[tag=clusterFtsSearch,indent=0]
 
 // as a scope-level search
-include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=scopedFtsSearch,indent=0]
+include::example$Search.cs[tag=scopedFtsSearch,indent=0]
 ----
 
 
@@ -57,14 +57,14 @@ Here is a date range query that looks for dates between 1st January 2021 and 31s
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=scopedDateSearch,indent=0]
+include::example$Search.cs[tag=scopedDateSearch,indent=0]
 ----
 
 A conjunction query contains multiple child queries; its result documents must satisfy all of the child queries:
 
 [source,csharp]
 ----
-include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=scopedConjunctionSearch,indent=0]
+include::example$Search.cs[tag=scopedConjunctionSearch,indent=0]
 ----
 
 [TIP]
@@ -90,13 +90,13 @@ such as success total hits and how long the query took to execute in the cluster
 [source,csharp]
 .Iterating hits
 ----
-include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=scopedEnumerateHits,indent=0]
+include::example$Search.cs[tag=scopedEnumerateHits,indent=0]
 ----
 
 [source,csharp]
 .Iterating facets
 ----
-include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=scopedEnumerateFacets,indent=0]
+include::example$Search.cs[tag=scopedEnumerateFacets,indent=0]
 ----
 
 
@@ -108,7 +108,7 @@ Search Service allows `RequestPlus` queries -- _Read-Your-Own_Writes (RYOW)_ con
 [source,csharp]
 ----
 
-include::example$Couchbase.Examples.SearchV2/SearchV2Examples/Program.cs[tag=scopedConsistentWithSearch,indent=0]
+include::example$Search.cs[tag=scopedConsistentWithSearch,indent=0]
 ----
 
 == Scoped vs Global Indexes
