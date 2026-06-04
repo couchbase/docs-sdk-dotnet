@@ -20,20 +20,20 @@ The most common uses of the `UserManager` API are creating and listing users:
 .Creating Users
 [source,csharp]
 ----
-include::example$UserManagementExample.csx[tag=usermanagement_1,indent=0]
+include::example$UserManagementExample.cs[tag=usermanagement_1,indent=0]
 ----
 
 .Listing Users
 [source,csharp]
 ----
-include::example$UserManagementExample.csx[tag=usermanagement_2,indent=0]
+include::example$UserManagementExample.cs[tag=usermanagement_2,indent=0]
 ----
 
 Using a user created in the SDK to access data:
 
 [source,csharp]
 ----
-include::example$UserManagementExample.csx[tag=usermanagement_3,indent=0]
+include::example$UserManagementExample.cs[tag=usermanagement_3,indent=0]
 ----
 
 

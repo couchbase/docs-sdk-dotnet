@@ -35,10 +35,5 @@ namespace Couchbase.Net.DevGuide
             var counter4 = await binaryCollection.DecrementAsync(key, options => options.Initial(13).Delta(20)).ConfigureAwait(false);
             Console.WriteLine("Initial value = 13, Decrement = 20, Counter value: " + counter4.Content);
         }
-
-        private new static void Main(string[] args)
-        {
-            new Counter().ExecuteAsync().Wait();
-        }
     }
 }

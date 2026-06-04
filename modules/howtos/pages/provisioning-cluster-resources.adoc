@@ -47,9 +47,9 @@ NOTE: When using a Couchbase version earlier than 6.5, you must create a valid B
 The `IBucketManager` interface may be used to create and delete buckets from the Couchbase cluster.
 It is referenced via the `Cluster.Buckets` property.
 
-[source,golang]
+[source,csharp]
 ----
-include::example$/ProvisioningResourcesBuckets.csx[tag=creatingBucketMgr,indent=0]
+include::example$/ProvisioningResourcesBuckets.cs[tag=creatingBucketMgr,indent=0]
 ----
 
 The `BucketSettings` object is used for creating or updating buckets, and for exposing information about existing buckets.
@@ -76,21 +76,21 @@ The following example creates a `hello` bucket:
 
 [source,csharp]
 ----
-include::example$ProvisioningResourcesBuckets.csx[tag=createBucket,indent=0]
+include::example$ProvisioningResourcesBuckets.cs[tag=createBucket,indent=0]
 ----
 
 We can now get this bucket and update it to enable Flush:
 
 [source,csharp]
 ----
-include::example$ProvisioningResourcesBuckets.csx[tag=updateBucket,indent=0]
+include::example$ProvisioningResourcesBuckets.cs[tag=updateBucket,indent=0]
 ----
 
 Once you no longer need to use the bucket, you can remove it:
 
 [source,csharp]
 ----
-include::example$ProvisioningResourcesBuckets.csx[tag=removeBucket,indent=0]
+include::example$ProvisioningResourcesBuckets.cs[tag=removeBucket,indent=0]
 ----
 
 === Flushing Buckets
@@ -101,7 +101,7 @@ You can flush a bucket in the SDK by using `FlushBucketAsync()`.
 
 [source,csharp]
 ----
-include::example$ProvisioningResourcesBuckets.csx[tag=flushBucket,indent=0]
+include::example$ProvisioningResourcesBuckets.cs[tag=flushBucket,indent=0]
 ----
 
 The `Flush` operation may fail if the bucket does not have flush enabled, in that case it will return a `BucketIsNotFlushableException`.
@@ -115,30 +115,30 @@ for further details.
 
 [source,csharp]
 ----
-include::example$CollectionManager.csx[tag=create-collection-manager,indent=0]
+include::example$CollectionManager.cs[tag=create-collection-manager,indent=0]
 ----
 
 You can create a scope:
 
 [source,csharp]
 ----
-include::example$CollectionManager.csx[tag=create-scope,indent=0]
+include::example$CollectionManager.cs[tag=create-scope,indent=0]
 ----
 
 You can then create a collection within that scope:
 
 [source,csharp]
 ----
-include::example$CollectionManager.csx[tag=create-collection,indent=0]
+include::example$CollectionManager.cs[tag=create-collection,indent=0]
 ----
 
 Finally, you can drop unneeded collections and scopes:
 
 [source,csharp]
 ----
-include::example$CollectionManager.csx[tag=drop-collection,indent=0]
+include::example$CollectionManager.cs[tag=drop-collection,indent=0]
 
-include::example$CollectionManager.csx[tag=drop-scope,indent=0]
+include::example$CollectionManager.cs[tag=drop-scope,indent=0]
 
 ----
 
@@ -150,7 +150,7 @@ You can create users with the appropriate RBAC programmatically:
 
 [source,csharp]
 ----
-include::example$CollectionManager.csx[tag=scopeAdmin, indent=0]
+include::example$CollectionManager.cs[tag=scopeAdmin, indent=0]
 ----
 
 You can enumerate Scopes and Collections using
@@ -159,7 +159,7 @@ the `CollectionManager` and the properties of the
 
 [source,csharp]
 ----
-include::example$CollectionManager.csx[tag=listing-scope-collection,indent=0]
+include::example$CollectionManager.cs[tag=listing-scope-collection,indent=0]
 ----
 
 == Index Management
@@ -174,7 +174,7 @@ It's referenced through the `Collection.QueryIndexes` property.
 
 [source,csharp]
 ----
-include::example$QueryIndexManagerExample.csx[tag=creating-index-mgr,indent=0]
+include::example$QueryIndexManagerExample.cs[tag=creating-index-mgr,indent=0]
 ----
 
 NOTE: The `ICollectionQueryIndexManager` can only manage indexes in the keyspace it's set on. You must create another Query Manager interface to manage indexes on a different keyspace.
@@ -187,7 +187,7 @@ The following example shows how to create a primary index, by calling the `Creat
 
 [source,csharp]
 ----
-include::example$QueryIndexManagerExample.csx[tag=primary,indent=0]
+include::example$QueryIndexManagerExample.cs[tag=primary,indent=0]
 ----
 
 When a primary index name is not specified, the SDK creates the index as `#primary` by default.
@@ -202,7 +202,7 @@ Creating a _secondary_ index follows a similar approach, with some minor differe
 
 [source,csharp]
 ----
-include::example$QueryIndexManagerExample.csx[tag=secondary,indent=0]
+include::example$QueryIndexManagerExample.cs[tag=secondary,indent=0]
 ----
 
 The `CreateIndexAsync()` method requires an index name to be provided, along with the fields to create the index on.
@@ -215,7 +215,7 @@ To achieve this we can use the `Deferred` boolean option, and set it to `true`.
 
 [source,csharp]
 ----
-include::example$QueryIndexManagerExample.csx[tag=defer-indexes,indent=0]
+include::example$QueryIndexManagerExample.cs[tag=defer-indexes,indent=0]
 ----
 
 To delete a query index you can use the `DropIndexAsync()` or `DropPrimaryIndexAsync()` methods. 
@@ -225,7 +225,7 @@ Which one you use depends on the type of query index you want to drop from the c
 
 [source,csharp]
 ----
-include::example$QueryIndexManagerExample.csx[tag=drop-primary-or-secondary-index,indent=0]
+include::example$QueryIndexManagerExample.cs[tag=drop-primary-or-secondary-index,indent=0]
 ----
 
 // * Search - note & link to Search page & API?
@@ -239,14 +239,14 @@ All operations on design documents are performed on the `ViewIndexManager` insta
 
 [source,csharp]
 ----
-include::example$ProvisioningResourcesViews.csx[tag=viewmgr,indent=0]
+include::example$ProvisioningResourcesViews.cs[tag=viewmgr,indent=0]
 ----
 
 The following example upserts a design document with two views:
 
 [source,csharp]
 ----
-include::example$ProvisioningResourcesViews.csx[tag=createView,indent=0]
+include::example$ProvisioningResourcesViews.cs[tag=createView,indent=0]
 ----
 
 include::{version-common}@sdk:shared:partial$flush-info-pars.adoc[tag=one-view-update-warning]
@@ -258,19 +258,19 @@ Now that we've created a design document we can fetch it:
 
 [source,csharp]
 ----
-include::example$ProvisioningResourcesViews.csx[tag=getView,indent=0]
+include::example$ProvisioningResourcesViews.cs[tag=getView,indent=0]
 ----
 
 We've created the design document using `DesignDocumentNamespace.Development` and now want to push it to production, we can do this with:
 
 [source,csharp]
 ----
-include::example$ProvisioningResourcesViews.csx[tag=publishView,indent=0]
+include::example$ProvisioningResourcesViews.cs[tag=publishView,indent=0]
 ----
 
 To remove this design document:
 
 [source,csharp]
 ----
-include::example$ProvisioningResourcesViews.csx[tag=removeView,indent=0]
+include::example$ProvisioningResourcesViews.cs[tag=removeView,indent=0]
 ----

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Couchbase.Net.DevGuide
 {
@@ -56,11 +54,6 @@ namespace Couchbase.Net.DevGuide
                 }
             }
             */
-        }
-
-        private new static async Task Main(string[] args)
-        {
-            await new Analytics().ExecuteAsync().ConfigureAwait(false);
         }
     }
 }

@@ -46,10 +46,5 @@ namespace Couchbase.Net.DevGuide
                 Console.WriteLine(pf);
             }
         }
-
-        private new static async Task Main(string[] args)
-        {
-            await new QueryCriteria().ExecuteAsync().ConfigureAwait(false);
-        }
     }
 }

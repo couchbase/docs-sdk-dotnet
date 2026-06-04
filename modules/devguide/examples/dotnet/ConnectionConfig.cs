@@ -34,10 +34,5 @@ namespace Couchbase.Net.DevGuide
 
             Console.WriteLine("Connected to bucket '{0}'", Bucket.Name);
         }
-
-        static async Task Main(string[] args)
-        {
-            await new ConnectionConfig().ExecuteAsync().ConfigureAwait(false);
-        }
     }
 }

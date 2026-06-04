@@ -49,10 +49,5 @@ namespace Couchbase.Net.DevGuide
             using var newDocument = await collection.GetAsync(key).ConfigureAwait(false);
             Console.WriteLine("Got: " + newDocument.ContentAs<Data>());
         }
-
-        private new static async Task Main(string[] args)
-        {
-            await new Update().ExecuteAsync().ConfigureAwait(false);
-        }
     }
 }

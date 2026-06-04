@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <!-- The example was written against the 2.0.0-dp.1 preview API (Encrypter/Decrypter);
+         the 2.0.0 stable renamed these (Encryptor/Decryptor). Pin the preview so the
+         documented snippet compiles unchanged. -->
+    <PackageReference Include="Couchbase.Extensions.Encryption" Version="2.0.0-dp.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="../../modules/howtos/examples/EncryptingUsingSdk.cs" />
+  </ItemGroup>
+
+</Project>

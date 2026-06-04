@@ -1,6 +1,9 @@
+using Couchbase.Extensions.DependencyInjection;
 
-// #tag::mybucketprovider[]
+namespace Couchbase.Docs.Examples.Howtos.DependencyInjection;
+
+// tag::mybucketprovider[]
 public interface IMyBucketProvider : INamedBucketProvider
 {
 }
-// #end::mybucketprovider[]
+// end::mybucketprovider[]

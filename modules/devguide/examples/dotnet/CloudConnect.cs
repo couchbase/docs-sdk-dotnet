@@ -12,7 +12,7 @@ namespace net3
 {
     public class Program2
     {
-        static async Task Main(string[] args)
+        static async Task RunExampleAsync()
         {
             // Update this to your cluster
             var endpoint = "cb.13d1a4bc-31a8-49c6-9ade-74073df0799f.dp.cloud.couchbase.com";

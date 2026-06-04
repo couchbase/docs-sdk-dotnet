@@ -1,36 +1,41 @@
-// #tag::using[]
+// tag::using[]
 using System;
 using System.Threading.Tasks;
-using Couchbase;await ExampleUsing();
-// #end::using[]
-async Task ExampleUsing()
+using Couchbase;
+// end::using[]
+
+namespace Couchbase.Docs.Examples.HelloWorld.StartUsing;
+
+internal static class StartUsingExample
 {
-    // #tag::connect[]
+    static async Task ExampleUsing()
+    {
+    // tag::connect[]
     var cluster = await Cluster.ConnectAsync(
         // Update these credentials for your Local Couchbase instance!
         "couchbase://localhost",
         "Administrator",
         "password");
-    // #end::connect[]
+    // end::connect[]
 
-    // #tag::bucket[]
+    // tag::bucket[]
     // get a bucket reference
     var bucket = await cluster.BucketAsync("travel-sample");
-    // #end::bucket[]
+    // end::bucket[]
 
-    // #tag::collection[]
+    // tag::collection[]
     // get a user-defined collection reference
     var scope = await bucket.ScopeAsync("tenant_agent_00");
     var collection = await scope.CollectionAsync("users");
-    // #end::collection[]
+    // end::collection[]
 
-    // #tag::upsert-get[]
+    // tag::upsert-get[]
     // Upsert Document
     var upsertResult = await collection.UpsertAsync("my-document-key", new { Name = "Ted", Age = 31 });
     var getResult = await collection.GetAsync("my-document-key");
 
     Console.WriteLine(getResult.ContentAs<dynamic>());
-    // #end::upsert-get[]
+    // end::upsert-get[]
 
     // Call the QueryAsync() function on the scope object and store the result.
     var inventoryScope = bucket.Scope("inventory");
@@ -39,5 +44,6 @@ async Task ExampleUsing()
     // Iterate over the rows to access result data and print to the terminal.
     await foreach (var row in queryResult) {
         Console.WriteLine(row);
+    }
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace CouchbaseDI
+namespace Couchbase.Docs.Examples.Howtos.DependencyInjection.WebStartupMyBucket
 {
     public class Startup
     {

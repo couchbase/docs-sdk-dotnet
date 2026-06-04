@@ -29,10 +29,5 @@ namespace Couchbase.Net.DevGuide
             Console.WriteLine("Ended Search example");
 
         }
-
-        private new static async Task Main(string[] args)
-        {
-            await new Search().ExecuteAsync().ConfigureAwait(false);
-        }
     }
 }

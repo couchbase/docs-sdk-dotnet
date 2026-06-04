@@ -8,12 +8,6 @@ namespace Couchbase.Net.DevGuide
 {
     class AsyncBatch : ConnectionBase
     {
-        private new static async Task Main(string[] args)
-        {
-            await new AsyncBatch().ExecuteAsync().ConfigureAwait(false);
-            Console.Read();
-        }
-
         public override async Task ExecuteAsync()
         {
             //Connect to Couchbase

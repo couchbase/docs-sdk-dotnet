@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="MessagePack" Version="3.1.6" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="Couchbase.Extensions.DependencyInjection" Version="3.9.2" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <!--
+    The example .cs files live under modules/<m>/examples (Antora needs them there).
+    Non-recursive globs pick up every loose snippet in each examples root: this now
+    includes the main-SDK Transactions, Search, RangeScan and SubDocument examples.
+    The non-recursive glob deliberately does NOT descend into howtos/examples/logging
+    (built by the Examples.Logging project). EncryptingUsingSdk.cs is excluded because
+    it needs the separate encryption package (Examples.Encryption). devguide is listed
+    explicitly because most of its files are orphaned and out of scope.
+  -->
+  <ItemGroup>
+    <Compile Include="../../modules/hello-world/examples/*.cs" />
+    <Compile Include="../../modules/concept-docs/examples/*.cs" />
+    <Compile Include="../../modules/howtos/examples/*.cs"
+             Exclude="../../modules/howtos/examples/EncryptingUsingSdk.cs" />
+    <Compile Include="../../modules/devguide/examples/dotnet/Analytics.cs" />
+    <Compile Include="../../modules/devguide/examples/dotnet/ConnectionBase.cs" />
+    <Compile Include="../../modules/devguide/examples/dotnet/Cloud/Cloud.cs" />
+  </ItemGroup>
+
+</Project>

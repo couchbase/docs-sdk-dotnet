@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Cross-platform logging examples (generic host + non-host). The Windows-only
+    full-.NET-Framework log4net sample lives under howtos/examples/logging/windows
+    and builds separately via examples-build/WindowsOnly/WindowsOnly.sln.
+  -->
+  <ItemGroup>
+    <PackageReference Include="Couchbase.Extensions.DependencyInjection" Version="3.9.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="../../modules/howtos/examples/logging/*.cs" />
+  </ItemGroup>
+
+</Project>

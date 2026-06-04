@@ -1,0 +1,35 @@
+name: Compile .NET Code Samples
+
+on:
+  pull_request:
+    branches: ["release/3.*"]
+  push:
+    branches: ["release/3.*"]
+
+jobs:
+  # Cross-platform compile check for all the documented examples.
+  compile:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Build (compile-only)
+        run: dotnet build examples-build/CouchbaseDocsExamples.sln -c Release
+
+  # The full-.NET-Framework log4net sample only builds on Windows.
+  compile-windows-fullframework:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: microsoft/setup-msbuild@v2
+      - uses: nuget/setup-nuget@v2
+      - name: Restore packages (packages.config)
+        run: nuget restore examples-build/WindowsOnly/WindowsOnly.sln -PackagesDirectory modules/howtos/examples/packages
+      - name: Build
+        run: msbuild examples-build/WindowsOnly/WindowsOnly.sln /p:Configuration=Release

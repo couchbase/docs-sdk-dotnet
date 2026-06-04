@@ -55,7 +55,7 @@ To enable Field-Level Encryption, create a `CryptoManager` and supply `Encrypted
 
 [source,csharp]
 ----
-include::example$EncryptingUsingSdk.csx[tag=encrypting_using_sdk_1,indent=0]
+include::example$EncryptingUsingSdk.cs[tag=encrypting_using_sdk_1,indent=0]
 ----
 
 
@@ -73,21 +73,21 @@ Let's use this class as an example:
 
 [source,csharp]
 ----
-include::example$EncryptingUsingSdk.csx[tag=encrypting_using_sdk_2,indent=0]
+include::example$EncryptingUsingSdk.cs[tag=encrypting_using_sdk_2,indent=0]
 ----
 
 Now let's create an employee record and save it to Couchbase:
 
 [source,csharp]
 ----
-include::example$EncryptingUsingSdk.csx[tag=encrypting_using_sdk_3,indent=0]
+include::example$EncryptingUsingSdk.cs[tag=encrypting_using_sdk_3,indent=0]
 ----
 
 You can get the document as a `JsonObject` to verify the field was encrypted:
 
 [source,csharp]
 ----
-include::example$EncryptingUsingSdk.csx[tag=encrypting_using_sdk_4,indent=0]
+include::example$EncryptingUsingSdk.cs[tag=encrypting_using_sdk_4,indent=0]
 ----
 
 Because `contentAsObject()` does not decrypt anything, the expected output is something like:
@@ -107,7 +107,7 @@ Now let's read the employee record using data binding:
 
 [source,csharp]
 ----
-include::example$EncryptingUsingSdk.csx[tag=encrypting_using_sdk_5,indent=0]
+include::example$EncryptingUsingSdk.cs[tag=encrypting_using_sdk_5,indent=0]
 ----
 
 This prints `true`.
@@ -122,7 +122,7 @@ This prints `true`.
 
 //[source,csharp]
 //----
-//include::example$EncryptingUsingSdk.csx[tag=encrypting_using_sdk_6,indent=0]
+//include::example$EncryptingUsingSdk.cs[tag=encrypting_using_sdk_6,indent=0]
 //----
 
 //=== JObject and CryptoManager
@@ -132,7 +132,7 @@ This prints `true`.
 
 //[source,csharp]
 //----
-//include::example$EncryptingUsingSdk.csx[tag=encrypting_using_sdk_7,indent=0]
+//include::example$EncryptingUsingSdk.cs[tag=encrypting_using_sdk_7,indent=0]
 //----
 
 
@@ -144,14 +144,14 @@ Here's an example that shows how to create a suitable encryption key:
 
 [source,csharp]
 ----
-include::example$EncryptingUsingSdk.csx[tag=encrypting_using_sdk_8,indent=0]
+include::example$EncryptingUsingSdk.cs[tag=encrypting_using_sdk_8,indent=0]
 ----
 
 And here's how to use it to create a `Keyring` for use with Couchbase Field-Level Encryption:
 
 [source,csharp]
 ----
-include::example$EncryptingUsingSdk.csx[tag=encrypting_using_sdk_9,indent=0]
+include::example$EncryptingUsingSdk.cs[tag=encrypting_using_sdk_9,indent=0]
 ----
 
 

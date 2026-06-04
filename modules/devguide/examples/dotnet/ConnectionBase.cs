@@ -48,12 +48,6 @@ namespace Couchbase.Net.DevGuide
             Console.WriteLine("Connected to bucket '{0}'", Bucket.Name);
         }
 
-        public static async Task Main(string[] args)
-        {
-           await new ConnectionBase().ExecuteAsync().ConfigureAwait(false);
-        }
-
-
         public async ValueTask DisposeAsync()
         {
             await Bucket.DisposeAsync().ConfigureAwait(false);
