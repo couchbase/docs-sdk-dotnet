@@ -43,7 +43,8 @@ Query, Analytics, and Search requests that hit a node going offline during a reb
 A Stellar `GetAsync` with projections that match no fields now returns an empty JSON object (`{}`), matching the behavior of the classic SDK.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4204[NCBC-4204]:
-Fixed an issue where explicitly-set `false` boolean flags (such as `Deferred` and `IgnoreIfExists`) were rejected by the Stellar gateway, causing query index management operations to fail. This change also adds support for rotating authentication credentials at runtime on long-lived Stellar clusters via a new `Authenticator(IAuthenticator)` method on `StellarCluster`.
+Fixed an issue where explicitly-set `false` boolean flags (such as `Deferred` and `IgnoreIfExists`) were rejected by the Stellar gateway, causing query index management operations to fail.
+This change also adds support for rotating authentication credentials at runtime on long-lived Stellar clusters via a new `Authenticator(IAuthenticator)` method on `StellarCluster`.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4201[NCBC-4201]:
 Fixed Stellar timeout enforcement and unbounded retry loops, and ensured transient HTTP/2 transport errors (such as connection resets) are now safely retried rather than surfaced as fatal errors.
@@ -57,7 +58,7 @@ Fixed Stellar timeout enforcement and unbounded retry loops, and ensured transie
 * https://couchbasecloud.atlassian.net/browse/NCBC-4202[NCBC-4202]:
 Improved Stellar observability so that spans carry the correct OpenTelemetry parent-child relationships and standard semantic attributes (`db.system`, `db.couchbase.service`, `db.operation`, `db.name`), including span status mapping for exceptions.
 
-* Upgraded `OpenTelemetry.Api` to 1.15.3 to address https://nvd.nist.gov/vuln/detail/CVE-2026-40894[CVE-2026-40894].
+* Upgraded `OpenTelemetry.Api` to `1.15.3` to address https://nvd.nist.gov/vuln/detail/CVE-2026-40894[CVE-2026-40894].
 
 
 === Version 3.9.2 (06 May 2026)
