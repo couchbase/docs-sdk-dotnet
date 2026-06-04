@@ -47,7 +47,7 @@ NOTE: When using a Couchbase version earlier than 6.5, you must create a valid B
 The `IBucketManager` interface may be used to create and delete buckets from the Couchbase cluster.
 It is referenced via the `Cluster.Buckets` property.
 
-[source,golang]
+[source,csharp]
 ----
 include::example$/ProvisioningResourcesBuckets.cs[tag=creatingBucketMgr,indent=0]
 ----
