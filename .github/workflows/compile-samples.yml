@@ -30,6 +30,6 @@ jobs:
       - uses: microsoft/setup-msbuild@v2
       - uses: nuget/setup-nuget@v2
       - name: Restore packages (packages.config)
-        run: nuget restore WindowsOnly/WindowsOnly.sln -PackagesDirectory modules/howtos/examples/packages
+        run: nuget restore examples-build/WindowsOnly/WindowsOnly.sln -PackagesDirectory modules/howtos/examples/packages
       - name: Build
-        run: msbuild WindowsOnly/WindowsOnly.sln /p:Configuration=Release
+        run: msbuild examples-build/WindowsOnly/WindowsOnly.sln /p:Configuration=Release
