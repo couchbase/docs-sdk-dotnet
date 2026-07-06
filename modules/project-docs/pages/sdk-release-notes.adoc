@@ -4,7 +4,7 @@
 :page-topic-type: project-doc
 :page-aliases: relnotes-dotnet-sdk
 :page-partial:
-:name_platform_lc: 'dotnet'
+:name_platform_lc: dotnet
 
 // tag::all[]
 [abstract]
