@@ -4,7 +4,7 @@
 :page-aliases: relnotes-dotnet-sdk
 :page-partial:
 :page-toclevels: 2
-:name_platform_lc: 'dotnet'
+:name_platform_lc: dotnet
 
 
 include::6.5@sdk:shared:partial$use-latest.adoc[tag=latest]
