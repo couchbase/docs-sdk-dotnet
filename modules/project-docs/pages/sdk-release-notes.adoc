@@ -4,10 +4,13 @@
 :page-aliases: relnotes-dotnet-sdk
 :page-toclevels: 2
 :page-partial:
+:name_platform_lc: 'dotnet'
 
 // tag::all[]
 [abstract]
 {description}
+
+include::6.5@sdk:shared:partial$use-latest.adoc[tag=latest]
 
 
 These pages cover the 3._x_ versions of the Couchbase .NET SDK.
