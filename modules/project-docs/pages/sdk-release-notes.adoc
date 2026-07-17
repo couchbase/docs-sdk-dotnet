@@ -40,16 +40,20 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.9.4[Nuget]
 Fixed corruption when reading `byte[]` values from sub-documents. `PersistentQueue<byte[]>`, `PersistentList<byte[]>`, and `LookupIn(...).ContentAs<byte[]>()` returned the raw JSON fragment instead of the decoded bytes (a regression affecting 3.8.1+ and 3.9.0+).
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4244[NCBC-4244]:
-Extended the `byte[]` sub-document read fix to Stellar (couchbase2), and fixed `LookupIn`/`MutateIn` over Stellar to honor a per-operation `Transcoder` instead of always using the cluster default.
+Extended the `byte[]` sub-document read fix to Protostellar (`couchbase2` protocol),
+and fixed `LookupIn`/`MutateIn` over Protostellar to honor a per-operation `Transcoder` instead of always using the cluster default.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4176[NCBC-4176]:
-Corrected several KV sub-document behaviours to match the cross-SDK spec: `LookupInAllReplicas` now returns an empty stream on a top-level failure, a `Get` with projections omits non-existent paths (including nested ones) rather than emitting nulls, and a sub-document counter overflow now surfaces `ValueInvalidException`.
+Corrected several KV sub-document behaviours to match the cross-SDK spec:
+`LookupInAllReplicas` now returns an empty stream on a top-level failure, a `Get` with projections omits non-existent paths (including nested ones) rather than emitting nulls, and a sub-document counter overflow now surfaces `ValueInvalidException`.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4036[NCBC-4036]:
-Fixed the transactional query error "cause" so it deserializes correctly under the default serializer; a retryable CAS mismatch at commit is now retried instead of being surfaced as a non-retryable `TransactionFailedException`.
+Fixed the transactional query error "cause" so it deserializes correctly under the default serializer;
+a retryable CAS mismatch at commit is now retried instead of being surfaced as a non-retryable `TransactionFailedException`.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4240[NCBC-4240]:
-TLS trust now loads the full certificate chain from a multi-certificate PEM (for example a cluster CA plus root CA), fixing `CustomRootTrust` handshake failures where only the first certificate was previously loaded.
+TLS trust now loads the full certificate chain from a multi-certificate PEM (for example a cluster CA plus root CA),
+fixing `CustomRootTrust` handshake failures where only the first certificate was previously loaded.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4214[NCBC-4214]:
 `StellarCluster` now disposes the HTTP handler it creates, fixing a leak of the handler and its keep-alive timers when the cluster is disposed.
@@ -58,13 +62,14 @@ TLS trust now loads the full certificate chain from a multi-certificate PEM (for
 On .NET Framework, the per-ATR transaction cleanup time budget is now computed with sub-millisecond precision instead of being rounded to the nearest millisecond.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4226[NCBC-4226]:
-Analytics link and dataverse identifiers now escape embedded backticks, preventing SQL++ identifier injection.
+Analytics link and dataverse identifiers now escape embedded backticks, preventing {sqlpp} identifier injection.
 
 
 ==== Improvements
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4100[NCBC-4100]:
-SASL authentication now negotiates the strongest mechanism the server and client both support, and defaults to stronger SCRAM (SHA-256/SHA-512) instead of SCRAM-SHA1, aligning with NIST SP 800-131A. (netstandard targets remain SHA-1 due to platform limitations.)
+SASL authentication now negotiates the strongest mechanism the server and client both support, and defaults to stronger SCRAM (SHA-256/SHA-512) instead of SCRAM-SHA1, aligning with NIST SP 800-131A. 
+(netstandard targets remain SHA-1 due to platform limitations.)
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4218[NCBC-4218]:
 Applications that do not use transactions no longer eagerly start the transaction cleanup machinery, avoiding a parked thread-pool thread and the resulting latency spikes (for example on `Ping`) in CPU-constrained environments such as Kubernetes pods.
