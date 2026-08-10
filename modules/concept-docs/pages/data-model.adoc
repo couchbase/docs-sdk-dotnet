@@ -15,3 +15,8 @@ include::{version-common}@sdk:shared:partial$data-model.adoc[tag=intro]
 include::{version-common}@sdk:shared:partial$data-model.adoc[tag=structures]
 
 
+== Couchbase Collections
+
+For more information on the `Couchbase.Datastructures` Classes, refer to the 
+https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.DataStructures.html[Couchbase Datastructures API reference].
+
