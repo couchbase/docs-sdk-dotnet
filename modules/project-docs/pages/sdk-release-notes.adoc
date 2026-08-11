@@ -45,13 +45,12 @@ A locked document accessed over Stellar (`couchbase2` protocol) is now retried u
 matching the other SDKs, rather than failing immediately with `UnambiguousTimeoutException`.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4259[NCBC-4259]:
-Stellar operations that are idempotent but still mutate -- `GetAndLock`, `GetAndTouch` and `MutateIn` --
+Stellar operations that are idempotent but still mutate -- `GetAndLock`, `GetAndTouch`, and `MutateIn` --
 now raise `AmbiguousTimeoutException` on timeout rather than `UnambiguousTimeoutException`,
 since the mutation may have been applied.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4263[NCBC-4263]:
-A retryable error arriving part-way through a Stellar query or analytics result stream
-now surfaces as `RequestCanceledException` with its error context,
+A retryable error arriving part-way through a Stellar query or analytics result stream now surfaces as `RequestCanceledException` with its error context,
 instead of leaking a raw gRPC exception to the caller.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4265[NCBC-4265]:
@@ -60,25 +59,23 @@ a rate-limit response is no longer reported as `ValueToolargeException`,
 and an unrecognised precondition failure is now reported immediately instead of being retried until the request timed out.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4251[NCBC-4251]:
-Partially addresses unbounded internal waits: cluster version detection now honours a `CancellationToken`
-through to the underlying HTTP request, and the transaction ATR-initialisation lock wait is now bounded by
-the attempt's remaining time so a stuck holder on another code path cannot block it indefinitely.
+Partially addresses unbounded internal waits:
+cluster version detection now honours a `CancellationToken` through to the underlying HTTP request,
+and the transaction ATR-initialisation lock wait is now bounded by the attempt's remaining time so a stuck holder on another code path cannot block it indefinitely.
 Cancellation support is offered through a new `IClusterVersionProviderCancellable` interface,
-discovered via a `GetVersionAsync` extension method, so external `IClusterVersionProvider` implementations
-remain binary compatible.
+discovered via a `GetVersionAsync` extension method, so external `IClusterVersionProvider` implementations remain binary compatible.
 
 
 ==== Improvements
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4269[NCBC-4269]:
-`WaitUntilReady` is now implemented for Stellar (`couchbase2` protocol) on both `ICluster` and `IBucket`,
-polling the gRPC health check until the server reports serving; it previously threw `FeatureNotAvailableException`.
+`WaitUntilReady` is now implemented for Stellar (`couchbase2` protocol) on both `ICluster` and `IBucket`, polling the gRPC health check until the server reports serving;
+it previously threw `FeatureNotAvailableException`.
 A timeout raises `UnambiguousTimeoutException` carrying the last observed serving status,
 and a caller-supplied `CancellationToken` surfaces as `OperationCanceledException`.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4258[NCBC-4258]:
-Stellar (`couchbase2` protocol) connections now set the gRPC maximum receive message size
-required by the specification.
+Stellar (`couchbase2` protocol) connections now set the gRPC maximum receive message size required by the specification.
 
 
 === Version 3.9.4 (16 July 2026)
