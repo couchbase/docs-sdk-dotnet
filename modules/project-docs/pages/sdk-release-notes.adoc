@@ -27,6 +27,31 @@ any changes to expected behavior are noted in the release notes that follow.
 
 
 
+=== Version 3.9.6 (03 September 2026)
+
+https://packages.couchbase.com/clients/net/3.9/Couchbase-Net-Client-3.9.6.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.9.6[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.9.6[Nuget]
+
+
+==== Fixed Issues
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4287[NCBC-4287]:
+Key-value operations are now framed from what the connection negotiated rather than from client-side state;
+a mismatch could store a document under an ID that no longer mapped to its own location, or address the wrong collection.
+This includes `GetAllReplicasAsync`, which could dispatch a key before resolving the collection ID (https://couchbasecloud.atlassian.net/browse/NCBC-4285[NCBC-4285]).
+A connection whose `HELO` fails is now rejected instead of joining the pool reporting no server features.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4291[NCBC-4291]:
+Lost-transaction cleanup no longer stops for one `Cluster` when another `Cluster` registered against the same keyspace is disposed;
+cleanup registrations are now owned per `Cluster` rather than shared across the process.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4280[NCBC-4280]:
+A node is no longer discarded when one of its key-value connections fails to connect but another succeeds,
+which could leave the SDK with no usable nodes and report `Cluster has not yet bootstrapped` until the operation timed out;
+a failed bootstrap attempt is also no longer reported as a success carrying no inner exceptions.
+
+
 === Version 3.9.5 (10 August 2026)
 
 https://packages.couchbase.com/clients/net/3.9/Couchbase-Net-Client-3.9.5.zip[Download] |
