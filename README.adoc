@@ -1,0 +1,135 @@
+= Couchbase .NET SDK Documentation
+
+This repository hosts the documentation source for the https://docs.couchbase.com/dotnet-sdk/3.10/hello-world/overview.html[Couchbase .NET SDK].
+
+This branch documents the 3.10 release of the SDK.
+It follows the https://docs.couchbase.com/dotnet-sdk/3.11/project-docs/compatibility.html#api-version[SDK 3.10 API].
+
+This branch reflects the new Information Architecture for the SDK docs, helping to guide new-to-Couchbase users through the pitfalls of a complex distributed system.
+
+
+== Contributing
+
+Contributions are welcome!
+Please test them locally, and then submit a pull request.
+A guide to using asciidoc, building Antora locally, and working with our repos can be found at https://docs.couchbase.com/home/contribute/index.html[https://docs.couchbase.com/home/contribute/index.html] (this may still be in the middle of being updated).
+
+At a minimum, to build the docs locally, you will need this repo,
+https://github.com/couchbase/docs-sdk-common[docs-sdk-common],
+and the https://github.com/couchbase/docs-server[Server Docs repo]
+in your Antora playbook.
+
+If you are not sure the best way to update the docs, please raise a JIRA ticket with your suggestion, putting in as much information as possible.
+
+TODO: Add in link to new JIRA.
+
+
+== Notes for Docs Maintainers
+
+The philosophy behind the Information Architecture can be found in the https://docs.couchbase.com/dotnet-sdk/3.10/project-docs/metadoc-about-these-sdk-docs.html[meta doc].
+
+=== Directory Structure
+
+Antora modules used are as follows:
+
+* concept-docs -- discussion docs explaining SDK-relevant aspects of Couchbase; in the published docs these are now interleaved with the howtos, rather than in a separate section.
+This module also contains the mini landing pages which introduce each section.
+* devguide/examples -- the home of all code examples.
+* hello-world -- overview (landing page) and the introductory tutorials.
+* howtos -- practical explanations, with plenty of code snippets.
+These are the docs used by the majority of developers.
+* project-docs -- deployment section.
+Docs that you need to use the software (compatibility tables, release notes, etc.), but which are not about the software API.
+* ref -- reference material, such as error codes and client settings.
+* ROOT -- contains `nav.adoc`, the navigation file for this component.
+
+Within each module, docs content is mostly found in the `pages` directories, as `.adoc` files.
+Occasionally, a partial fragment in a `partials` directory contains content reused over more than one page.
+Most re-use is from single-sourced content in the https://github.com/couchbase/docs-sdk-common[sdk-common] repo.
+
+=== Single-sourced Content
+
+To make maintenance easier for docs of around a dozen SDKs, content that is common across SDK docsets is -- wherever possible -- single-sourced from the https://github.com/couchbase/docs-sdk-common[sdk-common] repo.
+
+We recognise that this adds a slight cognitive burden for the new maintainer, but one layer of abstraction seems a reasonable compromise for maintainability.
+To make content re-use workable, certain replaceable attributes are used.
+These are found in the antora.yml file.
+
+.Attributes for Single-sourced Content
+|===
+| Attribute | Use
+
+| `server_version:`
+| SDK dotminor releases contain new APIs to match new Server releases.
+This is the release version of Couchbase Server that this SDK release accompanied.
+Not often needed within the SDK documentation -- the server version in `xref` links is set with  `version-server:` (see below).
+
+| `sdk_current_version:` | Sets the current patch version.
+
+| `sdk_dot_minor:` | The current dotminor.
+
+| `sdk_dot_major:` | The current major release -- not often needed within the documentation.
+
+| `version-server:` | This is substituted into `xref` links to the Server, to ensure they land on the correct release version.
+
+| `version-common:`
+| The version (branch) of the single-sourced `sdk-common` repo.
+This is substituted into Antora `include::` directives, to pull in content from the correct branch.
+
+| `name_platform:` | Allows us to name the SDK within shared content (*.NET*).
+
+| `name-sdk:` | Allows us to name the SDK within shared content (*.NET SDK*).
+
+| `sdk_api:` | The API version of this release.
+
+| `sdk-api-link:` | Link to the latest API Reference for the SDK.
+
+| `sdk-gh-link:` | Link to the source code of the SDK.
+
+|===
+
+
+An additional attribute, `page-nav-header-levels: 1`, ensures that the left-hand navigation of the site opens with each topic unfurled by one level.
+
+=== Page Headers
+
+Each `.adoc` page contains information in the headers:
+
+[source,asciidoc]
+----
+= Compatibility
+:description: Platform compatibility, and features available in different SDK versions, and compatibility between Server and SDK. \
+Plus notes on Cloud, networks, and AWS Lambda.
+:page-aliases: ROOT:overview,ROOT:compatibility-versions-features,compatibility-versions-features
+:page-toclevels: 3
+:table-caption!:
+----
+
+The `:page-aliases:` directive enables Antora to build 502 redirects -- meaning that inbound links from, for example, old blog posts will still work with the current docset.
+
+`:page-toclevels:` should be set to `2` to include h3 headers along with h2s in the in-page navigation (right-hand nav).
+Leaving out this directive means that the page will default to `1`, showing only h2 headers in the in-page nav.
+A value of `3` should not be used, save in exceptionally complicated pages like that shown (the https://docs.couchbase.com/dotnet-sdk/3.10/project-docs/compatibility.html[compatibility page]).
+
+=== Patch Releases
+
+Update the following files:
+
+* antora.yml
+* modules/project-docs/pages/sdk-release-notes.adoc
+
+=== New Branches
+
+Production branches use the *release/x.y* naming pattern (e.g. `release/3.10`, `release/3.11`).
+Antora uses the branch names in the playbook, but also uses the `version` given in the antor.yml file, to create the version navigation -- so this version number must be unique within the repo for any branches included in the playbook.
+When creating a new branch for a new release, remember to update the antora.yml file before trying to build.
+
+=== Code Sample Testing
+
+This is in the process of being changed -- documentation will appear here once this is completed.
+
+
+== Docs License
+
+©2026 Couchbase, Inc.
+This work is licensed under https://creativecommons.org/licenses/by-nc-sa/4.0/[CC BY-NC-SA 4.0].

@@ -1,0 +1,196 @@
+= Best Practices
+:description: Speed up your application development, with some best practices for using Couchbase SDKs.
+:page-toclevels: 2
+:page-aliases: concept-docs:errors.adoc,concept-docs:rbac.adoc
+
+
+
+// Note to editors
+// 
+// This page pulls in content from 
+// https://github.com/couchbase/docs-sdk-common/blob/api/3.10/modules/shared/partials/best-practices-sdk.adoc
+// and code samples from -example-dir-
+// 
+// It can be seen built at 
+// https://docs.couchbase.com/java-sdk/3.13/concept-docs/best-practices.html
+
+[abstract]
+{description}
+
+
+// see .NET doc on this
+
+
+From batching and reactive APIs, to unit tests and handling errors.
+There's plenty that can be done to remove bottlenecks in development and in performance, and this page can be your checklist of areas not to neglect as you develop your app.
+
+
+
+== Security
+
+include::{version-common}@sdk:shared:partial$best-practices.adoc[tag=security]
+
+
+// === Roles and RBAC
+ 
+include::{version-common}@sdk:shared:partial$best-practices.adoc[tag=rbac]
+
+
+
+== Performance
+
+include::{version-common}@sdk:shared:partial$best-practices.adoc[tag=performance]
+
+
+
+=== Dealing with Timeout Errors
+
+include::{version-common}@sdk:shared:partial$best-practices.adoc[tag=timeout-debug]
+
+include::{version-common}@sdk:shared:partial$best-practices.adoc[tag=timeout-wait]
+
+include::{version-common}@sdk:shared:partial$best-practices.adoc[tag=timeout-more]
+
+
+
+
+=== Concurrency and Async APIs
+
+// ....this paragraph different for each SDK.
+
+We recommend using the reactive API over the `CompletableFuture` counterpart.
+See the xref:howtos:concurrent-async-apis.adoc[Async & Reactive APIs page] for discussion and practical examples.
+
+
+
+
+=== Bulk Get, Multi-Get, and Network Latency
+
+include::{version-common}@sdk:shared:partial$best-practices.adoc[tag=bulk-get]
+
+
+==== When to Use Bulk Get
+
+include::{version-common}@sdk:shared:partial$best-practices.adoc[tag=bulk-get-async-platform]
+
+
+
+
+// write after more LZA added
+////
+=== Read From Replica
+
+Advanced zone aware....
+////
+
+
+
+== Error Handling
+
+Best practices for error handling in Java depend somewhat upon your choice of API: 
+blocking, asynchronous, or reactive, as covered in the xref:howtos:concurrent-async-apis.adoc[async and reactive API guide].
+// That guide also covers how errors are actually returned (e.g. via `Try`, `Future`, or `Mono`) and handled.
+See also the xref:howtos:error-handling.adoc[error handling guide],
+which covers specific errors, along with a broader look at error handling strategies.
+
+
+
+////
+== General Approach to Scala Exceptions
+
+ When the unexpected happens, take a step-by-step approach.
+
+include::{version-common}@sdk:shared:partial$errors.adoc[tag=exception]
+
+// include::{version-common}@sdk:shared:partial$errors.adoc[tag=ref]
+
+include::{version-common}@sdk:shared:partial$errors.adoc[tag=durability]
+
+include::{version-common}@sdk:shared:partial$errors.adoc[tag=diag]
+////
+
+
+
+
+
+
+// Slow Operations Logging
+include::{version-common}@sdk:shared:partial$errors.adoc[tag=observability]
+
+// until opentelemetry release for link below, could add note on API to expose own tracing features?
+// include::{version-common}@sdk:shared:partial$errors.adoc[tag=rto]
+
+
+
+
+
+== Testing
+
+Integrate developing with the {name-sdk} into your accustomed test framework.
+
+
+
+
+
+// Missing APIs
+// For anything that is not covered by the SDK, 
+// for example
+// a raw FTS query from the SDK...
+// use the HTTP client: 
+
+////
+public class CouchbaseHttpClient
+extends Object
+A specialized HTTP client for making requests to Couchbase Server.
+Get an instance by calling Cluster.httpClient().
+
+Example usage:
+
+ public static String getAutoFailoverSettings(Cluster cluster) {
+   HttpResponse response = cluster.httpClient().get(
+       HttpTarget.manager(),
+       HttpPath.of("/settings/autoFailover"));
+
+   if (!response.success()) {
+     throw new RuntimeException(
+         "Failed to get auto-failover settings. HTTP status code " +
+             response.statusCode() + "; " + response.contentAsString());
+   }
+
+   return response.contentAsString();
+ }
+
+ public static void disableAutoFailover(Cluster cluster) {
+   HttpResponse response = cluster.httpClient().post(
+       HttpTarget.manager(),
+       HttpPath.of("/settings/autoFailover"),
+       HttpPostOptions.httpPostOptions()
+           .body(HttpBody.form(Map.of("enabled", "false"))));
+
+   if (!response.success()) {
+     throw new RuntimeException(
+         "Failed to disable auto-failover. HTTP status code " +
+             response.statusCode() + "; " + response.contentAsString());
+   }
+ }
+ 
+////
+// https://docs.couchbase.com/sdk-api/couchbase-java-client/com/couchbase/client/java/http/CouchbaseHttpClient.html
+
+
+
+
+== Additional Information
+
+
+include::{version-common}@sdk:shared:partial$best-practices.adoc[tag=additional]
+
+
+
+
+// other SDK's docs
+//
+// add in Python
+// https://docs.couchbase.com/sdk-api/couchbase-python-client/couchbase_api/parallelism.html
+//
+// 
