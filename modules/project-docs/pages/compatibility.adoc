@@ -71,40 +71,10 @@ include::hello-world:partial$supported.adoc[]
 In general, the Common Language Runtime (CLR) eliminates concerns about underlying OS compatibility, 
 and the Couchbase .NET SDK can be expected to run on all of the Operating Systems supported by xref:{version-server}@server:install:install-platforms.adoc[Couchbase Server].
 
-The {name-sdk} is tested and supported on the following OSs and platforms:
 
-****
-[discrete]
-=== GNU/Linux
+// The {name-sdk} is tested and supported on the following OSs and platforms:
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=os-compat]
 
-* Amazon Linux 2 & AL2023.
-* Red Hat Enterprise Linux 8 & 9;
-* Oracle Linux 8 & 9.
-* Ubuntu (LTS) 22.04 (_Jammy_) & 24.04 (_Noble_).
-* Debian 11 (_Bullseye_) & Debian 12 (_Bookworm_).
-* SUSE Enterprise Linux 12 & 15.
-* Alpine Linux 3.18.
-// (_Oracle JDK only_).
-// -- but see <<alpine-linux-compatibility, workaround note below>>.
-
-[discrete]
-=== Microsoft Windows
-
-* Microsoft Windows 10 & 11;
-* Windows Server 2019 & 2022.
-
-[discrete]
-=== Mac OS X
-
-The current and previous two releases of OS X.
-At time of writing (April 2025): 15 (Sequoia), 14 (Sonoma), and 13 (Ventura).
-M1 ARM  architecture is fully supported in the .NET SDK.
-
-[discrete]
-=== ARM Processor Support
-
-AWS Amazon Graviton2, Apple M1 ARM processors, and ARMv8 on Ubuntu 20.04+ (from SDK 1.4).
-****
 
 The .NET SDK should also be expected to run on other commonly-available GNU/Linux distributions which support an appropriate .NET Standard, but not all combinations can be tested -- notable exceptions are listed below.
 
@@ -135,8 +105,22 @@ The downside of these workarounds is potentially reduced performance, which can 
 
 
 
+// Platforms, Chipsets, and Virtual Environments.
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=virtual]
+
+
+
+
+
 // Network Requirements
-include::{version-common}@sdk:shared:partial$network-requirements.adoc[]
+include::{version-common}@sdk:shared:partial$compat[tag=network-requirements]
+
+
+
+// Serverless Environments
+include::{version-common}@sdk:shared:partial$compat[tag=serverless]
+
+
 
 
 
@@ -161,7 +145,7 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 .Recommended SDK per Server Version Matrix
 [#table_sdk_versions]
 |===
-| | 3.4 | 3.5 | 3.6 - 3.7 | 3.8 - 3.9
+| | 3.4 | 3.5 | 3.6 - 3.7 | 3.8 - 3.10'
 
 | *Server 7.0 - 7.2*
 | *✔*
@@ -192,10 +176,10 @@ See the notes there for Support details.
 
 === Capella Compatibility
 
-The Couchbase .NET SDK is fully compatible with Couchbase Capella, our fully-hosted database-as-a-service.
-To make development easier, the SDK includes the Capella client certificate ready installed.
+// The Couchbase .NET SDK is fully compatible with Couchbase Capella, our fully-hosted database-as-a-service.
+// To make development easier, the SDK includes the Capella client certificate ready installed.
 
-include::{version-common}@sdk:shared:partial$capella.adoc[tag=cloud]
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=cloud]
 
 
 === Couchbase New Feature Availability Matrix
@@ -224,16 +208,12 @@ include::{version-common}@sdk:shared:partial$capella.adoc[tag=cloud]
 | From SDK 3.9.0 ①
 |===
 
-① As part of the standard SDK {sqlpp} API, it should be compatible with all earlier versions of the SDK -- but it has not been tested.
-
-This table is not an exhaustive list -- just a few highlights -- provided to help assess compatibility of older versions in particular.
-For alignment of SDKs and new Server features, scroll down to the information below the <<api-version,API Version table>>.
-
+include::{version-common}@sdk:shared:partial$compat[tag=feature-notes]
 
 
 === API Version
 
-include::{version-common}@sdk:shared:partial$api-version.adoc[tag=api-version]
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=api-version]
 
 
 
@@ -243,9 +223,10 @@ include::{version-common}@sdk:shared:partial$api-version.adoc[tag=api-version]
 
 === Interface Stability
 
-include::{version-common}@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=interface-stability-section]
 
 
 === Older SDK Versions
 
-include::{version-common}@sdk:shared:partial$archive.adoc[tag=link]
+
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=archive-link]
