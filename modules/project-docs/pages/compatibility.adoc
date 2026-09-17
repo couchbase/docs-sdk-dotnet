@@ -208,7 +208,7 @@ include::{version-common}@sdk:shared:partial$compat.adoc[tag=cloud]
 | From SDK 3.9.0 ①
 |===
 
-include::{version-common}@sdk:shared:partial$compat[tag=feature-notes]
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=feature-notes]
 
 
 === API Version
