@@ -3,7 +3,8 @@
 :page-aliases: concept-docs:collections.adoc
 :description: Performance, availability, consistency -- balance your priorities, and model your data to achieve these goals.
 :page-toclevels: 2
-:anyreplica-api: pass:q[https://docs.couchbase.com/sdk-api/couchbase-java-client/com/couchbase/client/java/AsyncCollection.html#getAnyReplica(java.lang.String,com.couchbase.client.java.kv.GetAnyReplicaOptions)]
+:anyreplica-api: pass:q[https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.KeyValue.GetAllReplicasOptions.html]
+
 
 // Note to editors
 // 
@@ -21,11 +22,18 @@ You want to query your data, but does that always mean a {sqlpp} query to the Qu
 The CRUD API of the {sqlpp} Query service is mirrored by the Data Service's API, but without the need for indexes, and using a binary protocol gives faster access than streaming JSON from the Query Service.
 
 
-[source,java]
+[source,csharp]
 ----
-collection.upsert("my-document", JsonObject.create().put("doc", true),
-    upsertOptions().durability(DurabilityLevel.MAJORITY));
-}
+await collection
+    .InsertAsync(key, Encoding.UTF8.GetBytes("hello"), options =>
+    {
+        options.Expiry(TimeSpan.FromSeconds(30));
+        options.Timeout(TimeSpan.FromMinutes(5));
+    })
+    .ConfigureAwait(false);
+
+using var result = await collection.GetAsync(key, options => options.Transcoder(new LegacyTranscoder()))
+    .ConfigureAwait(false);
 ----
 
 At its heart, a database is in the business of storing data and letting you query and retrieve it.
@@ -151,7 +159,7 @@ A practical look at this -- using the `durability` parameter with mutating opera
 
 This durability is enforced by the cluster.
 Note, if you are working with an older, no longer supported version of Couchbase Server, you may want to look at
-https://docs-archive.couchbase.com/java-sdk/3.3/concept-docs/durability-replication-failure-considerations.html#older-server-versions[client-verified durability in our archived docs].
+https://docs-archive.couchbase.com/dotnet-sdk/3.4/concept-docs/durability-replication-failure-considerations.html#older-server-versions[client-verified durability in our archived docs].
 
 
 
@@ -173,7 +181,7 @@ or to return _all_ of the results, for client code to handle any inconsistency, 
 
 === Preferred Server Group Replica Reads
 
-IMPORTANT: Preferred Server Group Replica Reads are only accessible with the {name-sdk} working with Couchbase Server 7.6.2 or newer (Capella or self-managed), from SDK version 3.7.4.
+IMPORTANT: Preferred Server Group Replica Reads are only accessible with the {name-sdk} working with Couchbase Server 7.6.2 or newer (Capella or self-managed), from SDK version 3.8.0.
 
 xref:server:learn:clusters-and-availability/groups.adoc#understanding-server-group-awareness[Server Groups]
 can be used to define subsets of nodes within a Couchbase cluster, which contain a complete set of vbuckets (active or replica).
@@ -208,16 +216,20 @@ xref:concept-docs:transactions.adoc[multi-document ACID transactions].
 ====
 
 .getReplicaFromPreferredServerGroup example, using Transactions
-[source,java]
+[source,csharp]
 ----
-    cluster.transactions().run((ctx) -> {
-      TransactionGetResult getResult;
-      try {
-        getResult = ctx.getReplicaFromPreferredServerGroup(collection, id);
-      } catch (DocumentUnretrievableException err) {
-        getResult = ctx.get(collection, id);
-      }      
-    });
+await cluster.Transactions.RunAsync(async (ctx) =>
+{
+    TransactionGetResult? getResult;
+    try
+    {
+        getResult = await ctx.GetReplicaFromPreferredServerGroup(collection, id);
+    }
+    catch (DocumentUnretrievableException)
+    {
+        getResult = await ctx.GetAsync(collection, id);
+    }
+});
 ----
 
 
@@ -279,13 +291,13 @@ covers the interaction between a document’s expiration setting and the `maxExp
 
 TIP: In earlier releases of the SDK, `maxTTL` was used for setting the time to live.
 This method has been deprecated.
-Please use `maxExpiry` at the bucket and collection level.
+Please use `Expiry` at the bucket and collection level.
 
 // TODO check they all use MAX32INT -- 2147483648 seconds
 
 === Collection No-Expiry Option
 
-From Java SDK 3.5.3 with Capella (and self-managed Server from 7.6.0), setting a `maxExpiry` of `-1` on a collection will prevent it from expiring, even when its containing bucket has reached expiry time.
+From Java SDK 3.4.15 with Capella (and self-managed Server from 7.6.0), setting a `maxExpiry` of `-1` on a collection will prevent it from expiring, even when its containing bucket has reached expiry time.
 Again, see the table in the xref:{version-server}@server:learn:data/expiration.adoc#expiration-setting-priorities[expiration documentation].
 
 === Changing a Document, but Not the Expiry
