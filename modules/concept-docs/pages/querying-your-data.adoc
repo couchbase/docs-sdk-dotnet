@@ -22,7 +22,7 @@ Couchbase also offers fuzzy search, including Vector Search.
 The data service stores your documents, but is the best route to retrieving them?
 
 {sqlpp} is a SQL-family language, and an easy way for anyone familiar with Relational Databases (RDBMS) to work with documents stored in Couchbase --
-if you're sure that's the service that you want, jump to our xref:howtos:sqlpp-queries-with-sdk.adoc[Query Howto doc].
+if you're sure that's the service that you want, jump to our xref:howtos:sqlpp-queries-with-sdk.adoc[Query howto doc].
 
 
 Couchbase also has a powerful Search Service, supporting similarity and hybrid search, combining text, vector, range, and geospatial search.
