@@ -159,7 +159,7 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 |===
 | | 3.4 | 3.5 | 3.6 - 3.7 | 3.8
 
-| *Server 7.0 - 7.2*
+| *Server 7.0 - 7.2* ②
 | *✔*
 | *✔*
 | *✔*
@@ -182,6 +182,8 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 While these versions will continue be compatible and supported with server 7.6.0+, you may encounter timeout exceptions during rebalances under KV high workload.
 3.6.1+ is recommended for Server 7.6.0+ --
 more information is on the xref:sdk-release-notes.adoc[Release Notes page].
+
+② Earlier versions of Server, back to 7.0, should be compatible with newer releases of the SDK (unless the release notes mention specific deprecations), but these older Server versions are EOL and no longer supported.
 
 Note the https://www.couchbase.com/support-policy/EOL/[End of Life dates^] for Couchbase Server and SDK versions.
 See the notes there for Support details.
