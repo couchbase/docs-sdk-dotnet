@@ -1,24 +1,249 @@
-= Couchbase .NET SDK {sdk_dot_minor}
+= Couchbase {name-sdk} {sdk_dot_minor}
 :page-layout: landing-page-top-level-sdk
 :page-role: tiles
 :!sectids:
 :page-aliases: ROOT:dotnet-sdk.sdoc
 
-= Couchbase .NET SDK {sdk_dot_minor}
 
-[source,csharp]
-----
-await collection
-    .InsertAsync(key, Encoding.UTF8.GetBytes("hello"), options =>
-    {
-        options.Expiry(TimeSpan.FromSeconds(30));
-        options.Timeout(TimeSpan.FromMinutes(5));
-    })
-    .ConfigureAwait(false);
 
-using var result = await collection.GetAsync(key, options => options.Transcoder(new LegacyTranscoder()))
-    .ConfigureAwait(false);
+
+= Couchbase {name-sdk} {sdk_dot_minor}
+
+
+The Couchbase {name-sdk} allows {name_platform} applications to access a Couchbase cluster --
+Capella or self-managed.
+// -- other SDKs are available for Couchbase Lite (edge or mobile devices) and Capella Columnar (real-time analytics)
+
+xref:hello-world:start-using-sdk.adoc[Quickstart Guide] |
+xref:project-docs:sdk-release-notes.adoc[] |
+{sdk-api-link}[{name-sdk} API Reference] |
+{sdk-gh-link}[{name-sdk} source code]
+
+
+
+A fast and scalable database is even better when it's easy to develop for.
+Couchbase gives you the {name_platform} APIs to work with Capella, our managed solution, or self-managed options in your private Cloud or datacenter.
+
+
+[{tabs}] 
+==== 
+Data Ops (CRUD)::
++
+--
+[source,{lang-code}]
 ----
+include::devguide:example$dotnet/KvOperations.cs[indent=0,tag=upsertwithtimeout]
+----
+--
+
+{sqlpp} Query (OLTP)::
++
+--
+
+[source,{lang-code}]
+----
+include::devguide:example$dotnet/N1qlQueries.cs[indent=0,tag=atplus]
+----
+--
+Vector Search::
++
+--
+
+[source,{lang-code}]
+----
+include::devguide:example$dotnet/Search.cs[indent=0,tag=scopedVector]
+----
+--
+====
+
+
+Couchbase is a large platform -- covering many services -- and Couchbase SDKs are not thin wrappers generated around a REST API, but well thought out interfaces to the platform that make it easier to design and maintain your client code,
+and work with Couchbase in more natural ways for your platform.
+Install the SDK, and explore in the way that works best for you.
+
+.Installation
+[source,console]
+----
+Install-Package CouchbaseNetClient
+----
+
+
+
+
+The links below will take you where you want to go -- as will the navigation on the left-hand side of this page.
+But if you don't know exactly where you need to go, try one of the following:
+
+* Our xref:hello-world:start-using-sdk.adoc[Quickstart Guide] introduces the SDK with a quick install, and CRUD examples against the Data Service.
+* Couchbase's familiar SQL-family query language and fuzzy search options (including vector search) are introduced on the xref:concept-docs:querying-your-data.adoc[] page.
+* The {name-sdk} docs are, necessarily, just a sub-set {sdk-api-link}[{name-sdk} API Reference] -- and a complete reference of all APIs can be found there.
+* For a fuller orientation, there is a xref:project-docs:metadoc-about-these-sdk-docs.adoc[guide to the {name-sdk} docs]
+
+
+{empty} +
+
+== icon:database[] Using Your Database
+
+How-to guides to help you start your development journey with Couchbase and the {name-sdk}.
+
+++++
+<div class="card-row two-column-row">
+++++
+
+[.column]
+.Easy to Connect & Get Started
+* xref:hello-world:start-using-sdk.adoc[Quickstart Guide]
+* xref:hello-world:sample-application.adoc[]
+* xref:howtos:managing-connections.adoc[]
+// * xref:hello-world:student-record-developer-tutorial.adoc[Beginners' Couchbase Tutorial]
+
+[.column]
+.Search, Query, Analyze
+* xref:howtos:sqlpp-queries-with-sdk.adoc[Query with a familiar, SQL-like language]
+* xref:howtos:vector-searching-with-sdk.adoc[Vector Search for your AI app]
+* xref:howtos:full-text-searching-with-sdk.adoc[Fuzzy Search with text and Geo data]
+* xref:howtos:analytics-using-sdk.adoc[OLAP -- long running analytical queries]
+
+// For Real-Time Analytics, see our xref:[Capella Columnar SDKs].
+
+[.column]
+.Lightning Fast Data Service
+* xref:howtos:kv-operations.adoc[]
+* xref:howtos:subdocument-operations.adoc[]
+* xref:howtos:encrypting-using-sdk.adoc[]
+* xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Multi-Document Distributed ACID Transactions]
+
+[.column]
+.Observability & Error Handling
+* xref:howtos:error-handling.adoc[]
+* xref:howtos:collecting-information-and-logging.adoc[]
+* xref:howtos:slow-operations-logging.adoc[]
+* xref:howtos:health-check.adoc[]
+
+++++
+</div>
+++++
+
+////
+== icon:graduation-cap[] Learn
+
+Take a deep-dive into the SDK concept material and learn more about Couchbase.
+
+++++
+<div class="card-row two-column-row">
+++++
+
+[.column]
+.Data Concepts
+* xref:concept-docs:data-model.adoc[]
+* xref:concept-docs:data-services.adoc[Service Selection]
+* xref:concept-docs:encryption.adoc[Field Level Encryption]
+
+[.column]
+.Errors & Diagnostics Concepts
+* xref:concept-docs:errors.adoc[]
+* xref:concept-docs:response-time-observability.adoc[]
+* xref:concept-docs:durability-replication-failure-considerations.adoc[]
+
+++++
+</div>
+++++
+////
+
+{empty} +
+
+== icon:book[] Resources
+
+Useful resources to help support your development experience with Couchbase and the {name_platform} SDK.
+
+++++
+<div class="card-row two-column-row">
+++++
+
+[.column]
+.Reference
+* {sdk-api-link}[API Reference^]
+* xref:ref:client-settings.adoc[]
+* xref:ref:error-codes.adoc[]
+* {sdk-gh-link}[SDK source code]
+* xref:ref:glossary.adoc[Glossary]
+* xref:ref:travel-app-data-model.adoc[]
+
+[.column]
+.Deployment
+* xref:project-docs:sdk-release-notes.adoc[]
+* xref:project-docs:compatibility.adoc[Compatibility]
+* https://docs-archive.couchbase.com/home/index.html[Older Versions Archive]
+** xref:project-docs:migrating-sdk-code-to-3.n.adoc[]
+* xref:project-docs:third-party-integrations.adoc[]
+* xref:project-docs:sdk-full-installation.adoc[]
+
+++++
+</div>
+++++
+
+
+{empty} +
+
+
+{empty} +
+
+
+== icon:code[] Couchbase Operational Cluster Feature Compatibility
+
+include::project-docs:deployment.adoc[tag=feature-compat]
+
+
+
+{empty} +
+
+
+include::{version-common}@sdk:shared:partial$columnar-available.adoc[tag=initial-availability-o]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 The Couchbase .NET client allows applications to connect to Couchbase Server using any Common Language Runtime (CLR) language, including C#, F#, and VB.NET.
 The SDK is written in C#, and some of its idiomatic patterns reflect that choice.

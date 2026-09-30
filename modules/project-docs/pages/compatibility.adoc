@@ -211,6 +211,15 @@ include::{version-common}@sdk:shared:partial$compat.adoc[tag=cloud]
 include::{version-common}@sdk:shared:partial$compat.adoc[tag=feature-notes]
 
 
+
+=== Entity Framework Core Compatibility
+
+For version compatibility with Couchbase EF Core, see the
+xref:efcore-provider::entity-framework-core-compatibility-guide.adoc[Entity Framework Core Compatibility Guide]
+
+
+
+
 === API Version
 
 include::{version-common}@sdk:shared:partial$compat.adoc[tag=api-version]
