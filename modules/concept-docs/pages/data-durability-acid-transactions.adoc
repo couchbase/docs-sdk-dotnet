@@ -297,7 +297,7 @@ Please use `Expiry` at the bucket and collection level.
 
 === Collection No-Expiry Option
 
-From Java SDK 3.4.15 with Capella (and self-managed Server from 7.6.0), setting a `maxExpiry` of `-1` on a collection will prevent it from expiring, even when its containing bucket has reached expiry time.
+From .NET SDK 3.4.15 with Capella (and self-managed Server from 7.6.0), setting a `maxExpiry` of `-1` on a collection will prevent it from expiring, even when its containing bucket has reached expiry time.
 Again, see the table in the xref:{version-server}@server:learn:data/expiration.adoc#expiration-setting-priorities[expiration documentation].
 
 === Changing a Document, but Not the Expiry
