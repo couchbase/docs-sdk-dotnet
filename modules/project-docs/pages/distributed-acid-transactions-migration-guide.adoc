@@ -32,7 +32,7 @@ await transactions.RunAsync(async (ctx) => {
 .After
 [source,csharp]
 ----
-include::howtos:example$TransactionsExample.cs[tag=init,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=init,indent=0]
 ----
 
 == Configuration
@@ -51,7 +51,7 @@ var transactions = Transactions.Create(cluster,
 .After
 [source,csharp]
 ----
-include::howtos:example$TransactionsExample.cs[tag=config,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=config,indent=0]
 ----
 
 A few details of configuration change:
@@ -81,7 +81,7 @@ var transactions = Transactions.Create(cluster,
 .After
 [source,csharp]
 ----
-include::howtos:example$TransactionsExample.cs[tag=config-cleanup,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=config-cleanup,indent=0]
 ----
 
 == Lambda
@@ -111,7 +111,7 @@ SingleQueryTransactionResult sqr = await transactions.QueryAsync<dynamic>("INSER
 .After
 [source,csharp]
 ----
-include::howtos:example$TransactionsExample.cs[tag=querySingle,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=querySingle,indent=0]
 ----
 
 Or with configuration:
@@ -128,7 +128,7 @@ SingleQueryTransactionResult sqr = await transactions.QueryAsync<dynamic>("INSER
 .After
 [source,csharp]
 ----
-include::howtos:example$TransactionsExample.cs[tag=querySingleConfigured,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=querySingleConfigured,indent=0]
 ----
 
 == Cleanup
@@ -154,7 +154,7 @@ Failure logging remains largely the same, but note that `TransactionFailedExcept
 
 [source,csharp]
 ----
-include::howtos:example$TransactionsExample.cs[tag=logging,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=logging,indent=0]
 ----
 
 == Further Reading
