@@ -2,11 +2,11 @@
 :page-aliases: ROOT:getting-started.adoc,ROOT:start-using.adoc,ROOT:hello-couchbase.adoc,ROOT:start-using-sdk.adoc
 :page-toclevels: 3
 :description: Install, connect, try. A quick start guide to get you up and running with Couchbase and the {name-sdk}.
-// :forum-link: https://www.couchbase.com/forums/c/c-sdk/7
+:forum-link: https://forums.couchbase.com/c/net-sdk/6
 :complete-code-include: include::devguide:example$dotnet/StartUsingCapella.cs[]
 :page-partial:
 :lang: csharp
-:example-source-lang: C#
+// :example-source-lang: C#
 
 
 // Note to editors
@@ -111,86 +111,56 @@ Connect to your Couchbase Capella operational cluster (or your local Couchbase C
 Couchbase Capella::
 +
 --
-[source,java]
+[source,csharp]
 ----
-include::devguide:example$java/StartUsingCapella.java[tags=connect,indent=0]
+include::devguide:example$dotnet/Cloud.cs[tags=connect,indent=0]
 ----
 --
 
 Self-Managed Couchbase Server::
 +
 --
-
-[source,java]
+[source,csharp]
 ----
-include::devguide:example$java/StartUsing.java[tags="connect-info",indent=0]
-----
-[source,java]
-----
-include::devguide:example$java/StartUsing.java[tags="connect-env",indent=0]
+include::devguide:example$dotnet/StartUsing.cs[tag=connect,indent=0]
 ----
 --
 
 Cloud Native Gateway (CNG)::
 +
 --
-Couchbase's large number of ports across the URLs of many services can be proxied by using a `couchbase2://` endpoint as the connection string --
-currently only compatible with recent versions of xref:operator:ROOT:concept-cloud-native-gateway.adoc[Couchbase Autonomous Operator]:
+include::{version-common}@sdk:shared:partial$start-using-sdk.adoc[tag=cng]
 
-[source,java]
+[source,csharp]
 ----
-Cluster cluster = Cluster.connect(
-  "couchbase2://10.12.14.16",
-  ClusterOptions
-    .create(username, password)
-    .environment(env)
-)
+    var cluster = await Cluster.ConnectAsync(
+        // Update these credentials for your Local Couchbase instance!
+        "couchbase2://<your-ip-address>",
+        "Administrator",
+        "password");
 ----
 
 Read more on the xref:howtos:managing-connections.adoc#cloud-native-gateway[Connections] page.
---
-
-Quarkus::
-+
---
-Our  xref:quarkus-extension:ROOT:overview.adoc[Couchbase Quarkus Java Extension docs] cover installing and connecting with the Quarkus extension in detail,
-but if you already have Quarkus installed and a project ready (with `quarkus-couchbase` in your `pom.xml` or `build.gradle`),
-then your `src/main/resources/application.properties` file needs to contain:
-
-[source,properties]
-----
-quarkus.couchbase.connection-string=localhost
-quarkus.couchbase.username=username
-quarkus.couchbase.password=password
-----
 --
 ====
 
 include::{version-common}@sdk:shared:partial$start-using-sdk.adoc[tag=deeper-conn]
 
 
-The `ClusterEnvironment.Builder` is covered more fully on the xref:ref:client-settings.adoc#the-environment-builder[Client Settings] page.
-
-[TIP]
-.Simpler Connection
-====
-There's also a simpler version of `Cluster.connect()` for when you don't need to customize the cluster environment:
-[source,java]
-----
-include::devguide:example$java/SimpleConnect.java[tags=connect-string,indent=0]
-----
-====
-
 
 === Opening a Bucket
 
 Following successful authentication, open the bucket with:
-
-[source,java]
+////
+[source,csharp]
 ----
-include::devguide:example$java/StartUsingCapella.java[tag=bucket,indent=0]
+include::devguide:example$dotnet/StartUsing.cs[tag=bucket,indent=0]
 ----
-
+////
+[source,csharp]
+----
+include::devguide:example$dontnet/ClusterExample.cs[tag=waitUntilReady,indent=0]
+----
 
 
 ////
@@ -204,14 +174,15 @@ Opening resources such as buckets is asynchronous --
 that is, the `cluster.bucket` call returns immediately and proceeds in the background.
 `waitUntilReady` ensures that the bucket resource is fully loaded before proceeding.
 If not present, then the first key-value (KV) operation on the bucket will wait for it to be ready.
-As with the earlier `Cluster.connect`, we use `.get` on the result here for simplicity.
+// As with the earlier `Cluster.connect`, we use `.get` on the result here for simplicity.
 
 *Collections* allow documents to be grouped by purpose or theme, according to a specified *scope* -- see data modeling, <<data-modeling,below>>.
 Here we will use the `airport` collection within the `inventory` scope from `travel-sample` bucket as an example.
 
-[source,java]
+[source,csharp]
 ----
-include::devguide:example$java/StartUsingCapella.java[tag=collection,indent=0]
+var scope = await bucket.ScopeAsync("inventory");
+var collection = await scope.CollectionAsync("airport");
 ----
 
 
@@ -220,6 +191,8 @@ include::devguide:example$java/StartUsingCapella.java[tag=collection,indent=0]
 include::{version-common}@sdk:shared:partial$start-using-sdk.adoc[tag=crud]
 
 
+
+////
 === JSON
 
 We'll create a snippet of JSON to work with, using the client's own JSON library,
@@ -230,109 +203,66 @@ xref:howtos:json.adoc[] page.
 ----
 include::devguide:example$java/StartUsingCapella.java[tag=json,indent=0]
 ----
+////
+
 
 === Insert (Create) and Upsert
 
+
+xref:howtos:kv-operations.adoc[Data operations], like storing and retrieving documents, can be done using simple methods on the `Collection` class such as `Collection.InsertAsync()` and `Collection.UpsertAsync()`.
 `insert` and `upsert` will both create a new document.
 The difference between the two is that if a document with that key already exists, the `insert` operation will fail,
-// throwing `DocumentExistsException` --
+throwing a `DocumentExistsException` --
 while the `upsert` operation will succeed, replacing the content.
 
-We need to provide a unique ID as the key, and we'll use a UUID here:
 
-.Creating a new document
-[source,java]
+.Insert
+[source,csharp]
 ----
-include::devguide:example$java/StartUsingCapella.java[tag=upsert,indent=0]
+include::devguide:example$dotnet/KvOperations.cs[tag=insert,indent=0]
 ----
+
 
 === Get (Read)
 
 The `get` method reads a document from a collection.
-// If the collection does not have a document with this ID, the `get` method also throws `DocumentNotFoundException`.
+If the collection does not have a document with this ID, the `get` method also throws `DocumentNotFoundException`.
 
-Wrapping the method in a `try` / `catch` is a good way to handle exceptions:
+The following code snippet creates a new document in a custom scope and collection and then fetches it again, printing the result.
 
-[source,java]
+[source,csharp]
 ----
-include::devguide:example$java/StartUsingCapella.java[tag=get,indent=0]
-----
-
-////
-Here we're fetching the value for the key `docId`,
-converting that value to a `JsonObjectSafe`
-(a simple wrapper around `JsonObject` that returns `Try` results -- see
-xref:howtos:json.adoc#error-handling-and-jsonobjectsafe[JsonObjectSafe] for details),
-and then accessing the value of the *status* key as a String.
-////
-
-////
-==== Better Error Handling
-
-All three of these operations could fail, so there's quite a lot of error handling code here to do something quite simple.
-One way to improve on this is by using `flatMap`, like this:
-
-[source,java]
-----
-include::devguide:example$java/StartUsingCapella.java[tag=get-map,indent=0]
+include::devguide:example$dotnet/StartUsing.cs[tag=upsert-get,indent=0]
 ----
 
-Alternatively, you can use a for-comprehension, like so:
-
-[source,java]
-----
-include::devguide:example$java/StartUsingCapella.java[tag=get-for,indent=0]
-----
-
-Either of these methods will stop on the first failed operation.  So the final returned `Try` contains either 
-a) `Success` and the result of the final operation, indicating that everything was successful, or 
-b) `Failure` with the error returned by the first failing operation.
-////
 
 === Replace (Update) and Overloads
 
-////
-You'll notice that most operations in the Scala SDK have two overloads.
-One will take an Options builder, which provides all possible options that operation takes.
-For instance:
-////
+The replace method updates the value of an existing document.
+Here we add a couple of useful options for expiry and timeout --
+read more on our xref:howtos:kv-operations.adoc[using the Data Service] page.
 
-.The replace method updates the value of an existing document
-[source,java]
+[source,csharp]
 ----
-include::devguide:example$java/StartUsingCapella.java[tag=replace-options,indent=0]
+include::example$KvOperations.cs[tag=replacewithcas,indent=0]
 ----
-
-////
-These options blocks are implemented as Scala case classes:
-they are immutable data objects that return a copy of themselves on each change.
-
-The other overload is provided purely for convenience.
-It takes named arguments instead of an Options object, and provides only the most commonly used options:
-
-[source,java]
-----
-include::devguide:example$java/StartUsingCapella.java[tag=replace-named,indent=0]
-----
-////
 
 CAUTION: When you replace a document, it's usually good practice to use xref:howtos:kv-operations.adoc#optimistic-locking[optimistic locking].
 Otherwise, changes might get lost if two people change the same document at the same time.
 
+
+
 === Remove (Delete)
 
-The remove method deletes a document from a collection:
+When removing a document, you will have the same concern for durability as with any additive modification to the Bucket:
 
-[source,java]
+.Remove (with options)
+[source,csharp]
 ----
-try {
-  collection.remove("my-document");
-} catch (DocumentNotFoundException ex) {
-  System.out.println("Document did not exist when trying to remove");
-}
+include::example$KvOperations.cs[tag=remove,indent=0]
 ----
 
-Like `replace`, `remove` also optionally takes the xref:howtos:kv-operations.adoc#what-is-cas[CAS value] if you want to make sure you are only removing the document if it hasn’t changed since you last fetched it.
+Like `Replace`, `Remove` also optionally takes the xref:howtos:kv-operations.adoc#what-is-cas[CAS value] if you want to make sure you are only removing the document if it hasn’t changed since you last fetched it.
 
 
 == Data Modeling
