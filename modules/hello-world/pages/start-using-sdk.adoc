@@ -113,7 +113,7 @@ Couchbase Capella::
 --
 [source,csharp]
 ----
-include::devguide:example$dotnet/Cloud.cs[tags=connect,indent=0]
+include::devguide:example$dotnet/Cloud/Cloud.cs[tags=connect,indent=0]
 ----
 --
 
@@ -159,7 +159,7 @@ include::devguide:example$dotnet/StartUsing.cs[tag=bucket,indent=0]
 ////
 [source,csharp]
 ----
-include::devguide:example$dontnet/ClusterExample.cs[tag=waitUntilReady,indent=0]
+include::devguide:example$dotnet/ClusterExample.cs[tag=waitUntilReady,indent=0]
 ----
 
 
@@ -244,7 +244,7 @@ read more on our xref:howtos:kv-operations.adoc[using the Data Service] page.
 
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=replacewithcas,indent=0]
+include::devguide:example$dotnet/KvOperations.cs[tag=replacewithcas,indent=0]
 ----
 
 CAUTION: When you replace a document, it's usually good practice to use xref:howtos:kv-operations.adoc#optimistic-locking[optimistic locking].
@@ -259,7 +259,7 @@ When removing a document, you will have the same concern for durability as with 
 .Remove (with options)
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=remove,indent=0]
+include::devguide:example$dotnet/KvOperations.cs[tag=remove,indent=0]
 ----
 
 Like `Replace`, `Remove` also optionally takes the xref:howtos:kv-operations.adoc#what-is-cas[CAS value] if you want to make sure you are only removing the document if it hasn’t changed since you last fetched it.
