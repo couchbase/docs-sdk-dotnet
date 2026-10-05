@@ -20,7 +20,7 @@ include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tags=intro]
 
 [source,csharp]
 ----
-include::howtos:example$TransactionsExample.cs[tag=create-simple,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=create-simple,indent=0]
 ----
 
 include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tags=mechanics;!integrated-sdk-cleanup-process]
