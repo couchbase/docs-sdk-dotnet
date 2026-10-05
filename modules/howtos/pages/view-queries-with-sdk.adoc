@@ -1,56 +1,37 @@
 = MapReduce Views
-:description: You can use MapReduce views to create queryable indexes in Couchbase Data Platform.
+:description: Our legacy MapReduce Views Service is best replaced by the scalable Query Service.
+:navtitle: MapReduce Views
+:page-aliases: ROOT:view-queries-with-sdk.adoc,ROOT:geo-spatial-views.adoc
 :page-edition: Deprecated
-:page-aliases: ROOT:view-queries-with-sdk
-
-include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 {description}
 
-include::8.0@sdk:shared:partial$views.adoc[tag=deprecate2]
+// include::{version-common}@sdk:shared:partial$views.adoc[tag=deprecate]
 
 
-include::{version-common}@sdk:shared:partial$views.adoc[tag=views-intro]
+// option 1 - C++ - redirect to migration page, and add note at end.
 
-include::{version-common}@sdk:shared:partial$views.adoc[tag=example-beer]
-
-
-[source,csharp]
-----
-var result = await bucket.ViewQueryAsync("beers", "by_name", options => {
-    options.WithStartKey("A");
-    options.WithLimit(10);
-});
-----
-
-include::{version-common}@sdk:shared:partial$views.adoc[tag=example-travel]
+// option 2 - most others - this common page, with per-sdk archive link at end.
 
 
-[source,csharp]
-----
-var result = await bucket.ViewQueryAsync("landmarks", "by_name", options => {
-    options.WithKey("<landmark-name>");
-});
-----
+
+////
+Views are a legacy service which pre-dates the {name-sdk}.
+Your use case is most likely to be met by the xref:howtos:n1ql-queries-with-sdk.adoc[Query service].
+////
+
+xref:{version-server}@server:learn:views/views-intro.adoc[MapReduce Views] date from the earliest days of Couchbase and although still maintained and supported for legacy use, they are deprecated in Couchbase Server, and will eventually be removed.
+MapReduce Views are not available in Capella Operational, only in self-managed Couchbase Server.
+
+Views are the only service which does not benefit from xref:{version-server}@server:learn:services-and-indexes/services/services.adoc#services-and-multi-dimensional-scaling[Multi-Dimensional Scaling], and is rarely the best choice over, say, xref:howtos:n1ql-queries-with-sdk.adoc[our Query service] if you are starting a fresh application.
+See our discussion document on xref:concept-docs:data-services.adoc[the best service for you to use].
+
+CAUTION: If you are provisioning Views on Couchbase Server for a legacy application, _they must run on a 
+xref:{version-server}@server:learn:buckets-memory-and-storage/storage-engines.adoc#couchstore[couchstore] bucket_.
 
 
-== Querying Views through the .NET SDK
+Use of Views in the {name-sdk} is now deprecated.
 
-Once you have a view defined, it can be queried from the .NET SDK by using the `ViewQuery` method on a Bucket instance.
+Information on using MapReduce Views with the SDK can still be accessed in our https://docs-archive.couchbase.com/dotnet-sdk/3.1/howtos/view-queries-with-sdk.html[documentation archive].
 
-Here is an example:
-
-[source,csharp]
-----
-var result = await bucket.ViewQueryAsync<Type>("design-doc", "view-name", options =>
-{
-	options.WithLimit(10);
-});
-
-foreach (var row in result.Rows)
-{
-	var id = row.Id;
-	var key = row.Key<string[]>();
-	var value = row.Value<Type>();
-}
