@@ -53,7 +53,7 @@ In a dependency injection context, this instance should be injected as a singlet
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=init,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=init,indent=0]
 ----
 // End TODO
 
@@ -61,7 +61,7 @@ include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=creating
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=examples,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=examples,indent=0]
 ----
 
 include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=lambda-ctx]
@@ -85,7 +85,7 @@ To aid troubleshooting, each transaction maintains a list of log entries, which 
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=logging,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=logging,indent=0]
 ----
 
 A failed transaction can involve dozens, even hundreds, of lines of logging, so it may be preferable to write failed transactions into a separate file.
@@ -94,7 +94,7 @@ A failed transaction can involve dozens, even hundreds, of lines of logging, so 
 This will log all lines of any failed transactions, to `WARN` level:
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=config_warn,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=config_warn,indent=0]
 ----
 ////
 
@@ -104,7 +104,7 @@ Here is an example of configuring a `Microsoft.Extensions.Logging.ILoggingFactor
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=full-logging,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=full-logging,indent=0]
 ----
 
 == Key-Value Operations
@@ -130,7 +130,7 @@ To insert a document within a transaction {lambda}, simply call `ctx.InsertAsync
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=insert,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=insert,indent=0]
 ----
 
 === Get
@@ -139,7 +139,7 @@ There are two ways to get a document, `GetAsync` and `GetOptionalAsync`:
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=get,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=get,indent=0]
 ----
 
 `GetAsync` may return a `TransactionFailedException` if a document doesn't exist, for example.
@@ -149,7 +149,7 @@ Gets will "Read Your Own Writes", e.g. this will succeed:
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=getReadOwnWrites,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=getReadOwnWrites,indent=0]
 ----
 
 Of course, no other transaction will be able to read that inserted document, until this transaction reaches the commit point.
@@ -162,7 +162,7 @@ If it is, then the transaction will handle this, generally by rolling back what 
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=replace,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=replace,indent=0]
 ----
 
 === Remove
@@ -171,7 +171,7 @@ As with replaces, removing a document requires awaiting a `TransactionGetResult`
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=remove,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=remove,indent=0]
 ----
 
 == {sqlpp} Queries
@@ -188,21 +188,21 @@ Here is an example of selecting some rows from the `travel-sample` bucket:
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=queryExamplesSelectScope,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=queryExamplesSelectScope,indent=0]
 ----
 
 An example using a `IScope` for an UPDATE:
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=queryExamplesUpdate,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=queryExamplesUpdate,indent=0]
 ----
 
 And an example combining `SELECT` and `UPDATE`.
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=queryExamplesComplex,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=queryExamplesComplex,indent=0]
 ----
 
 As you can see from the snippet above, it is possible to call regular C# methods from the lambda, permitting complex logic to be performed.
@@ -213,7 +213,7 @@ This example shows inserting a document and then selecting it again:
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=queryInsert,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=queryInsert,indent=0]
 ----
 
 <1> The inserted document is only staged at this point, as the transaction has not yet committed. +
@@ -226,7 +226,7 @@ Query options can be provided via `TransactionQueryOptions` object:
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=queryOptions,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=queryOptions,indent=0]
 ----
 
 .Supported Transaction Query Options
@@ -255,7 +255,7 @@ In this example we insert a document with a key-value operation, and read it wit
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=queryRyow,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=queryRyow,indent=0]
 ----
 
 <1> The key-value insert operation is only staged, and so it is not visible to other transactions or non-transactional actors.
@@ -270,7 +270,7 @@ If needed, transactions can optionally be configured at the point of creating th
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=config,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=config,indent=0]
 ----
 
 include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=config]

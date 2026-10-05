@@ -19,7 +19,7 @@ The simplest way to create a `Cluster` object is to call `Cluster.ConnectAsync()
 
 [source,csharp]
 ----
-include::example$ManagingConnections.cs[tag=simpleconnect,indent=0]
+include::devguide:example$dotnet/ManagingConnections.cs[tag=simpleconnect,indent=0]
 ----
 
 NOTE: If you are connecting to a version of Couchbase Server earlier than 6.5, it will be more efficient if the addresses are those of data (KV) nodes.
@@ -30,7 +30,7 @@ Multiple addresses may be specified in a connection string by delimiting them wi
 
 [source,csharp]
 ----
-include::example$ManagingConnections.cs[tag=multinodeconnect,indent=0]
+include::devguide:example$dotnet/ManagingConnections.cs[tag=multinodeconnect,indent=0]
 ----
 
 TIP: You do not need to include the address of every node in the cluster.
@@ -63,7 +63,7 @@ This last connection string with parameters is equivalent to connecting with Clu
 
 [source,csharp]
 ----
-include::example$ManagingConnections.cs[tag=network-and-timeout,indent=0]
+include::devguide:example$dotnet/ManagingConnections.cs[tag=network-and-timeout,indent=0]
 
 ----
 
@@ -104,7 +104,7 @@ The easiest way to get started in a Web application is to use the `ConfigureServ
 
 [source,csharp]
 ----
-include::example$WebStartupDI.cs[tag=configureservices,indent=0]
+include::devguide:example$dotnet/WebStartupDI.cs[tag=configureservices,indent=0]
 ----
 
 === Injecting Couchbase Buckets
@@ -114,14 +114,14 @@ Be sure that you don't dispose the IBucket, it's a singleton that will be reused
 
 [source,csharp]
 ----
-include::example$HomeControllerDI.cs[tag=namedbucketprovider,indent=0]
+include::devguide:example$dotnet/HomeControllerDI.cs[tag=namedbucketprovider,indent=0]
 ----
 
 === Simplifying Injecting Bucket Names
 
 [source,csharp]
 ----
-include::example$mybucketproviderDI.cs[tag=mybucketprovider,indent=0]
+include::devguide:example$dotnet/mybucketproviderDI.cs[tag=mybucketprovider,indent=0]
 ----
 
 To further simplify dependency injection, you can setup to inject specific buckets.
@@ -132,7 +132,7 @@ You can then configure your bucket interfaces during IServiceCollection setup.
 
 [source,csharp]
 ----
-include::example$WebStartupDI-IMyBucketProvider.cs[tag=configureservices,indent=0]
+include::devguide:example$dotnet/WebStartupDI-IMyBucketProvider.cs[tag=configureservices,indent=0]
 ----
 
 The interface you created can now be injected into controllers or business logic, and the `GetBucketAsync` method will return the specified bucket.
@@ -140,7 +140,7 @@ You are no longer required to know the name of the bucket in the controller, imp
 
 [source,csharp]
 ----
-include::example$HomeControllerDI.cs[tag=IMybucketprovider,indent=0]
+include::devguide:example$dotnet/HomeControllerDI.cs[tag=IMybucketprovider,indent=0]
 ----
 
 === Injecting the Couchbase Cluster
@@ -150,7 +150,7 @@ be calling:
 
 [source,csharp]
 ----
-include::example$HomeControllerDI2.cs[tag=IClusterProvider,indent=0]
+include::devguide:example$dotnet/HomeControllerDI2.cs[tag=IClusterProvider,indent=0]
 ----
 
 Once you have done this you can use Cluster level services like Query and Analytics in your code.
@@ -163,7 +163,7 @@ For Asp.Net Core, you can call this service from the `ApplicationStopped` cancel
 
 [source,csharp]
 ----
-include::example$WebStartupDI.cs[tag=configure,indent=0]
+include::devguide:example$dotnet/WebStartupDI.cs[tag=configure,indent=0]
 ----
 
 
@@ -185,7 +185,7 @@ On the client side, the externally visible ports must be used when connecting.
 If the external ports are not the default, you can specify custom ports using the overloaded `Cluster.connect()` method that takes a set of `SeedNode` objects instead of a connection string.
 
 // todo use the include (and uncomment in ManageingConnections.java) after next client snapshot is published
-// include::example$ManagingConnections.java[tag=seednodes,indent=0]
+// include::devguide:example$dotnet/ManagingConnections.java[tag=seednodes,indent=0]
 [source,java]
 ----
 int customKvPort = 1234;
@@ -275,7 +275,7 @@ The next step is to enable encryption and import the certificate.
 
 [source,csharp]
 ----
-include::example$ManagingConnections.cs[tag=enableTls,indent=0]
+include::devguide:example$dotnet/ManagingConnections.cs[tag=enableTls,indent=0]
 ----
 
 ==== Importing the Certificate into Windows
@@ -433,7 +433,7 @@ In order to make the SDK use the SRV records, you need to pass in the hostname f
 
 [source,csharp]
 ----
-include::example$ManagingConnections.cs[tag=dnssrv,indent=0]
+include::devguide:example$dotnet/ManagingConnections.cs[tag=dnssrv,indent=0]
 ----
 
 If the DNS SRV records could not be loaded properly you’ll get the exception logged and the given host name will be used as a A record lookup.
@@ -457,14 +457,14 @@ If you are working at the _Cluster_ level, then add to the `cluster()` in the xr
 
 [source,csharp]
 ----
-include::example$ManagingConnections.cs[tag=waitUntilReady,indent=0]
+include::devguide:example$dotnet/ManagingConnections.cs[tag=waitUntilReady,indent=0]
 ----
 
 Or more fully:
 
 [source,csharp]
 ----
-include::example$ClusterExample.cs[tag=waitUntilReady,indent=0]
+include::devguide:example$dotnet/ClusterExample.cs[tag=waitUntilReady,indent=0]
 ----
 
 If you are working at the _Bucket_ level, then the {api-bucket-link}[Bucket-level `waitUntilReady`] does the same as the Cluster-level version,
@@ -472,7 +472,7 @@ _plus_ it waits for the K-V (data) sockets to be ready.
 
 [source,csharp]
 ----
-include::example$ClusterExample.cs[tag=waitUntilReadyBucket,indent=0]
+include::devguide:example$dotnet/ClusterExample.cs[tag=waitUntilReadyBucket,indent=0]
 ----
 
 Other timeout issues may occur when using the SDK located geographically separately from the Couchbase Server cluster -- this is xref:project-docs:compatibility#network-requirements[not recommended].

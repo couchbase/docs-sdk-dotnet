@@ -33,7 +33,7 @@ If the application wishes to monitor cleanup it may subscribe to these events:
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=cleanup-events,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=cleanup-events,indent=0]
 ----
 
 `TransactionCleanupEndRunEvent` is raised whenever a current 'run' is finished, and contains statistics from the run.

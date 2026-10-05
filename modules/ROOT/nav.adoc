@@ -9,7 +9,7 @@
 
 * xref:concept-docs:data-durability-acid-transactions.adoc[Data Modelling, Durability, and Consistency]
 ** xref:howtos:kv-operations.adoc[]
-// *** xref:3.0@python-sdk:howtos:caching-example.adoc
+*** xref:howtos:caching-example.adoc[]
 ** xref:howtos:concurrent-document-mutations.adoc[]
 ** xref:howtos:subdocument-operations.adoc[]
 ** xref:concept-docs:data-model.adoc[]

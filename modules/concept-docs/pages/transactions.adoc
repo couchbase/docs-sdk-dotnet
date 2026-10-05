@@ -40,7 +40,7 @@ If the transaction is not retried then it will throw a `{transaction-failed}`.
 
 [source,csharp]
 ----
-include::howtos:example$TransactionsExample.cs[tag=rollback-cause,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=rollback-cause,indent=0]
 ----
 
 == Transaction Operations
@@ -53,7 +53,7 @@ include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=custom-m
 
 [source,csharp]
 ----
-include::howtos:example$TransactionsExample.cs[tag=custom-metadata,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=custom-metadata,indent=0]
 ----
 
 include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=custom-metadata-2]

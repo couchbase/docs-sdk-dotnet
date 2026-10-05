@@ -13,19 +13,19 @@ include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=single-q
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=querySingle,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=querySingle,indent=0]
 ----
 
 You can also run a single query transaction against a particular `IScope` (these examples will exclude the full error handling for brevity):
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=querySingleScoped,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=querySingleScoped,indent=0]
 ----
 
 and configure it:
 
 [source,csharp]
 ----
-include::example$TransactionsExample.cs[tag=querySingleConfigured,indent=0]
+include::devguide:example$dotnet/TransactionsExample.cs[tag=querySingleConfigured,indent=0]
 ----
