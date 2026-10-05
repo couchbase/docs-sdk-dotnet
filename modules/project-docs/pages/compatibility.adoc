@@ -26,15 +26,17 @@ include::hello-world:partial$supported.adoc[]
 [#table_sdk_versions]
 [cols="40,23,20,20,20"]
 |===
-| | SDK 3.5, 3.6 | SDK 3.7 | SDK 3.8 | SDK 3.9
+| | SDK 3.5, 3.6 | SDK 3.7 | SDK 3.8 | SDK 3.9 | SDK 3.10
 
 | .NET 6.0 (Long-Term Support)
 | *✔*
 | *✖*
 | *✖*
 | *✖*
+| *✖*
 
 | .NET 7.0
+| *✖*
 | *✖*
 | *✖*
 | *✖*
@@ -45,8 +47,10 @@ include::hello-world:partial$supported.adoc[]
 | *✔*
 | *✔*
 | *✔*
+| *✔*
 
 | .NET 9.0
+| *✖*
 | *✖*
 | *✖*
 | *✖*
@@ -57,8 +61,10 @@ include::hello-world:partial$supported.adoc[]
 | *✖*
 | *✖*
 | *✔*
+| *✔*
 
 | .NET Framework 4.6.2+
+| *✔*
 | *✔*
 | *✔*
 | *✔*
@@ -134,22 +140,17 @@ Couchbase SDKs are tested against a variety of different environments to ensure 
 
 === Couchbase Version/SDK Version Matrix
 
-The matrix below denotes the version of Couchbase Server, the version of the .NET SDK and whether the SDK is:
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=matrix-notes1]
 
-* ✖ *Unsupported*: This combination is not tested, and is not within the scope of technical support if you have purchased a support agreement.
-* ◎ *Compatible*: This combination has been tested previously, and should be compatible.
-This combination is not recommended by our technical support organization.
-It is best to upgrade either the SDK or the Couchbase version you are using.
-* ✔ *Supported*: This combination is subject to ongoing quality assurance, and is fully supported by our technical support organization.
 
 .Recommended SDK per Server Version Matrix
 [#table_sdk_versions]
 |===
-| | 3.4 | 3.5 | 3.6 - 3.7 | 3.8 - 3.10'
+| | 3.4 | 3.5 | 3.6 - 3.7 | 3.8 - 3.10
 
-| *Server 7.0 - 7.2*
-| *✔*
-| *✔*
+| *Server 8.0*
+| *◎* ①
+| *◎*
 | *✔*
 | *✔*
 
@@ -159,20 +160,31 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 | *✔*
 | *✔*
 
-| *Server 8.0*
-| *◎* ①
-| *◎*
+| *Server 7.0 - 7.2*②
+| *✔*
+| *✔*
 | *✔*
 | *✔*
 |===
 
-<1> If you are on SDK versions 3.4.11 - 3.4.15, we strongly encourage you to upgrade to .NET SDK v3.5.1+.
+<1> Server 7.6 & 8.0 are compatible with all supported (not yet End-of-Life) versions of the {name-sdk}, but for full support of the latest features you need to upgrade to a recent version of the SDK.
+See the <<#couchbase-new-feature-availability-matrix,Feature Availablity matrix below>> and the xref:sdk-release-notes.adoc[Release Notes page].
+If you are on SDK versions 3.4.11 - 3.4.15, we strongly encourage you to upgrade to .NET SDK v3.5.1+.
++
 While these versions will continue be compatible and supported with server 7.6.0+, you may encounter timeout exceptions during rebalances under KV high workload.
 3.6.1+ is recommended for Server 7.6.0+ --
 more information is on the xref:sdk-release-notes.adoc[Release Notes page].
 
+② Earlier versions of Server, back to 7.0, should be compatible with newer releases of the SDK (unless the release notes mention specific deprecations), but these older Server versions are EOL and no longer supported.
+
 Note the https://www.couchbase.com/support-policy/EOL/[End of Life dates^] for Couchbase Server and SDK versions.
 See the notes there for Support details.
+
+
+// include::{version-common}@sdk:shared:partial$compat.adoc[tag=matrix-notes2]
+
+
+
 
 === Capella Compatibility
 
