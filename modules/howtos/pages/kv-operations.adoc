@@ -34,7 +34,7 @@ Here is the _Insert_ operation at its simplest:
 .Insert
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=insert,indent=0]
+include::devguide:example$dotnet/KvOperations.cs[tag=insert,indent=0]
 ----
 
 Options may be added to operations:
@@ -42,7 +42,7 @@ Options may be added to operations:
 .Insert (with options)
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=insertwithoptions,indent=0]
+include::devguide:example$dotnet/KvOperations.cs[tag=insertwithoptions,indent=0]
 ----
 
 Setting a Compare and Swap (CAS) value is a form of optimistic locking - dealt with in depth in the xref:concurrent-document-mutations.adoc[CAS page].
@@ -56,7 +56,7 @@ We will add to these options for the _Replace_ example:
 
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=replacewithcas,indent=0]
+include::devguide:example$dotnet/KvOperations.cs[tag=replacewithcas,indent=0]
 ----
 
 Expiration sets an explicit time to live (TTL) for a document.
@@ -66,7 +66,7 @@ xref:{version-server}@server:learn:buckets-memory-and-storage/expiration.adoc#ex
 
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=upsertwithtimeout,indent=0]
+include::devguide:example$dotnet/KvOperations.cs[tag=upsertwithtimeout,indent=0]
 ----
 
 Here, we have add _Durability_ options, namely `PersistTo` and `ReplicateTo`.
@@ -90,7 +90,7 @@ The following example demonstrates using the newer durability features available
 
 [source,csharp]
 ----
-include::example$KvOperations.cs[tag=upsertwithdurability,indent=0]
+include::devguide:example$dotnet/KvOperations.cs[tag=upsertwithdurability,indent=0]
 ----
 
 If a version of Couchbase Server earlier than 6.5 is being used then the application can fall-back to xref:concept-docs:durability-replication-failure-considerations.adoc#older-server-versions['client verified' durability].
