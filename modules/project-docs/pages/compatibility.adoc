@@ -119,12 +119,12 @@ include::{version-common}@sdk:shared:partial$compat.adoc[tag=virtual]
 
 
 // Network Requirements
-include::{version-common}@sdk:shared:partial$compat[tag=network-requirements]
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=network-requirements]
 
 
 
 // Serverless Environments
-include::{version-common}@sdk:shared:partial$compat[tag=serverless]
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=serverless]
 
 
 
