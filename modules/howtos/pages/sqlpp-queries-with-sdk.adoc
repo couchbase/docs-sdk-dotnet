@@ -1,8 +1,6 @@
 = {sqlpp} Queries from the SDK
 :description: You can query for documents in Couchbase using the {sqlpp} query language, a language based on SQL, but designed for structured and flexible JSON documents.
-:page-topic-type: howto
 :page-aliases: n1ql-query
-:page-pagination: full
 
 
 [abstract]
