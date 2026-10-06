@@ -1,9 +1,5 @@
 = Search
 :description: You can use the Search service to create queryable search indexes in Couchbase Server.
-:page-topic-type: howto
-:page-pagination: full
-
-include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 {description}
