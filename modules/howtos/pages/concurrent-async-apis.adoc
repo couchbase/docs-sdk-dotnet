@@ -133,6 +133,9 @@ This will configure the Task to not use the synchronization context even if it e
 
 == Batching
 
+include::{version-common}@sdk:shared:partial$best-practices.adoc[tag=bulk-get-sidebar]
+
+
 Asynchronous clients inherently batch operations: because the application receives the response at a later stage in the application, batching will be the result of issuing many requests in sequence.
 
 Batching in .NET using TAP is relively simple.
