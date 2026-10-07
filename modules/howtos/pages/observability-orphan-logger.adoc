@@ -138,9 +138,10 @@ Each individual request has the following format:
 
 If a field is not available, it will not be included in the output.
 
+
 == Configuration
 
-The orphan logger can be configured through the `OrphanReporterConfig`.
+The orphan logger can be configured through `OrphanOptions`.
 
 The following properties can be configured:
 
@@ -148,10 +149,13 @@ The following properties can be configured:
 [options="header"]
 |====
 | Property       | Default | Description
-| `emitInterval` | 10 seconds | The interval where found orphans are emitted.
-| `sampleSize`   | 10 | The number of samples to store per service.
-| `queueLength`  | 1024 | Maximum buffer size of orphans to store to pick up for the reporter.
+| `OrphanOptions.EmitInterval` | 10 seconds | The interval where found orphans are emitted.
+| `OrphanOptions.SampleSize`   | 10 | The number of samples to store per service.
+| `OrphanOptions.OrphanListener`  | Optional: `{ get; set; }` | Provides the means of registering a custom `TraceListener` implementation.
 |====
+
+See the https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.Core.Diagnostics.Tracing.OrphanResponseReporting.OrphanOptions.html[API Reference] for more information.
+
 
 In addition to those properties, if you want to try out the new logging format you can set the `com.couchbase.orphanReporterNewOutputFormat` system property to `true`.
 
