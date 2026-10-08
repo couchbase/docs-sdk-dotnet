@@ -26,7 +26,7 @@ any changes to expected behavior are noted in the release notes that follow.
 
 
 
-=== Version 3.10.0 (????????? October 2026)
+=== Version 3.10.0 (08 October 2026)
 
 https://packages.couchbase.com/clients/net/3.10/Couchbase-Net-Client-3.10.0.zip[Download] |
 https://docs.couchbase.com/sdk-api/couchbase-net-client-3.10.0[API Reference] |
@@ -34,6 +34,148 @@ https://www.nuget.org/packages/CouchbaseNetClient/3.10.0[Nuget]
 
 
 ==== Fixed Issues
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4292[NCBC-4292]:
+The key-value circuit breaker is now tracked per node rather than shared across the cluster.
+One breaker decided for every node, so a failing node's errors were diluted by healthy nodes'
+successes and its circuit could never open at all, while a circuit that did open blocked the
+whole cluster rather than the node at fault.
+Resetting a circuit now clears its failure counts, so a node that recovers no longer re-trips
+on its next failure.
+A circuit that has opened also now keeps that node isolated until a probe succeeds
+(https://couchbasecloud.atlassian.net/browse/NCBC-4231[NCBC-4231]):
+the rolling window expiring closed the circuit outright, letting a fresh burst of operations
+through to a node that was still down roughly once a minute,
+and a failure arriving while the circuit was open moved it to half-open,
+which sent canary probes during the sleep window meant to shield the node.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4261[NCBC-4261]:
+Transactions now commit a document with the user flags recorded when it was staged,
+rather than re-deriving them, so a binary document committed by lost-transaction cleanup or after an ambiguous commit
+is no longer stored with JSON flags and left unreadable by `ContentAs<byte[]>`.
+The staged flags are also now written in network byte order, as the other SDKs expect;
+a transaction staged by an earlier .NET SDK release and cleaned up by another SDK, or the reverse, may still read them incorrectly.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4282[NCBC-4282]:
+`WaitUntilReady` now follows the SDK RFC.
+It no longer reports `Online` before every requested service has a reachable endpoint,
+and no longer reports a bucket ready before the bucket has received a configuration.
+Query, Analytics and Search are now pinged on every node that runs them, rather than on one node chosen at random,
+and the service timeout now applies to each ping, so one unresponsive node can no longer stall the wait.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4298[NCBC-4298]:
+When every management node fails, the HTTP streaming configuration listener (used for Memcached buckets,
+and for Couchbase buckets when key-value configuration polling fails) now backs off between attempts as intended,
+at 100 ms, then 1 s, then 10 s, rather than retrying in a tight loop for as long as the outage lasts.
+Reconnecting after a stream ends normally now also waits 100 ms.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4233[NCBC-4233]:
+An exception in the lost-transaction cleanup timer can no longer terminate the application.
+Disposing a cluster also no longer leaves the cleanup client record behind when cleanup is disposed concurrently,
+and a logging provider that throws can no longer hang its disposal.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4232[NCBC-4232]:
+A retried query now keeps the caller's `StreamResults` setting,
+and a retried query inside a transaction is now sent to the node that began the transaction rather than to a random query node.
+Two queries started concurrently with the same `QueryOptions` instance can no longer overwrite each other's request.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4305[NCBC-4305]:
+Disposing a `Cluster` while a bucket is still opening no longer replaces the outcome of that call with an unrelated `ObjectDisposedException`,
+and a bucket that finishes opening after the cluster is disposed is now disposed rather than returned.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4303[NCBC-4303]:
+Rotating mTLS client certificates now takes effect.
+The SDK previously kept presenting the old certificate on new connections after a rotation.
+The certificate refresh also no longer fails on cultures that write the date first, and its timer now stops when the cluster is disposed.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4236[NCBC-4236]:
+Connection pool diagnostics and metrics no longer slow down over the life of the process.
+They kept an entry for every connection the process had ever opened, so their cost grew with every rebalance.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4309[NCBC-4309]:
+App Telemetry now starts reporting when a node begins to advertise a telemetry endpoint after bootstrap,
+for example when an administrator enables App Telemetry on a running cluster.
+Previously it was turned off for the life of the application if no endpoint was advertised at bootstrap.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4307[NCBC-4307]:
+`SearchIndexManager.GetAllIndexesAsync` now returns an empty list when there are no search indexes, rather than throwing.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4314[NCBC-4314]:
+Range scan metrics are now tagged with the same operation names as the other SDKs
+(`rangescancreate`, `rangescancontinue` and `rangescancancel`).
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4308[NCBC-4308]:
+Stellar: a timeout caused by the gRPC deadline now keeps its error context, including the retry reasons such as `KvLocked`.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4320[NCBC-4320]:
+Stellar: a `Get` with projections where none of the requested paths exist now returns the gateway's `null` response,
+rather than an empty JSON object.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4213[NCBC-4213]:
+Three log statements now honour `ClusterOptions.RedactionLevel`:
+the trace-level Search request body, the document key logged during replica reads, and a debug message in range scan.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4252[NCBC-4252]:
+`PersistentDictionary.TryGetValue` now creates the backing document when it does not exist yet,
+rather than reporting that the key is missing.
+
+
+==== New Features and Behavioral Changes
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4272[NCBC-4272]:
+Added hybrid search score fusion.
+`SearchOptions.Scoring()` takes `SearchScoring.ReciprocalRankFusion()`, `SearchScoring.RelativeScoreFusion()` or `SearchScoring.None()`,
+and controls how the full-text and vector results of a hybrid search are merged into one ranked list.
+A fusion strategy raises `FeatureNotAvailableException` when the cluster does not support score fusion, and on `couchbase2://`.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4294[NCBC-4294]:
+Added `ICouchbaseCollection.GetReplicaAsync`, which reads a document from one specific replica chosen with `GetReplicaStrategy.FromIndex`.
+It raises `ReplicaIndexOutOfBoundsException` or `ReplicaIndexCurrentlyUnavailableException` when that replica cannot be used,
+and `DocumentNotFoundOnReplicaException` (a `DocumentNotFoundException`) when the document is not on it.
+This API is Uncommitted.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4216[NCBC-4216]:
+TLS validation now uses the intermediate certificates the server presents,
+so a node whose certificate is issued by an intermediate CA is accepted when you trust only the root.
+This includes clusters that mix certificate authorities across nodes
+(https://couchbasecloud.atlassian.net/browse/NCBC-4275[NCBC-4275]).
+The chain is first validated against the operating system trust store.
+If it does not reach a trusted root, the SDK builds it again against the certificates given to `WithTrustedServerCertificates`
+(or the bundled Capella CA when none are given) plus the server-sent intermediates;
+a certificate the server sends is never trusted as a root.
+`WithTrustedServerCertificates` must therefore include the root CA:
+an intermediate on its own no longer completes a chain to a root in the operating system trust store.
+On .NET Framework and on .NET 7 or earlier, which load the `netstandard2.0` and `netstandard2.1` builds,
+custom trust anchors are not available, so validation uses the operating system trust store only and the configured certificates are not used.
+Where the platform cannot build a chain at all, as OpenSSL 3.0 on Ubuntu 22.04 cannot for a CA certificate that shares its issuer's name,
+the certificate is now rejected with a logged warning, rather than the connection failing with an opaque `CryptographicException`
+(https://couchbasecloud.atlassian.net/browse/NCBC-4316[NCBC-4316]).
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4296[NCBC-4296]:
+Exception error contexts now honour `ClusterOptions.RedactionLevel`, which previously applied to the log stream only.
+If you have enabled redaction, error-context properties hold the tagged value: `ex.Context.DocumentKey` returns `<ud>the-key</ud>` rather than `the-key`, and the raw value is no longer recoverable from the context.
+Document keys, statements, query parameters and search queries are tagged `<ud>`; bucket, scope, collection, index, design-document and view names `<md>`; endpoints and management URIs `<sd>`.
+Text authored by the server is deliberately left raw, so a statement that a query error quotes back can still appear in `Context.Message` and `Context.Errors` even at `Partial`: redaction covers the fields the SDK populates, not the text the server returns.
+`ClientContextId` is left raw for the same reason it always was, so that it can be correlated against server logs.
+This covers the `couchbase://` path only; `couchbase2://` is tracked separately as https://couchbasecloud.atlassian.net/browse/NCBC-4300[NCBC-4300].
+`Context.ToString()` renders the tags as literal angle brackets so that `cblogredaction` can match them; every other character keeps its usual JSON escaping, so output is unchanged for anyone who has not enabled redaction.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4302[NCBC-4302]:
+Log redaction is now performed by a single internal redactor rather than two.
+Registering your own `IRedactor` via `AddClusterService<IRedactor>` is now ignored: the registration is discarded
+when the cluster is built and the SDK logs a warning, so the change is not silent.
+This was never a documented extension point, and since 3.3.0 it had been honoured on some code paths and ignored on others.
+The `IRedactor` interface is unchanged and remains public, and `ClusterOptions.RedactionLevel` is unaffected.
+Retrieving the cluster's redactor in order to redact your own log arguments the same way the SDK does
+remains supported: `cluster.ClusterServices.GetRequiredService<IRedactor>()` always returns a
+redactor that honours the configured `ClusterOptions.RedactionLevel`.
+
+
+==== Deprecations
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4272[NCBC-4272]:
+`SearchOptions.DisableScoring()` is deprecated in favour of `SearchOptions.Scoring(SearchScoring.None())`.
+Setting both raises `InvalidArgumentException`.
 
 
 
