@@ -41,6 +41,9 @@ include::{version-common}@sdk:shared:partial$best-practices.adoc[tag=rbac]
 
 include::{version-common}@sdk:shared:partial$best-practices.adoc[tag=performance]
 
+A collection of performance tips --
+and antipatterns to avoid --
+can be found on the xref:project-docs:performance.adoc[performance page].
 
 
 === Dealing with Timeout Errors
