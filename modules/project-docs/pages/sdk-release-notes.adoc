@@ -26,6 +26,111 @@ any changes to expected behavior are noted in the release notes that follow.
 
 
 
+=== Version 3.10.1 (03 November 2026)
+
+https://packages.couchbase.com/clients/net/3.10/Couchbase-Net-Client-3.10.1.zip[Download] |
+https://docs.couchbase.com/sdk-api/couchbase-net-client-3.10.1[API Reference] |
+https://www.nuget.org/packages/CouchbaseNetClient/3.10.1[Nuget]
+
+
+==== Fixed Issues
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4372[NCBC-4372]:
+A key-value connection that the server closes is now replaced, whether it was idle or busy at the time.
+Previously the node stayed unusable until the application was restarted, for example after the Data Service restarted on that node.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4373[NCBC-4373]:
+A node whose connections fail to select the bucket now recovers.
+Replacement connections previously opened without selecting the bucket, so every operation on that node failed with `BucketNotConnected` and was retried until it timed out.
+A connection on which the server reports that no bucket is selected is now also closed and replaced, as the key-value error map requires.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4328[NCBC-4328]:
+A connection that closes while its responses are being handled can no longer terminate the application.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4337[NCBC-4337]:
+An App Telemetry endpoint set with `AppTelemetryOptions.Endpoint` no longer receives the cluster's credentials.
+It previously received the cluster's password or JWT in the `Authorization` header, and the client certificate when certificate authentication was used;
+with a `ws://` endpoint the password or token was sent in cleartext.
+The override endpoint is now connected without authentication, with the cluster's TLS settings and server certificate validation,
+and a `ws://` endpoint logs a one-time warning that telemetry is not encrypted.
+Connections to the cluster's own nodes are authenticated as before.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4325[NCBC-4325]:
+When the server pushes a new configuration but the node the SDK asks does not have it yet, the SDK now asks again.
+Previously it kept the old configuration until the next configuration change, so, for example, spans and metrics could report the old cluster name for 30 seconds or more after a rename.
+The configuration push handler also no longer stops processing pushes for a bucket, which left the SDK on a stale configuration until the bucket was opened again.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4376[NCBC-4376]:
+A `MutateIn` with more than one spec no longer throws "Cannot advance past the end of the buffer" when a previous spec's value ends close to the end of the internal buffer.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4336[NCBC-4336]:
+`GetAnyReplicaAsync` and `LookupInAnyReplicaAsync` now complete as cancelled as soon as the caller's cancellation token is cancelled.
+Previously a token cancelled before every replica had answered could leave the call never returning.
+Failed replica reads are also no longer reported as unobserved task exceptions.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4365[NCBC-4365]:
+`LookupInAllReplicasAsync` and `ScanAsync` now honour a cancellation token passed with `WithCancellation`, as well as the token in their options,
+and stopping the enumeration early cancels the reads still in progress.
+Cancelling `ScanOptions.Token` now always throws `OperationCanceledException`;
+previously a cancellation between reads could end the scan quietly, as if it had returned every result.
+`ScanAsync` also now closes its server-side scans when the caller stops early.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4360[NCBC-4360]:
+A durable `MutateIn` with no explicit timeout now uses `KvDurabilityTimeout` (10 seconds by default) rather than `KvTimeout` (2.5 seconds), as other durable operations do.
+This also affects transactions, whose ATR writes are durable sub-document mutations, and which could time out when several transactions shared an ATR.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4361[NCBC-4361]:
+Transactions: when a query fails with a timeout (error 1080 or 17010), the transaction now reports that it expired without trying to roll back the attempt that has already expired.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4370[NCBC-4370]:
+Transactions: a query operation started when the transaction is about to expire now fails as expired before it is sent,
+rather than being sent and failing with a less specific error when the server's own expiry check fires.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4323[NCBC-4323]:
+Transactions: when a document's staged changes refer to an ATR document that no longer exists, a get now returns the document's body from before the transaction,
+and a write proceeds, rather than the get reporting the document missing and the write failing.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4324[NCBC-4324]:
+Transactions: `GetMulti` could return a stale document body when another transaction's ATR entry was missing.
+It now reads that transaction's documents again, and returns the committed body if that transaction committed.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4318[NCBC-4318]:
+Stellar: an operation can no longer wait forever when gRPC never completes a call.
+Each attempt now times out at its deadline plus a short grace period.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4300[NCBC-4300]:
+Stellar: exception error contexts now honour `ClusterOptions.RedactionLevel`, as the `couchbase://` contexts have since 3.10.0, so document keys are no longer written raw.
+
+
+==== New Features and Behavioral Changes
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4326[NCBC-4326]:
+Added `CustomScoreQuery` and `CustomFilterQuery` (namespace `Couchbase.Search.Queries.Script`),
+which pass the results of an inner search query through a user-defined JavaScript function that rescores or filters them.
+They require Couchbase Server 8.5 Enterprise Edition,
+and raise `FeatureNotAvailableException` before sending the request when the cluster does not support them, and on `couchbase2://`.
+Custom script queries are disabled on the Search Service by default;
+while they are disabled, the server rejects these queries with a `CouchbaseException`.
+`Boost()` has no effect on these query types and is marked obsolete; apply the boost to the inner query instead.
+This API is Uncommitted.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3625[NCBC-3625]:
+Added `ICouchbaseCollection.GetAllReplicasStreamAsync`, which returns an `IAsyncEnumerable<IGetReplicaResult>` that yields each copy of the document as soon as it is read.
+With `GetAllReplicasAsync`, which returns one task per copy in a fixed order, a slow node holds back copies that have already been read.
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-4364[NCBC-4364]:
+Added `Timeout` to `GetAllReplicasOptions` and `GetAnyReplicaOptions`, so the timeout of a replica read can be set per call.
+Previously these operations always used `KvTimeout`.
+
+
+==== Deprecations
+
+* https://couchbasecloud.atlassian.net/browse/NCBC-3625[NCBC-3625]:
+`GetAllReplicasAsync` is deprecated in favour of `GetAllReplicasStreamAsync`.
+It will be removed in the next major version, and `GetAllReplicasStreamAsync` renamed to `GetAllReplicasAsync`.
+
+
+
 === Version 3.10.0 (08 October 2026)
 
 https://packages.couchbase.com/clients/net/3.10/Couchbase-Net-Client-3.10.0.zip[Download] |
