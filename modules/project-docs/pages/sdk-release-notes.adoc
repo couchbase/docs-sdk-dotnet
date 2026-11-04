@@ -59,6 +59,7 @@ A `MutateIn` with several specs no longer throws "Cannot advance past the end of
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4365[NCBC-4365]:
 `LookupInAllReplicasAsync` and `ScanAsync` now honour cancellation reliably, including tokens passed with `WithCancellation`.
+Cancelling `ScanOptions.Token` now always throws `OperationCanceledException`, rather than sometimes ending the scan quietly.
 
 * https://couchbasecloud.atlassian.net/browse/NCBC-4360[NCBC-4360]:
 A durable `MutateIn` with no explicit timeout now uses `KvDurabilityTimeout` rather than `KvTimeout`, as other durable operations do.
